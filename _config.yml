@@ -1,0 +1,5 @@
+exclude: 
+# Exlude git specific files.
+- 'README.md'
+- 'LICENSE'
+
