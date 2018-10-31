@@ -1,5 +1,6 @@
-exclude: 
-# Exlude git specific files.
-- 'README.md'
-- 'LICENSE'
+
+
+url: http://matthiaspetursson.com
+
+exclude: [README.md, LICENSE]
 
