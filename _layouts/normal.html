@@ -1,8 +1,42 @@
 ---
 layout: default
 ---
-<div class="{{ page.cover }}">
+<main>
+	<div class="{{ page.cover }}">
 
-	{{ content }}
-	
-</div>
+		<section class="content">
+			{{ content }}
+		</section>
+
+		<nav>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="about">About</a></li>
+				<li><a href="works">Works</a></li>
+				<li><a href="collaborations">Collaborations</a></li>
+				<li><a href="dungeon">Enter the dungeon</a></li>
+			</ul>
+		</nav>
+		
+	</div>
+</main>
+
+{% include footer.html %}
+
+
+<!--
+
+	About
+
+	Works
+
+	Collaborations
+
+	For the fans
+
+		Song idea library
+		Old stuff
+		Really old stuff
+		Weird stuff
+
+-->
