@@ -17,5 +17,13 @@ layout: default
 
 <script src="js/ext/mainloop/mainloop.min.js"></script>
 
+<script src="js/consts.js"></script>
+<script src="js/util.js"></script>
+<script src="js/global.js"></script>
+
+<script src="js/Entity.js"></script>
+
+<script src="js/EntityManager.js"></script>
+
 <script src="js/input.js"></script>
 <script src="js/game.js"></script>

@@ -1,10 +1,14 @@
 // My javascript game Dream Of Songs
 // Matthias Petursson - oldschool01123@gmail.com
 
-"use strict";
+(function () {
 
-var g_canvas = document.getElementById("dreamOfSongs");
-var g_context = g_canvas.getContext("2d");
+'use strict';
+
+global.set('canvas', document.getElementById('dreamOfSongs'));
+var canvas = global.get('canvas');
+global.set('context', canvas.getContext('2d'));
+var context = global.get('context');
 // canvas.width = window.innerWidth;
 // canvas.height = window.innerHeight;
 
@@ -13,11 +17,11 @@ function begin() {
 }
 
 function update(delta) {
-
+	// for each entity in entity manager, update position and other stuff
 }
 
 function draw() {
-	g_context.clearRect(0, 0, g_canvas.width, g_canvas.height);
+	context.clearRect(0, 0, canvas.width, canvas.height);
 
 	// for each entity in entity manager, draw
 }
@@ -25,7 +29,7 @@ function draw() {
 function end(fps, panic) {
 
 	// Display FPS in bottom right corner
-	g_context.fillText(fps.toPrecision(4) + ' fps', g_canvas.width - 55, g_canvas.height - 10);
+	context.fillText(fps.toPrecision(4) + ' fps', canvas.width - 55, canvas.height - 10);
 	
 	if (panic) {
         // This pattern introduces non-deterministic behavior, but in this case
@@ -40,3 +44,4 @@ function end(fps, panic) {
 
 MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
 
+}());
