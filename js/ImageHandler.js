@@ -6,6 +6,7 @@ function ImageHandler() {
 	this.sprites = {};
 
 	this.imageCounter = 0;
+	// UPDATE THIS VARIABLE MANUALLY
 	this.totalImageCount = 9; 	// total number of images to be loaded here, to update progress of loading bar
 
 	this.canvas = global.get('canvas');
@@ -13,8 +14,8 @@ function ImageHandler() {
 	// Sprite creation and data
 	this._createSpriteFromImage(
 		'player', consts.SPRITEURL + 'protagonist-spritesheet.png', 
-		600, 1000, 
 		180, 300, 
+		600, 1000, 
 		[[0,0], [0,1000], [600,0], [600,1000], [1200,0]]
 	);
 

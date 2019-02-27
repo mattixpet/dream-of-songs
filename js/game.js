@@ -16,24 +16,19 @@ function start() {
 	var loadingBar = new LoadingBar();
 	global.set('loadingBar', loadingBar);
 
-	loadingBar.preloadImage(initGame);
+	loadingBar.preloadImage(continueLoading); // have to actually preload the (go figure) loading background
 }
 
-function initGame() {
+function continueLoading() {
 	// background image of loading bar should now be loaded
 	var loadingBar = global.get('loadingBar');
 	loadingBar.start();
 
-	var entityManager = new EntityManager();
-	global.set('entityManager', entityManager);
-
 	var imageHandler = new ImageHandler(loadingBar);
 	global.set('imageHandler', imageHandler);
 
-	var player = new Player(300, 50);
-	entityManager.register(player);
-
-	imageHandler.preloadImages(imagesLoaded);
+	// load all images/sprites in game
+	imageHandler.preloadImages(initGame);
 }
 
 function begin() {
@@ -72,9 +67,15 @@ function end(fps, panic) {
     }
 }
 
-function imagesLoaded() {
+function initGame() {
+	var entityManager = new EntityManager();
+	global.set('entityManager', entityManager);
+
+	var player = new Player(300, 50);
+	entityManager.register(player);
+
 	//  Start the game !
-	//MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
+	MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
 
 	// end loading bar
 	//global.get('loadingBar').updateProgress(1);

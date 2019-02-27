@@ -8,7 +8,7 @@ Entity.prototype.draw = function () {
 
 };
 
-Entity.prototype.update = function () {
+Entity.prototype.update = function (dt) {
 
 };
 
