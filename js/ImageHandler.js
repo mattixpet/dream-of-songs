@@ -6,18 +6,29 @@ function ImageHandler() {
 	this.sprites = {};
 
 	// Sprite creation and data
-	var playerImg = new Image();
-	this.imagesLoaded.push(
-		new Promise(function(resolve, reject){
-			playerImg.onload = resolve;
-		})
+	this._createSpriteFromImage(
+		'player', 'protagonist-spritesheet.png', 
+		600, 1000, 
+		180, 300, 
+		[[0,0], [0,1000], [600,0], [600,1000], [1200,0]]
 	);
-	playerImg.src = consts.SPRITEURL + 'protagonist-spritesheet.png';
-	var playerSprite = new Sprite(playerImg, 	600, 1000, 
-												180, 300, 
-												[[0,0], [0,1000], [600,0], [600,1000], [1200,0]]);
-	this.sprites['player'] = playerSprite;
 }
+
+ImageHandler.prototype._createSpriteFromImage = 
+	function createSpriteFromImage(name, filename, srcWidth, srcHeight, dispWidth, dispHeight, positions) {
+		var img = new Image();
+		this.imagesLoaded.push(
+			new Promise(function(resolve, reject){
+				img.onload = resolve;
+			})
+		);
+		img.src = consts.SPRITEURL + filename;
+		var sprite = new Sprite(img, 	srcWidth, srcHeight,
+										dispWidth, dispHeight,
+										positions
+								);
+		this.sprites[name] = sprite;
+	};
 
 ImageHandler.prototype.preloadImages = function (callback) {
 	Promise.all(this.imagesLoaded).then(function(values){
