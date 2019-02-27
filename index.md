@@ -5,7 +5,7 @@ layout: default
 
 <main>
 
-	<canvas id="dreamOfSongs" width="800" height="600">
+	<canvas id="dreamOfSongs" width="800" height="450">
         Sorry, but your browser does not support the HTML5 canvas tag.
     </canvas>
 
@@ -19,8 +19,10 @@ layout: default
 
 <script src="js/consts.js" type="text/javascript"></script>
 <script src="js/util.js" type="text/javascript"></script>
+<script src="js/draw.js" type="text/javascript"></script>
 <script src="js/global.js" type="text/javascript"></script>
 
+<script src="js/LoadingBar.js" type="text/javascript"></script>
 <script src="js/ImageHandler.js" type="text/javascript"></script>
 
 <script src="js/Sprite.js" type="text/javascript"></script>

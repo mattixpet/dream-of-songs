@@ -2,6 +2,8 @@
 
 (function () {
 
+'use strict';
+
 global.set('keys', []);
 var keys = global.get('keys');
 

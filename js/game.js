@@ -7,19 +7,27 @@
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
 var canvas = global.get('canvas');
-global.set('context', canvas.getContext('2d'));
-var ctx = global.get('context');
+global.set('ctx', canvas.getContext('2d')); // context
+var ctx = global.get('ctx');
 // canvas.width = window.innerWidth;
 // canvas.height = window.innerHeight;
 
+function start() {
+	var loadingBar = new LoadingBar();
+	global.set('loadingBar', loadingBar);
+
+	loadingBar.preloadImage(initGame);
+}
+
 function initGame() {
-	// start loading bar !
-	util.print('Start loading.');
+	// background image of loading bar should now be loaded
+	var loadingBar = global.get('loadingBar');
+	loadingBar.start();
 
 	var entityManager = new EntityManager();
 	global.set('entityManager', entityManager);
 
-	var imageHandler = new ImageHandler();
+	var imageHandler = new ImageHandler(loadingBar);
 	global.set('imageHandler', imageHandler);
 
 	var player = new Player(300, 50);
@@ -32,8 +40,11 @@ function begin() {
 	// handle input
 }
 
-function update(delta) {
-	// for each entity in entity manager, update position and other stuff
+function update(dt) {
+	var entityManager = global.get('entityManager');
+	for (var key in entityManager.entities) {
+		entityManager.entities[key].update(dt);
+	}
 }
 
 function draw() {
@@ -57,18 +68,18 @@ function end(fps, panic) {
         // time). See the documentation for `MainLoop.setEnd()` for additional
         // explanation.
         var discardedTime = Math.round(MainLoop.resetFrameDelta());
-        console.warn('Main loop panicked, probably because the browser tab was put in the background. Discarding ' + discardedTime + 'ms');
+        util.warn('Main loop panicked, probably because the browser tab was put in the background. Discarding ' + discardedTime + 'ms');
     }
 }
 
 function imagesLoaded() {
 	//  Start the game !
-	MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
+	//MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
 
 	// end loading bar
-	util.print('Loading finished.');
+	//global.get('loadingBar').updateProgress(1);
 }
 
-initGame();
+start(); // kicks everything off 
 
 }());

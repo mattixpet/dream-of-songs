@@ -1,8 +1,10 @@
 // Utility library
 
-util = {};
+var util = {};
 
 (function () {
+
+'use strict';
 
 function containsDuplicates(arr) {
 	return (new Set(arr)).size !== arr.length;
@@ -13,22 +15,28 @@ function randInt(low, high) {
 	return low + Math.floor(Math.random * high);
 }
 
-function print(arg) {
+function log(arg) {
+	console.log(arg + ' ' + _getDateMilliseconds());
+}
+
+function warn(arg) {
+	console.warn(arg + ' ' + _getDateMilliseconds());
+}
+
+function _getDateMilliseconds() {
 	var date = new Date();
-	console.log(
-		arg + ' ' + 
-		date.getFullYear() + '-' +
+	return date.getFullYear() + '-' +
 		date.getMonth() + '-' +
 		date.getDate() + ' ' +
 		date.getHours() + ':' +
 		date.getMinutes() + ':' +
 		date.getSeconds() + '.' +
-		date.getMilliseconds()
-	);
+		date.getMilliseconds();
 }
 
 util['containsDuplicates'] = containsDuplicates;
 util['randInt'] = randInt;
-util['print'] = print;
+util['log'] = log;
+util['warn'] = warn;
 
 }());
