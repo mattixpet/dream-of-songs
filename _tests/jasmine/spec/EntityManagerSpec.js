@@ -30,7 +30,7 @@ describe("entityManager", function() {
       // make sure everything is okay after delete
       
       // check if entityManager contains all entities in ids except
-      // the ones in ids at indices idxs
+      // the ones at indices idxs
       function containsEverythingExcept(ids, idxs) {
         for (var i = 0; i < idxs.length; i++) {
           expect(entityManager).not.toContainEntity(ids[idxs[i]]);

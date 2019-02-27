@@ -11,3 +11,7 @@ Entity.prototype.draw = function () {
 Entity.prototype.update = function () {
 
 };
+
+Entity.prototype.setId = function (id) {
+	this.id = id;
+}

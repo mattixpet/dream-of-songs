@@ -15,15 +15,19 @@ layout: default
 
 {% include footer.html %}
 
-<script src="js/ext/mainloop/mainloop.min.js"></script>
+<script src="js/ext/mainloop/mainloop.min.js" type="text/javascript"></script>
 
-<script src="js/consts.js"></script>
-<script src="js/util.js"></script>
-<script src="js/global.js"></script>
+<script src="js/consts.js" type="text/javascript"></script>
+<script src="js/util.js" type="text/javascript"></script>
+<script src="js/global.js" type="text/javascript"></script>
 
-<script src="js/Entity.js"></script>
+<script src="js/ImageHandler.js" type="text/javascript"></script>
 
-<script src="js/EntityManager.js"></script>
+<script src="js/Sprite.js" type="text/javascript"></script>
+<script src="js/Entity.js" type="text/javascript"></script>
+<script src="js/Player.js" type="text/javascript"></script>
 
-<script src="js/input.js"></script>
-<script src="js/game.js"></script>
+<script src="js/EntityManager.js" type="text/javascript"></script>
+
+<script src="js/input.js" type="text/javascript"></script>
+<script src="js/game.js" type="text/javascript"></script>

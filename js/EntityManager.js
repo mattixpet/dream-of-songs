@@ -7,6 +7,7 @@ function EntityManager () {
 
 EntityManager.prototype.register = function (entity) {
 	this.entities[++this.lastId] = entity;
+	entity.setId(this.lastId);
 	return this.lastId;
 };
 
