@@ -4,8 +4,9 @@
 
 'use strict';
 
-global.set('keys', []);
-var keys = global.get('keys');
+var consts = global.get('consts');
+
+var keys = [];
 
 function handleKeydown(e) {
 	keys[e.keyCode] = true;
@@ -23,5 +24,7 @@ function handleKeyup(e) {
 
 window.addEventListener("keydown", handleKeydown);
 window.addEventListener("keyup", handleKeyup);
+
+global.set('keys', keys);
 
 }());

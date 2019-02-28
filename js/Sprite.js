@@ -1,5 +1,9 @@
 // Sprite class
 
+(function () {
+
+'use strict';
+
 function Sprite(img, displayWidth, displayHeight, srcWidth, srcHeight, positions) {
 	this.img = img;
 	this.dispW = displayWidth;
@@ -29,5 +33,8 @@ Sprite.prototype.draw = function(position, x, y) {
 			x, y, this.dispW, this.dispH
 		);
 	}
-	
 }
+
+global.set('class/Sprite', Sprite);
+
+}());

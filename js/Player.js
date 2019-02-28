@@ -1,5 +1,13 @@
 // Player class
 
+(function () {
+
+'use strict';
+
+// imports
+var consts = global.get('consts');
+var Entity = global.get('class/Entity');
+
 function Player(posX, posY) {
 	this.sprite = global.get('imageHandler').getSprite('player');
 	this.x = posX;
@@ -23,3 +31,7 @@ Player.prototype.update = function (dt) {
 		this.x -= this.speed * dt;
 	}
 };
+
+global.set('class/Player', Player); // export
+
+}());

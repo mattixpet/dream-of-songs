@@ -1,4 +1,8 @@
 describe("entityManager", function() {
+  var EntityManager = global.get('class/EntityManager');
+  var Entity = global.get('class/Entity');
+  var util = global.get('util');
+
   var entityManager;
 
   beforeEach(function() {

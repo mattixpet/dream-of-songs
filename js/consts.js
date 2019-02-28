@@ -1,10 +1,10 @@
 // An object of constats, accessed by consts.val
 
-var consts = {};
-
 (function () {
 
 'use strict';
+
+var consts = {};
 
 // input
 consts['KEY_W'] = 'W'.charCodeAt(0);
@@ -20,5 +20,7 @@ consts['KEY_SPACE'] = 32;
 // sprites
 consts['SPRITEURL'] = 'img/spritesheets/';
 consts['BACKGROUNDURL'] = 'img/backgrounds/';
+
+global.set('consts', consts);
 
 }());

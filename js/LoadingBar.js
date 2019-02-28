@@ -1,5 +1,13 @@
 // Loading bar
 
+(function () {
+
+'use strict';
+
+// imports
+var consts = global.get('consts');
+var util = global.get('util');
+
 function LoadingBar() {
 	this.progress = 0; // 0-1
 	this.canvas = global.get('canvas');
@@ -60,3 +68,7 @@ LoadingBar.prototype._draw = function() {
 	ctx.fillRect(this.x, this.y, Math.floor(this.progress * this.w), this.h);
 	ctx.restore();
 }
+
+global.set('class/LoadingBar', LoadingBar);
+
+}());

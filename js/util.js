@@ -1,10 +1,10 @@
 // Utility library
 
-var util = {};
-
 (function () {
 
 'use strict';
+
+var util = {};
 
 function containsDuplicates(arr) {
 	return (new Set(arr)).size !== arr.length;
@@ -38,5 +38,7 @@ util['containsDuplicates'] = containsDuplicates;
 util['randInt'] = randInt;
 util['log'] = log;
 util['warn'] = warn;
+
+global.set('util', util);
 
 }());

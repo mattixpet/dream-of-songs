@@ -5,6 +5,13 @@
 
 'use strict';
 
+// imports
+var util = global.get('util');
+var LoadingBar = global.get('class/LoadingBar'); // loading bar constructor
+var ImageHandler = global.get('class/ImageHandler');
+var Player = global.get('class/Player');
+var EntityManager = global.get('class/EntityManager');
+
 global.set('canvas', document.getElementById('dreamOfSongs'));
 var canvas = global.get('canvas');
 global.set('ctx', canvas.getContext('2d')); // context
@@ -27,7 +34,7 @@ function continueLoading() {
 	var imageHandler = new ImageHandler(loadingBar);
 	global.set('imageHandler', imageHandler);
 
-	// load all images/sprites in game
+	// load all images/sprites in game, then invoke initGame callback
 	imageHandler.preloadImages(initGame);
 }
 

@@ -1,10 +1,10 @@
 // Draw helper classes
 
-var draw = {};
-
 (function () {
 
 'use strict';
+
+var draw = {};
 
 function drawRect(ctx, x, y, w, h, color) {
 	ctx.save();
@@ -16,5 +16,7 @@ function drawRect(ctx, x, y, w, h, color) {
 }
 
 draw['drawRect'] = drawRect;
+
+global.set('draw', draw); // export
 
 }());

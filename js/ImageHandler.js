@@ -1,6 +1,15 @@
 // Handles image preloading and all loading of images
 // also contains information about spritesheet data/pixel locations
 
+(function () {
+
+'use strict';
+
+// imports
+var consts = global.get('consts');
+var util = global.get('util');
+var Sprite = global.get('class/Sprite');
+
 function ImageHandler() {
 	this.imagesLoaded = []; // promise array with the onload of each image
 	this.sprites = {};
@@ -93,3 +102,8 @@ ImageHandler.prototype.preloadImages = function (callback) {
 ImageHandler.prototype.getSprite = function (key) {
 	return this.sprites[key];
 }
+
+// exports
+global.set('class/ImageHandler', ImageHandler);
+
+}());
