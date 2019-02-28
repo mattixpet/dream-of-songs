@@ -38,13 +38,13 @@ LoadingBar.prototype.preloadImage = function(callback) {
 	this.img = img;
 	img.onload = callback;
 	img.src = this.bgUrl;
-}
+};
 
 // call this in the callback to this.preloadImage to start
 LoadingBar.prototype.start = function() {
 	util.log('Started proper loading.');
 	this._drawBg();
-}
+};
 
 LoadingBar.prototype.updateProgress = function(progress) {
 	this.progress = progress;
@@ -55,11 +55,15 @@ LoadingBar.prototype.updateProgress = function(progress) {
 	if (progress === 1) {
 		util.log('Loading finished.');
 	}
-}
+};
+
+LoadingBar.prototype.getProgress = function() {
+	return this.progress;
+};
 
 LoadingBar.prototype._drawBg = function() {
 	this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
-}
+};
 
 LoadingBar.prototype._draw = function() {
 	var ctx = this.ctx;
@@ -67,7 +71,7 @@ LoadingBar.prototype._draw = function() {
 	ctx.fillStyle = this.color;
 	ctx.fillRect(this.x, this.y, Math.floor(this.progress * this.w), this.h);
 	ctx.restore();
-}
+};
 
 global.set('class/LoadingBar', LoadingBar);
 

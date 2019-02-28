@@ -14,7 +14,8 @@ function ImageHandler() {
 	this.imagesLoaded = []; // promise array with the onload of each image
 	this.sprites = {};
 
-	this.imageCounter = 0;
+	this.imageCounter = 0; // this can be accessed by async
+	this.imageCounterLock = false; // true if someone is modifying the imageCounter
 	// UPDATE THIS VARIABLE MANUALLY
 	this.totalImageCount = 9; 	// total number of images to be loaded here, to update progress of loading bar
 
@@ -90,18 +91,24 @@ ImageHandler.prototype._createSpriteFromImage =
 	};
 
 ImageHandler.prototype.incrementImageCounter = function () {
-	this.imageCounter++;
-}
+	if (!this.imageCounterLock) {
+		this.imageCounterLock = true;
+		this.imageCounter++;
+		this.imageCounterLock = false;
+	} else {
+		util.warn('Image counter tried to be accessed async by two threads, not doing anything.');
+	}
+};
 
 ImageHandler.prototype.preloadImages = function (callback) {
 	Promise.all(this.imagesLoaded).then(function(values){
 		callback();
 	});
-}
+};
 
 ImageHandler.prototype.getSprite = function (key) {
 	return this.sprites[key];
-}
+};
 
 // exports
 global.set('class/ImageHandler', ImageHandler);

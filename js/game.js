@@ -81,11 +81,14 @@ function initGame() {
 	var player = new Player(300, 50);
 	entityManager.register(player);
 
+	var loadingBar = global.get('loadingBar');
+	if (loadingBar.getProgress() !== 1) {
+		util.warn('Loading not finished when it should be, setting as finished to continue game.');
+		loadingBar.updateProgress(1); // end loading
+	}
+
 	//  Start the game !
 	MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
-
-	// end loading bar
-	//global.get('loadingBar').updateProgress(1);
 }
 
 start(); // kicks everything off 
