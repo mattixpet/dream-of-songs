@@ -28,13 +28,13 @@ Player.prototype.update = function (dt) {
 
 	if (keys[consts.KEY_RIGHT] || keys[consts.KEY_D]) {
 		var nextX = this.x + Math.floor(this.speed * dt);
-		if (!this.isColliding()) {
+		if (!this.isColliding(nextX, this.y)) {
 			this.x = nextX;
 		}
 	} 
 	if (keys[consts.KEY_LEFT] || keys[consts.KEY_A]) {
 		var nextX = this.x - Math.floor(this.speed * dt);
-		if (!this.isColliding()) {
+		if (!this.isColliding(nextX, this.y)) {
 			this.x = nextX;
 		}
 	}

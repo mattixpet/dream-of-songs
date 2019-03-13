@@ -21,8 +21,9 @@ Entity.prototype.setId = function (id) {
 	this.id = id;
 }
 
-Entity.prototype.isColliding = function () {
-	return global.get('collisionManager').isColliding(this);
+// check whether entity is colliding given top left position x, y
+Entity.prototype.isColliding = function (x, y) {
+	return global.get('collisionManager').isColliding(this, x, y);
 };
 
 global.set('class/Entity', Entity);

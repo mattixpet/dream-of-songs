@@ -11,10 +11,11 @@ function CollisionManager() {
 
 }
 
-CollisionManager.prototype.isColliding = function isColliding(entity) {
+// Is entity colliding with anyone given entities top left position x, y?
+CollisionManager.prototype.isColliding = function isColliding(entity, x, y) {
 	// is colliding with background ?
 	var bgCollision = global.get('background')
-						.isRectangleCollidingWith(entity.x, entity.y, entity.width, entity.height);
+						.isRectangleCollidingWith(x, y, entity.width, entity.height);
 	return bgCollision;
 
 	// is colliding with something else ?
