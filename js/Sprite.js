@@ -17,7 +17,7 @@ function Sprite(img, displayWidth, displayHeight, srcWidth, srcHeight, positions
 	this.positions = positions;
 }
 
-Sprite.prototype.draw = function(position, x, y) {
+Sprite.prototype.draw = function(x, y, position) {
 	var ctx = global.get('ctx');
 
 	if (this.positions) {
@@ -33,6 +33,14 @@ Sprite.prototype.draw = function(position, x, y) {
 			x, y, this.dispW, this.dispH
 		);
 	}
+}
+
+Sprite.prototype.getWidth = function() {
+	return this.dispW;
+}
+
+Sprite.prototype.getHeight = function() {
+	return this.dispH;
 }
 
 global.set('class/Sprite', Sprite);

@@ -11,6 +11,8 @@ var LoadingBar = global.get('class/LoadingBar'); // loading bar constructor
 var ImageHandler = global.get('class/ImageHandler');
 var Player = global.get('class/Player');
 var EntityManager = global.get('class/EntityManager');
+var Background = global.get('class/Background');
+var CollisionManager = global.get('class/CollisionManager');
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
 var canvas = global.get('canvas');
@@ -52,6 +54,9 @@ function update(dt) {
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+	var background = global.get('background');
+	background.draw();
+
 	var entityManager = global.get('entityManager');
 	for (var key in entityManager.entities) {
 		entityManager.entities[key].draw();
@@ -78,7 +83,15 @@ function initGame() {
 	var entityManager = new EntityManager();
 	global.set('entityManager', entityManager);
 
-	var player = new Player(300, 50);
+	var background = new Background();
+	global.set('background', background);
+
+	console.log(background);
+
+	var collisionManager = new CollisionManager();
+	global.set('collisionManager', collisionManager);
+
+	var player = new Player(300, 180);
 	entityManager.register(player);
 
 	var loadingBar = global.get('loadingBar');

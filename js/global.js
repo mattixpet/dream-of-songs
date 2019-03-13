@@ -14,15 +14,19 @@ function Global() {
 	this.refs = {}; // the all seeing eye
 }
 
-Global.prototype.set = function (name, value) {
-	this.refs[name] = value;
+Global.prototype.set = function (key, value) {
+	this.refs[key] = value;
 };
 
-Global.prototype.get = function (name) {
-	if (this.refs[name] === undefined) {
-		util.warn('Nothing found with name: ' + name + ' in global');
+Global.prototype.get = function (key) {
+	if (this.refs[key] === undefined) {
+		this.get('util').warn('Nothing found with name: ' + key + ' in global\n\nStack trace: ' + new Error().stack);
 	}
-	return this.refs[name];
+	return this.refs[key];
+};
+
+Global.prototype.delete = function (key) {
+	delete this.refs[key];
 };
 
 global = new Global();

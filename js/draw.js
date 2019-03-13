@@ -6,7 +6,7 @@
 
 var draw = {};
 
-function drawRect(ctx, x, y, w, h, color) {
+function fillRect(ctx, x, y, w, h, color) {
 	ctx.save();
 
 	ctx.fillStyle = color;
@@ -15,7 +15,18 @@ function drawRect(ctx, x, y, w, h, color) {
 	ctx.restore();
 }
 
-draw['drawRect'] = drawRect;
+// draw outline of rect
+function drawBox(ctx, x, y, w, h, color) {
+	ctx.save();
+
+	ctx.strokeStyle = color;
+	ctx.strokeRect(x, y, w, h);
+
+	ctx.restore();
+}
+
+draw['fillRect'] = fillRect;
+draw['drawBox'] = drawBox;
 
 global.set('draw', draw); // export
 

@@ -15,6 +15,28 @@ function randInt(low, high) {
 	return low + Math.floor(Math.random * high);
 }
 
+// x,y pixel coordinate to most approximate grid number
+// in a gridW x gridH long grid (e.g. collision array)
+// returns [gridX,gridY]
+function pixelToGrid(pixelX, pixelY, gridW, gridH) {
+	var canvas = global.get('canvas');
+	return [
+		Math.floor(pixelX / canvas.width * gridW),
+		Math.floor(pixelY / canvas.height * gridH)
+	];
+}
+
+// opposite of pixelToGrid, gives the top left pixel coordinate
+// of the supplied grid block
+// returns [x,y]
+function gridToPixel(gridX, gridY, gridW, gridH) {
+	var canvas = global.get('canvas');
+	return [
+		Math.floor(gridX / gridW * canvas.width),
+		Math.floor(gridY / gridH * canvas.height)
+	];
+}
+
 function log(arg) {
 	console.log(arg + ' ' + _getDateMilliseconds());
 }
@@ -36,6 +58,8 @@ function _getDateMilliseconds() {
 
 util['containsDuplicates'] = containsDuplicates;
 util['randInt'] = randInt;
+util['pixelToGrid'] = pixelToGrid;
+util['gridToPixel'] = gridToPixel;
 util['log'] = log;
 util['warn'] = warn;
 
