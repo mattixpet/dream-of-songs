@@ -24,9 +24,9 @@ function ImageHandler() {
 	// Sprite creation and data
 	this._createSpriteFromImage(
 		'player', consts.SPRITEURL + 'protagonist-spritesheet.png', 
-		80, 100, 
-		600, 1000, 
-		[[0,0], [0,1000], [600,0], [600,1000], [1200,0]]
+		60, 100, 
+		327, 827, 
+		[[141,74], [139,1072], [738,74], [741,1072], [1344,72]]
 	);
 
 	// backgrounds

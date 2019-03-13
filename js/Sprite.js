@@ -11,7 +11,7 @@ function Sprite(img, displayWidth, displayHeight, srcWidth, srcHeight, positions
 	// optional, for spritesheets, if undefined, then just sprite is entire image
 	this.srcW = srcWidth;
 	this.srcH = srcHeight;
-	// Positions in src image of sprite animations
+	// Positions top left in src image of sprite animations
 	// e.g.     x, y      x,   y  ..
 	//       [[23,400], [103, 400], [163, 200]]
 	this.positions = positions;

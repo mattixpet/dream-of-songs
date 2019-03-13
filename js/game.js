@@ -86,8 +86,6 @@ function initGame() {
 	var background = new Background();
 	global.set('background', background);
 
-	console.log(background);
-
 	var collisionManager = new CollisionManager();
 	global.set('collisionManager', collisionManager);
 
