@@ -7,6 +7,7 @@
 // imports
 var consts = global.get('consts');
 var draw = global.get('draw');
+var util = global.get('util');
 var Entity = global.get('class/Entity');
 
 function Player(posX, posY) {
@@ -16,6 +17,7 @@ function Player(posX, posY) {
 	this.speedX = 0.2;
 	this.speedY = 0.0;
 	this.accelerationY = 0.001; // gravity
+	this.JUMPSPEED = 0.4;
 	// collision width/height
 	this.width = this.sprite.getWidth();
 	this.height = this.sprite.getHeight();
@@ -59,6 +61,11 @@ Player.prototype.update = function (dt) {
 	// effects of gravity
 	// displacement = speed * time + 1/2 * acceleration * time squared
 	if (consts.gravity) {
+		// jump !
+		if (this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
+			this.speedY -= this.JUMPSPEED;
+			this.onGround = false;
+		}
 		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * Math.pow(dt, 2));
 	}
 	if (!this.isColliding(nextX, nextY)) {

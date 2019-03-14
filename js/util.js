@@ -10,11 +10,6 @@ function containsDuplicates(arr) {
 	return (new Set(arr)).size !== arr.length;
 }
 
-// randInt(0,10) gives random integer 0-9
-function randInt(low, high) {
-	return low + Math.floor(Math.random * high);
-}
-
 // x,y pixel coordinate to most approximate grid number
 // in a gridW x gridH long grid (e.g. collision array)
 // returns [gridX,gridY]
@@ -37,6 +32,17 @@ function gridToPixel(gridX, gridY, gridW, gridH) {
 	];
 }
 
+// for input toggles, set immediately as false in global.keys array
+// to trigger action only once
+function eatKey(keyCode) {
+	var keys = global.get('keys');
+	if (keys[keyCode]) {
+		keys[keyCode] = false;
+		return true;
+	}
+	return false;
+}
+
 function log(arg) {
 	console.log(arg + ' ' + _getDateMilliseconds());
 }
@@ -57,9 +63,9 @@ function _getDateMilliseconds() {
 }
 
 util['containsDuplicates'] = containsDuplicates;
-util['randInt'] = randInt;
 util['pixelToGrid'] = pixelToGrid;
 util['gridToPixel'] = gridToPixel;
+util['eatKey'] = eatKey;
 util['log'] = log;
 util['warn'] = warn;
 

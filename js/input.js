@@ -11,10 +11,6 @@ var keys = [];
 function handleKeydown(e) {
 	keys[e.keyCode] = true;
 
-	if (keys[consts.KEY_W]) {
-		console.log('KEY_W is pressed!');
-	}
-
 	e.preventDefault();
 }
 
