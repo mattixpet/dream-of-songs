@@ -10,6 +10,20 @@ var draw = global.get('draw');
 var util = global.get('util');
 var Entity = global.get('class/Entity');
 
+// LOCAL CONSTS
+// animations
+const STOP = 0;
+const MOVE1 = 1;
+const MOVE2 = 2;
+const MOVE3 = 3;
+const MOVE4 = 4;
+
+// magic numbers WOOOO
+// since everything starts from top left, this is the offset for collision
+// meaning not count the first COLLISIONXDELTA pixels of the player sprite for collision
+const COLLISIONXDELTA = 10;
+const COLLISIONWIDTHREDUCTION = 30; // how much to reduce the collision width of the player sprite
+
 function Player(posX, posY) {
 	this.sprite = global.get('imageHandler').getSprite('player');
 	this.x = posX;
@@ -19,18 +33,39 @@ function Player(posX, posY) {
 	this.accelerationY = 0.001; // gravity
 	this.JUMPSPEED = 0.4;
 	// collision width/height
-	this.width = this.sprite.getWidth();
+	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
 	this.height = this.sprite.getHeight();
+	// status variables
 	this.onGround = false; // start in the air
+	this.isStationary = false;
+	this.currentSprite = STOP;
+	this.distanceTraveled = 0; // for sprite animations, keep record of distance traveled
+	this.ANIMATIONDISTANCE = 30; // swap animations every X pixels in x direction
+	// array of order of sprite animations to use for walking
+	this.WALKINGANIMATIONS = [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3];
 }
 
 Player.prototype = new Entity();
 
 Player.prototype.draw = function () {
-	this.sprite.draw(this.x, this.y, 0);
+	// sprite calculations
+	if (!this.onGround) {
+		// always do same animation in air
+		this.currentSprite = MOVE4;
+	} else if (this.isStationary) {
+		this.currentSprite = STOP;
+	} else {
+		this.currentSprite = this.WALKINGANIMATIONS[
+								Math.floor(
+									this.distanceTraveled / this.ANIMATIONDISTANCE
+								)	% this.WALKINGANIMATIONS.length
+							 ];
+	}
+
+	this.sprite.draw(this.x, this.y, this.currentSprite);
 
 	if (consts.drawBoundingBoxes) {
-		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
+		draw.drawBox(global.get('ctx'), this.x + COLLISIONXDELTA, this.y, this.width, this.height, 'red');
 	}
 };
 
@@ -68,7 +103,16 @@ Player.prototype.update = function (dt) {
 		}
 		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * Math.pow(dt, 2));
 	}
-	if (!this.isColliding(nextX, nextY)) {
+
+	if (nextX === this.x && nextY === this.y) {
+		this.isStationary = true;
+	} else {
+		this.isStationary = false;
+	}
+
+	if (!this.isColliding(nextX + COLLISIONXDELTA, nextY)) {
+		this.distanceTraveled += Math.abs(nextX - this.x);
+
 		this.x = nextX;
 		this.y = nextY;
 
