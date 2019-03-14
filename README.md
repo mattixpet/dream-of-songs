@@ -1,5 +1,5 @@
-# web-matthiaspage
+# Dream of songs
 
 ## Summary:
-* Webpage of Matthías Pétursson
+* A javascript platformer where you collect song scraps from my life !
 
