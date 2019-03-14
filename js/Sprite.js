@@ -33,15 +33,24 @@ Sprite.prototype.draw = function(x, y, position) {
 			x, y, this.dispW, this.dispH
 		);
 	}
-}
+};
+
+Sprite.prototype.drawMirrored = function(x, y, position) {
+	var ctx = global.get('ctx');
+	ctx.save();
+	ctx.translate(x + this.dispW, y);
+	ctx.scale(-1,1);
+	this.draw(0, 0, position);
+	ctx.restore();
+};
 
 Sprite.prototype.getWidth = function() {
 	return this.dispW;
-}
+};
 
 Sprite.prototype.getHeight = function() {
 	return this.dispH;
-}
+};
 
 global.set('class/Sprite', Sprite);
 

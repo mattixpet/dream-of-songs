@@ -23,6 +23,7 @@ const MOVE4 = 4;
 // meaning not count the first COLLISIONXDELTA pixels of the player sprite for collision
 const COLLISIONXDELTA = 10;
 const COLLISIONWIDTHREDUCTION = 30; // how much to reduce the collision width of the player sprite
+const MIRROREDMARGIN = 10; // how much to move the mirrored sprite to the left, so bounding box fits sprite display
 
 function Player(posX, posY) {
 	this.sprite = global.get('imageHandler').getSprite('player');
@@ -64,7 +65,11 @@ Player.prototype.draw = function () {
 							 ];
 	}
 
-	this.sprite.draw(this.x, this.y, this.currentSprite);
+	if (this.orientation === 'right') {
+		this.sprite.draw(this.x, this.y, this.currentSprite);
+	} else {
+		this.sprite.drawMirrored(this.x - MIRROREDMARGIN, this.y, this.currentSprite);
+	}
 
 	if (consts.drawBoundingBoxes) {
 		draw.drawBox(global.get('ctx'), this.x + COLLISIONXDELTA, this.y, this.width, this.height, 'red');
@@ -77,9 +82,11 @@ Player.prototype.update = function (dt) {
 	var nextX = this.x;
 	if (keys[consts.KEY_RIGHT] || keys[consts.KEY_D]) {
 		nextX = this.x + Math.floor(this.speedX * dt);
+		this.orientation = 'right';
 	} 
 	if (keys[consts.KEY_LEFT] || keys[consts.KEY_A]) {
 		nextX = this.x - Math.floor(this.speedX * dt);
+		this.orientation = 'left';
 	}
 
 	var nextY = this.y;
