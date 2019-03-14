@@ -76,7 +76,7 @@ Background.prototype._drawGrid = function () {
 // is this rectangle colliding with us (the background!)
 Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 	// check only parts of the grid which are bounded by the rectangle
-	var gridTopLeft = util.pixelToGrid(rX, rY, this.gridW, this.gridH);
+	var gridTopLeft = util.pixelToGrid(rX, rY, this.gridW, this.gridH); // pixel to grid sets to boundaries if out of bounds
 	var gridBotRight = util.pixelToGrid(rX + rW, rY + rH, this.gridW, this.gridH);
 	var data = this.cData[this.currentScene];
 

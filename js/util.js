@@ -13,12 +13,23 @@ function containsDuplicates(arr) {
 // x,y pixel coordinate to most approximate grid number
 // in a gridW x gridH long grid (e.g. collision array)
 // returns [gridX,gridY]
+// if gridX, gridY is out of bounds of [0,..,gridW-1 or gridH-1] then it sets to boundaries
 function pixelToGrid(pixelX, pixelY, gridW, gridH) {
 	var canvas = global.get('canvas');
-	return [
-		Math.floor(pixelX / canvas.width * gridW),
-		Math.floor(pixelY / canvas.height * gridH)
-	];
+	var gridX = Math.floor(pixelX / canvas.width * gridW);
+	var gridY = Math.floor(pixelY / canvas.height * gridH);
+
+	if (gridX < 0) {
+		gridX = 0;
+	} else if (gridX >= gridW) {
+		gridX = gridW - 1;
+	}
+	if (gridY < 0) {
+		gridY = 0;
+	} else if (gridY >= gridH) {
+		gridY = gridH - 1;
+	}
+	return [gridX, gridY];
 }
 
 // opposite of pixelToGrid, gives the top left pixel coordinate
