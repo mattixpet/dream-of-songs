@@ -32,6 +32,7 @@ function Player(posX, posY) {
 	this.speedY = 0.0;
 	this.accelerationY = 0.001; // gravity
 	this.JUMPSPEED = 0.4;
+	this.TERMINALSPEED = 0.5; // maximum speed character can go in y+ direction through acceleration of gravity
 	// collision width/height
 	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
 	this.height = this.sprite.getHeight();
@@ -39,6 +40,7 @@ function Player(posX, posY) {
 	this.onGround = false; // start in the air
 	this.isStationary = false;
 	this.currentSprite = STOP;
+	this.orientation = 'right'; // 'left'
 	this.distanceTraveled = 0; // for sprite animations, keep record of distance traveled
 	this.ANIMATIONDISTANCE = 30; // swap animations every X pixels in x direction
 	// array of order of sprite animations to use for walking
@@ -118,7 +120,11 @@ Player.prototype.update = function (dt) {
 
 		// update speedY with acceleration
 		if (!this.onGround && consts.gravity) {
+			var oldSpeedY = this.speedY;
 			this.speedY = this.speedY + this.accelerationY * dt;
+			if (this.speedY > this.TERMINALSPEED) {
+				this.speedY = oldSpeedY;
+			}
 		}
 	} else if (consts.gravity) {
 		// if a case of landing set a flag so as to not constantly check for ground collisions
