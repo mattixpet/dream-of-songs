@@ -17,6 +17,7 @@ consts['KEY_RIGHT'] = 39;
 consts['KEY_DOWN'] = 40;
 consts['KEY_SPACE'] = 32;
 consts['KEY_Q'] = 'Q'.charCodeAt(0);
+consts['KEY_O'] = 'O'.charCodeAt(0);
 
 // sprites
 consts['SPRITEURL'] = 'img/spritesheets/';

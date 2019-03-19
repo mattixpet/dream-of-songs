@@ -57,7 +57,8 @@ Background.prototype._drawGrid = function () {
 	//			[0,0,1,1,1,0],
 	//			..
 	//		]
-	// and draw a red box for each place a collision could happen, draw a grid
+	// and draw a different colored box for each place a collision could happen, 
+	// depending on type of collision (ground, stairs, teleport, etc.), draw a grid
 	// i is x
 	// j is y
 	var canvas = global.get('canvas');
@@ -66,11 +67,21 @@ Background.prototype._drawGrid = function () {
 	var data = this.cData[this.currentScene];
 	for (var i = 0; i < this.gridW; i++) {
 		for (var j = 0; j < this.gridH; j++) {
-			if (data[j][i] !== 0) {
+			var block = data[j][i];
+			if (block !== 0) {
+				var color = 'red'; // default
+				// draw different color grid depending on type of collision block
+				if (block === 2) {
+					color = 'blue'; // only top collision
+				} else if (block === 3) {
+					color = 'green'; // stairs
+				} else if (block === 4) {
+					color = 'orange'; // teleport for bottom of feet of entity touching it
+				}
 				// collision block, draw it
 				var x = Math.floor(i / this.gridW * canvas.width);
 				var y = Math.floor(j / this.gridH * canvas.height);
-				draw.drawBox(ctx, x, y, this.brickWidth, this.brickHeight, 'red');
+				draw.drawBox(ctx, x, y, this.brickWidth, this.brickHeight, color);
 			}
 		}
 	}

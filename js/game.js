@@ -42,9 +42,15 @@ function continueLoading() {
 }
 
 function begin() {
-	if (global.get('keys')[consts.KEY_Q]) {
+	var keys = global.get('keys');
+	if (keys[consts.KEY_Q]) {
 		util.log('Quitting..');
 		MainLoop.stop();
+	}
+
+	if (util.eatKey(consts.KEY_O)) {
+		util.log('Toggling snake mode.');
+		consts.snakeMode = !consts.snakeMode;
 	}
 }
 
@@ -93,7 +99,7 @@ function initGame() {
 	var collisionManager = new CollisionManager();
 	global.set('collisionManager', collisionManager);
 
-	var player = new Player(300, 135);
+	var player = new Player(300, 110);
 	if (consts.globalPlayer) {
 		global.set('player', player); // DEV ONLY
 	}
