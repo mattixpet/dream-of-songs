@@ -38,6 +38,9 @@ Background.prototype.draw = function () {
 	if (consts.drawBackgroundGrid) {
 		this._drawGrid();
 	}
+	if (consts.drawPixelGrid) {
+		this._drawPixelGrid(50); // draw 50 by 50 grid
+	}
 };
 
 // dat name tho
@@ -73,6 +76,18 @@ Background.prototype._drawGrid = function () {
 	}
 };
 
+// set on or off with 'drawPixelGrid' in consts.
+// Draws a size by size pixel grid to see better where pixels are.
+Background.prototype._drawPixelGrid = function (size) {
+	var canvas = global.get('canvas');
+	var ctx = global.get('ctx')
+	for (var i = 0; i < canvas.width; i+=size) {
+		for (var j = 0; j < canvas.height; j+=size) {
+			draw.drawBox(ctx, i, j, size, size, 'blue');
+		}
+	}
+};
+
 // is this rectangle colliding with us (the background!)
 Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 	// check only parts of the grid which are bounded by the rectangle
@@ -93,6 +108,24 @@ Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 
 	return false;
 };
+
+// Check if Entity is touching the ground anywhere (it's feet on something of the background)
+// botLeft, botRight are [x,y] coordinates in pixels of the bottom cornerpoints of the entity (rectangle collision)
+Background.prototype.isEntityOnGround = function (botLeft, botRight) {
+	var gridBotLeft = util.pixelToGrid(botLeft[0], botLeft[1], this.gridW, this.gridH);
+	var gridBotRight = util.pixelToGrid(botRight[0], botRight[1], this.gridW, this.gridH);
+
+	// check only the grid tiles under gridBotLeft up until gridBotRight (to see if he's on ground)
+	// the y coordinate should be fixed and same for botLeft, botRight (then we add 1 to it to check 'below')
+	// if no tile under gridBotLeft..gridBotRight is a 1 in the grid, player is not on ground
+	var data = this.cData[this.currentScene];
+	for (var i = gridBotLeft[0]; i <= gridBotRight[0]; i++) {
+		if (data[gridBotLeft[1] + 1][i] !== 0) { // 57
+			return true;
+		}
+	}
+	return false;
+}
 
 global.set('class/Background', Background);
 

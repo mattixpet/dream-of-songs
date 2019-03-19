@@ -16,6 +16,7 @@ consts['KEY_UP'] = 38;
 consts['KEY_RIGHT'] = 39;
 consts['KEY_DOWN'] = 40;
 consts['KEY_SPACE'] = 32;
+consts['KEY_Q'] = 'Q'.charCodeAt(0);
 
 // sprites
 consts['SPRITEURL'] = 'img/spritesheets/';
@@ -23,9 +24,11 @@ consts['BACKGROUNDURL'] = 'img/backgrounds/';
 
 // diagnostics
 consts['drawBackgroundGrid'] = true;
+consts['drawPixelGrid'] = false;
 consts['drawBoundingBoxes'] = true;
 consts['snakeMode'] = false;
 consts['gravity'] = true;
+consts['globalPlayer'] = false;
 
 global.set('consts', consts);
 

@@ -7,6 +7,7 @@
 
 // imports
 var util = global.get('util');
+var consts = global.get('consts');
 var LoadingBar = global.get('class/LoadingBar'); // loading bar constructor
 var ImageHandler = global.get('class/ImageHandler');
 var Player = global.get('class/Player');
@@ -41,7 +42,10 @@ function continueLoading() {
 }
 
 function begin() {
-	// handle input
+	if (global.get('keys')[consts.KEY_Q]) {
+		util.log('Quitting..');
+		MainLoop.stop();
+	}
 }
 
 function update(dt) {
@@ -90,6 +94,9 @@ function initGame() {
 	global.set('collisionManager', collisionManager);
 
 	var player = new Player(300, 135);
+	if (consts.globalPlayer) {
+		global.set('player', player); // DEV ONLY
+	}
 	entityManager.register(player);
 
 	var loadingBar = global.get('loadingBar');

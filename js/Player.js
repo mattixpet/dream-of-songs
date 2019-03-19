@@ -103,23 +103,30 @@ Player.prototype.update = function (dt) {
 	}
 
 	// effects of gravity
-	// displacement = speed * time + 1/2 * acceleration * time squared
 	if (consts.gravity) {
+		// only check when we move if we are not on ground anymore (check background under us for collision)
+		if (!this.isStationary) {
+			this.onGround = this.isOnGround(COLLISIONXDELTA);
+		}
+
 		// jump !
 		if (this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
 			this.speedY -= this.JUMPSPEED;
 			this.onGround = false;
 		}
-		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * Math.pow(dt, 2));
+
+		// displacement = speed * time + 1/2 * acceleration * time squared
+		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * dt * dt);
 	}
 
-	if (nextX === this.x && nextY === this.y) {
+	if (nextX === this.x && nextY === this.y && this.onGround) {
 		this.isStationary = true;
 	} else {
 		this.isStationary = false;
 	}
 
-	if (!this.isColliding(nextX + COLLISIONXDELTA, nextY)) {
+	var isColliding = this.isColliding(nextX + COLLISIONXDELTA, nextY);
+	if (!this.isStationary && !isColliding) {
 		this.distanceTraveled += Math.abs(nextX - this.x);
 
 		this.x = nextX;
@@ -133,12 +140,7 @@ Player.prototype.update = function (dt) {
 				this.speedY = oldSpeedY;
 			}
 		}
-	} else if (consts.gravity) {
-		// if a case of landing set a flag so as to not constantly check for ground collisions
-		if (this.y < nextY) {
-			this.onGround = true;
-		}
-
+	} else if (consts.gravity && isColliding) {
 		this.speedY = 0;
 	}
 };

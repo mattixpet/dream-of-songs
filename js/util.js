@@ -19,6 +19,7 @@ function pixelToGrid(pixelX, pixelY, gridW, gridH) {
 	var gridX = Math.floor(pixelX / canvas.width * gridW);
 	var gridY = Math.floor(pixelY / canvas.height * gridH);
 
+	// clip to boundaries
 	if (gridX < 0) {
 		gridX = 0;
 	} else if (gridX >= gridW) {
