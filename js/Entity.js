@@ -26,8 +26,8 @@ Entity.prototype.isColliding = function (x, y) {
 	return global.get('collisionManager').isColliding(this, x, y);
 };
 
-Entity.prototype.isOnGround = function (COLLISIONXDELTA) {
-	return global.get('collisionManager').isEntityOnGround(this, this.x + COLLISIONXDELTA, this.y);
+Entity.prototype.isOnGround = function () {
+	return global.get('collisionManager').isEntityOnGround(this, this.x, this.y);
 };
 
 global.set('class/Entity', Entity);

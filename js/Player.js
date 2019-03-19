@@ -66,13 +66,13 @@ Player.prototype.draw = function () {
 	}
 
 	if (this.orientation === 'right') {
-		this.sprite.draw(this.x, this.y, this.currentSprite);
+		this.sprite.draw(this.x - COLLISIONXDELTA, this.y, this.currentSprite);
 	} else {
-		this.sprite.drawMirrored(this.x - MIRROREDMARGIN, this.y, this.currentSprite);
+		this.sprite.drawMirrored(this.x - MIRROREDMARGIN - COLLISIONXDELTA, this.y, this.currentSprite);
 	}
 
 	if (consts.drawBoundingBoxes) {
-		draw.drawBox(global.get('ctx'), this.x + COLLISIONXDELTA, this.y, this.width, this.height, 'red');
+		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
 	}
 };
 
@@ -106,7 +106,7 @@ Player.prototype.update = function (dt) {
 	if (consts.gravity) {
 		// only check when we move if we are not on ground anymore (check background under us for collision)
 		if (!this.isStationary) {
-			this.onGround = this.isOnGround(COLLISIONXDELTA);
+			this.onGround = this.isOnGround();
 		}
 
 		// jump !
@@ -125,7 +125,7 @@ Player.prototype.update = function (dt) {
 		this.isStationary = false;
 	}
 
-	var isColliding = this.isColliding(nextX + COLLISIONXDELTA, nextY);
+	var isColliding = this.isColliding(nextX, nextY);
 	if (!this.isStationary && !isColliding) {
 		this.distanceTraveled += Math.abs(nextX - this.x);
 
