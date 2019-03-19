@@ -127,6 +127,14 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 	return false;
 }
 
+Background.prototype.getGridWidth = function () {
+	return this.gridW;
+}
+
+Background.prototype.getGridHeight = function () {
+	return this.gridH;
+}
+
 global.set('class/Background', Background);
 
 }());

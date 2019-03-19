@@ -106,6 +106,9 @@ Player.prototype.update = function (dt) {
 	if (consts.gravity) {
 		// only check when we move if we are not on ground anymore (check background under us for collision)
 		if (!this.isStationary) {
+			if (this.onGround) {
+				this.clipToGround();
+			}
 			this.onGround = this.isOnGround();
 		}
 
