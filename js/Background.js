@@ -17,19 +17,22 @@ function Background() {
 	// load collision data for each background image
 	this.cData = global.get('background_data');
 
+	// blocks entity can stand on
+	this.standableBlocks = [consts.REGBLOCK, consts.PLATFORMBLOCK, consts.STAIRBLOCK];
+
 	// depending on our cData, set the granularity of our grid/ widths etc.
-	// split map into bricks, depending on the cData array (>0 is collision brick, 0 is not)
+	// split map into blocks, depending on the cData array (>0 is collision brick, 0 is not)
 	// see this._drawGrid
 	var canvas = global.get('canvas');
 	this.gridW = this.cData[this.currentScene][0].length;
 	this.gridH = this.cData[this.currentScene].length;
-	this.brickWidth = canvas.width / this.gridW;
-	this.brickHeight = canvas.height / this.gridH;
+	this.blockWidth = canvas.width / this.gridW;
+	this.blockHeight = canvas.height / this.gridH;
 
-	if (!Number.isInteger(this.brickWidth) || !Number.isInteger(this.brickHeight)) {
+	if (!Number.isInteger(this.blockWidth) || !Number.isInteger(this.blockHeight)) {
 		util.warn('Brick width or height is not integer, setting to floor.');
-		this.brickHeight = Math.floor(this.brickHeight);
-		this.brickWidth = Math.floor(this.brickWidth);
+		this.blockHeight = Math.floor(this.blockHeight);
+		this.blockWidth = Math.floor(this.blockWidth);
 	}
 }
 
@@ -68,20 +71,20 @@ Background.prototype._drawGrid = function () {
 	for (var i = 0; i < this.gridW; i++) {
 		for (var j = 0; j < this.gridH; j++) {
 			var block = data[j][i];
-			if (block !== 0) {
+			if (block !== consts.NOBLOCK) {
 				var color = 'red'; // default
 				// draw different color grid depending on type of collision block
-				if (block === 2) {
+				if (block === consts.PLATFORMBLOCK) {
 					color = 'blue'; // only top collision
-				} else if (block === 3) {
+				} else if (block === consts.STAIRBLOCK) {
 					color = 'green'; // stairs
-				} else if (block === 4) {
+				} else if (block === consts.TELEBLOCK) {
 					color = 'orange'; // teleport for bottom of feet of entity touching it
 				}
 				// collision block, draw it
 				var x = Math.floor(i / this.gridW * canvas.width);
 				var y = Math.floor(j / this.gridH * canvas.height);
-				draw.drawBox(ctx, x, y, this.brickWidth, this.brickHeight, color);
+				draw.drawBox(ctx, x, y, this.blockWidth, this.blockHeight, color);
 			}
 		}
 	}
@@ -100,6 +103,15 @@ Background.prototype._drawPixelGrid = function (size) {
 };
 
 // is this rectangle colliding with us (the background!)
+// returns object with some info about the collision
+// Format:
+// {
+//		'block' : type of block hit
+//		'gridX' : grid coordinate in x direction of hit block
+//		'gridY' : grid coordinate in y direction of hit block
+// }
+// or 
+// false if no block hit
 Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 	// check only parts of the grid which are bounded by the rectangle
 	var gridTopLeft = util.pixelToGrid(rX, rY, this.gridW, this.gridH); // pixel to grid sets to boundaries if out of bounds
@@ -110,14 +122,19 @@ Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 	// collision is rectangle with ground
 	for (var j = gridBotRight[1]; j >= gridTopLeft[1]; j--) {
 		for (var i = gridBotRight[0]; i >= gridTopLeft[0]; i--) {
-			if (data[j][i] !== 0) {
+			var block = data[j][i];
+			if (block !== consts.NOBLOCK) {
 				// collision
-				return true;
+				return {
+					'block' : block,
+					'gridX' : i,
+					'gridY' : j
+				};
 			}
 		}
 	}
 
-	return false;
+	return false; // no collision
 };
 
 // Check if Entity is touching the ground anywhere (it's feet on something of the background)
@@ -131,7 +148,8 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 	// if no tile under gridBotLeft..gridBotRight is a 1 in the grid, player is not on ground
 	var data = this.cData[this.currentScene];
 	for (var i = gridBotLeft[0]; i <= gridBotRight[0]; i++) {
-		if (data[gridBotLeft[1] + 1][i] !== 0) { // 57
+		// "if data[grid..] is in standableBlocks"
+		if (this.standableBlocks.indexOf(data[gridBotLeft[1] + 1][i]) >= 0) { // 57
 			return true;
 		}
 	}

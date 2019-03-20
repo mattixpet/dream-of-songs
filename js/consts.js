@@ -18,6 +18,16 @@ consts['KEY_DOWN'] = 40;
 consts['KEY_SPACE'] = 32;
 consts['KEY_Q'] = 'Q'.charCodeAt(0);
 consts['KEY_O'] = 'O'.charCodeAt(0);
+consts['KEY_P'] = 'P'.charCodeAt(0);
+consts['KEY_K'] = 'K'.charCodeAt(0);
+consts['KEY_G'] = 'G'.charCodeAt(0);
+
+// background consts
+consts['NOBLOCK'] = 0;
+consts['REGBLOCK'] = 1; // regular block
+consts['PLATFORMBLOCK'] = 2; // block you can jump through but land on
+consts['STAIRBLOCK'] = 3;
+consts['TELEBLOCK'] = 4; // teleport block, special within each scene to go to another scene
 
 // sprites
 consts['SPRITEURL'] = 'img/spritesheets/';
@@ -29,7 +39,7 @@ consts['drawPixelGrid'] = false;
 consts['drawBoundingBoxes'] = true;
 consts['snakeMode'] = false;
 consts['gravity'] = true;
-consts['globalPlayer'] = false;
+consts['globalPlayer'] = true;
 
 global.set('consts', consts);
 

@@ -43,9 +43,11 @@ function continueLoading() {
 
 function begin() {
 	var keys = global.get('keys');
-	if (keys[consts.KEY_Q]) {
-		util.log('Quitting..');
-		MainLoop.stop();
+
+	// handle in game input logic (other logic is in input.js)
+	if (util.eatKey(consts.KEY_G)) {
+		util.log('Toggling grid.');
+		consts.drawBackgroundGrid = !consts.drawBackgroundGrid;
 	}
 
 	if (util.eatKey(consts.KEY_O)) {
@@ -74,9 +76,7 @@ function draw() {
 }
 
 function end(fps, panic) {
-
-	// Display FPS in bottom right corner
-	ctx.fillText(fps.toPrecision(4) + ' fps', canvas.width - 55, canvas.height - 10);
+	displayDiagnostics(fps);
 	
 	if (panic) {
         // This pattern introduces non-deterministic behavior, but in this case
@@ -87,6 +87,11 @@ function end(fps, panic) {
         var discardedTime = Math.round(MainLoop.resetFrameDelta());
         util.warn('Main loop panicked, probably because the browser tab was put in the background. Discarding ' + discardedTime + 'ms');
     }
+
+	if (global.get('inSingleCycle')) {
+		MainLoop.stop();
+		global.set('inSingleCycle', false);
+	}
 }
 
 function initGame() {
@@ -113,6 +118,25 @@ function initGame() {
 
 	//  Start the game !
 	MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
+}
+
+function displayDiagnostics(fps) {
+	ctx.save();
+
+	ctx.fillStyle = 'white';
+	ctx.font = 'normal 12px Monospace';
+
+	// Display Player x,y
+	var player = global.get('player');
+	ctx.fillText('x: ' + player.getX() + ' y: ' + player.getY(), canvas.width - 100, canvas.height - 40);
+
+	// player speed
+	ctx.fillText('Speed y: ' + player.getSpeedY().toPrecision(2), canvas.width - 105, canvas.height - 25);
+
+	// Display FPS in bottom right corner
+	ctx.fillText(fps.toPrecision(4) + ' fps', canvas.width - 75, canvas.height - 10);
+
+	ctx.restore();
 }
 
 start(); // kicks everything off 

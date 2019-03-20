@@ -43,6 +43,14 @@ Entity.prototype.clipToGround = function () {
 	this.y = -1 + Math.ceil(this.y / gridBrickSize) * gridBrickSize;
 }
 
+Entity.prototype.getX = function () {
+	return this.x;
+}
+
+Entity.prototype.getY = function () {
+	return this.y;
+}
+
 global.set('class/Entity', Entity);
 
 }());

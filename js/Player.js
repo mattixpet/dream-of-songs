@@ -77,6 +77,80 @@ Player.prototype.draw = function () {
 };
 
 Player.prototype.update = function (dt) {
+	var oldX = this.x;
+	var oldY = this.y;
+	var nextX = this._findNextX(dt);
+	var nextY = this._findNextY(dt);
+
+	if (nextX === this.x && nextY === this.y && this.onGround) {
+		this.isStationary = true;
+	} else {
+		this.isStationary = false;
+	}
+
+	// collision is false if no collision, otherwise object with .block, .gridX and .gridY
+	var collision = this.isColliding(nextX, nextY);
+	// Handle all the different blocks we could be colliding with.
+	if (!collision) {
+		if (!this.isStationary) {
+			this._updatePos(nextX, nextY);
+		}
+	} else if (collision.block === consts.REGBLOCK) {
+		// halt
+		if (consts.gravity) {
+			this.speedY = 0;
+		}
+	} else if (collision.block === consts.PLATFORMBLOCK) {
+		var gridX = collision.gridX;
+		var gridY = collision.gridY;
+		var bg = global.get('background');
+		// only count this as collision if we are coming from above the block and on our way down
+		if (this.y + this.height <= util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight())[1]
+			&& this.y < nextY) {
+			// halt
+			if (consts.gravity) {
+				this.speedY = 0;
+			}
+		} else {
+			// treat as 'no collision'
+			collision = false;
+			if (!this.isStationary) {
+				this._updatePos(nextX, nextY);
+			}
+		}
+	}
+
+	// Do all updates !
+	if (consts.gravity) {
+		// only check when we move if we are not on ground anymore (check background under us for collision)
+		if (!this.isStationary) {
+			if (this.onGround && collision) {
+				this.clipToGround();
+			}
+			// Don't check for ground if we are moving up!
+			if (!(nextY < oldY)) {
+				this.onGround = this.isOnGround();
+			}
+		}
+
+		// update speedY with acceleration
+		if (!this.onGround) {
+			var oldSpeedY = this.speedY;
+			this.speedY = this.speedY + this.accelerationY * dt;
+			if (this.speedY > this.TERMINALSPEED) {
+				this.speedY = oldSpeedY;
+			}
+		}
+
+		// jump !
+		if (this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
+			this.speedY -= this.JUMPSPEED;
+			this.onGround = false;
+		}
+	}
+};
+
+Player.prototype._findNextX = function (dt) {
 	var keys = global.get('keys');
 
 	var nextX = this.x;
@@ -88,6 +162,11 @@ Player.prototype.update = function (dt) {
 		nextX = this.x - Math.floor(this.speedX * dt);
 		this.orientation = 'left';
 	}
+	return nextX;
+};
+
+Player.prototype._findNextY = function (dt) {
+	var keys = global.get('keys');
 
 	var nextY = this.y;
 	if (consts.snakeMode) {
@@ -101,51 +180,23 @@ Player.prototype.update = function (dt) {
 			nextY = this.y + Math.floor(this.speedY * dt);
 		}
 	}
-
-	// effects of gravity
 	if (consts.gravity) {
-		// only check when we move if we are not on ground anymore (check background under us for collision)
-		if (!this.isStationary) {
-			if (this.onGround) {
-				this.clipToGround();
-			}
-			this.onGround = this.isOnGround();
-		}
-
-		// jump !
-		if (this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
-			this.speedY -= this.JUMPSPEED;
-			this.onGround = false;
-		}
-
 		// displacement = speed * time + 1/2 * acceleration * time squared
 		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * dt * dt);
 	}
+	return nextY;
+};
 
-	if (nextX === this.x && nextY === this.y && this.onGround) {
-		this.isStationary = true;
-	} else {
-		this.isStationary = false;
-	}
+// Helper function to move player (update x,y)
+Player.prototype._updatePos = function (nextX, nextY) {
+	this.distanceTraveled += Math.abs(nextX - this.x);
 
-	var isColliding = this.isColliding(nextX, nextY);
-	if (!this.isStationary && !isColliding) {
-		this.distanceTraveled += Math.abs(nextX - this.x);
+	this.x = nextX;
+	this.y = nextY;
+};
 
-		this.x = nextX;
-		this.y = nextY;
-
-		// update speedY with acceleration
-		if (!this.onGround && consts.gravity) {
-			var oldSpeedY = this.speedY;
-			this.speedY = this.speedY + this.accelerationY * dt;
-			if (this.speedY > this.TERMINALSPEED) {
-				this.speedY = oldSpeedY;
-			}
-		}
-	} else if (consts.gravity && isColliding) {
-		this.speedY = 0;
-	}
+Player.prototype.getSpeedY = function () {
+	return this.speedY;
 };
 
 global.set('class/Player', Player); // export
