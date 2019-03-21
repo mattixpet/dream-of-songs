@@ -51,6 +51,11 @@ function begin() {
 		config.drawBackgroundGrid = !config.drawBackgroundGrid;
 	}
 
+	if (util.eatKey(consts.KEY_B)) {
+		util.log('Toggling bounding boxes.');
+		config.drawBoundingBoxes = !config.drawBoundingBoxes;
+	}
+
 	if (util.eatKey(consts.KEY_O)) {
 		util.log('Toggling snake mode.');
 		config.snakeMode = !config.snakeMode;
