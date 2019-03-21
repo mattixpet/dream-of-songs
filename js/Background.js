@@ -83,6 +83,8 @@ Background.prototype._drawGrid = function () {
 					color = 'green'; // teleport for bottom of feet of entity touching it
 				} else if (block === consts.STAIRTOPBLOCK) {
 					color = 'orange';
+				} else if (block === consts.SECONDARYTELEBLOCK) {
+					color = '#00ff00';
 				}
 				// collision block, draw it
 				var x = Math.floor(i / this.gridW * canvas.width);
