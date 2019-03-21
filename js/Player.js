@@ -191,14 +191,20 @@ Player.prototype.update = function (dt) {
 	// check for scene change
 	var canvas = global.get('canvas');
 	var background = global.get('background');
+	var sceneChangeSuccess = true;
 	if (this.x >= canvas.width) {
-		background.requestNextScene(this, 'right');
+		sceneChangeSuccess = background.requestNextScene(this, 'right');
 	} else if (this.x <= -this.width) {
-		background.requestNextScene(this, 'left');
+		sceneChangeSuccess = background.requestNextScene(this, 'left');
 	} else if (this.y >= canvas.height) {
-		background.requestNextScene(this, 'down');
+		sceneChangeSuccess = background.requestNextScene(this, 'down');
 	} else if (this.y <= -this.height) {
-		background.requestNextScene(this, 'up');
+		sceneChangeSuccess = background.requestNextScene(this, 'up');
+	}
+	// let's not move if we can't get another scene
+	if (!sceneChangeSuccess) {
+		this.x = oldX;
+		this.y = oldY;
 	}
 };
 

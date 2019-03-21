@@ -166,6 +166,8 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 
 // request scene, moving 'left', 'up', 'right', 'down' or 'special' (teleport)
 // change entities coordinates depending on what it is
+// return true if change scene is valid/successful
+// return false if not !
 Background.prototype.requestNextScene = function (entity, direction) {
 	var nextScene = this.cData['Connections'][this.currentScene][direction];
 	if (nextScene) {
@@ -188,6 +190,7 @@ Background.prototype.requestNextScene = function (entity, direction) {
 					break;
 				default:
 					util.warn('Invalid direction: ' + direction + ' for background: ' + this.currentScene);
+					return false;
 			}
 		} else if (coords === 'nochange') {
 			// do nothing to entities coordinates
@@ -196,10 +199,11 @@ Background.prototype.requestNextScene = function (entity, direction) {
 			entity.setX(coords[0]);
 			entity.setY(coords[1]);
 		}
-	} else {
-		util.warn('Warning, requested scene: ' + direction + ' for background: ' + this.currentScene + ' is invalid.');
+
+		return true;
 	}
 
+	return false;
 };
 
 Background.prototype.getGridWidth = function () {
