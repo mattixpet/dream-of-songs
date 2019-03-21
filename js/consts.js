@@ -35,14 +35,6 @@ consts['STAIRTOPBLOCK'] = 5; // the top of all stairs (which you can stand on, a
 consts['SPRITEURL'] = 'img/spritesheets/';
 consts['BACKGROUNDURL'] = 'img/backgrounds/';
 
-// diagnostics
-consts['drawBackgroundGrid'] = true;
-consts['drawPixelGrid'] = false;
-consts['drawBoundingBoxes'] = true;
-consts['snakeMode'] = false;
-consts['gravity'] = true;
-consts['globalPlayer'] = true;
-
 global.set('consts', consts);
 
 }());

@@ -7,6 +7,7 @@
 
 // imports
 var util = global.get('util');
+var config = global.get('config');
 var consts = global.get('consts');
 var LoadingBar = global.get('class/LoadingBar'); // loading bar constructor
 var ImageHandler = global.get('class/ImageHandler');
@@ -47,13 +48,13 @@ function begin() {
 	// handle in game input logic (other logic is in input.js)
 	if (util.eatKey(consts.KEY_G)) {
 		util.log('Toggling grid.');
-		consts.drawBackgroundGrid = !consts.drawBackgroundGrid;
+		config.drawBackgroundGrid = !config.drawBackgroundGrid;
 	}
 
 	if (util.eatKey(consts.KEY_O)) {
 		util.log('Toggling snake mode.');
-		consts.snakeMode = !consts.snakeMode;
-		consts.gravity = !consts.gravity;
+		config.snakeMode = !config.snakeMode;
+		config.gravity = !config.gravity;
 	}
 
 	// print player info!
@@ -120,7 +121,7 @@ function initGame() {
 	global.set('collisionManager', collisionManager);
 
 	var player = new Player(300, 110);
-	if (consts.globalPlayer) {
+	if (config.globalPlayer) {
 		global.set('player', player); // DEV ONLY
 	}
 	entityManager.register(player);

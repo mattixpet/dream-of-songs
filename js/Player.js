@@ -5,6 +5,7 @@
 'use strict';
 
 // imports
+var config = global.get('config');
 var consts = global.get('consts');
 var draw = global.get('draw');
 var util = global.get('util');
@@ -73,7 +74,7 @@ Player.prototype.draw = function () {
 		this.sprite.drawMirrored(this.x - MIRROREDMARGIN - COLLISIONXDELTA, this.y, this.currentSprite);
 	}
 
-	if (consts.drawBoundingBoxes) {
+	if (config.drawBoundingBoxes) {
 		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
 	}
 };
@@ -104,7 +105,7 @@ Player.prototype.update = function (dt) {
 		}
 	} else if (collision.block === consts.REGBLOCK) {
 		// halt
-		if (consts.gravity) {
+		if (config.gravity) {
 			this.speedY = 0;
 		}
 	} else if (collision.block === consts.PLATFORMBLOCK || collision.block === consts.STAIRTOPBLOCK) {
@@ -122,7 +123,7 @@ Player.prototype.update = function (dt) {
 			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight())[1]
 			&& this.y < nextY) {
 			// halt
-			if (consts.gravity) {
+			if (config.gravity) {
 				this.speedY = 0;
 			}
 		} else {
@@ -159,7 +160,7 @@ Player.prototype.update = function (dt) {
 	}
 
 	// Do all updates !
-	if (consts.gravity && !this.inStairs) {
+	if (config.gravity && !this.inStairs) {
 		// only check when we move if we are not on ground anymore (check background under us for collision)
 		// also check if we are pressing down (so we can move down stairs)
 		if (!this.isStationary) {
@@ -228,7 +229,7 @@ Player.prototype._findNextY = function (dt) {
 
 	var nextY = this.y;
 	// snake mode and stairs
-	if (consts.snakeMode || this.inStairs) {
+	if (config.snakeMode || this.inStairs) {
 		this.speedY = this.speedX;
 		if (keys[consts.KEY_UP] || keys[consts.KEY_W]) {
 			nextY = this.y - Math.floor(this.speedY * dt);
@@ -246,7 +247,7 @@ Player.prototype._findNextY = function (dt) {
 		}
 	}
 	// normal gravity
-	if (consts.gravity && !this.inStairs) {
+	if (config.gravity && !this.inStairs) {
 		// displacement = speed * time + 1/2 * acceleration * time squared
 		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * dt * dt);
 	}

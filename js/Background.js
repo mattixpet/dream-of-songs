@@ -5,6 +5,7 @@
 'use strict';
 
 // imports
+var config = global.get('config');
 var util = global.get('util');
 var draw = global.get('draw');
 var consts = global.get('consts');
@@ -38,10 +39,10 @@ function Background() {
 
 Background.prototype.draw = function () {
 	this._drawBg();
-	if (consts.drawBackgroundGrid) {
+	if (config.drawBackgroundGrid) {
 		this._drawGrid();
 	}
-	if (consts.drawPixelGrid) {
+	if (config.drawPixelGrid) {
 		this._drawPixelGrid(50); // draw 50 by 50 grid
 	}
 };
@@ -92,7 +93,7 @@ Background.prototype._drawGrid = function () {
 	}
 };
 
-// set on or off with 'drawPixelGrid' in consts.
+// set on or off with 'drawPixelGrid' in config.
 // Draws a size by size pixel grid to see better where pixels are.
 Background.prototype._drawPixelGrid = function (size) {
 	var canvas = global.get('canvas');
