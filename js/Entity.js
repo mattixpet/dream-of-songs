@@ -51,6 +51,14 @@ Entity.prototype.getY = function () {
 	return this.y;
 }
 
+Entity.prototype.setX = function(x) {
+	this.x = x;
+}
+
+Entity.prototype.setY = function(y) {
+	this.y = y;
+}
+
 global.set('class/Entity', Entity);
 
 }());

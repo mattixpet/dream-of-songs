@@ -10,6 +10,13 @@ var background_data = {
 	// The format should be well apparent if you look at the connections object below, undefined means no connecting
 	// background in that direction
 	// special means there is a movement between screens somewhere in the middle of the map, not at the edges
+	// the direction object, is e.g.
+	// 'left' : {'scene':'scene', 'coords':'flip'}
+	// possible coords values: 
+	// 		'flip' - means traditional left,up,right,down movement, only add width or height of canvas depending on direction
+	//               e.g. if going left we add canvas width from player coords to flip him to correct side
+	//		'nochange' - means it's a special within the map where we leave the coords alone (no movement)
+	//		[x,y] - integers x and y for the new coordinates of entity
 	'Connections' : {
 		'clearsky' : {
 			'left' : 'clearskyclouds',
@@ -44,14 +51,14 @@ var background_data = {
 			'up' : undefined,
 			'right' : undefined,
 			'down' : undefined,
-			'special' : 'cavestairs'
+			'special' : {'scene' : 'cavestairs', 'coords' : [550, -85]}
 		},
 		'cavestairs' : {
 			'left' : 'cave1',
 			'up' : undefined,
 			'right' : undefined,
 			'down' : undefined,
-			'special' : 'abovecave'
+			'special' : {'scene' : 'abovecave', 'coords' : [160, -10]}
 		},
 		'cave1' : {
 			'left' : undefined,

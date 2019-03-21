@@ -12,7 +12,7 @@ var collision = global.get('collision');
 
 function Background() {
 	this.scenes = {}; // scene = page, stage whatever you want to call it, one background image
-	this.currentScene = 'smallcliff'; // starting scene
+	this.currentScene = 'cavestairs'; // starting scene
 
 	// load collision data for each background image
 	this.cData = global.get('background_data');
@@ -157,15 +157,53 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 		}
 	}
 	return false;
-}
+};
+
+// request scene, moving 'left', 'up', 'right', 'down' or 'special' (teleport)
+// change entities coordinates depending on what it is
+Background.prototype.requestNextScene = function (entity, direction) {
+	var nextScene = this.cData['Connections'][this.currentScene][direction];
+	if (nextScene) {
+		this.currentScene = nextScene.scene;
+		var coords = nextScene.coords;
+		var canvas = global.get('canvas');
+		if (coords === 'flip') {
+			switch (direction) {
+				case 'left':
+					entity.setX(entity.getX() + canvas.width);
+					break;
+				case 'up':
+					entity.setY(entity.getY() + canvas.height);
+					break;
+				case 'right':
+					entity.setX(entity.getX() - canvas.width);
+					break;
+				case 'down':
+					entity.setY(entity.getY() - canvas.height);
+					break;
+				default:
+					util.warn('Invalid direction: ' + direction + ' for background: ' + this.currentScene);
+			}
+		} else if (coords === 'nochange') {
+			// do nothing to entities coordinates
+		} else {
+			// coordinates is [x,y]
+			entity.setX(coords[0]);
+			entity.setY(coords[1]);
+		}
+	} else {
+		util.warn('Warning, requested scene: ' + direction + ' for background: ' + this.currentScene + ' is invalid.');
+	}
+
+};
 
 Background.prototype.getGridWidth = function () {
 	return this.gridW;
-}
+};
 
 Background.prototype.getGridHeight = function () {
 	return this.gridH;
-}
+};
 
 global.set('class/Background', Background);
 

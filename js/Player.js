@@ -143,6 +143,19 @@ Player.prototype.update = function (dt) {
 		if (!this.isStationary) {
 			this._updatePos(nextX, nextY);
 		}
+	} else if (collision.block === consts.TELEBLOCK) {
+		// TELEBLOCK only teleports you to next scene if your feet are touching it
+		// check if y grid coordinate of our feet match the y grid coordinate of the collision
+		var bg = global.get('background');
+		if (util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight())[1] === collision.gridY) {
+			global.get('background').requestNextScene(this, 'special');
+		} else {
+			// treat as 'no collision'
+			collision = false;
+			if (!this.isStationary) {
+				this._updatePos(nextX, nextY);
+			}
+		}
 	}
 
 	// Do all updates !
