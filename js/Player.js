@@ -41,6 +41,7 @@ function Player(posX, posY) {
 	this.onGround = false; // start in the air
 	this.isStationary = false;
 	this.inStairs = false;
+	this.disableJump = false; // used for stairs for example, temporary flag, not allow player to jump
 	this.currentSprite = STOP;
 	this.orientation = 'right'; // 'left'
 	this.distanceTraveled = 0; // for sprite animations, keep record of distance traveled
@@ -111,6 +112,7 @@ Player.prototype.update = function (dt) {
 		if (collision.block === consts.STAIRTOPBLOCK && this._isUpOrDownPressed()) {
 			this.inStairs = true;
 			this.speedY = this.speedX;
+			this.disableJump = true; // so we don't jump directly out of stairs, is reset on x movement
 		}
 
 		var gridX = collision.gridX;
@@ -167,7 +169,7 @@ Player.prototype.update = function (dt) {
 		}
 
 		// jump !
-		if (this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
+		if (!this.disableJump && this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
 			this.speedY -= this.JUMPSPEED;
 			this.onGround = false;
 		}
@@ -211,6 +213,10 @@ Player.prototype._findNextY = function (dt) {
 // Helper function to move player (update x,y)
 Player.prototype._updatePos = function (nextX, nextY) {
 	this.distanceTraveled += Math.abs(nextX - this.x);
+	// reallow jump if we move in x coordinate (for coming up from stairs)
+	if (this.x !== nextX) {
+		this.disableJump = false;
+	}
 
 	this.x = nextX;
 	this.y = nextY;
