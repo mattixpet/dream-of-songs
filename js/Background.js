@@ -150,10 +150,15 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 	// if no tile under gridBotLeft..gridBotRight is a 1 in the grid, player is not on ground
 	var data = this.cData[this.currentScene];
 	for (var i = gridBotLeft[0]; i <= gridBotRight[0]; i++) {
-		// "if data[grid..] is in standableBlocks"
-		var block = data[gridBotLeft[1] + 1][i];
-		if (this.standableBlocks.indexOf(block) >= 0) { // 57
-			return block;
+		// check for out of bounds of our +1 check for block below
+		if (gridBotLeft[1] + 1 < data.length) {
+			// "if data[grid..] is in standableBlocks"
+			var block = data[gridBotLeft[1] + 1][i];
+			if (this.standableBlocks.indexOf(block) >= 0) { // 57
+				return block;
+			}
+		} else {
+			break;
 		}
 	}
 	return false;

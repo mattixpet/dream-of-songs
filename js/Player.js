@@ -187,6 +187,19 @@ Player.prototype.update = function (dt) {
 			this.onGround = false;
 		}
 	}
+
+	// check for scene change
+	var canvas = global.get('canvas');
+	var background = global.get('background');
+	if (this.x >= canvas.width) {
+		background.requestNextScene(this, 'right');
+	} else if (this.x <= -this.width) {
+		background.requestNextScene(this, 'left');
+	} else if (this.y >= canvas.height) {
+		background.requestNextScene(this, 'down');
+	} else if (this.y <= -this.height) {
+		background.requestNextScene(this, 'up');
+	}
 };
 
 Player.prototype._findNextX = function (dt) {
