@@ -10,8 +10,9 @@
 
 var config = global.get('config');
 var util = global.get('util');
+var draw = global.get('draw');
 
-function Entity(sprite, posX, posY) {
+function Entity(sprite, posX, posY, affectedByGravity) {
 	global.get('entityManager').register(this);
 
 	this.sprite = sprite;
@@ -25,11 +26,15 @@ function Entity(sprite, posX, posY) {
 	this.TERMINALSPEED = config.DEFAULTTERMINALSPEED;
 
 	this.onGround = false;
-	this.affectedByGravity = true; // default
+	this.affectedByGravity = affectedByGravity;
 }
 
 Entity.prototype.draw = function () {
 	this.sprite.draw(this.x, this.y, 0);
+
+	if (config.drawBoundingBoxes) {
+		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
+	}
 };
 
 Entity.prototype.update = function (dt) {
@@ -49,7 +54,7 @@ Entity.prototype.update = function (dt) {
 			this.y = nextY;
 		}
 
-		if (config.gravity) {
+		if (config.gravity && !this.onGround) {
 			this.speedY = this._updateSpeed(this.speedY, config.GRAVITYCONSTANT, dt);
 		}
 	}
@@ -63,20 +68,14 @@ Entity.prototype._applyAcceleration = function (y, speed, acceleration, dt) {
 
 // update speed given acceleration, initial speed and dt.
 // capped at this.TERMINALSPEED
-// so far only used for gravity, should not be used for anything else unmodified
 Entity.prototype._updateSpeed = function (speed, acceleration, dt) {
 	// update speed with acceleration
-	// only apply if we are not on ground (means this code would not work for x accel on ground, NOTE)
-	if (!this.onGround) {
-		var oldSpeed = speed;
-		var newSpeed = speed + acceleration * dt;
-		if (newSpeed > this.TERMINALSPEED) {
-			newSpeed = oldSpeed;
-		}
-		return newSpeed;
+	var oldSpeed = speed;
+	var newSpeed = speed + acceleration * dt;
+	if (newSpeed > this.TERMINALSPEED) {
+		newSpeed = oldSpeed;
 	}
-
-	return speed;
+	return newSpeed;
 };
 
 Entity.prototype.setId = function (id) {

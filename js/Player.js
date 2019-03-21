@@ -177,7 +177,9 @@ Player.prototype.update = function (dt) {
 		}
 
 		// update speedY with acceleration
-		this.speedY = this._updateSpeed(this.speedY, this.accelerationY, dt);
+		if (!this.onGround) {
+			this.speedY = this._updateSpeed(this.speedY, this.accelerationY, dt);
+		}
 
 		// jump !
 		if (!this.disableJump && this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
