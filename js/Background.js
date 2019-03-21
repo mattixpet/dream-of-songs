@@ -151,8 +151,9 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 	var data = this.cData[this.currentScene];
 	for (var i = gridBotLeft[0]; i <= gridBotRight[0]; i++) {
 		// "if data[grid..] is in standableBlocks"
-		if (this.standableBlocks.indexOf(data[gridBotLeft[1] + 1][i]) >= 0) { // 57
-			return true;
+		var block = data[gridBotLeft[1] + 1][i];
+		if (this.standableBlocks.indexOf(block) >= 0) { // 57
+			return block;
 		}
 	}
 	return false;

@@ -38,7 +38,7 @@ function Player(posX, posY) {
 	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
 	this.height = this.sprite.getHeight();
 	// status variables
-	this.onGround = false; // start in the air
+	this.onGround = false; // start in the air (can also take value of the block underneat, REGBLOCK, etc.)
 	this.isStationary = false;
 	this.inStairs = false;
 	this.disableJump = false; // used for stairs for example, temporary flag, not allow player to jump
@@ -111,15 +111,15 @@ Player.prototype.update = function (dt) {
 		// check for top of stairs block
 		if (collision.block === consts.STAIRTOPBLOCK && this._isUpOrDownPressed()) {
 			this.inStairs = true;
-			this.speedY = this.speedX;
 			this.disableJump = true; // so we don't jump directly out of stairs, is reset on x movement
 		}
 
 		var gridX = collision.gridX;
 		var gridY = collision.gridY;
 		var bg = global.get('background');
-		// only count this as collision if we are coming from above the block and on our way down
-		if (this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight())[1]
+		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
+		if (!this.inStairs
+			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight())[1]
 			&& this.y < nextY) {
 			// halt
 			if (consts.gravity) {
@@ -139,7 +139,6 @@ Player.prototype.update = function (dt) {
 		// only treat player as in stairs if he's using up or down key
 		if (this._isUpOrDownPressed()) {
 			this.inStairs = true;
-			this.speedY = this.speedX;
 		}
 		if (!this.isStationary) {
 			this._updatePos(nextX, nextY);
@@ -149,13 +148,14 @@ Player.prototype.update = function (dt) {
 	// Do all updates !
 	if (consts.gravity && !this.inStairs) {
 		// only check when we move if we are not on ground anymore (check background under us for collision)
+		// also check if we are pressing down (so we can move down stairs)
 		if (!this.isStationary) {
 			if (this.onGround && collision) {
 				this.clipToGround();
 			}
 			// Don't check for ground if we are moving up!
 			if (!(nextY < oldY)) {
-				this.onGround = this.isOnGround();
+				this.onGround = this.isOnGround(); // returns false, or the block we're on (1,2,5 (or REGBLOCK, etc..))
 			}
 		}
 
@@ -195,7 +195,9 @@ Player.prototype._findNextY = function (dt) {
 	var keys = global.get('keys');
 
 	var nextY = this.y;
+	// snake mode and stairs
 	if (consts.snakeMode || this.inStairs) {
+		this.speedY = this.speedX;
 		if (keys[consts.KEY_UP] || keys[consts.KEY_W]) {
 			nextY = this.y - Math.floor(this.speedY * dt);
 		} 
@@ -203,6 +205,15 @@ Player.prototype._findNextY = function (dt) {
 			nextY = this.y + Math.floor(this.speedY * dt);
 		}
 	}
+	// allow down movement if we are on top of stairs
+	if (this.onGround === consts.STAIRTOPBLOCK || this.disableJump) {
+		if (keys[consts.KEY_DOWN] || keys[consts.KEY_S]) {
+			this.inStairs = true;
+			this.speedY = this.speedX;
+			nextY = this.y + Math.floor(this.speedY * dt);
+		}
+	}
+	// normal gravity
 	if (consts.gravity && !this.inStairs) {
 		// displacement = speed * time + 1/2 * acceleration * time squared
 		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * dt * dt);
@@ -231,6 +242,10 @@ Player.prototype._isUpOrDownPressed = function () {
 	return global.get('keys')[consts.KEY_W] || global.get('keys')[consts.KEY_S]
 			|| global.get('keys')[consts.KEY_UP] || global.get('keys')[consts.KEY_DOWN];
 };
+
+Player.prototype._isDownPressed = function () {
+	return global.get('keys')[consts.KEY_S] || global.get('keys')[consts.KEY_DOWN];
+}
 
 global.set('class/Player', Player); // export
 
