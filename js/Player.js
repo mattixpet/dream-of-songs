@@ -27,14 +27,16 @@ const COLLISIONWIDTHREDUCTION = 30; // how much to reduce the collision width of
 const MIRROREDMARGIN = 10; // how much to move the mirrored sprite to the left, so bounding box fits sprite display
 
 function Player(posX, posY) {
+	global.get('entityManager').register(this);
+
 	this.sprite = global.get('imageHandler').getSprite('player');
 	this.x = posX;
 	this.y = posY;
 	this.speedX = 0.2;
 	this.speedY = 0.0;
-	this.accelerationY = 0.001; // gravity
+	this.accelerationY = config.GRAVITYCONSTANT;
 	this.JUMPSPEED = 0.4;
-	this.TERMINALSPEED = 0.5; // maximum speed character can go in y+ direction through acceleration of gravity
+	this.TERMINALSPEED = config.DEFAULTTERMINALSPEED; // maximum speed character can go in y+ direction through acceleration of gravity
 	// collision width/height
 	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
 	this.height = this.sprite.getHeight();
@@ -51,7 +53,7 @@ function Player(posX, posY) {
 	this.WALKINGANIMATIONS = [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3];
 }
 
-Player.prototype = new Entity();
+Player.prototype = Object.create(Entity.prototype);
 
 Player.prototype.draw = function () {
 	// sprite calculations
@@ -175,13 +177,7 @@ Player.prototype.update = function (dt) {
 		}
 
 		// update speedY with acceleration
-		if (!this.onGround) {
-			var oldSpeedY = this.speedY;
-			this.speedY = this.speedY + this.accelerationY * dt;
-			if (this.speedY > this.TERMINALSPEED) {
-				this.speedY = oldSpeedY;
-			}
-		}
+		this.speedY = this._updateSpeed(this.speedY, this.accelerationY, dt);
 
 		// jump !
 		if (!this.disableJump && this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
@@ -249,8 +245,7 @@ Player.prototype._findNextY = function (dt) {
 	}
 	// normal gravity
 	if (config.gravity && !this.inStairs) {
-		// displacement = speed * time + 1/2 * acceleration * time squared
-		nextY = this.y + Math.floor(this.speedY * dt + this.accelerationY * dt * dt);
+		nextY = this._applyAcceleration(this.y, this.speedY, this.accelerationY, dt);
 	}
 	return nextY;
 };

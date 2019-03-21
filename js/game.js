@@ -109,6 +109,7 @@ function end(fps, panic) {
         util.warn('Main loop panicked, probably because the browser tab was put in the background. Discarding ' + discardedTime + 'ms');
     }
 
+    // for single stepping, see input.js
 	if (global.get('inSingleCycle')) {
 		MainLoop.stop();
 		global.set('inSingleCycle', false);
@@ -129,7 +130,6 @@ function initGame() {
 	if (config.globalPlayer) {
 		global.set('player', player); // DEV ONLY
 	}
-	entityManager.register(player);
 
 	var loadingBar = global.get('loadingBar');
 	if (loadingBar.getProgress() !== 1) {

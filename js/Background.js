@@ -217,6 +217,11 @@ Background.prototype.getGridHeight = function () {
 	return this.gridH;
 };
 
+// returns an array with the blocks you can stand on (consts.REGBLOCK, consts.PLATFORMBLOCK, etc.)
+Background.prototype.getStandableBlocks = function () {
+	return this.standableBlocks.slice();
+};
+
 global.set('class/Background', Background);
 
 }());

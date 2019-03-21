@@ -14,6 +14,9 @@ config['snakeMode'] = false;
 config['gravity'] = true;
 config['globalPlayer'] = true;
 
+config['GRAVITYCONSTANT'] = 0.001;
+config['DEFAULTTERMINALSPEED'] = 0.5;
+
 global.set('config', config);
 
 }());
