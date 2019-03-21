@@ -53,6 +53,21 @@ function begin() {
 	if (util.eatKey(consts.KEY_O)) {
 		util.log('Toggling snake mode.');
 		consts.snakeMode = !consts.snakeMode;
+		consts.gravity = !consts.gravity;
+	}
+
+	// print player info!
+	if (util.eatKey(consts.KEY_I)) {
+		var out = '';
+		var player = global.get('player');
+		for (var prop in player) {
+			if (player.hasOwnProperty(prop)) {
+				out += '\n' + prop + ': ' + player[prop];
+			}
+		}
+		util.log('Player information: ' +
+			out
+		);
 	}
 }
 

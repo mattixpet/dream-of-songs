@@ -12,13 +12,13 @@ var collision = global.get('collision');
 
 function Background() {
 	this.scenes = {}; // scene = page, stage whatever you want to call it, one background image
-	this.currentScene = 'clearsky'; // starting scene
+	this.currentScene = 'smallcliff'; // starting scene
 
 	// load collision data for each background image
 	this.cData = global.get('background_data');
 
 	// blocks entity can stand on
-	this.standableBlocks = [consts.REGBLOCK, consts.PLATFORMBLOCK, consts.STAIRBLOCK];
+	this.standableBlocks = [consts.REGBLOCK, consts.PLATFORMBLOCK, consts.STAIRTOPBLOCK];
 
 	// depending on our cData, set the granularity of our grid/ widths etc.
 	// split map into blocks, depending on the cData array (>0 is collision brick, 0 is not)
@@ -77,9 +77,11 @@ Background.prototype._drawGrid = function () {
 				if (block === consts.PLATFORMBLOCK) {
 					color = 'blue'; // only top collision
 				} else if (block === consts.STAIRBLOCK) {
-					color = 'green'; // stairs
+					color = 'yellow'; // stairs
 				} else if (block === consts.TELEBLOCK) {
-					color = 'orange'; // teleport for bottom of feet of entity touching it
+					color = 'green'; // teleport for bottom of feet of entity touching it
+				} else if (block === consts.STAIRTOPBLOCK) {
+					color = 'orange';
 				}
 				// collision block, draw it
 				var x = Math.floor(i / this.gridW * canvas.width);
