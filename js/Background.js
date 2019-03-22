@@ -13,7 +13,7 @@ var collision = global.get('collision');
 
 function Background() {
 	this.scenes = {}; // scene = page, stage whatever you want to call it, one background image
-	this.currentScene = 'cavestairs'; // starting scene
+	this.currentScene = 'smallcliff'; // starting scene
 
 	// load collision data for each background image
 	this.cData = global.get('background_data');

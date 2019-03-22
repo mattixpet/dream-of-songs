@@ -12,6 +12,7 @@ var consts = global.get('consts');
 var LoadingBar = global.get('class/LoadingBar'); // loading bar constructor
 var ImageHandler = global.get('class/ImageHandler');
 var Player = global.get('class/Player');
+var Chest = global.get('class/Chest');
 var EntityManager = global.get('class/EntityManager');
 var Background = global.get('class/Background');
 var CollisionManager = global.get('class/CollisionManager');
@@ -130,6 +131,13 @@ function initGame() {
 	if (config.globalPlayer) {
 		global.set('player', player); // DEV ONLY
 	}
+
+	var chest1 = new Chest(200, 100, true);
+	var chest2 = new Chest(0,0, false);
+	var chest3 = new Chest(600, 200, false);
+	var chest4 = new Chest(400, 50, false);
+	var chest5 = new Chest(450, 50, false);
+	//var chest6 = new Chest(500, 50, false);
 
 	var loadingBar = global.get('loadingBar');
 	if (loadingBar.getProgress() !== 1) {

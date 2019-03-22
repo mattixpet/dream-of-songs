@@ -58,6 +58,14 @@ Entity.prototype.update = function (dt) {
 			this.speedY = this._updateSpeed(this.speedY, config.GRAVITYCONSTANT, dt);
 		}
 	}
+
+	this._updateSpecific(dt); 	// in case a class inheriting from this one wants to use the default
+								// update but wants to do some non-movement related updates himself
+};
+
+// Do specific updates but use the default update function from here in inherited classes
+Entity.prototype._updateSpecific = function (dt) {
+	// to be implemented in children classes
 };
 
 // returns the new y coordinate given the affects of gravity (or acceleration given)

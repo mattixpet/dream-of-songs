@@ -17,7 +17,7 @@ function ImageHandler() {
 	this.imageCounter = 0; // this can be accessed by async
 	this.imageCounterLock = false; // true if someone is modifying the imageCounter
 	// UPDATE THIS VARIABLE MANUALLY
-	this.totalImageCount = 9; 	// total number of images to be loaded here, to update progress of loading bar
+	this.totalImageCount = 10; 	// total number of images to be loaded here, to update progress of loading bar
 
 	this.canvas = global.get('canvas');
 
@@ -27,6 +27,13 @@ function ImageHandler() {
 		60, 100, 
 		365, 827, 
 		[[141,74], [738,74], [1344,72], [139,1072], [741,1072]]
+	);
+
+	this._createSpriteFromImage(
+		'chest', consts.SPRITEURL + 'chest-spritesheet.png',
+		40, 50,
+		428, 636,
+		[[0,6], [0, 643], [441, 9], [440, 641]]
 	);
 
 	// backgrounds
