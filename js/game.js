@@ -92,9 +92,16 @@ function draw() {
 	background.draw();
 
 	var entityManager = global.get('entityManager');
-	for (var key in entityManager.entities) {
-		entityManager.entities[key].draw();
+	var entities = entityManager.getEntities();
+	var player = global.get('player');
+	for (var key in entities) {
+		var entity = entities[key];
+		if (entity !== player) {
+			entities[key].draw();
+		}
 	}
+	// special case, let's always draw Player last (so he's in foreground)
+	player.draw();
 }
 
 function end(fps, panic) {
@@ -128,9 +135,7 @@ function initGame() {
 	global.set('collisionManager', collisionManager);
 
 	var player = new Player(300, 110);
-	if (config.globalPlayer) {
-		global.set('player', player); // DEV ONLY
-	}
+	global.set('player', player); // used for drawing player last and for diagnostics
 
 	var chest1 = new Chest(200, 100, true);
 	var chest2 = new Chest(0,0, false);
