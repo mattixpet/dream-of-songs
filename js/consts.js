@@ -34,7 +34,7 @@ consts['STAIRTOPBLOCK'] = 5; // the top of all stairs (which you can stand on, a
 consts['SECONDARYTELEBLOCK'] = 6; // if there are two teleports on one scene, this behaves exactly as teleblock otherwise
 								  // requests the 'secondary-special' from background instead of the normal special	
 
-consts['STARTINGSCENE'] = 'clearsky';
+consts['STARTINGSCENE'] = 'cavestairs';
 
 // sprites
 consts['SPRITEURL'] = 'img/spritesheets/';

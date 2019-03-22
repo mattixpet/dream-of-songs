@@ -4,8 +4,11 @@
 
 'use strict';
 
+var config = global.get('config');
 var consts = global.get('consts');
 var util = global.get('util');
+
+var canvas = document.getElementById('dreamOfSongs');
 
 var keys = [];
 
@@ -49,8 +52,17 @@ function handleKeyup(e) {
 	keys[e.keyCode] = false;
 }
 
+function handleMousedown(e) {
+	if (config.clickToShowCoord) {
+		var x = e.clientX - canvas.offsetLeft;
+		var y = e.clientY - canvas.offsetTop;
+		util.log('Clicked x, y: ' + x + ', ' + y);
+	}
+}
+
 window.addEventListener("keydown", handleKeydown);
 window.addEventListener("keyup", handleKeyup);
+canvas.addEventListener("mousedown", handleMousedown);
 
 global.set('keys', keys);
 
