@@ -29,7 +29,8 @@ const MIRROREDMARGIN = 10; // how much to move the mirrored sprite to the left, 
 function Player(posX, posY) {
 	global.get('entityManager').register(this);
 
-	this.sprite = global.get('imageHandler').getSprite('player');
+	this.name = 'player';
+	this.sprite = global.get('imageHandler').getSprite(this.name);
 	this.x = posX;
 	this.y = posY;
 	this.speedX = 0.2;
@@ -98,69 +99,21 @@ Player.prototype.update = function (dt) {
 		this.speedY = 0.0;
 		this.inStairs = false; // if we are still in stairs, this should be set back to true during collision check
 	}
-	// collision is false if no collision, otherwise object with .block, .gridX and .gridY
+	// collision is false if no collision, otherwise object with 
+	// {'bgCollision': {.block, .gridX and .gridY}, 'entityCollision' : entity (or false)}
 	var collision = this.isColliding(nextX, nextY);
-	// Handle all the different blocks we could be colliding with.
-	if (!collision) {
-		if (!this.isStationary) {
-			this._updatePos(nextX, nextY);
-		}
-	} else if (collision.block === consts.REGBLOCK) {
-		// halt
-		if (config.gravity) {
-			this.speedY = 0;
-		}
-	} else if (collision.block === consts.PLATFORMBLOCK || collision.block === consts.STAIRTOPBLOCK) {
-		// check for top of stairs block
-		if (collision.block === consts.STAIRTOPBLOCK && this._isUpOrDownPressed()) {
-			this.inStairs = true;
-			this.disableJump = true; // so we don't jump directly out of stairs, is reset on x movement
-		}
-
-		var gridX = collision.gridX;
-		var gridY = collision.gridY;
-		var bg = global.get('background');
-		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
-		if (!this.inStairs
-			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight())[1]
-			&& this.y < nextY) {
-			// halt
-			if (config.gravity) {
-				this.speedY = 0;
-			}
-		} else {
-			// treat as 'no collision'
+	if (collision) {
+		var bgCollision = this._handleBackgroundCollision(collision.bgCollision, nextX, nextY);
+		var entCollision = this._handleEntityCollision(collision.entityCollision);
+		if (!bgCollision && !entCollision) {
 			collision = false;
-			if (!this.isStationary) {
-				this._updatePos(nextX, nextY);
-			}
-		}
-
-	} else if (collision.block === consts.STAIRBLOCK) {
-		// treat as 'no collision'
-		collision = false;
-		// only treat player as in stairs if he's using up or down key
-		if (this._isUpOrDownPressed()) {
-			this.inStairs = true;
-		}
-		if (!this.isStationary) {
-			this._updatePos(nextX, nextY);
-		}
-	} else if (collision.block === consts.TELEBLOCK || collision.block === consts.SECONDARYTELEBLOCK) {
-		// TELEBLOCK/SECONDARYTELEBLOCK only teleports you to next scene if your feet are touching it
-		// check if y grid coordinate of our feet match the y grid coordinate of the collision
-		var bg = global.get('background');
-		if (util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight())[1] === collision.gridY) {
-			var direction = collision.block === consts.TELEBLOCK ? 'special' : 'secondary-special';
-			global.get('background').requestNextScene(this, direction);
-		} else {
-			// treat as 'no collision'
-			collision = false;
-			if (!this.isStationary) {
-				this._updatePos(nextX, nextY);
-			}
 		}
 	}
+	// move if no collision or collision with something which set us as no collision
+	if (!this.isStationary && !collision) {
+		this._updatePos(nextX, nextY);
+	}
+
 
 	// Do all updates !
 	if (config.gravity && !this.inStairs) {
@@ -206,6 +159,86 @@ Player.prototype.update = function (dt) {
 		this.x = oldX;
 		this.y = oldY;
 	}
+};
+
+Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY) {
+	// Handle all the different blocks we could be colliding with.
+	if (!collision) {
+		return false;
+	} else if (collision.block === consts.REGBLOCK) {
+		// halt
+		if (config.gravity) {
+			this.speedY = 0;
+		}
+	} else if (collision.block === consts.PLATFORMBLOCK || collision.block === consts.STAIRTOPBLOCK) {
+		// check for top of stairs block
+		if (collision.block === consts.STAIRTOPBLOCK && this._isUpOrDownPressed()) {
+			this.inStairs = true;
+			this.disableJump = true; // so we don't jump directly out of stairs, is reset on x movement
+		}
+
+		var gridX = collision.gridX;
+		var gridY = collision.gridY;
+		var bg = global.get('background');
+		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
+		if (!this.inStairs
+			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight())[1]
+			&& this.y < nextY) {
+			// halt
+			if (config.gravity) {
+				this.speedY = 0;
+			}
+		} else {
+			// treat as 'no collision'
+			return false
+		}
+
+	} else if (collision.block === consts.STAIRBLOCK) {
+		// only treat player as in stairs if he's using up or down key
+		if (this._isUpOrDownPressed()) {
+			this.inStairs = true;
+		}		
+		// treat as 'no collision'
+		return false;
+	} else if (collision.block === consts.TELEBLOCK || collision.block === consts.SECONDARYTELEBLOCK) {
+		// TELEBLOCK/SECONDARYTELEBLOCK only teleports you to next scene if your feet are touching it
+		// check if y grid coordinate of our feet match the y grid coordinate of the collision
+		var bg = global.get('background');
+		if (util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight())[1] === collision.gridY) {
+			var direction = collision.block === consts.TELEBLOCK ? 'special' : 'secondary-special';
+			global.get('background').requestNextScene(this, direction);
+		} else {
+			// treat as 'no collision'
+			return false;
+		}
+	} else {
+		util.warn('Warning, unhandled bgcollision, treating like no collision.');
+		return false;
+	}
+
+	return true;
+};
+
+Player.prototype._handleEntityCollision = function (entity) {
+	if (entity) {
+		if (entity.getName() === 'chest') {
+			// only handle as we really collided with this chest if our feet are touching it 
+			// (so you can't jump and open them with your hat :P )
+			// do that using our handy grid coordinates
+			var bg = global.get('background');
+			var gridWidth = bg.getGridWidth();
+			var gridHeight = bg.getGridHeight();
+			var chestY = util.pixelToGrid(entity.getX() + entity.getWidth(), entity.getY() + entity.getHeight(), 
+										  gridWidth, gridHeight)[1];
+			var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight)[1];
+			if (chestY === playerY) {
+				entity.loot(); // get that loot!
+			}
+		}
+		// else we don't know how to handle any more entities
+	}
+
+	return false;
 };
 
 Player.prototype._findNextX = function (dt) {

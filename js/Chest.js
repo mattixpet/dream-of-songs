@@ -15,13 +15,15 @@ const FLIPPED = 2;
 const FLIPPEDOPEN = 3;
 
 // draw the sprite a bit lower than the collision box because of semi-3d
-const COLLISIONYDELTA = 4;
-const COLLISIONHEIGHTREDUCTION = 9;
+const COLLISIONYDELTA = 5;
+const COLLISIONHEIGHTREDUCTION = 10;
 
 function Chest(posX, posY, flip) {
 	global.get('entityManager').register(this);
 
-	this.sprite = global.get('imageHandler').getSprite('chest');
+	this.name = 'chest';
+
+	this.sprite = global.get('imageHandler').getSprite(this.name);
 	this.animation = flip ? FLIPPED : NORMAL;
 
 	this.x = posX;
@@ -37,10 +39,6 @@ function Chest(posX, posY, flip) {
 
 	// set as true once player has gotten the song from us
 	this.looted = false;
-	// used for collision/changes assume chest only lands on ground and then doesn't move
-	// when it lands, we update the y coordinate accordingly and never again correct
-	// for the sprite/width/drawing mismatch
-	this.correctedForSprite = false;
 }
 
 Chest.prototype = Object.create(Entity.prototype);
@@ -59,8 +57,10 @@ Chest.prototype._updateSpecific = function (dt) {
 
 // Player calls this when he loots us
 Chest.prototype.loot = function () {
-	this.looted = true;
-	this.animation = this.animation === NORMAL ? NORMALOPEN : FLIPPEDOPEN;
+	if (!this.looted) {
+		this.looted = true;
+		this.animation = this.animation === NORMAL ? NORMALOPEN : FLIPPEDOPEN;
+	}
 };
 
 global.set('class/Chest', Chest);

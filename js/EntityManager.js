@@ -15,6 +15,10 @@ EntityManager.prototype.register = function (entity) {
 	return this._lastId;
 };
 
+EntityManager.prototype.getEntities = function () {
+	return this.entities;
+};
+
 EntityManager.prototype.delete = function (id) {
 	delete this.entities[id];
 };

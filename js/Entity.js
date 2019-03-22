@@ -3,6 +3,7 @@
 // Any more complicated entities should override functions
 // All entities must be registered with EntityManager, see EntityManager.js 
 //  and the first line in the default constructor function Entity() here below
+// Entities should also have a this.name attribute for any entity-entity collisions
 
 (function () {
 
@@ -14,6 +15,8 @@ var draw = global.get('draw');
 
 function Entity(sprite, posX, posY, affectedByGravity) {
 	global.get('entityManager').register(this);
+
+	this.name = 'entity';
 
 	this.sprite = sprite;
 
@@ -42,6 +45,7 @@ Entity.prototype.update = function (dt) {
 		var nextY = this._applyAcceleration(this.y, this.speedY, config.GRAVITYCONSTANT, dt);
 
 		var collision = this.isColliding(this.x, nextY);
+		collision = collision ? collision.bgCollision : false;
 		if (!collision) {
 			// move
 			this.y = nextY;
@@ -118,12 +122,24 @@ Entity.prototype.getY = function () {
 	return this.y;
 };
 
-Entity.prototype.setX = function(x) {
+Entity.prototype.setX = function (x) {
 	this.x = x;
 };
 
-Entity.prototype.setY = function(y) {
+Entity.prototype.setY = function (y) {
 	this.y = y;
+};
+
+Entity.prototype.getWidth = function () {
+	return this.width;
+};
+
+Entity.prototype.getHeight = function () {
+	return this.height;
+};
+
+Entity.prototype.getName = function () {
+	return this.name;
 };
 
 global.set('class/Entity', Entity);
