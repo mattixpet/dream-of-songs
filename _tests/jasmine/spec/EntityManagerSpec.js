@@ -4,9 +4,12 @@ describe("entityManager", function() {
   var util = global.get('util');
 
   var entityManager;
+  var placeHolderSprite;
 
   beforeEach(function() {
     entityManager = new EntityManager();
+    global.set('entityManager', entityManager);
+    placeHolderSprite = {'getWidth' : function (){}, 'getHeight' : function (){}};
   });
 
   describe("registration", function() {
@@ -14,7 +17,7 @@ describe("entityManager", function() {
     it("should be able to register multiple entities with different ids", function() {
       var ids = [];
       for (var i = 0; i < 7; i++) {
-        ids.push(entityManager.register(new Entity()));
+        ids.push(entityManager.register(new Entity(placeHolderSprite)));
       }
 
       expect(util.containsDuplicates(ids)).toBeFalsy();
@@ -24,7 +27,7 @@ describe("entityManager", function() {
       var ids = [];
       var n = 7;
       for (var i = 0; i < n; i++) {
-        ids.push(entityManager.register(new Entity()));
+        ids.push(entityManager.register(new Entity(placeHolderSprite)));
       }
 
       // delete entity in middle
