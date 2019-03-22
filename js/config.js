@@ -7,9 +7,9 @@
 var config = {};
 
 // diagnostics
-config['drawBackgroundGrid'] = true;
+config['drawBackgroundGrid'] = false;
 config['drawPixelGrid'] = false;
-config['drawBoundingBoxes'] = true;
+config['drawBoundingBoxes'] = false;
 config['snakeMode'] = false;
 config['gravity'] = true;
 

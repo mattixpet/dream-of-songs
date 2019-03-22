@@ -35,11 +35,12 @@ EntityManager.prototype.register = function (entity, scene) {
 
 // Background calls us here when he changes scene
 EntityManager.prototype.notifySceneChange = function (scene) {
+	var oldScene = this.currentScene;
+	var newScene = scene;
 	if (this.entities.hasOwnProperty(scene)) {
-		this.currentScene = scene;
+		this.currentScene = newScene;
+		this._movePlayerToScene(oldScene, newScene);
 	} else {
-		var oldScene = this.currentScene;
-		var newScene = scene;
 		// first time on this scene
 		this.entities[newScene] = {};
 		// spawn all entities on this scene and move player to this scene
