@@ -1,5 +1,5 @@
 describe("background-data", function() {
-  var background_data = global.get('background_data');
+  var background_data = global.get('background-data');
 
   describe("background collision arrays", function() {
     it("should be 45 by 80 long (the grid size)", function() {

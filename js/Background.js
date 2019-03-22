@@ -13,10 +13,10 @@ var collision = global.get('collision');
 
 function Background() {
 	this.scenes = {}; // scene = page, stage whatever you want to call it, one background image
-	this.currentScene = 'smallcliff'; // starting scene
+	this.currentScene = consts.STARTINGSCENE;
 
 	// load collision data for each background image
-	this.cData = global.get('background_data');
+	this.cData = global.get('background-data');
 
 	// blocks entity can stand on
 	this.standableBlocks = [consts.REGBLOCK, consts.PLATFORMBLOCK, consts.STAIRTOPBLOCK];
@@ -175,6 +175,10 @@ Background.prototype.requestNextScene = function (entity, direction) {
 	var nextScene = this.cData['Connections'][this.currentScene][direction];
 	if (nextScene) {
 		this.currentScene = nextScene.scene;
+		// let's not just change scene, let's also notify entityManager so he can
+		// spawn/take care of entities on that scene
+		global.get('entityManager').notifySceneChange(nextScene.scene);
+
 		var coords = nextScene.coords;
 		var canvas = global.get('canvas');
 		if (coords === 'flip') {

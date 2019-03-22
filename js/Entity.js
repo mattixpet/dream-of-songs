@@ -14,8 +14,6 @@ var util = global.get('util');
 var draw = global.get('draw');
 
 function Entity(sprite, posX, posY, affectedByGravity) {
-	global.get('entityManager').register(this);
-
 	this.name = 'entity';
 
 	this.sprite = sprite;
@@ -88,6 +86,10 @@ Entity.prototype._updateSpeed = function (speed, acceleration, dt) {
 		newSpeed = oldSpeed;
 	}
 	return newSpeed;
+};
+
+Entity.prototype.getId = function () {
+	return this.id;
 };
 
 Entity.prototype.setId = function (id) {

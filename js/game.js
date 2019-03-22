@@ -72,7 +72,7 @@ function begin() {
 				out += '\n' + prop + ': ' + player[prop];
 			}
 		}
-		util.log('Player information: ' +
+		util.log('\nPlayer information: ' +
 			out
 		);
 	}
@@ -80,8 +80,9 @@ function begin() {
 
 function update(dt) {
 	var entityManager = global.get('entityManager');
-	for (var key in entityManager.entities) {
-		entityManager.entities[key].update(dt);
+	var entities = entityManager.getEntities();
+	for (var key in entities) {
+		entities[key].update(dt);
 	}
 }
 
@@ -135,14 +136,8 @@ function initGame() {
 	global.set('collisionManager', collisionManager);
 
 	var player = new Player(300, 110);
+	entityManager.register(player, consts.STARTINGSCENE);
 	global.set('player', player); // used for drawing player last and for diagnostics
-
-	var chest1 = new Chest(200, 100, true);
-	var chest2 = new Chest(0,0, false);
-	var chest3 = new Chest(600, 200, false);
-	var chest4 = new Chest(400, 50, false);
-	var chest5 = new Chest(450, 50, false);
-	//var chest6 = new Chest(500, 50, false);
 
 	var loadingBar = global.get('loadingBar');
 	if (loadingBar.getProgress() !== 1) {

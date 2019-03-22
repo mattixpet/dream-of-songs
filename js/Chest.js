@@ -19,8 +19,6 @@ const COLLISIONYDELTA = 5;
 const COLLISIONHEIGHTREDUCTION = 10;
 
 function Chest(posX, posY, flip) {
-	global.get('entityManager').register(this);
-
 	this.name = 'chest';
 
 	this.sprite = global.get('imageHandler').getSprite(this.name);

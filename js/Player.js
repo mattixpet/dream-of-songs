@@ -27,8 +27,6 @@ const COLLISIONWIDTHREDUCTION = 30; // how much to reduce the collision width of
 const MIRROREDMARGIN = 10; // how much to move the mirrored sprite to the left, so bounding box fits sprite display
 
 function Player(posX, posY) {
-	global.get('entityManager').register(this);
-
 	this.name = 'player';
 	this.sprite = global.get('imageHandler').getSprite(this.name);
 	this.x = posX;

@@ -457,6 +457,6 @@ var background_data = {
 	]
 }
 
-global.set('background_data', background_data);
+global.set('background-data', background_data);
 
 }());
