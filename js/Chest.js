@@ -19,23 +19,15 @@ const COLLISIONYDELTA = 5;
 const COLLISIONHEIGHTREDUCTION = 10;
 
 function Chest(posX, posY, flip) {
-	this.name = 'chest';
+	// use Entity constructor, then overwrite what we need to/ set what we need to after
+	Entity.call(this, global.get('imageHandler').getSprite('chest'),
+				posX, posY, true);
 
-	this.sprite = global.get('imageHandler').getSprite(this.name);
+	this.name = 'chest';
 	this.animation = flip ? FLIPPED : NORMAL;
 
-	this.x = posX;
-	this.y = posY;
 	this.width = this.sprite.getWidth();
 	this.height = this.sprite.getHeight() - COLLISIONHEIGHTREDUCTION;
-	this.startingX = posX;
-	this.startingY = posY;
-
-	this.speedY = 0.0;
-	this.TERMINALSPEED = config.DEFAULTTERMINALSPEED;
-
-	this.onGround = false;
-	this.affectedByGravity = true;
 
 	// set as true once player has gotten the song from us
 	this.looted = false;
