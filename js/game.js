@@ -16,15 +16,14 @@ var Chest = global.get('class/Chest');
 var EntityManager = global.get('class/EntityManager');
 var Background = global.get('class/Background');
 var CollisionManager = global.get('class/CollisionManager');
+var StartMenu = global.get('class/StartMenu');
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
 var canvas = global.get('canvas');
 global.set('ctx', canvas.getContext('2d')); // context
 var ctx = global.get('ctx');
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
 
-function start() {
+function startLoading() {
 	var loadingBar = new LoadingBar();
 	global.set('loadingBar', loadingBar);
 
@@ -126,6 +125,11 @@ function end(fps, panic) {
 }
 
 function initGame() {
+	// create all our entities and objects we need before we start the game
+	var startMenu = new StartMenu(global.get('imageHandler').getSprite('waterfallofdreams'), startGame); // this then calls startGame when user clicks start
+	//var pauseMenu = new PauseMenu();
+	//global.set('pauseMenu', pauseMenu);
+
 	var entityManager = new EntityManager();
 	global.set('entityManager', entityManager);
 
@@ -145,6 +149,10 @@ function initGame() {
 		loadingBar.updateProgress(1); // end loading
 	}
 
+	startMenu.display();
+}
+
+function startGame() {
 	//  Start the game !
 	MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
 }
@@ -168,6 +176,6 @@ function displayDiagnostics(fps) {
 	ctx.restore();
 }
 
-start(); // kicks everything off 
+startLoading(); // kicks everything off 
 
 }());

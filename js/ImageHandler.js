@@ -17,7 +17,7 @@ function ImageHandler() {
 	this.imageCounter = 0; // this can be accessed by async
 	this.imageCounterLock = false; // true if someone is modifying the imageCounter
 	// UPDATE THIS VARIABLE MANUALLY
-	this.totalImageCount = 10; 	// total number of images to be loaded here, to update progress of loading bar
+	this.totalImageCount = 11; 	// total number of images to be loaded here, to update progress of loading bar
 
 	this.canvas = global.get('canvas');
 
@@ -67,6 +67,10 @@ function ImageHandler() {
 	);
 	this._createSpriteFromImage(
 		'abovecave', consts.BACKGROUNDURL + 'abovecave.jpg',
+		this.canvas.width, this.canvas.height
+	);
+	this._createSpriteFromImage(
+		'waterfallofdreams', consts.BACKGROUNDURL + 'waterfallofdreams.jpg',
 		this.canvas.width, this.canvas.height
 	);
 }

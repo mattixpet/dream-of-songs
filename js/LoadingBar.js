@@ -12,7 +12,7 @@ function LoadingBar() {
 	this.progress = 0; // 0-1
 	this.canvas = global.get('canvas');
 	this.ctx = global.get('ctx');
-	this.bgUrl = consts.BACKGROUNDURL + 'loading.jpg';
+	this.bgUrl = consts.MENUITEMSURL + 'loading.jpg';
 	this.img = undefined; // set in this.preloadImage
 	// positions of loading bar bar (go figure)
 	this.x = Math.floor(this.canvas.width / 3.031);
