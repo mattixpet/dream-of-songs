@@ -12,11 +12,13 @@ function EntityManager () {
 	// format:
 	// entities = {
 	//		'sceneName' : {'id' : entity, 'id2' : entity, ..},
-	// 		'anotherScene' : ..
+	// 		'anotherScene' : {'id' : .., ..
 	//}
-	// move player from scene to scene, see this._movePlayerToScene()
+	// and then we move player from scene to scene, see this._movePlayerToScene()
 	this.entities = {};
 	this.currentScene = consts.STARTINGSCENE;
+	this.scenesVisited = {}; // Keep a record of scenes we've visited for the first time (or again)
+							 // format: {'sceneName' : true, ..}
 
 	this._lastId = -1;
 
@@ -37,17 +39,17 @@ EntityManager.prototype.register = function (entity, scene) {
 EntityManager.prototype.notifySceneChange = function (scene) {
 	var oldScene = this.currentScene;
 	var newScene = scene;
-	if (this.entities.hasOwnProperty(scene)) {
-		this.currentScene = newScene;
-		this._movePlayerToScene(oldScene, newScene);
-	} else {
+	if (!this.entities.hasOwnProperty(scene)) {
 		// first time on this scene
 		this.entities[newScene] = {};
-		// spawn all entities on this scene and move player to this scene
-		this._movePlayerToScene(oldScene, newScene);
-		this._spawnEntitiesOnScene(newScene);
-		this.currentScene = newScene;
 	}
+
+	// spawn all entities on this scene and move player to this scene
+	this._movePlayerToScene(oldScene, newScene);
+	this._spawnEntitiesOnScene(newScene);
+	this.currentScene = newScene;
+
+	this.scenesVisited[scene] = true;
 };
 
 EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
@@ -56,8 +58,19 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 	if (data.hasOwnProperty(scene)) {
 		var chests = data[scene];
 		for (var i = 0; i < chests.length; i++) {
-			var chest = new Chest(chests[i][0], chests[i][1], chests[i][2]);
-			this.register(chest, scene);
+			if (!this.scenesVisited[scene]) {
+				// first time here
+				var chest = new Chest(chests[i][0], chests[i][1], chests[i][2]);
+				this.register(chest, scene);
+			} else {
+				// we've been here before, still let's reset chests to their starting coordinates
+				for (var key in this.entities[scene]) {
+					var ent = this.entities[scene][key];
+					if (ent.getName() === 'chest') {
+						ent.resetToStartingPosition();
+					}
+				}
+			}
 		}
 	}
 	// else no chests on scene

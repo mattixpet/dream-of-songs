@@ -28,6 +28,8 @@ function Chest(posX, posY, flip) {
 	this.y = posY;
 	this.width = this.sprite.getWidth();
 	this.height = this.sprite.getHeight() - COLLISIONHEIGHTREDUCTION;
+	this.startingX = posX;
+	this.startingY = posY;
 
 	this.speedY = 0.0;
 	this.TERMINALSPEED = config.DEFAULTTERMINALSPEED;

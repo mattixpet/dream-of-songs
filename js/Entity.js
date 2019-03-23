@@ -22,6 +22,8 @@ function Entity(sprite, posX, posY, affectedByGravity) {
 	this.y = posY;
 	this.width = this.sprite.getWidth();
 	this.height = this.sprite.getHeight();
+	this.startingX = posX;
+	this.startingY = posY;
 
 	this.speedY = 0.0;
 	this.TERMINALSPEED = config.DEFAULTTERMINALSPEED;
@@ -138,6 +140,12 @@ Entity.prototype.getWidth = function () {
 
 Entity.prototype.getHeight = function () {
 	return this.height;
+};
+
+Entity.prototype.resetToStartingPosition = function () {
+	this.x = this.startingX;
+	this.y = this.startingY;
+	this.onGround = false;
 };
 
 Entity.prototype.getName = function () {

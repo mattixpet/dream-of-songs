@@ -13,13 +13,13 @@ var chest_data = {
 	// where xi, yi are coordinates of the chests to be spawned
 	// and flippedi is a boolean if the chest should face left or right respectively
 	'smallcliff' : [
-		[380,60,false], [440,60,false]
+		[380,80,false], [440,60,false]
 	],
 	'abovecave' : [
-		[16,40,false], [103,13,false], [209,18,true]
+		[16,0,false], [103,-20,false], [209,-40,true]
 	],
 	'brokenstairs' : [
-		[535,-10,false], [600,-23,false], [664,-39,false]
+		[535,-20,false], [600,-40,false], [664,-60,false]
 	]
 }
 
