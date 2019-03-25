@@ -55,6 +55,10 @@ function eatKey(keyCode) {
 	return false;
 }
 
+function objLen(obj) {
+	return Object.keys(obj).length;
+}
+
 function log(arg) {
 	console.log(arg + ' ' + _getDateMilliseconds());
 }
@@ -78,6 +82,7 @@ util['containsDuplicates'] = containsDuplicates;
 util['pixelToGrid'] = pixelToGrid;
 util['gridToPixel'] = gridToPixel;
 util['eatKey'] = eatKey;
+util['objLen'] = objLen;
 util['log'] = log;
 util['warn'] = warn;
 

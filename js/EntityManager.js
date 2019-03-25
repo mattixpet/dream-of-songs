@@ -4,7 +4,7 @@
 
 'use strict';
 
-var consts = global.get('consts');
+var config = global.get('config');
 var Chest = global.get('class/Chest');
 
 function EntityManager () {
@@ -16,13 +16,13 @@ function EntityManager () {
 	//}
 	// and then we move player from scene to scene, see this._movePlayerToScene()
 	this.entities = {};
-	this.currentScene = consts.STARTINGSCENE;
+	this.currentScene = config.STARTINGSCENE;
 	this.scenesVisited = {}; // Keep a record of scenes we've visited for the first time (or again)
 							 // format: {'sceneName' : true, ..}
 
 	this._lastId = -1;
 
-	this.notifySceneChange(consts.STARTINGSCENE); // initial spawns
+	this.notifySceneChange(config.STARTINGSCENE); // initial spawns
 }
 
 EntityManager.prototype.register = function (entity, scene) {

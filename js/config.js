@@ -17,6 +17,13 @@ config['clickToShowCoord'] = true;
 config['GRAVITYCONSTANT'] = 0.001;
 config['DEFAULTTERMINALSPEED'] = 0.5;
 
+config['STARTINGSCENE'] = 'clearsky';
+
+// sprites
+config['SPRITEURL'] = 'img/spritesheets/';
+config['BACKGROUNDURL'] = 'img/backgrounds/';
+config['MENUITEMSURL'] = 'img/menuitems/';
+
 global.set('config', config);
 
 }());

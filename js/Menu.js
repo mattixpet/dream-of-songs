@@ -15,7 +15,7 @@ function Menu(callback) {
 
 	this.sprite = global.get('imageHandler').getSprite('waterfallofdreams');
 	// sprite with png of buttons to go over normal sprite
-	this.itemsSprite = global.get('imageHandler').getSprite(this.name.toLowerCase());
+	this.itemsSprite = global.get('imageHandler').getSprite(this.name);
 
 	this.previousMenu = false; // set in this.display
 

@@ -10,25 +10,52 @@
   <script src="lib/jasmine-3.3.0/jasmine.js"></script>
   <script src="lib/jasmine-3.3.0/jasmine-html.js"></script>
   <script src="lib/jasmine-3.3.0/boot.js"></script>
+</head>
+
+<body>
+  <canvas id="dreamOfSongs" width="800" height="450" style="display:none;">
+    Sorry, but your browser does not support the HTML5 canvas tag.
+  </canvas>
 
   <!-- include source files here... -->
-  <script src="../../js/global.js"></script>
-  <script src="../../js/config.js"></script>
-  <script src="../../js/consts.js"></script>
-  <script src="../../js/util.js"></script>
-  <script src="../../js/draw.js"></script>
-  <script src="../../js/collision.js"></script>
+  <script src="../../js/ext/mainloop/mainloop.min.js" type="text/javascript"></script>
 
-  <script src="../../js/data/background-data.js"></script>
-  <script src="../../js/data/chest-data.js"></script>
-  
-  <script src="../../js/Sprite.js"></script>
-  <script src="../../js/ImageHandler.js"></script>
+  <script src="../../js/global.js" type="text/javascript"></script>
+  <script src="../../js/config.js" type="text/javascript"></script>
 
-  <script src="../../js/Entity.js"></script>
-  <script src="../../js/Chest.js"></script>
+  <!-- special file so that the game still at least loads, changes urls in config
+       so we can load the images at least and start the game (even though it is hidden) -->
+  <script src="modifyGameForTests.js" type="text/javascript"></script>
+  <!-- -->
 
-  <script src="../../js/EntityManager.js"></script>
+  <script src="../../js/consts.js" type="text/javascript"></script>
+  <script src="../../js/util.js" type="text/javascript"></script>
+  <script src="../../js/draw.js" type="text/javascript"></script>
+  <script src="../../js/collision.js" type="text/javascript"></script>
+
+  <script src="../../js/data/sprite-data.js" type="text/javascript"></script>
+  <script src="../../js/data/background-data.js" type="text/javascript"></script>
+  <script src="../../js/data/chest-data.js" type="text/javascript"></script>
+  <script src="../../js/data/menu-data.js" type="text/javascript"></script>
+
+  <script src="../../js/LoadingBar.js" type="text/javascript"></script>
+  <script src="../../js/Sprite.js" type="text/javascript"></script>
+  <script src="../../js/ImageHandler.js" type="text/javascript"></script>
+  <script src="../../js/Background.js" type="text/javascript"></script>
+
+  <script src="../../js/Menu.js" type="text/javascript"></script>
+  <script src="../../js/StartMenu.js" type="text/javascript"></script>
+  <script src="../../js/AboutMenu.js" type="text/javascript"></script>
+
+  <script src="../../js/Entity.js" type="text/javascript"></script>
+  <script src="../../js/Player.js" type="text/javascript"></script>
+  <script src="../../js/Chest.js" type="text/javascript"></script>
+
+  <script src="../../js/EntityManager.js" type="text/javascript"></script>
+  <script src="../../js/CollisionManager.js" type="text/javascript"></script>
+
+  <script src="../../js/input.js" type="text/javascript"></script>
+  <script src="../../js/game.js" type="text/javascript"></script>
 
   <!-- include spec files here... -->
   <script src="spec/SpecHelper.js"></script>
@@ -36,9 +63,5 @@
   <script src="spec/utilSpec.js"></script>
   <script src="spec/collisionSpec.js"></script>
   <script src="spec/background-dataSpec.js"></script>
-
-</head>
-
-<body>
 </body>
 </html>

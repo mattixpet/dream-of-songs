@@ -6,7 +6,7 @@
 'use strict';
 
 // imports
-var consts = global.get('consts');
+var config = global.get('config');
 var util = global.get('util');
 var Sprite = global.get('class/Sprite');
 
@@ -16,74 +16,59 @@ function ImageHandler() {
 
 	this.imageCounter = 0; // this can be accessed by async
 	this.imageCounterLock = false; // true if someone is modifying the imageCounter
-	// UPDATE THIS VARIABLE MANUALLY
-	this.totalImageCount = 13; 	// total number of images to be loaded here, to update progress of loading bar
 
-	this.canvas = global.get('canvas');
+	var sprite_data = global.get('sprite-data');
+	var menu_data = global.get('menu-data');
+	var background_data = global.get('background-data');
 
-	// Sprite creation and data
-	this._createSpriteFromImage(
-		'player', consts.SPRITEURL + 'protagonist-spritesheet.png', 
-		60, 100, 
-		365, 827, 
-		[[141,74], [738,74], [1344,72], [139,1072], [741,1072]]
-	);
+	// total number of images to be loaded here, to update progress of loading bar
+	// the -1 is because background_data has a Connections object which does not correspond to an image
+	this.totalImageCount = util.objLen(sprite_data) + util.objLen(menu_data) + util.objLen(background_data) - 1;
 
-	this._createSpriteFromImage(
-		'chest', consts.SPRITEURL + 'chest-spritesheet.png',
-		40, 50,
-		428, 636,
-		[[0,6], [0, 643], [441, 9], [440, 641]]
-	);
-
-	// menuitems
-	this._createSpriteFromImage(
-		'startmenu', consts.MENUITEMSURL + 'startmenu.png',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'aboutmenu', consts.MENUITEMSURL + 'aboutmenu.png',
-		this.canvas.width, this.canvas.height
-	);
-
-	// backgrounds
-	this._createSpriteFromImage(
-		'clearsky', consts.BACKGROUNDURL + 'clearsky.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'clearskyclouds', consts.BACKGROUNDURL + 'clearskyclouds.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'smallcliff', consts.BACKGROUNDURL + 'smallcliff.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'cave0', consts.BACKGROUNDURL + 'cave0.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'cave1', consts.BACKGROUNDURL + 'cave1.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'cavestairs', consts.BACKGROUNDURL + 'cavestairs.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'brokenstairs', consts.BACKGROUNDURL + 'brokenstairs.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'abovecave', consts.BACKGROUNDURL + 'abovecave.jpg',
-		this.canvas.width, this.canvas.height
-	);
-	this._createSpriteFromImage(
-		'waterfallofdreams', consts.BACKGROUNDURL + 'waterfallofdreams.jpg',
-		this.canvas.width, this.canvas.height
-	);
+	this._handleSprites();
+	this._handleMenuItems();
+	this._handleBackground();
 }
+
+ImageHandler.prototype._handleSprites = function () {
+	var sprite_data = global.get('sprite-data');
+
+	for (var sprite in sprite_data) {
+		var data = sprite_data[sprite];
+		this._createSpriteFromImage(
+			sprite, data.fileurl,
+			data.dispWidth, data.dispHeight,
+			data.srcWidth, data.srcHeight,
+			data.positions
+		);
+	}
+};
+
+ImageHandler.prototype._handleMenuItems = function () {
+	var menu_data = global.get('menu-data');
+	var canvas = global.get('canvas');
+
+	for (var menu in menu_data) {
+		this._createSpriteFromImage(
+			menu, config.MENUITEMSURL + menu.toLowerCase() + '.png',
+			canvas.width, canvas.height
+		);
+	}
+};
+
+ImageHandler.prototype._handleBackground = function () {
+	var background_data = global.get('background-data');
+	var canvas = global.get('canvas');
+
+	for (var bg in background_data) {
+		if (bg !== 'Connections') {
+			this._createSpriteFromImage(
+				bg, config.BACKGROUNDURL + bg + '.jpg',
+				canvas.width, canvas.height
+			);
+		}
+	}
+};
 
 ImageHandler.prototype._createSpriteFromImage = 
 	function _createSpriteFromImage(name, fileurl, dispWidth, dispHeight, srcWidth, srcHeight, positions) {

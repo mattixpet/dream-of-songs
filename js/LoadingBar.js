@@ -5,14 +5,14 @@
 'use strict';
 
 // imports
-var consts = global.get('consts');
+var config = global.get('config');
 var util = global.get('util');
 
 function LoadingBar() {
 	this.progress = 0; // 0-1
 	this.canvas = global.get('canvas');
 	this.ctx = global.get('ctx');
-	this.bgUrl = consts.MENUITEMSURL + 'loading.jpg';
+	this.bgUrl = config.MENUITEMSURL + 'loading.jpg';
 	this.img = undefined; // set in this.preloadImage
 	// positions of loading bar bar (go figure)
 	this.x = Math.floor(this.canvas.width / 3.031);
