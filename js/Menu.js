@@ -1,4 +1,5 @@
-// Menu, base class for all menus
+// Menu, base class for all menus (example StartMenu, AboutMenu and PauseMenu)
+// All menus must set a name before calling Menu constructor for the button initialization
 
 (function () {
 
@@ -6,35 +7,80 @@
 
 // imports
 var util = global.get('util');
+var collision = global.get('collision');
 
-function Menu(sprite, callback) {
-	// callback is a function you want menu to call when menu is hidden (removed from display)
+function Menu(callback) {
+	// callback is an optional function you want menu to call at some point
 	this.callback = callback;
-	this.active = false; // flag to know if this menu is active or 'displaying' at the moment	
-	this.name = 'menu';
-	this.sprite = sprite;
+
+	this.sprite = global.get('imageHandler').getSprite('waterfallofdreams');
+	// sprite with png of buttons to go over normal sprite
+	this.itemsSprite = global.get('imageHandler').getSprite(this.name.toLowerCase());
+
+	this.previousMenu = false; // set in this.display
+
+	// keep our buttons as rectangular coordinates, format
+	// buttons: {
+	//		'start' : {'x':292, 'y':199, 'width':210, 'height':68},
+	//      etc. exactly like in menu-data.js	
+	// }
+	this.buttons = global.get('menu-data')[this.name];
+
+	// this should be set up with functions to call if buttons are clicked, format e.g.
+	// buttonActions: {
+	//		'start' : this._handleStart,
+	//		'settings' : this._handleSettings,
+	//		etc.	
+	// }
+	this.buttonActions = {};
 }
 
 Menu.prototype.draw = function () {
+	var canvas = global.get('canvas');
+	global.get('ctx').clearRect(0, 0, canvas.width, canvas.height);
 	this.sprite.draw(0,0);
-
-	this._drawSpecific(); // code for children classes to use if they use the draw code above
+	this.itemsSprite.draw(0,0);
 };
 
-Menu.prototype._drawSpecific = function () {
-	// this needs to be implemented for children classes
+// get notified from event handling (input.js) whenever user clicks
+// with mouse and he is in some menu
+Menu.prototype.notifyClick = function (x, y) {
+	this._handleClick(x, y);
+};
+
+// handle a click from user and process if it is within a button
+Menu.prototype._handleClick = function (x, y) {
+	var buttonClicked = this._pixelWithinButton(x, y);
+	if (buttonClicked) {
+		// call relevant handler for this button and since they are stored as function pointers
+		// only, remember to pass the correct 'this' to them :)
+		this.buttonActions[buttonClicked].call(this);
+	}
+};
+
+// returns the button if pixel is within it, otherwise returns false
+Menu.prototype._pixelWithinButton = function (x, y) {
+	// check all our buttons
+	for (var button in this.buttons) {
+		var rect = this.buttons[button];
+		if (collision.pixelWithinRect(x, y, rect.x, rect.y, rect.width, rect.height)) {
+			return button;
+		}
+	}
+	return false;
 };
 
 Menu.prototype.display = function () {
-	util.log('Displaying: ' + this.name);
-	this.active = true;
+	util.log('Displaying ' + this.name);
+	// log the menu before us (false if no) and set us as the current menu
+	this.previousMenu = global.get('inMenu');
+	global.set('inMenu', this.name);
 	this.draw();
 };
 
 Menu.prototype.hide = function () {
-	util.log('Hiding: ' + this.name);
-	this.active = false;
-	this.callback();
+	util.log('Hiding ' + this.name);
+	global.set('inMenu', false);
 };
 
 global.set('class/Menu', Menu);

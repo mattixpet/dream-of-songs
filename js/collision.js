@@ -18,6 +18,19 @@ function rectCollision(aX, aY, aW, aH, bX, bY, bW, bH) {
 				_oneOfPointsWithinRect(bX, bY, bW, bH, aX, aY, aW, aH);
 }
 
+// rectX, rectY are top left coords of rectangle and rectW, H are widths and height respectively
+function pixelWithinRect(x, y, rectX, rectY, rectW, rectH) {
+	if (y >= rectY && y <= rectY + rectH) {
+		// we have vertical collision
+		if (x >= rectX && x <= rectX + rectW) {
+			// we have horizontal collision as well
+			// and therefore a total collision
+			return true;
+		}
+	}
+	return false;
+}
+
 // given two rectangles, calculate if one of the first ones corner points
 // are bounded by the second rect
 // aX, aY are top left coordinates of rect A
@@ -51,6 +64,7 @@ function _oneOfPointsWithinRect(aX, aY, aW, aH, bX, bY, bW, bH) {
 }
 
 collision['rectCollision'] = rectCollision;
+collision['pixelWithinRect'] = pixelWithinRect;
 
 global.set('collision', collision);
 

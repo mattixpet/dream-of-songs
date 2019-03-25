@@ -17,9 +17,12 @@ var menu_data = {
 	// and x, y are top left coordinates of the clickable box which is our button
 	// and width, height are the widths heights of same box
 	'startMenu' : {
-		'start' : 		{'x':700, 'y':478, 'width':168, 'height':164},
-		'settings' : 	{'x':700, 'y':642, 'width':168, 'height':164},
-		'about' : 		{'x':700, 'y':806, 'width':168, 'height':164}
+		'start' : 		{'x':292, 'y':199, 'width':210, 'height':68},
+		'settings' : 	{'x':292, 'y':268, 'width':210, 'height':68},
+		'about' : 		{'x':292, 'y':336, 'width':210, 'height':68}
+	},
+	'aboutMenu' : {
+		'back' :  		{'x':552, 'y':352, 'width':164, 'height':63}
 	}
 }
 

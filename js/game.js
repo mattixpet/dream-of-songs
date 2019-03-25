@@ -17,6 +17,7 @@ var EntityManager = global.get('class/EntityManager');
 var Background = global.get('class/Background');
 var CollisionManager = global.get('class/CollisionManager');
 var StartMenu = global.get('class/StartMenu');
+var AboutMenu = global.get('class/AboutMenu');
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
 var canvas = global.get('canvas');
@@ -126,7 +127,10 @@ function end(fps, panic) {
 
 function initGame() {
 	// create all our entities and objects we need before we start the game
-	var startMenu = new StartMenu(global.get('imageHandler').getSprite('waterfallofdreams'), startGame); // this then calls startGame when user clicks start
+	var startMenu = new StartMenu(startGame); // this then calls startGame when user clicks start
+	global.set('startMenu', startMenu);
+	var aboutMenu = new AboutMenu();
+	global.set('aboutMenu', aboutMenu);
 	//var pauseMenu = new PauseMenu();
 	//global.set('pauseMenu', pauseMenu);
 

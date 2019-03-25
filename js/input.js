@@ -53,9 +53,16 @@ function handleKeyup(e) {
 }
 
 function handleMousedown(e) {
+	var x = e.clientX - canvas.offsetLeft;
+	var y = e.clientY - canvas.offsetTop;
+
+	var inMenu = global.get('inMenu');
+	if (inMenu) {
+		// notify menu up at the moment of the click
+		global.get(inMenu).notifyClick(x,y);
+	}
+
 	if (config.clickToShowCoord) {
-		var x = e.clientX - canvas.offsetLeft;
-		var y = e.clientY - canvas.offsetTop;
 		util.log('Clicked x, y: ' + x + ', ' + y);
 	}
 }

@@ -17,7 +17,7 @@ function ImageHandler() {
 	this.imageCounter = 0; // this can be accessed by async
 	this.imageCounterLock = false; // true if someone is modifying the imageCounter
 	// UPDATE THIS VARIABLE MANUALLY
-	this.totalImageCount = 11; 	// total number of images to be loaded here, to update progress of loading bar
+	this.totalImageCount = 13; 	// total number of images to be loaded here, to update progress of loading bar
 
 	this.canvas = global.get('canvas');
 
@@ -34,6 +34,16 @@ function ImageHandler() {
 		40, 50,
 		428, 636,
 		[[0,6], [0, 643], [441, 9], [440, 641]]
+	);
+
+	// menuitems
+	this._createSpriteFromImage(
+		'startmenu', consts.MENUITEMSURL + 'startmenu.png',
+		this.canvas.width, this.canvas.height
+	);
+	this._createSpriteFromImage(
+		'aboutmenu', consts.MENUITEMSURL + 'aboutmenu.png',
+		this.canvas.width, this.canvas.height
 	);
 
 	// backgrounds
