@@ -24,7 +24,7 @@ var menu_data = {
 	'aboutMenu' : {
 		'back' :  		{'x':552, 'y':352, 'width':164, 'height':63}
 	}
-}
+};
 
 global.set('menu-data', menu_data);
 

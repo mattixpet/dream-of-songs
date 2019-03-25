@@ -21,7 +21,7 @@ var chest_data = {
 	'brokenstairs' : [
 		[535,-20,false], [600,-40,false], [664,-60,false]
 	]
-}
+};
 
 global.set('chest-data', chest_data);
 
