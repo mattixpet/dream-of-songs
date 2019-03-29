@@ -23,6 +23,7 @@ config['STARTINGSCENE'] = 'clearsky';
 config['SPRITEURL'] = 'img/spritesheets/';
 config['BACKGROUNDURL'] = 'img/backgrounds/';
 config['MENUITEMSURL'] = 'img/menuitems/';
+config['AUDIOGUIURL'] = 'img/audiogui/';
 config['SONGURL'] = 'http://dramattic.club/songs/';
 
 global.set('config', config);

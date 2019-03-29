@@ -20,14 +20,19 @@ function ImageHandler() {
 	var sprite_data = global.get('sprite-data');
 	var menu_data = global.get('menu-data');
 	var background_data = global.get('background-data');
+	var audio_gui_data = global.get('audio-gui-data');
 
 	// total number of images to be loaded here, to update progress of loading bar
 	// the -1 is because background_data has a Connections object which does not correspond to an image
-	this.totalImageCount = util.objLen(sprite_data) + util.objLen(menu_data) + util.objLen(background_data) - 1;
+	// and likewise audio_gui_data has a Spacings object
+	this.totalImageCount = 	util.objLen(sprite_data) + util.objLen(menu_data) + 
+							util.objLen(audio_gui_data) - 1 + util.objLen(background_data) - 1;
 
+	// load all the images !
 	this._handleSprites();
 	this._handleMenuItems();
 	this._handleBackground();
+	this._handleGuiItems();
 }
 
 ImageHandler.prototype._handleSprites = function () {
@@ -65,6 +70,21 @@ ImageHandler.prototype._handleBackground = function () {
 			this._createSpriteFromImage(
 				bg, config.BACKGROUNDURL + bg + '.jpg',
 				canvas.width, canvas.height
+			);
+		}
+	}
+};
+
+ImageHandler.prototype._handleGuiItems = function () {
+	var audio_gui_data = global.get('audio-gui-data');
+	var canvas = global.get('canvas');
+
+	for (var item in audio_gui_data) {
+		var itemInfo = audio_gui_data[item];
+		if (item !== 'Spacings') {
+			this._createSpriteFromImage(
+				item, config.AUDIOGUIURL + item + '.png',
+				itemInfo.width, itemInfo.height
 			);
 		}
 	}

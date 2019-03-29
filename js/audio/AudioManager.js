@@ -11,20 +11,90 @@ var AudioGUI = global.get('class/AudioGUI');
 
 function AudioManager () {
 	this.player = new AudioPlayer();
-	// global.set('audioPlayer', this.player);
 	this.gui = new AudioGUI();
+	global.set('audioGui', this.gui); // for the mouse events, so they can notify the gui
 
 	this.songs = global.get('audio-data');
 	this.songsDelivered = {}; // songs we've put in chests but player hasn't opened
-	this.playerSongs = {}; // songs player has gotten from chests
+	this.playerSongs = []; // songs player has gotten from chests
 
-	// test
-	this.play(config.SONGURL + 'Lelegar_upptokur/amr/2014/american_psycho.mp3');
+	// just for test add a few songs to player songs
+	for (var i = 0; i < 5; i++) {
+		this.notifySongOpened(this.getNewSong());
+	}
+
+	// index of current song in this.playerSongs
+	this.currentSong = -1;
+
+	// is a song playing at the moment? (audio audible)
+	this.isPlaying = false;
 }
 
-// play song by url
-AudioManager.prototype.play = function (url) {
-	this.player.playSong(url);
+// Audio GUI calls this, when user asks us to do any command (play, pause, rewind, etc.)
+// Command is:
+//  	'play', 'playSong', 'pause', 'next', 'previous', 'seek' and 'download'
+// value is optional except when command is 'seek' (then it is between 0 and 1)
+// play means just play current song
+// playSong means user is selecting a new song to play (on pause screen), then value is songName
+AudioManager.prototype.notifyCommand = function (command, value) {
+	util.log('Audio manager received command: ' + command);
+	if (command === 'play') {
+		this.play();
+	} else if (command === 'playSong') {
+		this.playSong(value, true);
+	} else if (command === 'pause') {
+		this.pause();
+	} else if (command === 'next') {
+		this.next();
+	} else if (command === 'previous') {
+		this.previous();
+	} else if (command === 'seek') {
+		this.player.seek(value);
+	} else if (command === 'download') {
+		// NEED TO HANDLE DOWNLOAD
+	} else {
+		util.warn('Unknown command: ' + command + ', not doing anything.');
+	}
+};
+
+// Play current song
+AudioManager.prototype.play = function () {
+	this.player.play();
+	this.isPlaying = true;
+};
+
+// Pause current song
+AudioManager.prototype.pause = function () {
+	this.player.pause();
+	this.isPlaying = false;
+};
+
+// Play next song if we are playing, otherwise just swap to next
+AudioManager.prototype.next = function () {
+	this.currentSong = (this.currentSong + 1) % this.playerSongs.length;
+	this.playSong(this.playerSongs[this.currentSong], this.isPlaying);
+};
+
+AudioManager.prototype.previous = function () {
+	this.currentSong = Math.abs(this.currentSong - 1) % this.playerSongs.length;
+	this.playSong(this.playerSongs[this.currentSong], this.isPlaying);
+};
+
+// play song by name (need to call this when switching to a new song)
+AudioManager.prototype.playSong = function (songName, play) {
+	util.log('Playing song: ' + songName);
+
+	// We should always and only be playing songs Player has access too !
+	for (var i = 0; i < this.playerSongs.length; i++) {
+		var song = this.playerSongs[i];
+		if (song.name === songName) {
+			this.player.playSong(config.SONGURL + song.url, play);
+		}
+	}
+};
+
+AudioManager.prototype.drawGui = function () {
+	this.gui.draw();
 };
 
 // Returns the name of a random song, and moves the song itself to this.songsDelivered
@@ -41,8 +111,12 @@ AudioManager.prototype.getNewSong = function () {
 // player has this song available, and we can draw it in the list of songs
 AudioManager.prototype.notifySongOpened = function (songName) {
 	console.log('Notified with song: ' + songName);
-	this.playerSongs[songName] = this.songsDelivered[songName];
+	this.playerSongs.push(this.songsDelivered[songName]);
 	delete this.songsDelivered[songName];
+};
+
+AudioManager.prototype.getPlayerSongs = function () {
+	return this.playerSongs;
 };
 
 global.set('class/AudioManager', AudioManager);

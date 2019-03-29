@@ -104,6 +104,9 @@ function draw() {
 	}
 	// special case, let's always draw Player last (so he's in foreground)
 	player.draw();
+
+	// well let's draw the audio player last
+	global.get('audioManager').drawGui();
 }
 
 function end(fps, panic) {
@@ -135,6 +138,7 @@ function initGame() {
 	//var pauseMenu = new PauseMenu();
 	//global.set('pauseMenu', pauseMenu);
 
+	// call 1-800-AUDIOMANAGER for everything audio
 	var audioManager = new AudioManager();
 	global.set('audioManager', audioManager);
 

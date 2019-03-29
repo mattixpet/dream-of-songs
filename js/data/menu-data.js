@@ -1,4 +1,4 @@
-// Data for scenes and spawn points for all Chests in game
+// Data for menus, where each buttons bounding box is and where the buttons are.
 
 (function () {
 

@@ -62,6 +62,9 @@ function handleMousedown(e) {
 		global.get(inMenu).notifyClick(x,y);
 	}
 
+	// notify the audio gui we clicked as well
+	global.get('audioGui').notifyClick(x,y);
+
 	if (config.clickToShowCoord) {
 		util.log('Clicked x, y: ' + x + ', ' + y);
 	}

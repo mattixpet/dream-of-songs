@@ -35,14 +35,12 @@ AudioPlayer.prototype.seek = function (index) {
 };
 
 // Play song by url
-AudioPlayer.prototype.playSong = function (songUrl) {
-	console.log('Playing song: ' + songUrl);
+// Play is true if we want to play it straight away
+AudioPlayer.prototype.playSong = function (songUrl, play) {
 	this.currentSong = new Audio(songUrl);
-	this.play();
-	// this.currentSong.addEventListener('loadeddata', function() {
-	// 	global.get('audioPlayer').seek(0.64);
-	// 	global.get('audioPlayer').play();
-	// });
+	if (play) {
+		this.play();
+	}
 };
 
 global.set('class/AudioPlayer', AudioPlayer);
