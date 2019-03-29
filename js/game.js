@@ -18,6 +18,7 @@ var Background = global.get('class/Background');
 var CollisionManager = global.get('class/CollisionManager');
 var StartMenu = global.get('class/StartMenu');
 var AboutMenu = global.get('class/AboutMenu');
+var AudioManager = global.get('class/AudioManager');
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
 var canvas = global.get('canvas');
@@ -133,6 +134,9 @@ function initGame() {
 	global.set('aboutMenu', aboutMenu);
 	//var pauseMenu = new PauseMenu();
 	//global.set('pauseMenu', pauseMenu);
+
+	var audioManager = new AudioManager();
+	global.set('audioManager', audioManager);
 
 	var entityManager = new EntityManager();
 	global.set('entityManager', entityManager);

@@ -19,10 +19,11 @@ config['DEFAULTTERMINALSPEED'] = 0.5;
 
 config['STARTINGSCENE'] = 'clearsky';
 
-// sprites
+// paths/urls
 config['SPRITEURL'] = 'img/spritesheets/';
 config['BACKGROUNDURL'] = 'img/backgrounds/';
 config['MENUITEMSURL'] = 'img/menuitems/';
+config['SONGURL'] = 'http://dramattic.club/songs/';
 
 global.set('config', config);
 
