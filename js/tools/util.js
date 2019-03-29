@@ -10,6 +10,11 @@ function containsDuplicates(arr) {
 	return (new Set(arr)).size !== arr.length;
 }
 
+// Returns a random int in interval [min, max-1]
+function randInt(min, max) {
+	return min + Math.floor(Math.random() * (max - min));
+}
+
 // x,y pixel coordinate to most approximate grid number
 // in a gridW x gridH long grid (e.g. collision array)
 // returns [gridX,gridY]
@@ -79,6 +84,7 @@ function _getDateMilliseconds() {
 }
 
 util['containsDuplicates'] = containsDuplicates;
+util['randInt'] = randInt;
 util['pixelToGrid'] = pixelToGrid;
 util['gridToPixel'] = gridToPixel;
 util['eatKey'] = eatKey;

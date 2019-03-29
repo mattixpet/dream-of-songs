@@ -14,8 +14,6 @@ var util = global.get('util');
 var draw = global.get('draw');
 
 function Entity(sprite, posX, posY, affectedByGravity) {
-	this.name = 'entity';
-
 	this.sprite = sprite;
 
 	this.x = posX;

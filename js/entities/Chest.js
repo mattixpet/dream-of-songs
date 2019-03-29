@@ -19,11 +19,12 @@ const COLLISIONYDELTA = 5;
 const COLLISIONHEIGHTREDUCTION = 10;
 
 function Chest(posX, posY, flip) {
+	this.name = 'chest'; // remember to set name before calling Entity constructor so it can use the name
+
 	// use Entity constructor, then overwrite what we need to/ set what we need to after
 	Entity.call(this, global.get('imageHandler').getSprite('chest'),
 				posX, posY, true);
 
-	this.name = 'chest';
 	this.animation = flip ? FLIPPED : NORMAL;
 
 	this.width = this.sprite.getWidth();
@@ -31,6 +32,9 @@ function Chest(posX, posY, flip) {
 
 	// set as true once player has gotten the song from us
 	this.looted = false;
+
+	// get our song !
+	this.song = global.get('audioManager').getNewSong();
 }
 
 Chest.prototype = Object.create(Entity.prototype);
@@ -52,6 +56,8 @@ Chest.prototype.loot = function () {
 	if (!this.looted) {
 		this.looted = true;
 		this.animation = this.animation === NORMAL ? NORMALOPEN : FLIPPEDOPEN;
+		// let AudioManager know so he knows Player now has this song
+		global.get('audioManager').notifySongOpened(this.song);
 	}
 };
 
