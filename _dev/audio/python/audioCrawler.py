@@ -13,9 +13,10 @@
 # var audio_data = [
 #     // format
 #     // {
-#     //      'name' : readable song name
+#     //      'name' : readable song name, (string)
 #     //      'url' : 'relative path of file',
-#     //      'year' : closest we have to year of creation
+#     //      'year' : closest we have to year of creation, (integer)
+#     //      'duration' : duration in minutes:seconds, (string)
 #     //      'cover' : boolean
 #     //  }, etc.
 #     // Where name is a readable name as a string
@@ -27,6 +28,7 @@
 #       'name' : 'american_psycho',
 #       'url' : 'Lelegar_upptokur/amr/2014/american_psycho.mp3',
 #       'year' : 2014,
+#       'duration': '3:14'
 #       'cover' : false
 #     },
 #     ..
@@ -54,14 +56,16 @@ header = '// Data for audio\
 \nvar audio_data = [\
 \n\t// format\
 \n\t// {\
-\n\t//     \'name\' : readable song name\
+\n\t//     \'name\' : readable song name, (string)\
 \n\t//     \'url\' : \'relative path of file\',\
-\n\t//     \'year\' : closest we have to year of creation\
+\n\t//     \'year\' : closest we have to year of creation, (integer)\
+\n\t//     \'duration\' : duration in minutes:seconds, (string)\
 \n\t//     \'cover\' : boolean\
 \n\t// }, etc.\
 \n\t// Where name is a readable name as a string\
 \n\t// url is the path to the file usable on a domain (e.g. matthiaspetursson.com/songs/url)\
 \n\t// Year is the closest I could find to the actual year I created the song\
+\n\t// Duration is the duration of the song in minutes:seconds as a string\
 \n\t// Cover indicates if the song was written by someone else (true if so)\
 \n\t// e.g.'
 
@@ -81,6 +85,7 @@ def outputToJsFile(songList):
         out += '\n\t\t\'name\' : \'' + song['songName'] + '\','
         out += '\n\t\t\'url\' : \'' + song['songUrl'] + '\','
         out += '\n\t\t\'year\' : ' + str(song['songYear']) + ','
+        out += '\n\t\t\'duration\' : \'' + song['songDuration'] + '\','
         out += '\n\t\t\'cover\' : ' + str(song['songCover']).lower()
         out += '\n\t},'
 
@@ -89,6 +94,15 @@ def outputToJsFile(songList):
     out += footer
     with open(outputFile, 'w') as f:
         f.write(out)
+
+# Uses mutagen to get duration of the song and returns it as
+# string minutes:seconds
+def getDuration(fullSongPath):
+    from mutagen.mp3 import MP3
+    durationS = MP3(fullSongPath).info.length
+    mins = int(durationS / 60)
+    secs = int(durationS % 60)
+    return '{}:{}'.format(mins, secs if len(str(secs)) > 1 else '0{}'.format(secs))
 
 # Looks through filename and folders in path for a year
 # Also looks at date modified.
@@ -115,13 +129,15 @@ def trimName(song):
 
 def processSong(folders, filename):
     songPath = os.path.join(folders, filename + '.mp3')
+    fullSongPath = os.path.join(rootPath, songPath)
 
     songName = trimName(filename)
     songUrl = songPath.replace('\\','/')
-    songYear = extractYear(os.path.join(rootPath, songPath))
+    songYear = extractYear(fullSongPath)
+    songDuration = getDuration(fullSongPath)
     songCover = '(cover)' in filename
 
-    return {'songName' : songName, 'songUrl' : songUrl, 'songYear' : songYear, 'songCover' : songCover}
+    return {'songName' : songName, 'songUrl' : songUrl, 'songYear' : songYear, 'songDuration' : songDuration, 'songCover' : songCover}
 
 
 # dirpath is the path for the filenames (e.g. dirpath/filename)
