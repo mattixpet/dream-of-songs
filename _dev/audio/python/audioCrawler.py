@@ -78,6 +78,7 @@ footer = '\n];\
 # songList is an array of objects {'songName':name, 'songUrl':url, 'songYear':year, songCover:True/False}
 # this outputs it to a javascript file, outputFile as described in the top of this file
 def outputToJsFile(songList):
+    import codecs
     out = header
     
     for song in songList:
@@ -92,7 +93,7 @@ def outputToJsFile(songList):
     out = out[:-1] # remove last trailing comma
 
     out += footer
-    with open(outputFile, 'w') as f:
+    with codecs.open(outputFile, 'w', 'utf-8') as f:
         f.write(out)
 
 # Uses mutagen to get duration of the song and returns it as

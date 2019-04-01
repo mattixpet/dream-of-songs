@@ -41,7 +41,7 @@ AudioGUI.prototype.draw = function () {
 	if (!this.tested) {
 		var playerSongs = global.get('audioManager').getPlayerSongs();
 
-		var song = new Song(playerSongs[0]['name'], 400, 250);
+		var song = new Song(playerSongs[0]['name'], 250, 350, playerSongs[0]['year'], playerSongs[0]['duration']);
 		this.activeSongs.push(song);
 		this.tested = true;
 	}

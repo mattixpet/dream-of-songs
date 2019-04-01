@@ -34,14 +34,16 @@ function AudioManager () {
 // Command is:
 //  	'play', 'playSong', 'pause', 'next', 'previous', 'seek' and 'download'
 // value is optional except when command is 'seek' (then it is between 0 and 1)
-// play means just play current song
+// play means play current song if value is same as currentSong or else a new song
 // playSong means user is selecting a new song to play (on pause screen), then value is songName
 AudioManager.prototype.notifyCommand = function (command, value) {
-	util.log('Audio manager received command: ' + command);
+	util.log('Audio manager received command: ' + command + ' with value: ' + value);
 	if (command === 'play') {
-		this.play();
-	} else if (command === 'playSong') {
-		this.playSong(value, true);
+		//if (this.playerSongs[this.currentSong].name === value && !this.isPlaying) {
+		//	this.play();
+		//} else {
+			this.playSong(value, true);
+		//}
 	} else if (command === 'pause') {
 		this.pause();
 	} else if (command === 'next') {
@@ -53,7 +55,7 @@ AudioManager.prototype.notifyCommand = function (command, value) {
 	} else if (command === 'download') {
 		// NEED TO HANDLE DOWNLOAD
 	} else {
-		util.warn('Unknown command: ' + command + ', not doing anything.');
+		util.warn('Unknown command: ' + command + ' with value: ' + value + ', not doing anything.');
 	}
 };
 
@@ -89,8 +91,11 @@ AudioManager.prototype.playSong = function (songName, play) {
 		var song = this.playerSongs[i];
 		if (song.name === songName) {
 			this.player.playSong(config.SONGURL + song.url, play);
+			this.currentSong = i;
 		}
 	}
+
+	this.isPlaying = true;
 };
 
 AudioManager.prototype.drawGui = function () {

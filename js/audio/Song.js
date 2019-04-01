@@ -18,11 +18,13 @@ var draw = global.get('draw');
 var collision = global.get('collision');
 
 // x, y is topleft coord of bounding box of song
-function Song (name, x, y) {
+function Song (name, x, y, year, duration) {
 	this.name = name; // song name as in audio-data and AudioManager (and everywhere)
 
 	this.x = x;
 	this.y = y;
+	this.year = year;
+	this.duration = duration;
 
 	// sprites
 	var imageHandler = global.get('imageHandler');
@@ -66,6 +68,7 @@ Song.prototype._populateRects = function (x, y) {
 	this.namePos = [this.downloadPos[0] + this.iconW + Math.floor(itemMarginR * 2),
 					this.y + this.iconW / 2];
 	this.barPos = [this.namePos[0] - Math.floor(itemMarginR * 0.5), this.playPos[1] + this.iconW / 2];
+	this.timePos = [this.barPos[0] + this.barW + itemMarginR, this.barPos[1] + Math.floor(itemMarginR * 1.5)]; // not really proper use of right margin in the y coord here but who cares
 	this.seekerPos = [this.barPos[0] + Math.floor(margin/2), this.barPos[1] + Math.floor(this.barH/8)];
 };
 
@@ -78,7 +81,7 @@ Song.prototype.click = function (x, y) {
 	if (collision.pixelWithinRect(	x, y, this.playPos[0], this.playPos[1], 
 									this.iconW, this.iconW)) {
 		this.isPlaying = !this.isPlaying;
-		return {'command': !this.isPlaying ? 'pause' : 'playSong', 'value': this.name};
+		return {'command': !this.isPlaying ? 'pause' : 'play', 'value': this.name};
 	}
 	// check for download
 	if (collision.pixelWithinRect(	x, y, this.downloadPos[0], this.downloadPos[1],
@@ -103,7 +106,9 @@ Song.prototype.draw = function () {
 	}
 	this.downloadSprite.draw(this.downloadPos[0], this.downloadPos[1]);
 
-	draw.fillText(	global.get('ctx'), this.name, this.namePos[0], this.namePos[1],
+	draw.fillText(	global.get('ctx'), this.name + ' (' + this.year + ')', this.namePos[0], this.namePos[1],
+					'Monospace', this.fontSize, 'white');
+	draw.fillText(	global.get('ctx'), this.duration, this.timePos[0], this.timePos[1],
 					'Monospace', this.fontSize, 'white');
 
 	this.barSprite.draw(this.barPos[0], this.barPos[1]);
