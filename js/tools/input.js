@@ -27,10 +27,12 @@ function handleKeydown(e) {
 	// pause/resume
 	if (util.eatKey(consts.KEY_P)) {
 		if (MainLoop.isRunning()) {
-			util.log('Pausing game.');
 			MainLoop.stop();
+			global.get('pauseMenu').display();
+			global.get('audioGui').notifyPause();
+			global.get('audioManager').drawGui();
 		} else {
-			util.log('Resuming game.');
+			global.get('pauseMenu').hide();
 			MainLoop.start();
 		}
 	}

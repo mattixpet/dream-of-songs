@@ -23,6 +23,9 @@ var menu_data = {
 	},
 	'aboutMenu' : {
 		'back' :  		{'x':552, 'y':352, 'width':164, 'height':63}
+	},
+	'pauseMenu' : {
+		'resume' :      {'x':0, 'y':0, 'width':50, 'height':50}
 	}
 };
 

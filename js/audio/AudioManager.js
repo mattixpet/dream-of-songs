@@ -12,19 +12,19 @@ var AudioGUI = global.get('class/AudioGUI');
 function AudioManager () {
 	this.player = new AudioPlayer();
 	this.gui = new AudioGUI();
-	global.set('audioGui', this.gui); // for the mouse events, so they can notify the gui
+	global.set('audioGui', this.gui); // for the mouse events, so they can notify the gui and more of course..
 
 	this.songs = global.get('audio-data');
 	this.songsDelivered = {}; // songs we've put in chests but player hasn't opened
 	this.playerSongs = []; // songs player has gotten from chests
 
 	// just for test add a few songs to player songs
-	for (var i = 0; i < 5; i++) {
+	for (var i = 0; i < 10; i++) {
 		this.notifySongOpened(this.getNewSong());
 	}
 
 	// index of current song in this.playerSongs
-	this.currentSong = -1;
+	this.currentSong = 0;//-1;
 
 	// is a song playing at the moment? (audio audible)
 	this.isPlaying = false;
@@ -73,12 +73,12 @@ AudioManager.prototype.pause = function () {
 
 // Play next song if we are playing, otherwise just swap to next
 AudioManager.prototype.next = function () {
-	this.currentSong = (this.currentSong + 1) % this.playerSongs.length;
+	this.currentSong = util.circularIdx(this.currentSong + 1, this.playerSongs.length);
 	this.playSong(this.playerSongs[this.currentSong], this.isPlaying);
 };
 
 AudioManager.prototype.previous = function () {
-	this.currentSong = Math.abs(this.currentSong - 1) % this.playerSongs.length;
+	this.currentSong = util.circularIdx(this.currentSong - 1, this.playerSongs.length);
 	this.playSong(this.playerSongs[this.currentSong], this.isPlaying);
 };
 
@@ -122,6 +122,11 @@ AudioManager.prototype.notifySongOpened = function (songName) {
 
 AudioManager.prototype.getPlayerSongs = function () {
 	return this.playerSongs;
+};
+
+// get position in playerSongs
+AudioManager.prototype.getCurrentSong = function () {
+	return this.currentSong;
 };
 
 global.set('class/AudioManager', AudioManager);

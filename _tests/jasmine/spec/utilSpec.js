@@ -92,4 +92,16 @@ describe("util", function() {
       }
     });
   });
+
+  describe("circular indices", function() {
+    it("should work exactly like in python", function() {
+      var len = 6;
+      expect(util.circularIdx(3, len)).toEqual(3);
+      expect(util.circularIdx(-1, len)).toEqual(len - 1);
+      expect(util.circularIdx(len, len)).toEqual(0);
+      expect(util.circularIdx(-5, len)).toEqual(1);
+      expect(util.circularIdx(-20, len)).toEqual(4);
+      expect(util.circularIdx(32, len)).toEqual(2);
+    });
+  });
 });

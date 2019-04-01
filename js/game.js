@@ -18,6 +18,7 @@ var Background = global.get('class/Background');
 var CollisionManager = global.get('class/CollisionManager');
 var StartMenu = global.get('class/StartMenu');
 var AboutMenu = global.get('class/AboutMenu');
+var PauseMenu = global.get('class/PauseMenu');
 var AudioManager = global.get('class/AudioManager');
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
@@ -135,8 +136,8 @@ function initGame() {
 	global.set('startMenu', startMenu);
 	var aboutMenu = new AboutMenu();
 	global.set('aboutMenu', aboutMenu);
-	//var pauseMenu = new PauseMenu();
-	//global.set('pauseMenu', pauseMenu);
+	var pauseMenu = new PauseMenu();
+	global.set('pauseMenu', pauseMenu);
 
 	// call 1-800-AUDIOMANAGER for everything audio
 	var audioManager = new AudioManager();
@@ -153,7 +154,7 @@ function initGame() {
 
 	var player = new Player(300, 110);
 	entityManager.register(player, config.STARTINGSCENE);
-	global.set('player', player); // used for drawing player last and for diagnostics
+	global.set('player', player); // used for drawing player last
 
 	var loadingBar = global.get('loadingBar');
 	if (loadingBar.getProgress() !== 1) {
@@ -174,14 +175,6 @@ function displayDiagnostics(fps) {
 
 	ctx.fillStyle = 'white';
 	ctx.font = 'normal 12px Monospace';
-
-	// these diagnostics not as important once we made command i to print player variables and single stepping/pause
-	// Display Player x,y
-	//var player = global.get('player');
-	//ctx.fillText('x: ' + player.getX() + ' y: ' + player.getY(), canvas.width - 100, canvas.height - 40);
-
-	// player speed
-	//ctx.fillText('Speed y: ' + player.getSpeedY().toPrecision(2), canvas.width - 105, canvas.height - 25);
 
 	// Display FPS in bottom right corner
 	ctx.fillText(fps.toPrecision(4) + ' fps', canvas.width - 75, canvas.height - 10);

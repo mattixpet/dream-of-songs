@@ -61,13 +61,14 @@ Song.prototype._populateRects = function (x, y) {
 	var margin = spacingData.margin;
 	var itemMarginR = spacingData.itemMarginRight;
 
+	// this pos is not the best use of the sizes we got in audio-gui-data (kind of magic), but whatever, time to finish this game
 	this.playPos = [this.x + margin, this.y + margin];
 	// download rect is to right of play button
 	this.downloadPos = [this.playPos[0] + this.iconW + itemMarginR,
 						this.y + margin];
 	this.namePos = [this.downloadPos[0] + this.iconW + Math.floor(itemMarginR * 2),
-					this.y + this.iconW / 2];
-	this.barPos = [this.namePos[0] - Math.floor(itemMarginR * 0.5), this.playPos[1] + this.iconW / 2];
+					this.y + Math.floor(this.iconW / 1.75)];
+	this.barPos = [this.namePos[0] - Math.floor(itemMarginR * 0.5), this.playPos[1] + Math.floor(this.iconW / 2.75)];
 	this.timePos = [this.barPos[0] + this.barW + itemMarginR, this.barPos[1] + Math.floor(itemMarginR * 1.5)]; // not really proper use of right margin in the y coord here but who cares
 	this.seekerPos = [this.barPos[0] + Math.floor(margin/2), this.barPos[1] + Math.floor(this.barH/8)];
 };
@@ -98,7 +99,14 @@ Song.prototype.click = function (x, y) {
 	return false;
 };
 
-Song.prototype.draw = function () {
+Song.prototype.draw = function (x, y) {
+	// if we get coordinates to draw function, change ours and reinitialize
+	if (x || x === 0) {
+		this.x = x;
+		this.y = y;
+		this._populateRects(x,y);
+	}
+
 	if (!this.isPlaying) {
 		this.playSprite.draw(this.playPos[0], this.playPos[1]);
 	} else {

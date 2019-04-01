@@ -9,12 +9,21 @@ var iconList = ['downarrow', 'download', 'next', 'pause', 'play', 'previous', 'u
 var iconWidth = 50; // px, icons are square
 var barWidth = 200;
 var barHeight = 30;
+var canvasWidth = 800;
+var canvasHeight = 450;
 
 var audio_gui_data = {
 	'Spacings' : {
 		'margin' : 16, // px
 		'itemMarginRight' : 12, // right margin of icons/images in here
-		'fontSize' : 16
+		'fontSize' : 16,
+		'pauseMenuXCoord' : 350, // have the song list in pause be 67% of screen
+		'pauseMenuYCoord' : iconWidth, // just magic kinda
+		'songHeight' : Math.floor(iconWidth * 1.1), // height of one song item (one of 5 songs on screen)
+		'iconWidth' : iconWidth,
+		// positions of up/down arrow in pause menu
+		'upArrowPos' : [canvasWidth - iconWidth - 12, 12],
+		'downArrowPos' : [canvasWidth - iconWidth - 12, canvasHeight - iconWidth - 12]
 	},
 	'bar' : {
 		'width' : barWidth,

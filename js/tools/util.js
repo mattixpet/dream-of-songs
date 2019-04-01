@@ -10,6 +10,13 @@ function containsDuplicates(arr) {
 	return (new Set(arr)).size !== arr.length;
 }
 
+// Accesses array in a circular manner
+// e.g. i == -1 would return idx = arrLength - 1
+//      i == arrLength would return idx = 0
+function circularIdx(i, arrLength) {
+	return (arrLength + (i % arrLength)) % arrLength;
+}
+
 // Returns a random int in interval [min, max-1]
 function randInt(min, max) {
 	return min + Math.floor(Math.random() * (max - min));
@@ -84,6 +91,7 @@ function _getDateMilliseconds() {
 }
 
 util['containsDuplicates'] = containsDuplicates;
+util['circularIdx'] = circularIdx;
 util['randInt'] = randInt;
 util['pixelToGrid'] = pixelToGrid;
 util['gridToPixel'] = gridToPixel;
