@@ -37,6 +37,9 @@ AudioPlayer.prototype.seek = function (index) {
 // Play song by url
 // Play is true if we want to play it straight away
 AudioPlayer.prototype.playSong = function (songUrl, play) {
+	if (this.currentSong) {
+		this.pause(); // stop our current song when we play a new one
+	}
 	this.currentSong = new Audio(songUrl);
 	if (play) {
 		this.play();
