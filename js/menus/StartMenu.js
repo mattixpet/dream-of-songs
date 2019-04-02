@@ -39,6 +39,12 @@ StartMenu.prototype._handleAbout = function () {
 	global.get('aboutMenu').display();
 };
 
+// overwrite the default display because we need to play our title theme !
+StartMenu.prototype.display = function () {
+	Menu.prototype.display.call(this);
+	global.get('audioManager').playTitleTheme();
+};
+
 global.set('class/StartMenu', StartMenu);
 
 }());
