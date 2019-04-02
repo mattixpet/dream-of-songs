@@ -17,13 +17,18 @@ var audio_gui_data = {
 		'margin' : 16, // px
 		'itemMarginRight' : 12, // right margin of icons/images in here
 		'fontSize' : 16,
+		'fontColor' : 'white',
+		'font' : 'Monospace',
 		'pauseMenuXCoord' : 350, // have the song list in pause be 67% of screen
 		'pauseMenuYCoord' : iconWidth, // just magic kinda
 		'songHeight' : Math.floor(iconWidth * 1.1), // height of one song item (one of 5 songs on screen)
 		'iconWidth' : iconWidth,
 		// positions of up/down arrow in pause menu
 		'upArrowPos' : [canvasWidth - iconWidth - 12, 12],
-		'downArrowPos' : [canvasWidth - iconWidth - 12, canvasHeight - iconWidth - 12]
+		'downArrowPos' : [canvasWidth - iconWidth - 12, canvasHeight - iconWidth - 12],
+		// total songs collected and download all text locations
+		'totalSongPos' : [430, 36],
+		'downloadAllPos' : [495, canvasHeight - 30]
 	},
 	'bar' : {
 		'width' : barWidth,

@@ -28,9 +28,8 @@ function handleKeydown(e) {
 	if (util.eatKey(consts.KEY_P)) {
 		if (MainLoop.isRunning()) {
 			MainLoop.stop();
-			global.get('pauseMenu').display();
-			global.get('audioGui').notifyPause();
-			global.get('audioManager').drawGui();
+			global.get('audioGui').notifyPause(); // so audio gui can prep for display
+			global.get('pauseMenu').display(); // this will also draw the gui
 		} else {
 			global.get('pauseMenu').hide();
 			MainLoop.start();
@@ -64,8 +63,10 @@ function handleMousedown(e) {
 		global.get(inMenu).notifyClick(x,y);
 	}
 
-	// notify the audio gui we clicked as well
-	global.get('audioGui').notifyClick(x,y);
+	// notify the audio gui we clicked, if only we are in pause or in game
+	if (inMenu === 'pauseMenu' || !inMenu) {
+		global.get('audioGui').notifyClick(x,y);
+	}
 
 	if (config.clickToShowCoord) {
 		util.log('Clicked x, y: ' + x + ', ' + y);

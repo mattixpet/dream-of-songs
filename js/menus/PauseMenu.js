@@ -14,8 +14,8 @@ function PauseMenu () {
 	Menu.call(this);
 
 	this.buttonActions['resume'] = this._handleResume;
-	this.buttonActions['up'] = this._handleUp;
-	this.buttonActions['down'] = this._handleDown;
+	this.buttonActions['settings'] = this._handleSettings;
+	this.buttonActions['about'] = this._handleAbout;
 }
 
 PauseMenu.prototype = Object.create(Menu.prototype);
@@ -25,14 +25,19 @@ PauseMenu.prototype._handleResume = function () {
 	MainLoop.start();
 };
 
-PauseMenu.prototype._handleUp = function () {
-	this.hide();
-	MainLoop.start();
+PauseMenu.prototype._handleSettings = function () {
+	// we don't do anything at the moment for settings
 };
 
-PauseMenu.prototype._handleDown = function () {
-	this.hide();
-	MainLoop.start();
+PauseMenu.prototype._handleAbout = function () {
+	global.get('aboutMenu').display();
+};
+
+// we overwrite this from Menu base class because we need to draw the audio gui as well
+// whenever we draw ourselves
+PauseMenu.prototype.display = function () {
+	Menu.prototype.display.call(this);
+	global.get('audioManager').drawGui();
 };
 
 global.set('class/PauseMenu', PauseMenu);

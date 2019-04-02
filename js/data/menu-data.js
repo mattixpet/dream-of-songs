@@ -18,14 +18,16 @@ var menu_data = {
 	// and width, height are the widths heights of same box
 	'startMenu' : {
 		'start' : 		{'x':292, 'y':199, 'width':210, 'height':68},
-		'settings' : 	{'x':292, 'y':268, 'width':210, 'height':68},
-		'about' : 		{'x':292, 'y':336, 'width':210, 'height':68}
+		'settings' : 	{'x':292, 'y':267, 'width':210, 'height':68},
+		'about' : 		{'x':292, 'y':335, 'width':210, 'height':68}
 	},
 	'aboutMenu' : {
 		'back' :  		{'x':552, 'y':352, 'width':164, 'height':63}
 	},
 	'pauseMenu' : {
-		'resume' :      {'x':0, 'y':0, 'width':50, 'height':50}
+		'resume' :      {'x':80, 'y':123, 'width':210, 'height':68},
+		'settings' :    {'x':80, 'y':191, 'width':210, 'height':68},
+		'about' :      	{'x':80, 'y':259, 'width':210, 'height':68}
 	}
 };
 

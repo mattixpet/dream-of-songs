@@ -35,9 +35,15 @@ function fillText(ctx, text, x, y, font, fontSize, color) {
 	ctx.restore();
 }
 
+function fillTextWithShadow(ctx, text, x, y, font, fontSize, color, shadowColor, shadowDistance) {
+	fillText(ctx, text, x + shadowDistance, y - shadowDistance, font, fontSize, shadowColor);
+	fillText(ctx, text, x, y, font, fontSize, color);
+}
+
 draw['fillRect'] = fillRect;
 draw['drawBox'] = drawBox;
 draw['fillText'] = fillText;
+draw['fillTextWithShadow'] = fillTextWithShadow;
 
 global.set('draw', draw); // export
 

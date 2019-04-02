@@ -10,17 +10,20 @@
 var Song = global.get('class/Song');
 var collision = global.get('collision');
 var util = global.get('util');
+var draw = global.get('draw');
 
 // local constants
 const songsPerPage = 6; // this.activeSongs should be max this length
 
-function AudioGUI () {
+function AudioGUI (TOTALSONGS) {
 	this.activeSongs = []; // songs displaying in menu at the moment, activeSongs[0] is also song displayed in game
 	// these are important variables maintaining where we are and what we are displaying from playerSongs
 	// looks something like this:
 	//
 	//					[as0, as1, as2, .. asSongsPerPage]
 	// [  ps0, ps1, ps2, ps3, ps4, ps5, ps6, ps7, ps8, ps9, .. ]
+	//                   |                              |
+	//             playerLeftIndex               playerRightIndex
 	// Meaning our activeSongs (as0..asX) is an intersection of playerSongs (ps0..psX)
 	// And in the example above playerSongs[playerSongLeftIndex] == ps3
 	this.playerSongLeftIndex = undefined;
@@ -30,6 +33,8 @@ function AudioGUI () {
 
 	this.upArrowSprite = global.get('imageHandler').getSprite('uparrow');
 	this.downArrowSprite = global.get('imageHandler').getSprite('downarrow');
+
+	this.TOTALSONGS = TOTALSONGS;
 }
 
 // Mouse event handling calls this function so we can know what to do
@@ -160,6 +165,26 @@ AudioGUI.prototype.draw = function () {
 		// draw the up/down arrows to scroll, up arrow in top right corner, down arrow in top left corner
 		this.upArrowSprite.draw(data.upArrowPos[0], data.upArrowPos[1]);
 		this.downArrowSprite.draw(data.downArrowPos[0], data.downArrowPos[1]);
+
+		// draw the total songs collected text and download all text
+		draw.fillText(
+			global.get('ctx'),
+			'Total songs collected: ' + global.get('audioManager').getPlayerSongs().length + '/' + this.TOTALSONGS,
+			data.totalSongPos[0],
+			data.totalSongPos[1],
+			data.font,
+			data.fontSize,
+			data.fontColor
+		);
+		draw.fillText(
+			global.get('ctx'),
+			'Download all',
+			data.downloadAllPos[0],
+			data.downloadAllPos[1],
+			data.font,
+			data.fontSize,
+			data.fontColor
+		);
 	}
 };
 

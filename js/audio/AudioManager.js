@@ -11,10 +11,13 @@ var AudioGUI = global.get('class/AudioGUI');
 
 function AudioManager () {
 	this.player = new AudioPlayer();
-	this.gui = new AudioGUI();
-	global.set('audioGui', this.gui); // for the mouse events, so they can notify the gui and more of course..
 
 	this.songs = global.get('audio-data');
+	this.TOTALSONGS = this.songs.length; // keep this number for our records (e.g. 261 songs)
+
+	this.gui = new AudioGUI(this.TOTALSONGS);
+	global.set('audioGui', this.gui); // for the mouse events, so they can notify the gui and more of course..
+
 	this.songsDelivered = {}; // songs we've put in chests but player hasn't opened
 	this.playerSongs = []; // songs player has gotten from chests
 
@@ -24,7 +27,7 @@ function AudioManager () {
 	}
 
 	// index of current song in this.playerSongs
-	this.currentSong = 0;//-1;
+	this.currentSong = 0; // we'll always have at least one song (since we get title theme)
 
 	// is a song playing at the moment? (audio audible)
 	this.isPlaying = false;
@@ -115,7 +118,6 @@ AudioManager.prototype.getNewSong = function () {
 // The chests should call this function once Player opens them, so we know
 // player has this song available, and we can draw it in the list of songs
 AudioManager.prototype.notifySongOpened = function (songName) {
-	console.log('Notified with song: ' + songName);
 	this.playerSongs.push(this.songsDelivered[songName]);
 	delete this.songsDelivered[songName];
 };
@@ -127,6 +129,10 @@ AudioManager.prototype.getPlayerSongs = function () {
 // get position in playerSongs
 AudioManager.prototype.getCurrentSong = function () {
 	return this.currentSong;
+};
+
+AudioManager.prototype.getNumTotalSongs = function () {
+	return this.TOTALSONGS;
 };
 
 global.set('class/AudioManager', AudioManager);

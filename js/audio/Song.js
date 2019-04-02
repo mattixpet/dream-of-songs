@@ -38,6 +38,8 @@ function Song (name, x, y, year, duration) {
 	this.barH = this.barSprite.getHeight();
 	this.iconW = this.playSprite.getWidth();
 	this.fontSize = global.get('audio-gui-data')['Spacings'].fontSize;
+	this.fontColor = global.get('audio-gui-data')['Spacings'].fontColor;
+	this.font = global.get('audio-gui-data')['Spacings'].font;
 
 	// store top left x,y pos for our controls as [x,y] (set in _populateRects)
 	this.playPos = undefined;
@@ -115,9 +117,9 @@ Song.prototype.draw = function (x, y) {
 	this.downloadSprite.draw(this.downloadPos[0], this.downloadPos[1]);
 
 	draw.fillText(	global.get('ctx'), this.name + ' (' + this.year + ')', this.namePos[0], this.namePos[1],
-					'Monospace', this.fontSize, 'white');
+					this.font, this.fontSize, this.fontColor);
 	draw.fillText(	global.get('ctx'), this.duration, this.timePos[0], this.timePos[1],
-					'Monospace', this.fontSize, 'white');
+					this.font, this.fontSize, this.fontColor);
 
 	this.barSprite.draw(this.barPos[0], this.barPos[1]);
 	this.seekerSprite.draw(this.seekerPos[0], this.seekerPos[1]);
