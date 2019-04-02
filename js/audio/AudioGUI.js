@@ -76,7 +76,9 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 				data.pauseMenuYCoord + data.songHeight * (songsPerPage - 1), 
 				pSong['year'], 
 				pSong['duration'],
-				'menu'
+				'menu',
+				// set position of the song as 0 unless we are at a currently playing song
+				pSong === playerSongs[currentSong] ? audioManager.getCurrentSongPosition() : 0
 			);
 			// let's not forget to draw the changes
 			this.draw();
@@ -98,7 +100,9 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 					data.pauseMenuYCoord, 
 					pSong['year'], 
 					pSong['duration'],
-					'menu'
+					'menu',
+					// set position of the song as 0 unless we are at a currently playing song
+					pSong === playerSongs[currentSong] ? audioManager.getCurrentSongPosition() : 0
 				)
 			);
 			// delet the last entry
@@ -135,7 +139,9 @@ AudioGUI.prototype._populateActiveSongs = function () {
 				data.pauseMenuYCoord + data.songHeight * i, 
 				playerSongs[idx]['year'], 
 				playerSongs[idx]['duration'],
-				'menu'
+				'menu',
+				// set position of song if we are at the current playing song
+				i === 0 ? audioManager.getCurrentSongPosition() : 0
 			);
 			this.activeSongs.push(song);
 		}
@@ -167,7 +173,8 @@ AudioGUI.prototype.draw = function () {
 				data.inGameYCoord,
 				song.year,
 				song.duration,
-				'game'
+				'game',
+				audioManager.getCurrentSongPosition()
 			)];
 			if (audioManager.isSongPlaying(this.activeSongs[0].getName())) {
 				this.activeSongs[0].setAsPlaying();
@@ -232,6 +239,11 @@ AudioGUI.prototype.draw = function () {
 			data.fontColor
 		);
 	}
+};
+
+AudioGUI.prototype.resetCurrentSong = function () {
+	this.activeSongs[0].setAsPaused();
+	this.activeSongs[0].setPosition(0);
 };
 
 global.set('class/AudioGUI', AudioGUI);

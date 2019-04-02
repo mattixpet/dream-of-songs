@@ -104,4 +104,15 @@ describe("util", function() {
       expect(util.circularIdx(32, len)).toEqual(2);
     });
   });
+
+  describe("string duration to secs", function() {
+    it("should work", function() {
+      expect(util.stringDurationToSecs('1:06')).toEqual(66);
+      expect(util.stringDurationToSecs('33:50')).toEqual(2030);
+      expect(util.stringDurationToSecs('00:01')).toEqual(1);
+      expect(util.stringDurationToSecs('0:10')).toEqual(10);
+      expect(util.stringDurationToSecs('10:00')).toEqual(600);
+      expect(util.stringDurationToSecs('0:2')).toEqual(2);
+    });
+  });
 });

@@ -49,6 +49,12 @@ AudioPlayer.prototype.playSong = function (songName, songUrl, play) {
 	this.currentSong = new Audio(songUrl);
 	this.lastPos = 0; // start
 	this.currentSongName = songName;
+
+	// set back to beginning once it ends
+	this.currentSong.addEventListener('ended', function () {
+		global.get('audioManager').setCurrentSongPosition(0);
+	});
+
 	if (play) {
 		this.currentSong.play();
 	}
@@ -56,6 +62,18 @@ AudioPlayer.prototype.playSong = function (songName, songUrl, play) {
 
 AudioPlayer.prototype.getSongName = function () {
 	return this.currentSongName;
+};
+
+AudioPlayer.prototype.getPosition = function () {
+	if (this.currentSong) {
+		return this.currentSong.currentTime;
+	}
+};
+
+AudioPlayer.prototype.setPosition = function (pos) {
+	if (this.currentSong) {
+		this.currentSong.currentTime = pos;
+	}
 };
 
 global.set('class/AudioPlayer', AudioPlayer);

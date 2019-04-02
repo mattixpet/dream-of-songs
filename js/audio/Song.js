@@ -22,7 +22,8 @@ var collision = global.get('collision');
 // configuration is either 'menu' or 'game'
 //  where menu means it's a song in a menu (only play, download and name/bar/time)
 //  but game means it's in game, so we also show next/previous song buttons
-function Song (name, x, y, year, duration, configuration) {
+// position is between 0 and 1 for the seeking bar
+function Song (name, x, y, year, duration, configuration, position) {
 	this.name = name; // song name as in audio-data and AudioManager (and everywhere)
 
 	this.x = x;
@@ -31,6 +32,8 @@ function Song (name, x, y, year, duration, configuration) {
 	this.duration = duration;
 
 	this.configuration = configuration;
+
+	this.position = position ? position : 0;
 
 	// sprites
 	var imageHandler = global.get('imageHandler');
@@ -57,6 +60,10 @@ function Song (name, x, y, year, duration, configuration) {
 	this.seekerPos = undefined;
 	this.previousPos = undefined;
 	this.nextPos = undefined;
+	// these also set in _populateRects
+	// valid bar length, is how much of the bar png to take into account for seeker calculations
+	this.validBarLength = undefined;
+	this.startingSeekerPos = undefined;
 
 	// fills this.playRect, this.downloadRect, etc. with relevant information
 	this._populateRects();
@@ -99,6 +106,10 @@ Song.prototype._populateRects = function (x, y) {
 	this.barPos = [this.namePos[0] - Math.floor(itemMarginR * 0.5), this.playPos[1] + Math.floor(this.iconW / 2.75)];
 	this.timePos = [this.barPos[0] + this.barW + itemMarginR, this.barPos[1] + Math.floor(itemMarginR * 1.5)]; // not really proper use of right margin in the y coord here but who cares
 	this.seekerPos = [this.barPos[0] + Math.floor(margin/2), this.barPos[1] + Math.floor(this.barH/8)];
+
+	this.startingSeekerPos = this.seekerPos.slice(); // copy
+	// set the valid bar length as the bar length - left margin * 3 because why not
+	this.validBarLength = this.barW - (this.seekerPos[0] - this.barPos[0]) * 3;
 };
 
 // Only do something if the click is within our rects for play/pause, download, or the bar
@@ -120,7 +131,7 @@ Song.prototype.click = function (x, y) {
 	// check for the seeking bar
 	if (collision.pixelWithinRect(	x, y, this.barPos[0], this.barPos[1],
 									this.barW, this.barH)) {
-		return {'command': 'seek', 'value': 0.5}; // NEEDS TO IMPLEMENT SEEKING THING
+		return {'command': 'seek', 'value': this._getSeekerPos(x)};
 	}
 
 	if (this.configuration === 'game') {
@@ -141,12 +152,37 @@ Song.prototype.click = function (x, y) {
 	return false;
 };
 
+// pos is [0,1] and we update the seeker pixel position depending on the length of the bar
+// so we display it at the correct spot compared to where the song is playing
+Song.prototype._updateSeekerPos = function (pos) {
+	if (pos || pos === 0) {
+		this.seekerPos[0] = this.startingSeekerPos[0] + Math.floor(pos * this.validBarLength);
+	}	
+};
+
+// calculate the value between 0 and 1 given a pixel x within our bar
+Song.prototype._getSeekerPos = function (x) {
+	var pos = (x - this.startingSeekerPos[0]) / this.validBarLength;
+	if (pos < 0) {
+		pos = 0;
+	} else if (pos > 1) {
+		pos = 1;
+	}
+	return pos;
+};
+
 Song.prototype.draw = function (x, y) {
 	// if we get coordinates to draw function, change ours and reinitialize
 	if (x || x === 0) {
 		this.x = x;
 		this.y = y;
 		this._populateRects(x,y);
+	}
+
+	// this is technically an update and not a draw, but whatever
+	if (this.isPlaying) {
+		// if we're playing, we must be audio managers current song and therefore have a position
+		this._updateSeekerPos(global.get('audioManager').getCurrentSongPosition());
 	}
 
 	if (!this.isPlaying) {
@@ -189,6 +225,11 @@ Song.prototype.setAsPlaying = function () {
 
 Song.prototype.getConfiguration = function () {
 	return this.configuration;
+};
+
+// pos is [0,1]
+Song.prototype.setPosition = function (pos) {
+	this._updateSeekerPos(pos);
 };
 
 global.set('class/Song', Song);

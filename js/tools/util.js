@@ -17,6 +17,13 @@ function circularIdx(i, arrLength) {
 	return (arrLength + (i % arrLength)) % arrLength;
 }
 
+// returns 66 for input '1:06'
+// Does no checking
+function stringDurationToSecs(duration) {
+	var vals = duration.split(':');
+	return parseInt(vals[0]) * 60 + parseInt(vals[1]);
+}
+
 // Returns a random int in interval [min, max-1]
 function randInt(min, max) {
 	return min + Math.floor(Math.random() * (max - min));
@@ -92,6 +99,7 @@ function _getDateMilliseconds() {
 
 util['containsDuplicates'] = containsDuplicates;
 util['circularIdx'] = circularIdx;
+util['stringDurationToSecs'] = stringDurationToSecs;
 util['randInt'] = randInt;
 util['pixelToGrid'] = pixelToGrid;
 util['gridToPixel'] = gridToPixel;

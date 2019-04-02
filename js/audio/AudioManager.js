@@ -59,6 +59,10 @@ AudioManager.prototype.notifyCommand = function (command, value) {
 			this.previous();
 		}
 	} else if (command === 'seek') {
+		if (!this.player.getSongName()) {
+			// we haven't starting playing any song
+			this.playSong(this.playerSongs[this.currentSong].name, false);
+		}
 		this.player.seek(value);
 	} else if (command === 'download') {
 		// NEED TO HANDLE DOWNLOAD
@@ -142,6 +146,25 @@ AudioManager.prototype.getCurrentSong = function () {
 
 AudioManager.prototype.getNumTotalSongs = function () {
 	return this.TOTALSONGS;
+};
+
+// Returns the song position in interval [0,1] 
+// (meaning if we are at minut 1:30 of a 3 minute song it returns 0.5)
+AudioManager.prototype.getCurrentSongPosition = function () {
+	var pos = this.player.getPosition();
+	if (pos) {
+		var song = this.playerSongs[this.currentSong];
+		return pos / util.stringDurationToSecs(song.duration);
+	}
+};
+
+AudioManager.prototype.setCurrentSongPosition = function (pos) {
+	var song = this.playerSongs[this.currentSong];
+	this.player.setPosition(pos * util.stringDurationToSecs(song.duration));
+	if (pos === 0) {
+		this.isPlaying = false;
+		this.gui.resetCurrentSong();
+	}
 };
 
 global.set('class/AudioManager', AudioManager);
