@@ -71,7 +71,6 @@ Menu.prototype._pixelWithinButton = function (x, y) {
 };
 
 Menu.prototype.display = function () {
-	util.log('Displaying ' + this.name);
 	// log the menu before us (false if no) and set us as the current menu
 	this.previousMenu = global.get('inMenu');
 	global.set('inMenu', this.name);
@@ -79,7 +78,6 @@ Menu.prototype.display = function () {
 };
 
 Menu.prototype.hide = function () {
-	util.log('Hiding ' + this.name);
 	global.set('inMenu', false);
 };
 

@@ -22,7 +22,7 @@ function AudioManager () {
 	this.playerSongs = []; // songs player has gotten from chests
 
 	// just for test add a few songs to player songs
-	for (var i = 0; i < 10; i++) {
+	for (var i = 0; i < 1; i++) {
 		this.notifySongOpened(this.getNewSong());
 	}
 
@@ -50,9 +50,13 @@ AudioManager.prototype.notifyCommand = function (command, value) {
 	} else if (command === 'pause') {
 		this.pause();
 	} else if (command === 'next') {
-		this.next();
+		if (this.playerSongs.length > 1) {
+			this.next();
+		}
 	} else if (command === 'previous') {
-		this.previous();
+		if (this.playerSongs.length > 1) {
+			this.previous();
+		}
 	} else if (command === 'seek') {
 		this.player.seek(value);
 	} else if (command === 'download') {
@@ -77,12 +81,12 @@ AudioManager.prototype.pause = function () {
 // Play next song if we are playing, otherwise just swap to next
 AudioManager.prototype.next = function () {
 	this.currentSong = util.circularIdx(this.currentSong + 1, this.playerSongs.length);
-	this.playSong(this.playerSongs[this.currentSong], this.isPlaying);
+	this.playSong(this.playerSongs[this.currentSong].name, this.isPlaying);
 };
 
 AudioManager.prototype.previous = function () {
 	this.currentSong = util.circularIdx(this.currentSong - 1, this.playerSongs.length);
-	this.playSong(this.playerSongs[this.currentSong], this.isPlaying);
+	this.playSong(this.playerSongs[this.currentSong].name, this.isPlaying);
 };
 
 // play song by name (need to call this when switching to a new song)
@@ -98,7 +102,7 @@ AudioManager.prototype.playSong = function (songName, play) {
 		}
 	}
 
-	this.isPlaying = true;
+	this.isPlaying = play;
 };
 
 AudioManager.prototype.isSongPlaying = function (songName) {

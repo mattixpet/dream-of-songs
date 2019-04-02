@@ -57,7 +57,8 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 	var playerSongs = audioManager.getPlayerSongs();
 	var currentSong = audioManager.getCurrentSong();
 	// if playerSongs is less than songsPerPage, our up/down arrows aren't supposed to do anything anyway
-	if (playerSongs.length > songsPerPage) {
+	// in addition, if we're not paused, we should definitely not do anything
+	if (playerSongs.length > songsPerPage && global.get('inMenu') === 'pauseMenu') {
 		if (collision.pixelWithinRect(	x, y, 
 										data.downArrowPos[0], data.downArrowPos[1], 
 										data.iconWidth, data.iconWidth)) {
@@ -74,7 +75,8 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 				data.pauseMenuXCoord, 
 				data.pauseMenuYCoord + data.songHeight * (songsPerPage - 1), 
 				pSong['year'], 
-				pSong['duration']
+				pSong['duration'],
+				'menu'
 			);
 			// let's not forget to draw the changes
 			this.draw();
@@ -95,7 +97,8 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 					data.pauseMenuXCoord, 
 					data.pauseMenuYCoord, 
 					pSong['year'], 
-					pSong['duration']
+					pSong['duration'],
+					'menu'
 				)
 			);
 			// delet the last entry
@@ -131,7 +134,8 @@ AudioGUI.prototype._populateActiveSongs = function () {
 				data.pauseMenuXCoord, 
 				data.pauseMenuYCoord + data.songHeight * i, 
 				playerSongs[idx]['year'], 
-				playerSongs[idx]['duration']
+				playerSongs[idx]['duration'],
+				'menu'
 			);
 			this.activeSongs.push(song);
 		}
@@ -142,18 +146,41 @@ AudioGUI.prototype._populateActiveSongs = function () {
 };
 
 AudioGUI.prototype.draw = function () {
-	// draw if we are in game
+	var inMenu = global.get('inMenu');
+	var data = global.get('audio-gui-data')['Spacings'];
 
-	// draw previous, play/pause, next, name of song and seek bar
+	// draw if we are in game (set active songs as only this one we are playing)
+	if (!inMenu) {
+		// if our length is 1, we have already created this array with one song to display while drawing
+		// in which case we just draw it. If however it is not 1 (the if clause) we create it
+		// However, if our length is one, but currentSong from audioManager has changed, we also have to
+		// create a new song and draw it
+		// Also if the current songs configuration is 'menu', we came from there and need to change it to game
+		var audioManager = global.get('audioManager');
+		var song = audioManager.getPlayerSongs()[audioManager.getCurrentSong()];
+		if (this.activeSongs.length !== 1 || 
+			(this.activeSongs.length > 0 && song.name !== this.activeSongs[0].name) ||
+			(this.activeSongs.length > 0 && this.activeSongs[0].getConfiguration() === 'menu')) {
+			this.activeSongs = [new Song(
+				song.name,
+				data.inGameXCoord,
+				data.inGameYCoord,
+				song.year,
+				song.duration,
+				'game'
+			)];
+			if (audioManager.isSongPlaying(this.activeSongs[0].getName())) {
+				this.activeSongs[0].setAsPlaying();
+			}
+		}
 
+		this.activeSongs[0].draw();
+	}
 
 	// draw if we are in menu
-	var inMenu = global.get('inMenu');
 	if (inMenu === 'pauseMenu') {
 		// first remove any songs we have already drawn by drawing pause menu again
 		global.get(inMenu).draw();
-
-		var data = global.get('audio-gui-data')['Spacings'];
 
 		// make sure we draw correct play/pause for each song
 		// if a song which is currentSong is playing, no one else should display pause
