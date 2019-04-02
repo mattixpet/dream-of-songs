@@ -46,6 +46,7 @@ from datetime import datetime
 rootPath = '..\\..\\..\\..\\..\\Music_for_dream_of_songs'
 outputFile = '..\\..\\..\\js\\data\\audio-data.js'
 
+totalDuration = 0 # for the average duration output at the end of script
 
 header = '// Data for audio\
 \n\
@@ -101,6 +102,8 @@ def outputToJsFile(songList):
 def getDuration(fullSongPath):
     from mutagen.mp3 import MP3
     durationS = MP3(fullSongPath).info.length
+    global totalDuration
+    totalDuration += durationS
     mins = int(durationS / 60)
     secs = int(durationS % 60)
     return '{}:{}'.format(mins, secs if len(str(secs)) > 1 else '0{}'.format(secs))
@@ -168,7 +171,8 @@ def main():
 
     outputToJsFile(songList)
 
-    print('Successful output to {}'.format(outputFile))
+    global totalDuration
+    print('Successful output to {}, with average length of songs: {}s'.format(outputFile, totalDuration/len(songList)))
 
 
 if __name__ == '__main__':

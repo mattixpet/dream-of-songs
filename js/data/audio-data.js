@@ -1063,11 +1063,11 @@ var audio_data = [
 		'cover' : false
 	},
 	{
-		'name' : 'klukkur syngja',
-		'url' : 'Lelegar_upptokur/Nexus5X/26.mars.2019/2018_12_12_17_46_13klukkur syngja.mp3',
+		'name' : 'klukkur syngja (cover)',
+		'url' : 'Lelegar_upptokur/Nexus5X/26.mars.2019/2018_12_12_17_46_13klukkur syngja (cover).mp3',
 		'year' : 2018,
 		'duration' : '1:13',
-		'cover' : false
+		'cover' : true
 	},
 	{
 		'name' : 'brunomars',
