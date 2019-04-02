@@ -35,18 +35,19 @@ function AudioManager () {
 
 // Audio GUI calls this, when user asks us to do any command (play, pause, rewind, etc.)
 // Command is:
-//  	'play', 'playSong', 'pause', 'next', 'previous', 'seek' and 'download'
+//  	'play', 'pause', 'next', 'previous', 'seek' and 'download'
 // value is optional except when command is 'seek' (then it is between 0 and 1)
-// play means play current song if value is same as currentSong or else a new song
-// playSong means user is selecting a new song to play (on pause screen), then value is songName
+// play means play/resume current song if value is same as currentSong or else a new song
 AudioManager.prototype.notifyCommand = function (command, value) {
 	util.log('Audio manager received command: ' + command + ' with value: ' + value);
 	if (command === 'play') {
-		//if (this.playerSongs[this.currentSong].name === value && !this.isPlaying) {
-		//	this.play();
-		//} else {
+		if (this.playerSongs[this.currentSong].name === value && 
+			!this.isPlaying && 
+			value === this.player.getSongName()) {
+			this.resume();
+		} else {
 			this.playSong(value, true);
-		//}
+		}
 	} else if (command === 'pause') {
 		this.pause();
 	} else if (command === 'next') {
@@ -66,9 +67,9 @@ AudioManager.prototype.notifyCommand = function (command, value) {
 	}
 };
 
-// Play current song
-AudioManager.prototype.play = function () {
-	this.player.play();
+// Resume current song or play it from 0 if that's where we're at
+AudioManager.prototype.resume = function () {
+	this.player.resume();
 	this.isPlaying = true;
 };
 
@@ -97,7 +98,7 @@ AudioManager.prototype.playSong = function (songName, play) {
 	for (var i = 0; i < this.playerSongs.length; i++) {
 		var song = this.playerSongs[i];
 		if (song.name === songName) {
-			this.player.playSong(config.SONGURL + song.url, play);
+			this.player.playSong(song.name, config.SONGURL + song.url, play);
 			this.currentSong = i;
 		}
 	}
