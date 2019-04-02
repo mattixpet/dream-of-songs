@@ -13,7 +13,8 @@ var sprite_data = {
 		'dispHeight' : 100,
 		'srcWidth' : 365,
 		'srcHeight' : 827,
-		'positions' : [[141,74], [738,74], [1344,72], [139,1072], [741,1072]]
+		'positions' : [[141,74], [738,74], [1344,72], [139,1072], [741,1072]],
+		'startingPosition' : [300, 110]
 	},
 	'chest' : {
 		'fileurl' : config.SPRITEURL + 'chest-spritesheet.png',
