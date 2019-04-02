@@ -46,7 +46,7 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 		if (action) {
 			global.get('audioManager').notifyCommand(action.command, action.value);
 			if (global.get('inMenu') === 'pauseMenu') {
-				//this.draw(); // need to force a draw here when in menu
+				this.draw(); // need to force a draw here when in menu
 			}
 		}
 	}
@@ -154,6 +154,25 @@ AudioGUI.prototype.draw = function () {
 		global.get(inMenu).draw();
 
 		var data = global.get('audio-gui-data')['Spacings'];
+
+		// make sure we draw correct play/pause for each song
+		// if a song which is currentSong is playing, no one else should display pause
+		for (var i = 0; i < this.activeSongs.length; i++) {
+			var song = this.activeSongs[i];
+			var audioManager = global.get('audioManager');
+			var isCurrentSong = song.getName() === audioManager.getPlayerSongs()[audioManager.getCurrentSong()].name;
+			if (song.isSetAsPlaying()) {
+				// only allow it to be displayed as playing if it's the same as current song
+				if (!isCurrentSong) {
+					song.setAsPaused();
+				}
+			} else {
+				// set song which is playing as playing (in case user scrolls down and up again to the song)
+				if (isCurrentSong && audioManager.isSongPlaying(song.getName())) {
+					song.setAsPlaying();
+				}
+			}
+		}
 
 		// for each song, draw what we can on screen (#songsPerPage songs)
 		// lets not forget to change the songs draw coordinates

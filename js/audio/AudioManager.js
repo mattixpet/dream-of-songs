@@ -101,6 +101,10 @@ AudioManager.prototype.playSong = function (songName, play) {
 	this.isPlaying = true;
 };
 
+AudioManager.prototype.isSongPlaying = function (songName) {
+	return this.isPlaying && this.playerSongs[this.currentSong].name === songName;
+};
+
 AudioManager.prototype.drawGui = function () {
 	this.gui.draw();
 };

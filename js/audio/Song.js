@@ -84,7 +84,7 @@ Song.prototype.click = function (x, y) {
 	if (collision.pixelWithinRect(	x, y, this.playPos[0], this.playPos[1], 
 									this.iconW, this.iconW)) {
 		this.isPlaying = !this.isPlaying;
-		return {'command': !this.isPlaying ? 'pause' : 'play', 'value': this.name};
+		return {'command': this.isPlaying ? 'play' : 'pause', 'value': this.name};
 	}
 	// check for download
 	if (collision.pixelWithinRect(	x, y, this.downloadPos[0], this.downloadPos[1],
@@ -127,6 +127,18 @@ Song.prototype.draw = function (x, y) {
 
 Song.prototype.getName = function () {
 	return this.name;
+};
+
+Song.prototype.isSetAsPlaying = function () {
+	return this.isPlaying;
+};
+
+Song.prototype.setAsPaused = function () {
+	this.isPlaying = false;
+};
+
+Song.prototype.setAsPlaying = function () {
+	this.isPlaying = true;
 };
 
 global.set('class/Song', Song);

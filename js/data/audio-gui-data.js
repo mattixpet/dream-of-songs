@@ -19,7 +19,7 @@ var audio_gui_data = {
 		'fontSize' : 16,
 		'fontColor' : 'white',
 		'font' : 'Monospace',
-		'pauseMenuXCoord' : 350, // have the song list in pause be 67% of screen
+		'pauseMenuXCoord' : 365, // have the song list in pause at around 50% of screen
 		'pauseMenuYCoord' : iconWidth, // just magic kinda
 		'songHeight' : Math.floor(iconWidth * 1.1), // height of one song item (one of 5 songs on screen)
 		'iconWidth' : iconWidth,
