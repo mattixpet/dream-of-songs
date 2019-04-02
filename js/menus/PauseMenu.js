@@ -36,8 +36,17 @@ PauseMenu.prototype._handleAbout = function () {
 // we overwrite this from Menu base class because we need to draw the audio gui as well
 // whenever we draw ourselves
 PauseMenu.prototype.display = function () {
+	global.get('audioGui').notifyPause(); // so audio gui can prep for display
 	Menu.prototype.display.call(this);
 	global.get('audioManager').drawGui();
+	// let audio manager know we are in pause so he can update the drawing songs
+	global.get('audioManager').setIntervalForSongInMenu();
+};
+
+PauseMenu.prototype.hide = function () {
+	Menu.prototype.hide.call(this);
+	// let audio manager know to stop the periodic updates of drawing the songs
+	global.get('audioManager').stopIntervalForSongInMenu();
 };
 
 global.set('class/PauseMenu', PauseMenu);

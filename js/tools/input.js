@@ -28,7 +28,6 @@ function handleKeydown(e) {
 	if (util.eatKey(consts.KEY_P)) {
 		if (MainLoop.isRunning()) {
 			MainLoop.stop();
-			global.get('audioGui').notifyPause(); // so audio gui can prep for display
 			global.get('pauseMenu').display(); // this will also draw the gui
 		} else {
 			global.get('pauseMenu').hide();

@@ -167,6 +167,23 @@ AudioManager.prototype.setCurrentSongPosition = function (pos) {
 	}
 };
 
+// This sets an interval function to update the position of the
+// seeker in the bar of the song (so it progresses while playing,
+// since there are no periodic draws during pause), it is important
+// to set this and to stop the interval as well.
+AudioManager.prototype.setIntervalForSongInMenu = function () {
+	// update every 500 millisecondss
+	this.intervalId = setInterval(function () {
+		global.get('audioManager').drawGui();
+	}, 500);
+};
+
+// this will stop the interval, should be called when player resumes game
+// and draw updates update the song
+AudioManager.prototype.stopIntervalForSongInMenu = function () {
+	clearInterval(this.intervalId);
+};
+
 global.set('class/AudioManager', AudioManager);
 
 }());

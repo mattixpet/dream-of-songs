@@ -241,8 +241,12 @@ AudioGUI.prototype.draw = function () {
 	}
 };
 
+// since we don't really keep a counter of what is the current song during pause
+// set them all as paused, the position seems to go to 0 on it's own
 AudioGUI.prototype.resetCurrentSong = function () {
-	this.activeSongs[0].setAsPaused();
+	for (var i = 0; i < this.activeSongs.length; i++) {
+		this.activeSongs[i].setAsPaused();
+	}
 	this.activeSongs[0].setPosition(0);
 };
 
