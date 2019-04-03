@@ -247,7 +247,9 @@ AudioGUI.prototype.resetCurrentSong = function () {
 	for (var i = 0; i < this.activeSongs.length; i++) {
 		this.activeSongs[i].setAsPaused();
 	}
-	this.activeSongs[0].setPosition(0);
+	if (this.activeSongs.length > 0) {
+		this.activeSongs[0].setPosition(0);
+	}
 };
 
 global.set('class/AudioGUI', AudioGUI);

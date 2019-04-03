@@ -12,8 +12,9 @@ config['drawPixelGrid'] = false;
 config['drawBoundingBoxes'] = false;
 config['snakeMode'] = false;
 config['gravity'] = true;
-config['clickToShowCoord'] = false;
+config['clickToShowCoord'] = true;
 
+// game values
 config['GRAVITYCONSTANT'] = 0.001;
 config['DEFAULTTERMINALSPEED'] = 0.5;
 

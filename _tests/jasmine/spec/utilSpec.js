@@ -115,4 +115,15 @@ describe("util", function() {
       expect(util.stringDurationToSecs('0:2')).toEqual(2);
     });
   });
+
+  describe("deep copy", function() {
+    it("should be able to copy arrays with objects", function() {
+      var a = [{x:2, y:3}, {'wow':1234}];
+      var b = util.deepCopy(a);
+      expect(a).not.toBe(b);
+      expect(a[0].x).toEqual(b[0].x);
+      b[0].x = 567;
+      expect(a[0].x).not.toEqual(b[0].x);
+    });
+  });
 });

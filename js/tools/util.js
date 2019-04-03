@@ -6,6 +6,11 @@
 
 var util = {};
 
+// yah..
+function deepCopy(obj) {
+	return JSON.parse(JSON.stringify(obj));
+}
+
 function containsDuplicates(arr) {
 	return (new Set(arr)).size !== arr.length;
 }
@@ -97,6 +102,7 @@ function _getDateMilliseconds() {
 		date.getMilliseconds();
 }
 
+util['deepCopy'] = deepCopy;
 util['containsDuplicates'] = containsDuplicates;
 util['circularIdx'] = circularIdx;
 util['stringDurationToSecs'] = stringDurationToSecs;

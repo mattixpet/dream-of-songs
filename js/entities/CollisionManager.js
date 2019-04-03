@@ -36,7 +36,8 @@ CollisionManager.prototype._collidingWithEntity = function (entity, x, y) {
 	for (var key in entities) {
 		var ent = entities[key];
 		// we would always collide with ourselves, so let's skip that one
-		if (ent !== entity) {
+		// also no one collides with torches
+		if (ent !== entity && ent.getName() !== 'torch') {
 			// check for collision
 			if (collision.rectCollision(
 					x, y, entity.width, entity.height,

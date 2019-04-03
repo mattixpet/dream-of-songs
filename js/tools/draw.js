@@ -6,6 +6,21 @@
 
 var draw = {};
 
+// Draw a bezier curve starting at sx, sy, control points cp1, cp2 and
+// end point ex, ey with color color
+function bezierCurve(ctx, sx, sy, cp1x, cp1y, cp2x, cp2y, ex, ey, color) {
+	ctx.save();
+
+	ctx.lineWidth = '2.0';
+	ctx.strokeStyle = color;
+	ctx.beginPath();
+	ctx.moveTo(sx, sy);
+	ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
+	ctx.stroke();
+
+	ctx.restore();
+}
+
 function fillRect(ctx, x, y, w, h, color) {
 	ctx.save();
 
@@ -40,6 +55,7 @@ function fillTextWithShadow(ctx, text, x, y, font, fontSize, color, shadowColor,
 	fillText(ctx, text, x, y, font, fontSize, color);
 }
 
+draw['bezierCurve'] = bezierCurve;
 draw['fillRect'] = fillRect;
 draw['drawBox'] = drawBox;
 draw['fillText'] = fillText;

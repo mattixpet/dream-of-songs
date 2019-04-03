@@ -47,10 +47,6 @@ Chest.prototype.draw = function () {
 	}
 };
 
-Chest.prototype._updateSpecific = function (dt) {
-
-};
-
 // Player calls this when he loots us
 Chest.prototype.loot = function () {
 	if (!this.looted) {

@@ -6,6 +6,7 @@
 
 var config = global.get('config');
 var Chest = global.get('class/Chest');
+var Torch = global.get('class/Torch');
 
 function EntityManager () {
 	// maintain all entities in game in this object
@@ -74,6 +75,19 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 		}
 	}
 	// else no chests on scene
+
+	// Spawn all torches if any
+	data = global.get('torch-data')['spawns'];
+	if (data.hasOwnProperty(scene)) {
+		var torches = data[scene];
+		for (var i = 0; i < torches.length; i++) {
+			if (!this.scenesVisited[scene]) {
+				// first time here
+				var torch = new Torch(torches[i][0], torches[i][1]);
+				this.register(torch, scene);
+			}
+		}
+	}
 };
 
 EntityManager.prototype._movePlayerToScene = function (lastScene, newScene) {
