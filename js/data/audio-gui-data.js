@@ -21,8 +21,8 @@ var audio_gui_data = {
 		'font' : 'Monospace',
 		'pauseMenuXCoord' : 365, // have the song list in pause at around 50% of screen
 		'pauseMenuYCoord' : iconWidth, // just magic kinda
-		'inGameXCoord' : 150, // coord for song displaying while in game
-		'inGameYCoord' : 375,
+		'inGameXCoord' : 145, // coord for song displaying while in game
+		'inGameYCoord' : 380,
 		'songHeight' : Math.floor(iconWidth * 1.1), // height of one song item (one of 5 songs on screen)
 		'iconWidth' : iconWidth,
 		// positions of up/down arrow in pause menu
