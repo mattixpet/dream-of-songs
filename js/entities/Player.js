@@ -19,13 +19,22 @@ const MOVE2 = 2;
 const MOVE3 = 3;
 const MOVE4 = 4;
 const JUMP = 5;
+const STAIR1 = 6;
+const STAIR2 = 7;
 
-// magic numbers WOOOO
 // since everything starts from top left, this is the offset for collision
 // meaning not count the first COLLISIONXDELTA pixels of the player sprite for collision
-const COLLISIONXDELTA = 10;
-const COLLISIONWIDTHREDUCTION = 30; // how much to reduce the collision width of the player sprite
-const MIRROREDMARGIN = 10; // how much to move the mirrored sprite to the left, so bounding box fits sprite display
+var sprite_data = global.get('sprite-data');
+const COLLISIONXDELTA = sprite_data.player.COLLISIONXDELTA;
+// how much to reduce the collision width of the player sprite
+const COLLISIONWIDTHREDUCTION = sprite_data.player.COLLISIONWIDTHREDUCTION;
+// how much to move the mirrored sprite to the left, so bounding box fits sprite display
+const MIRROREDMARGIN = sprite_data.player.MIRROREDMARGIN;
+
+const COLLISIONHEIGHTREDUCTION = sprite_data.player.COLLISIONHEIGHTREDUCTION;
+// how much to shift drawing of sprite if in stairs, because of how I crop it from the spritesheet man
+const STAIRMARGIN = sprite_data.player.STAIRMARGIN;
+sprite_data = undefined;
 
 function Player(posX, posY) {
 	this.name = 'player';
@@ -39,7 +48,7 @@ function Player(posX, posY) {
 	this.TERMINALSPEED = config.DEFAULTTERMINALSPEED; // maximum speed character can go in y+ direction through acceleration of gravity
 	// collision width/height
 	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
-	this.height = this.sprite.getHeight();
+	this.height = this.sprite.getHeight() - COLLISIONHEIGHTREDUCTION;
 	// status variables
 	this.onGround = false; // start in the air (can also take value of the block underneat, REGBLOCK, etc.)
 	this.isStationary = false;
@@ -47,10 +56,13 @@ function Player(posX, posY) {
 	this.disableJump = false; // used for stairs for example, temporary flag, not allow player to jump
 	this.currentSprite = STOP;
 	this.orientation = 'right'; // 'left'
-	this.distanceTraveled = 0; // for sprite animations, keep record of distance traveled
-	this.ANIMATIONDISTANCE = 30; // swap animations every X pixels in x direction
+	// for sprite animations, keep record of distance traveled
+	this.distanceTraveledX = 0;
+	this.distanceTraveledY = 0;
+	this.ANIMATIONDISTANCE = 30; // swap animations every X pixels in x or y direction
 	// array of order of sprite animations to use for walking
 	this.WALKINGANIMATIONS = [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3];
+	this.STAIRSANIMATIONS = [STAIR1, STAIR2];
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -65,19 +77,27 @@ Player.prototype.draw = function () {
 	} else {
 		this.currentSprite = this.WALKINGANIMATIONS[
 								Math.floor(
-									this.distanceTraveled / this.ANIMATIONDISTANCE
+									this.distanceTraveledX / this.ANIMATIONDISTANCE
 								)	% this.WALKINGANIMATIONS.length
 							 ];
 	}
 
-	// if (this.inStairs) {
-	// 	this.currentSprite = JUMP;
-	// }
+	if (this.inStairs) {
+		// update stair sprite twice as slow as walking sprite (the / 2)
+		this.currentSprite = this.STAIRSANIMATIONS[
+								Math.floor(
+									this.distanceTraveledY / this.ANIMATIONDISTANCE / 2
+								)	% this.STAIRSANIMATIONS.length
+							 ];
+	}
 
+	var x = this.x;
 	if (this.orientation === 'right') {
-		this.sprite.draw(this.x - COLLISIONXDELTA, this.y, this.currentSprite);
+		x -= this.inStairs ? STAIRMARGIN : 0;
+		this.sprite.draw(x - COLLISIONXDELTA, this.y, this.currentSprite);
 	} else {
-		this.sprite.drawMirrored(this.x - MIRROREDMARGIN - COLLISIONXDELTA, this.y, this.currentSprite);
+		x += this.inStairs ? STAIRMARGIN : 0;
+		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, this.y, this.currentSprite);
 	}
 
 	if (config.drawBoundingBoxes) {
@@ -290,7 +310,8 @@ Player.prototype._findNextY = function (dt) {
 
 // Helper function to move player (update x,y)
 Player.prototype._updatePos = function (nextX, nextY) {
-	this.distanceTraveled += Math.abs(nextX - this.x);
+	this.distanceTraveledX += Math.abs(nextX - this.x);
+	this.distanceTraveledY += Math.abs(nextY - this.y);
 	// reallow jump if we move in x coordinate (for coming up from stairs)
 	if (this.x !== nextX) {
 		this.disableJump = false;

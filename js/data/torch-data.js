@@ -105,8 +105,6 @@ for (var i = -flickerEachDirection; i <= flickerEachDirection; i++) {
 	}
 }
 
-console.log(torch_data);
-
 global.set('torch-data', torch_data);
 
 }());
