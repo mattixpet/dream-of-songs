@@ -12,7 +12,6 @@ var consts = global.get('consts');
 var LoadingBar = global.get('class/LoadingBar'); // loading bar constructor
 var ImageHandler = global.get('class/ImageHandler');
 var Player = global.get('class/Player');
-var Chest = global.get('class/Chest');
 var EntityManager = global.get('class/EntityManager');
 var Background = global.get('class/Background');
 var CollisionManager = global.get('class/CollisionManager');

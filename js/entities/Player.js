@@ -18,6 +18,7 @@ const MOVE1 = 1;
 const MOVE2 = 2;
 const MOVE3 = 3;
 const MOVE4 = 4;
+const JUMP = 5;
 
 // magic numbers WOOOO
 // since everything starts from top left, this is the offset for collision
@@ -58,7 +59,7 @@ Player.prototype.draw = function () {
 	// sprite calculations
 	if (!this.onGround) {
 		// always do same animation in air
-		this.currentSprite = MOVE4;
+		this.currentSprite = JUMP;
 	} else if (this.isStationary) {
 		this.currentSprite = STOP;
 	} else {
@@ -68,6 +69,10 @@ Player.prototype.draw = function () {
 								)	% this.WALKINGANIMATIONS.length
 							 ];
 	}
+
+	// if (this.inStairs) {
+	// 	this.currentSprite = JUMP;
+	// }
 
 	if (this.orientation === 'right') {
 		this.sprite.draw(this.x - COLLISIONXDELTA, this.y, this.currentSprite);

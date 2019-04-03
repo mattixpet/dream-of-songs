@@ -11,9 +11,9 @@ var sprite_data = {
 		'fileurl' : config.SPRITEURL + 'protagonist-spritesheet.png',
 		'dispWidth' : 60,
 		'dispHeight' : 100,
-		'srcWidth' : 365,
+		'srcWidth' : 423,
 		'srcHeight' : 827,
-		'positions' : [[141,74], [738,74], [1344,72], [139,1072], [741,1072]],
+		'positions' : [[141,74], [738,74], [1344,72], [139,1072], [741,1072], [1293,1080]],
 		'startingPosition' : [300, 110]
 	},
 	'chest' : {
