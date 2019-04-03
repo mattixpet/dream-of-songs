@@ -19,6 +19,8 @@ function StartMenu (callback) {
 	this.buttonActions['settings'] = this._handleSettings;
 	this.buttonActions['about'] = this._handleAbout;
 
+	this.startedPlayingTheme = false;
+
 	// this should be first menu to be called, lets set a 'inMenu' flag in global
 	// will only be populated with our name once this.display() is called though
 	global.set('inMenu', false);
@@ -42,7 +44,10 @@ StartMenu.prototype._handleAbout = function () {
 // overwrite the default display because we need to play our title theme !
 StartMenu.prototype.display = function () {
 	Menu.prototype.display.call(this);
-	global.get('audioManager').playTitleTheme();
+	if (!this.startedPlayingTheme) {
+		global.get('audioManager').playTitleTheme();
+		this.startedPlayingTheme = true;
+	}
 };
 
 global.set('class/StartMenu', StartMenu);
