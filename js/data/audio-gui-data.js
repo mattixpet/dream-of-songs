@@ -30,7 +30,8 @@ var audio_gui_data = {
 		'downArrowPos' : [canvasWidth - iconWidth - 12, canvasHeight - iconWidth - 12],
 		// total songs collected and download all text locations
 		'totalSongPos' : [430, 36],
-		'downloadAllPos' : [495, canvasHeight - 30]
+		'downloadAllPos' : [495, canvasHeight - 30],
+		'downloadMargin' : 8
 	},
 	'bar' : {
 		'width' : barWidth,

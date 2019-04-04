@@ -113,6 +113,17 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 		}
 	}
 	
+	// check if user clicked 'Download all' button
+	// data.downloadAllPos is bottom left pos (because canvas draws text like that)
+	var downloadButtonTopLeft = [data.downloadAllPos[0] - data.downloadMargin, 
+								data.downloadAllPos[1] - data.fontSize - data.downloadMargin];
+	// fontSize * 0.67 because width of letters is approximately 2/3 of height (font size)
+	var downloadButtonWidth = data.downloadMargin * 2 + 'Download all'.length * data.fontSize * 0.67;
+	var downloadButtonHeight = data.downloadMargin * 2 + data.fontSize;
+	if (collision.pixelWithinRect(	x, y, downloadButtonTopLeft[0], downloadButtonTopLeft[1],
+									downloadButtonWidth, downloadButtonHeight)) {
+		global.get('audioManager').notifyCommand('download all', undefined);
+	}
 };
 
 // Called by tools/input.js to let us know if player hit pause, so we can know to populate active songs/update them

@@ -33,9 +33,11 @@ function AudioManager () {
 
 // Audio GUI calls this, when user asks us to do any command (play, pause, rewind, etc.)
 // Command is:
-//  	'play', 'pause', 'next', 'previous', 'seek' and 'download'
-// value is optional except when command is 'seek' (then it is between 0 and 1)
+//  	'play', 'pause', 'next', 'previous', 'seek', 'download' and 'download all'
+// value is not always set except when command is 'seek' (then it is between 0 and 1) and
 // play means play/resume current song if value is same as currentSong or else a new song
+// download if value is one song then download that
+// download all, download all playerSongs as zip
 AudioManager.prototype.notifyCommand = function (command, value) {
 	util.log('Audio manager received command: ' + command + ' with value: ' + value);
 	if (command === 'play') {
@@ -63,7 +65,9 @@ AudioManager.prototype.notifyCommand = function (command, value) {
 		}
 		this.player.seek(value);
 	} else if (command === 'download') {
-		// NEED TO HANDLE DOWNLOAD
+		this._downloadSong(value);
+	} else if (command === 'download all') {
+		this._zipPlayerSongs();
 	} else {
 		util.warn('Unknown command: ' + command + ' with value: ' + value + ', not doing anything.');
 	}
@@ -108,10 +112,6 @@ AudioManager.prototype.playSong = function (songName, play) {
 	this.isPlaying = play;
 };
 
-AudioManager.prototype.isSongPlaying = function (songName) {
-	return this.isPlaying && this.playerSongs[this.currentSong].name === songName;
-};
-
 AudioManager.prototype.drawGui = function () {
 	this.gui.draw();
 };
@@ -137,11 +137,64 @@ AudioManager.prototype.getNewSong = function (special) {
 	return song.name;
 };
 
+AudioManager.prototype._downloadSong = function (songName) {
+	// first find the song to get the url
+	var song;
+	for (var i = 0; i < this.playerSongs.length; i++) {
+		song = this.playerSongs[i];
+		if (song.name === songName) {
+			break;
+		}
+	}
+	if (!song) {
+		util.warn('Invalid song name provided, not in player songs: ' + songName + ', not handling.');
+	}
+	// NEED TO FINISH THIS
+};
+
+// Put this.playerSongs into a zip folder and prompt user for download
+AudioManager.prototype._zipPlayerSongs = function () {
+	var zip = new JSZip();
+
+	// For each song in playerSongs, add a promise with the result from the fetch request
+	var fetchPromises = [];
+	for (var i = 0; i < this.playerSongs.length; i++) {
+		// grab each song from wherever we are storing the songs (config.SONGURL) using CORS
+		var song = this.playerSongs[i];
+		fetchPromises.push(
+			fetch(config.SONGURL + song.url, {mode: 'cors'})
+			.then(function(response){
+				// last item in this array is our file name, e.g. 'sofa.mp3'
+				var urlSplit = decodeURI(response.url).split('/');
+				if (response.ok) {
+					return {'fileName': urlSplit[urlSplit.length-1], 'blob': response.blob()};
+				}
+			})
+			.then(function (data) {
+				util.log('Adding file: ' + data.fileName);
+				zip.file(data.fileName, data.blob);
+			})
+		);
+	}
+
+	// After all the fetches are complete, zip it and saveAs to prompt download for user
+	Promise.all(fetchPromises).then(function (values) {
+		util.log('Zipping files.. this might take some time.');
+		zip.generateAsync({type: 'blob'}).then(function (value) {
+			saveAs(value, "songs.zip"); // from FileSaver.min.js
+		});
+	})
+};
+
 // The chests should call this function once Player opens them, so we know
 // player has this song available, and we can draw it in the list of songs
 AudioManager.prototype.notifySongOpened = function (songName) {
 	this.playerSongs.push(this.songsDelivered[songName]);
 	delete this.songsDelivered[songName];
+};
+
+AudioManager.prototype.isSongPlaying = function (songName) {
+	return this.isPlaying && this.playerSongs[this.currentSong].name === songName;
 };
 
 AudioManager.prototype.getPlayerSongs = function () {

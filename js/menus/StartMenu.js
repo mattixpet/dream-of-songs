@@ -5,6 +5,7 @@
 'use strict';
 
 // imports
+var config = global.get('config');
 var Menu = global.get('class/Menu');
 
 function StartMenu (callback) {
@@ -44,7 +45,7 @@ StartMenu.prototype._handleAbout = function () {
 // overwrite the default display because we need to play our title theme !
 StartMenu.prototype.display = function () {
 	Menu.prototype.display.call(this);
-	if (!this.startedPlayingTheme) {
+	if (!this.startedPlayingTheme && config.playTitleTheme) {
 		global.get('audioManager').playTitleTheme();
 		this.startedPlayingTheme = true;
 	}

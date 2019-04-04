@@ -1584,7 +1584,7 @@ var audio_data = [
 		'name' : 'Alvarlegur Templari',
 		'url' : 'Tonlist_haha/2013/Alvarlegur Templari.mp3',
 		'year' : 2013,
-		'duration' : '2:37',
+		'duration' : '2:38',
 		'cover' : false
 	},
 	{
@@ -1619,14 +1619,14 @@ var audio_data = [
 		'name' : 'FunkyMattarugl',
 		'url' : 'Tonlist_haha/2013/FunkyMattarugl.mp3',
 		'year' : 2013,
-		'duration' : '3:13',
+		'duration' : '3:25',
 		'cover' : false
 	},
 	{
 		'name' : 'G-MOLL LAGIÐ píanó',
 		'url' : 'Tonlist_haha/2013/G-MOLL LAGIÐ píanó.mp3',
 		'year' : 2013,
-		'duration' : '3:51',
+		'duration' : '3:52',
 		'cover' : false
 	},
 	{
@@ -1647,7 +1647,7 @@ var audio_data = [
 		'name' : 'Hættu þessu rugli og horfðu upp í stjörnubjartan himininn',
 		'url' : 'Tonlist_haha/2013/Hættu þessu rugli og horfðu upp í stjörnubjartan himininn.mp3',
 		'year' : 2013,
-		'duration' : '4:28',
+		'duration' : '4:29',
 		'cover' : false
 	},
 	{
@@ -1682,7 +1682,7 @@ var audio_data = [
 		'name' : 'Osom_Techno_Lag',
 		'url' : 'Tonlist_haha/2013/Osom_Techno_Lag.mp3',
 		'year' : 2013,
-		'duration' : '1:27',
+		'duration' : '1:32',
 		'cover' : false
 	},
 	{
@@ -1717,7 +1717,7 @@ var audio_data = [
 		'name' : 'SimpleBell',
 		'url' : 'Tonlist_haha/2013/SimpleBell.mp3',
 		'year' : 2013,
-		'duration' : '2:25',
+		'duration' : '2:26',
 		'cover' : false
 	},
 	{
@@ -1738,7 +1738,7 @@ var audio_data = [
 		'name' : 'Í Höll Fjallkonungsins (samt ekki)',
 		'url' : 'Tonlist_haha/2013/Í Höll Fjallkonungsins (samt ekki).mp3',
 		'year' : 2013,
-		'duration' : '2:17',
+		'duration' : '2:18',
 		'cover' : false
 	},
 	{
@@ -1801,7 +1801,7 @@ var audio_data = [
 		'name' : 'ninth2',
 		'url' : 'Tonlist_haha/2015/hex/ninth2.mp3',
 		'year' : 2015,
-		'duration' : '5:42',
+		'duration' : '5:43',
 		'cover' : false
 	},
 	{
