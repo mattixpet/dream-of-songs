@@ -148,8 +148,17 @@ AudioManager.prototype._downloadSong = function (songName) {
 	}
 	if (!song) {
 		util.warn('Invalid song name provided, not in player songs: ' + songName + ', not handling.');
+		return;
 	}
-	// NEED TO FINISH THIS
+	fetch(config.SONGURL + song.url, {mode: 'cors'})
+	.then(function(response){
+		if (response.ok) {
+			return response.blob();
+		}
+	})
+	.then(function(blob){
+		saveAs(blob, song.name + '.mp3');
+	});
 };
 
 // Put this.playerSongs into a zip folder and prompt user for download
