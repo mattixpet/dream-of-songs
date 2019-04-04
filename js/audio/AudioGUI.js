@@ -35,6 +35,11 @@ function AudioGUI (TOTALSONGS) {
 	this.downArrowSprite = global.get('imageHandler').getSprite('downarrow');
 
 	this.TOTALSONGS = TOTALSONGS;
+
+	this.downloading = false; // audio manager notifies us, so we set this as true when
+						      // when we want to display the loading animation
+	this.downloadTime = 0; // used only for loading animation xD
+	this.downloadPointIndex = 0; // index .= [0,audio-gui-data.Spacings.downloadNumPoints-1]
 }
 
 // Mouse event handling calls this function so we can know what to do
@@ -162,6 +167,19 @@ AudioGUI.prototype._populateActiveSongs = function () {
 	this.playerSongRightIndex = currentSong + this.activeSongs.length - 1;
 };
 
+AudioGUI.prototype.update = function (dt) {
+	if (this.downloading) {
+		this.downloadTime += dt; // dt is in milliseconds
+		if (this.downloadTime > 100) {
+			this.downloadPointIndex++;
+			if (this.downloadPointIndex === global.get('audio-gui-data')['Spacings'].downloadNumPoints) {
+				this.downloadPointIndex = 0;
+			}
+			this.downloadTime = 0;
+		}
+	}
+};
+
 AudioGUI.prototype.draw = function () {
 	var inMenu = global.get('inMenu');
 	var data = global.get('audio-gui-data')['Spacings'];
@@ -250,6 +268,41 @@ AudioGUI.prototype.draw = function () {
 			data.fontColor
 		);
 	}
+
+	if (this.downloading) {
+		this._drawLoading();
+	}
+};
+
+// Draw the loading animation (so user knows something is happening when clicking loading)
+AudioGUI.prototype._drawLoading = function () {
+	var data = global.get('audio-gui-data')['Spacings'];
+	var inMenu = global.get('inMenu');
+	var x,y;
+	if (!inMenu) {
+		x = data.gameDownloadAnimationPos[0];
+		y = data.gameDownloadAnimationPos[1];
+	}
+	if (inMenu === 'pauseMenu') {
+		x = data.menuDownloadAnimationPos[0];
+		y = data.menuDownloadAnimationPos[1];
+	}
+
+	var ctx = global.get('ctx');
+	var n = data.downloadNumPoints;
+	var idx = this.downloadPointIndex;
+	var thick = data.downloadPointThickness;
+	var r = data.downloadRadius;
+	var c = data.downloadAnimationColor;
+
+	// draw main point
+	draw.drawCirclePoint(ctx, x, y, n, idx, thick, r, c);
+	// draw shadow behind it (opacity .67)
+	idx = idx - 1 < 0 ? n - 1 : idx - 1;
+	draw.drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.67);
+	// draw shadow of shadow (opacity .33)
+	idx = idx - 1 < 0 ? n - 1 : idx - 1;
+	draw.drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.33);
 };
 
 // since we don't really keep a counter of what is the current song during pause
@@ -261,6 +314,18 @@ AudioGUI.prototype.resetCurrentSong = function () {
 	if (this.activeSongs.length > 0) {
 		this.activeSongs[0].setPosition(0);
 	}
+};
+
+// Audio manager is kind enough to let us know when a song is downloading
+// so we can display the downloading graphics
+AudioGUI.prototype.notifyDownloadInProgress = function () {
+	this.downloading = true;
+	util.log('Download in progress..');
+};
+
+AudioGUI.prototype.notifyDownloadCompleted = function () {
+	this.downloading = false;
+	util.log('Download completed or error.');
 };
 
 global.set('class/AudioGUI', AudioGUI);

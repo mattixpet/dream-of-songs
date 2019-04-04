@@ -150,6 +150,9 @@ AudioManager.prototype._downloadSong = function (songName) {
 		util.warn('Invalid song name provided, not in player songs: ' + songName + ', not handling.');
 		return;
 	}
+
+	this.gui.notifyDownloadInProgress();
+
 	fetch(config.SONGURL + song.url, {mode: 'cors'})
 	.then(function(response){
 		if (response.ok) {
@@ -158,12 +161,18 @@ AudioManager.prototype._downloadSong = function (songName) {
 	})
 	.then(function(blob){
 		saveAs(blob, song.name + '.mp3');
+		global.get('audioManager').gui.notifyDownloadCompleted();
+	})
+	.catch(function(err){
+		global.get('audioManager').gui.notifyDownloadCompleted();
 	});
 };
 
 // Put this.playerSongs into a zip folder and prompt user for download
 AudioManager.prototype._zipPlayerSongs = function () {
 	var zip = new JSZip();
+
+	this.gui.notifyDownloadInProgress();
 
 	// For each song in playerSongs, add a promise with the result from the fetch request
 	var fetchPromises = [];
@@ -191,8 +200,15 @@ AudioManager.prototype._zipPlayerSongs = function () {
 		util.log('Zipping files.. this might take some time.');
 		zip.generateAsync({type: 'blob'}).then(function (value) {
 			saveAs(value, "songs.zip"); // from FileSaver.min.js
+			global.get('audioManager').gui.notifyDownloadCompleted();
+		})
+		.catch(function(err){
+			global.get('audioManager').gui.notifyDownloadCompleted();
 		});
 	})
+	.catch(function(err){
+		global.get('audioManager').gui.notifyDownloadCompleted();
+	});	
 };
 
 // The chests should call this function once Player opens them, so we know
@@ -242,11 +258,14 @@ AudioManager.prototype.setCurrentSongPosition = function (pos) {
 // seeker in the bar of the song (so it progresses while playing,
 // since there are no periodic draws during pause), it is important
 // to set this and to stop the interval as well.
+// Conveniently this also updates our loading which is part of audioGui
 AudioManager.prototype.setIntervalForSongInMenu = function () {
-	// update every 500 millisecondss
+	var n = 100;
+	// update every n milliseconds
 	this.intervalId = setInterval(function () {
+		global.get('audioGui').update(n);
 		global.get('audioManager').drawGui();
-	}, 500);
+	}, n);
 };
 
 // this will stop the interval, should be called when player resumes game

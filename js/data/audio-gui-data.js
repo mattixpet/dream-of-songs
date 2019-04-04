@@ -31,7 +31,13 @@ var audio_gui_data = {
 		// total songs collected and download all text locations
 		'totalSongPos' : [430, 36],
 		'downloadAllPos' : [495, canvasHeight - 30],
-		'downloadMargin' : 8
+		'downloadMargin' : 8,
+		'menuDownloadAnimationPos' : [650, 412],
+		'gameDownloadAnimationPos' : [700, 420],
+		'downloadRadius' : 20,
+		'downloadPointThickness' : 6,
+		'downloadNumPoints' : 12,
+		'downloadAnimationColor' : 'white'
 	},
 	'bar' : {
 		'width' : barWidth,

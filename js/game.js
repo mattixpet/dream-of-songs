@@ -85,6 +85,8 @@ function update(dt) {
 	for (var key in entities) {
 		entities[key].update(dt);
 	}
+
+	global.get('audioGui').update(dt);
 }
 
 function draw() {
