@@ -21,10 +21,10 @@ const MOVE4 = 4;
 const JUMP = 5;
 const STAIR1 = 6;
 const STAIR2 = 7;
-const STILLRIGHT1 = 2;//8;
-const STILLRIGHT2 = 4;//9;
-const STILLLEFT1 = 5;//10;
-const STILLLEFT2 = 6;//11;
+const STILLRIGHT1 = 8;
+const STILLRIGHT2 = 9;
+const STILLLEFT1 = STILLRIGHT2; // makes sense because it is mirrored
+const STILLLEFT2 = 10;
 
 // since everything starts from top left, this is the offset for collision
 // meaning not count the first COLLISIONXDELTA pixels of the player sprite for collision
@@ -38,6 +38,7 @@ const MIRROREDMARGIN = sprite_data.player.MIRROREDMARGIN;
 const COLLISIONHEIGHTREDUCTION = sprite_data.player.COLLISIONHEIGHTREDUCTION;
 // how much to shift drawing of sprite if in stairs, because of how I crop it from the spritesheet man
 const STAIRMARGIN = sprite_data.player.STAIRMARGIN;
+const STILLMARGIN = sprite_data.player.STILLMARGIN;
 sprite_data = undefined;
 
 function Player(posX, posY) {
@@ -69,6 +70,9 @@ function Player(posX, posY) {
 	this.STAIRSANIMATIONS = [STAIR1, STAIR2];
 
 	this.timeStill = 0; // how long have we been standing still?
+	 // set this as true only when drawing the still animations specifically (not stop e.g)
+	this.inStillAnimation1 = false;
+	this.inStillAnimation2 = false;
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -104,9 +108,11 @@ Player.prototype.draw = function () {
 	var x = this.x;
 	if (this.orientation === 'right') {
 		x -= this.inStairs ? STAIRMARGIN : 0;
+		x -= this.inStillAnimation1 ? STILLMARGIN : 0;
 		this.sprite.draw(x - COLLISIONXDELTA, this.y, this.currentSprite);
 	} else {
 		x += this.inStairs ? STAIRMARGIN : 0;
+		x += this.inStillAnimation2 ? STILLMARGIN : 0;
 		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, this.y, this.currentSprite);
 	}
 
@@ -117,22 +123,27 @@ Player.prototype.draw = function () {
 
 Player.prototype._drawStillAnimation = function () {
 	// let's not start yet ! time until our first animation and time between our animations
-	var startTime = 15000; // after this time we start still animation
-	var waitTime = 12000; // how long to wait between animations
+	var startTime = 13000; // after this time we start still animation
+	var waitTime = 10000;
 	if (this.timeStill > startTime) {
 		var delta = (this.timeStill - startTime) % waitTime;
 		var totalAnimationTime = 1500; // 1.5 'seconds' for total thing (ball from one side to other)
+
+		this.inStillAnimation1 = false;
+		this.inStillAnimation2 = false;
 
 		// depending on where we are, we draw the parts of the still animation
 		if (delta < totalAnimationTime / 4) {
 			// first step, show still animation 1
 			this.currentSprite = this.orientation === 'right' ? STILLRIGHT1 : STILLLEFT1;
+			this.inStillAnimation1 = true;
 		} else if (delta > totalAnimationTime / 4 && delta < 3 * totalAnimationTime / 4) {
 			// second step, show normal stop animation
 			this.currentSprite = STOP;
 		} else if (delta > totalAnimationTime && delta < 5 * totalAnimationTime / 4) {
 			// third and final step, show still animation 2
 			this.currentSprite = this.orientation === 'right' ? STILLRIGHT2 : STILLLEFT2;
+			this.inStillAnimation2 = true;
 		}
 
 		if (delta < totalAnimationTime) {
@@ -142,9 +153,11 @@ Player.prototype._drawStillAnimation = function () {
 			var thick = data.stillAnimationThickness;
 			var r = data.stillAnimationRadius;
 			var c = data.stillAnimationColor;
+			var bC = data.stillAnimationBorderColor;
 			// the ball movement center is at our sprite center
-			var x = this.x + Math.floor(this.width / 2);
-			var y = this.y + Math.floor(this.height / 3);
+			var x = this.orientation === 'right' ? 
+						this.x + Math.floor(this.width / 4) : this.x + Math.floor(this.width / 1.5);
+			var y = this.y + Math.floor(this.height / 6);
 			// now to get our index in the draw.drawCirclePoint (position in circle)
 			// we get it as a ratio of totalAnimationTime and numPoints / 2
 			// and offset by numPoints / 2 because we start after half the circle movement
@@ -155,7 +168,7 @@ Player.prototype._drawStillAnimation = function () {
 			var relativeIndex = Math.floor(delta / totalAnimationTime * ourN);
 			var index = relativeIndex === ourN - 1 ? 0 : ourN + relativeIndex + 1;
 
-			draw.drawCirclePointWithShadow(global.get('ctx'), x, y, n, index, thick, r, c);
+			draw.drawCirclePointWithShadow(global.get('ctx'), x, y, n, index, thick, r, c, bC);
 		}
 	}
 };

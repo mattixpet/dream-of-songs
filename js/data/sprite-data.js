@@ -15,7 +15,9 @@ var sprite_data = {
 		'srcHeight' : 895,
 		'positions' : [	[141,74], [738,74], [1344,72], [139,1072], [741,1072], // walking
 						[1293,1080], // jump
-						[1960,45], [1955,1036]], // stairs
+						[1960,45], [1955,1036], // stairs
+						[2468,66], [3110,70], [2502,1088] // still animation
+					  ],
 		'startingPosition' : [300, 110],
 		// how much to alter bounding box/sprite drawing, see player.js for more explanation
 		'COLLISIONXDELTA' : 10,
@@ -23,10 +25,12 @@ var sprite_data = {
 		'MIRROREDMARGIN' : 10,
 		'COLLISIONHEIGHTREDUCTION' : 8,
 		'STAIRMARGIN' : -5,
-		'stillAnimationRadius' : 50,
+		'STILLMARGIN' : 20,
+		'stillAnimationRadius' : 40,
 		'stillAnimationThickness' : 12,
 		'stillAnimationNumPoints' : 48,
-		'stillAnimationColor' : 'lightblue'
+		'stillAnimationColor' : '#e4e4e4',
+		'stillAnimationBorderColor' : '#b3d8f5'
 	},
 	'chest' : {
 		'fileurl' : config.SPRITEURL + 'chest-spritesheet.png',

@@ -9,6 +9,7 @@ var draw = {};
 // Draw a [thickness] thick point at index [index] (if numPoints is 5, index is [0,4])
 // of [numPoints] granularity in a circle with radius [radius] centered at [x,y] with color [color]
 // optional [alpha] between 0 and 1 to set the alpha of the canvas (draw half transparent things for example)
+// optionally, add a [borderColor] colored border around the circle
 // If we would call drawCirclePoint with numPoints ~8 and all indices 0..7, the picture would be
 // something like:      6
 //					 	.
@@ -22,7 +23,7 @@ var draw = {};
 // And of course if you have numPoints high enough, it's just like an animated drawing
 // of a circle
 // Writing this function should be a fun exercise in geometry, time for some cosines and sines
-function drawCirclePoint(ctx, x, y, numPoints, index, thickness, radius, color, alpha) {
+function drawCirclePoint(ctx, x, y, numPoints, index, thickness, radius, color, alpha, borderColor) {
 	var angleDelta = 2 * Math.PI / numPoints; // 2*pi = whole circle in radians
 	var angle = angleDelta * index;
 	var circleX = Math.floor(x + Math.cos(angle) * radius);
@@ -38,23 +39,31 @@ function drawCirclePoint(ctx, x, y, numPoints, index, thickness, radius, color, 
 	ctx.arc(circleX, circleY, thickness / 2, 0, 2*Math.PI);
 	ctx.fill();
 
+	if (borderColor) {
+		ctx.strokeStyle = borderColor;
+		ctx.beginPath();
+		ctx.arc(circleX, circleY, thickness / 2, 0, 2*Math.PI);
+		ctx.stroke();
+	}
+
 	ctx.restore();
 }
 
-function drawCirclePointWithShadow(ctx, x, y, numPoints, index, thickness, radius, color) {
+function drawCirclePointWithShadow(ctx, x, y, numPoints, index, thickness, radius, color, borderColor) {
 	var n = numPoints;
 	var idx = index;
 	var thick = thickness;
 	var r = radius;
 	var c = color;
+	var bC = borderColor;
 	// draw main point
-	drawCirclePoint(ctx, x, y, n, idx, thick, r, c);
+	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 1.00, bC);
 	// draw shadow behind it (opacity .67)
 	idx = idx - 1 < 0 ? n - 1 : idx - 1;
-	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.67);
+	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.67, bC);
 	// draw shadow of shadow (opacity .33)
 	idx = idx - 1 < 0 ? n - 1 : idx - 1;
-	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.33);
+	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.33, bC);
 }
 
 // Draw a bezier curve starting at sx, sy, control points cp1, cp2 and
