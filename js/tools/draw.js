@@ -41,6 +41,22 @@ function drawCirclePoint(ctx, x, y, numPoints, index, thickness, radius, color, 
 	ctx.restore();
 }
 
+function drawCirclePointWithShadow(ctx, x, y, numPoints, index, thickness, radius, color) {
+	var n = numPoints;
+	var idx = index;
+	var thick = thickness;
+	var r = radius;
+	var c = color;
+	// draw main point
+	drawCirclePoint(ctx, x, y, n, idx, thick, r, c);
+	// draw shadow behind it (opacity .67)
+	idx = idx - 1 < 0 ? n - 1 : idx - 1;
+	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.67);
+	// draw shadow of shadow (opacity .33)
+	idx = idx - 1 < 0 ? n - 1 : idx - 1;
+	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.33);
+}
+
 // Draw a bezier curve starting at sx, sy, control points cp1, cp2 and
 // end point ex, ey with color color
 function bezierCurve(ctx, sx, sy, cp1x, cp1y, cp2x, cp2y, ex, ey, color) {
@@ -91,6 +107,7 @@ function fillTextWithShadow(ctx, text, x, y, font, fontSize, color, shadowColor,
 }
 
 draw['drawCirclePoint'] = drawCirclePoint;
+draw['drawCirclePointWithShadow'] = drawCirclePointWithShadow;
 draw['bezierCurve'] = bezierCurve;
 draw['fillRect'] = fillRect;
 draw['drawBox'] = drawBox;

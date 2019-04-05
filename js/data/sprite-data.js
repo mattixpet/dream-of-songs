@@ -22,8 +22,11 @@ var sprite_data = {
 		'COLLISIONWIDTHREDUCTION' : 30,
 		'MIRROREDMARGIN' : 10,
 		'COLLISIONHEIGHTREDUCTION' : 8,
-		'STAIRMARGIN' : -5
-
+		'STAIRMARGIN' : -5,
+		'stillAnimationRadius' : 50,
+		'stillAnimationThickness' : 12,
+		'stillAnimationNumPoints' : 48,
+		'stillAnimationColor' : 'lightblue'
 	},
 	'chest' : {
 		'fileurl' : config.SPRITEURL + 'chest-spritesheet.png',

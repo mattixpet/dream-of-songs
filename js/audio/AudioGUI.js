@@ -295,14 +295,7 @@ AudioGUI.prototype._drawLoading = function () {
 	var r = data.downloadRadius;
 	var c = data.downloadAnimationColor;
 
-	// draw main point
-	draw.drawCirclePoint(ctx, x, y, n, idx, thick, r, c);
-	// draw shadow behind it (opacity .67)
-	idx = idx - 1 < 0 ? n - 1 : idx - 1;
-	draw.drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.67);
-	// draw shadow of shadow (opacity .33)
-	idx = idx - 1 < 0 ? n - 1 : idx - 1;
-	draw.drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.33);
+	draw.drawCirclePointWithShadow(ctx, x, y, n, idx, thick, r, c);
 };
 
 // since we don't really keep a counter of what is the current song during pause

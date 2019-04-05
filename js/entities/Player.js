@@ -21,6 +21,10 @@ const MOVE4 = 4;
 const JUMP = 5;
 const STAIR1 = 6;
 const STAIR2 = 7;
+const STILLRIGHT1 = 2;//8;
+const STILLRIGHT2 = 4;//9;
+const STILLLEFT1 = 5;//10;
+const STILLLEFT2 = 6;//11;
 
 // since everything starts from top left, this is the offset for collision
 // meaning not count the first COLLISIONXDELTA pixels of the player sprite for collision
@@ -63,6 +67,8 @@ function Player(posX, posY) {
 	// array of order of sprite animations to use for walking
 	this.WALKINGANIMATIONS = [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3];
 	this.STAIRSANIMATIONS = [STAIR1, STAIR2];
+
+	this.timeStill = 0; // how long have we been standing still?
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -91,6 +97,10 @@ Player.prototype.draw = function () {
 							 ];
 	}
 
+	if (this.isStationary) {
+		this._drawStillAnimation();
+	}
+
 	var x = this.x;
 	if (this.orientation === 'right') {
 		x -= this.inStairs ? STAIRMARGIN : 0;
@@ -105,6 +115,51 @@ Player.prototype.draw = function () {
 	}
 };
 
+Player.prototype._drawStillAnimation = function () {
+	// let's not start yet ! time until our first animation and time between our animations
+	var startTime = 15000; // after this time we start still animation
+	var waitTime = 12000; // how long to wait between animations
+	if (this.timeStill > startTime) {
+		var delta = (this.timeStill - startTime) % waitTime;
+		var totalAnimationTime = 1500; // 1.5 'seconds' for total thing (ball from one side to other)
+
+		// depending on where we are, we draw the parts of the still animation
+		if (delta < totalAnimationTime / 4) {
+			// first step, show still animation 1
+			this.currentSprite = this.orientation === 'right' ? STILLRIGHT1 : STILLLEFT1;
+		} else if (delta > totalAnimationTime / 4 && delta < 3 * totalAnimationTime / 4) {
+			// second step, show normal stop animation
+			this.currentSprite = STOP;
+		} else if (delta > totalAnimationTime && delta < 5 * totalAnimationTime / 4) {
+			// third and final step, show still animation 2
+			this.currentSprite = this.orientation === 'right' ? STILLRIGHT2 : STILLLEFT2;
+		}
+
+		if (delta < totalAnimationTime) {
+			// depending on time, we also draw the correct ball placement
+			var data = global.get('sprite-data').player;
+			var n = data.stillAnimationNumPoints;
+			var thick = data.stillAnimationThickness;
+			var r = data.stillAnimationRadius;
+			var c = data.stillAnimationColor;
+			// the ball movement center is at our sprite center
+			var x = this.x + Math.floor(this.width / 2);
+			var y = this.y + Math.floor(this.height / 3);
+			// now to get our index in the draw.drawCirclePoint (position in circle)
+			// we get it as a ratio of totalAnimationTime and numPoints / 2
+			// and offset by numPoints / 2 because we start after half the circle movement
+			// (starts at 0 radians and goes clockwise, so we start at pi radians)
+			var ourN = Math.floor(n/2);
+			// this little humpty dumpty because we want e.g. from 13-23 and then 0
+			// instead of 12-23 as index
+			var relativeIndex = Math.floor(delta / totalAnimationTime * ourN);
+			var index = relativeIndex === ourN - 1 ? 0 : ourN + relativeIndex + 1;
+
+			draw.drawCirclePointWithShadow(global.get('ctx'), x, y, n, index, thick, r, c);
+		}
+	}
+};
+
 Player.prototype.update = function (dt) {
 	var oldX = this.x;
 	var oldY = this.y;
@@ -113,8 +168,10 @@ Player.prototype.update = function (dt) {
 
 	if (nextX === this.x && nextY === this.y && this.onGround) {
 		this.isStationary = true;
+		this.timeStill += dt;
 	} else {
 		this.isStationary = false;
+		this.timeStill = 0;
 	}
 
 	// reset stairs
