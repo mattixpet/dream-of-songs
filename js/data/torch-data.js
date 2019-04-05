@@ -54,7 +54,7 @@ var torch_data = {
 		//      'anotherScene' : ..
 		//	} 
 		// where xi, yi are top left coordinates of the torch to be spawned
-		'cave1' : [
+		'insidecave' : [
 			[680,184]
 		],
 		'cavestairs' : [
