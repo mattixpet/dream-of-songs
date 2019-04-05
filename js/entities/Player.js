@@ -124,7 +124,7 @@ Player.prototype.draw = function () {
 Player.prototype._drawStillAnimation = function () {
 	// let's not start yet ! time until our first animation and time between our animations
 	var startTime = 13000; // after this time we start still animation
-	var waitTime = 10000;
+	var waitTime = 13000;
 	if (this.timeStill > startTime) {
 		var delta = (this.timeStill - startTime) % waitTime;
 		var totalAnimationTime = 1500; // 1.5 'seconds' for total thing (ball from one side to other)

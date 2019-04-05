@@ -64,6 +64,12 @@ function begin() {
 		config.gravity = !config.gravity;
 	}
 
+	// click to show coordinate clicked
+	if (util.eatKey(consts.KEY_C)) {
+		util.log('Toggling click to show coord.');
+		config.clickToShowCoord = !config.clickToShowCoord;
+	}
+
 	// print player info!
 	if (util.eatKey(consts.KEY_I)) {
 		var out = '';

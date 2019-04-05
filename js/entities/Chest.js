@@ -18,7 +18,9 @@ const FLIPPEDOPEN = 3;
 const COLLISIONYDELTA = 5;
 const COLLISIONHEIGHTREDUCTION = 10;
 
-function Chest(posX, posY, flip) {
+// flip means which direction chest faces (left/right), flip is true if left
+// invisible is true iff chest is not supposed to be drawn (meaning player has to find it without seeing it)
+function Chest(posX, posY, flip, invisible) {
 	this.name = 'chest'; // remember to set name before calling Entity constructor so it can use the name
 
 	// use Entity constructor, then overwrite what we need to/ set what we need to after
@@ -26,6 +28,8 @@ function Chest(posX, posY, flip) {
 				posX, posY, true);
 
 	this.animation = flip ? FLIPPED : NORMAL;
+
+	this.invisible = invisible;
 
 	this.width = this.sprite.getWidth();
 	this.height = this.sprite.getHeight() - COLLISIONHEIGHTREDUCTION;
@@ -40,7 +44,9 @@ function Chest(posX, posY, flip) {
 Chest.prototype = Object.create(Entity.prototype);
 
 Chest.prototype.draw = function () {
-	this.sprite.draw(this.x, this.y - COLLISIONYDELTA, this.animation);
+	if (!this.invisible) {
+		this.sprite.draw(this.x, this.y - COLLISIONYDELTA, this.animation);
+	}
 
 	if (config.drawBoundingBoxes) {
 		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
