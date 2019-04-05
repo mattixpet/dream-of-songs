@@ -127,7 +127,7 @@ Player.prototype._drawStillAnimation = function () {
 	var waitTime = 13000;
 	if (this.timeStill > startTime) {
 		var delta = (this.timeStill - startTime) % waitTime;
-		var totalAnimationTime = 1500; // 1.5 'seconds' for total thing (ball from one side to other)
+		var totalAnimationTime = 1000; // 1 'second' for total thing (ball from one side to other)
 
 		this.inStillAnimation1 = false;
 		this.inStillAnimation2 = false;
