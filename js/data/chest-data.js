@@ -18,6 +18,9 @@ var chest_data = {
 	'clearsky' : [
 		[400,-200,true,false]
 	],
+	'insidecave' : [
+		[743,65,true,false]
+	],
 	'smallcliff' : [
 		[380,80,false,false], [440,60,false,false]
 	],
