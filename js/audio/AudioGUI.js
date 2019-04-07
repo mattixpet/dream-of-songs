@@ -125,7 +125,8 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 	var downloadButtonWidth = data.downloadMargin * 2 + 'Download all'.length * data.fontSize * 0.67;
 	var downloadButtonHeight = data.downloadMargin * 2 + data.fontSize;
 	if (collision.pixelWithinRect(	x, y, downloadButtonTopLeft[0], downloadButtonTopLeft[1],
-									downloadButtonWidth, downloadButtonHeight)) {
+									downloadButtonWidth, downloadButtonHeight) &&
+		global.get('inMenu') === 'pauseMenu') {
 		global.get('audioManager').notifyCommand('download all', undefined);
 	}
 };
