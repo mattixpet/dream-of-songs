@@ -36,7 +36,8 @@ function NotificationMenu () {
 	// which appears and then disappears (a popup)
 	this.inPopup = false;
 	this.popupTime = 0;
-	this.POPUPDURATION = 2000; // ms total display time of popup
+	this.POPUPDURATION = 2500; // ms total display time of popup
+	this.POPUPFADETIME = 1000; // will fade for last 1000 ms of popupduration 
 	this.entityX = undefined; // entity which prompted the popup!
 	this.entityY = undefined;
 	this.entityWidth = undefined;
@@ -110,6 +111,8 @@ NotificationMenu.prototype.draw = function () {
 // We draw popup default to the right and above player.
 // If that is out of screen in any direction, mirror with respective axis
 // (center of player) so it is on screen
+// Popup will last for this.POPUPDURATION
+// and will be fading away for this.POPUPFADETIME 'milliseconds'
 NotificationMenu.prototype._drawPopup = function () {
 	var x = this.entityX;
 	var y = this.entityY;
@@ -131,13 +134,19 @@ NotificationMenu.prototype._drawPopup = function () {
 		popupY = y + h + data.fontSize;
 	}
 
-	this._drawText(popupX, popupY, popupWidth);
+	var opacity = undefined;
+	var fadeTime = this.popupTime - (this.POPUPDURATION - this.POPUPFADETIME); // time we've been fading
+	if (fadeTime > 0) {
+		opacity = (this.POPUPFADETIME - fadeTime) / this.POPUPFADETIME; // goes from 1 - 0 in POPUPFADETIME ms
+	}
+	this._drawText(popupX, popupY, popupWidth, opacity, true);
 };
 
 // Draw our designated text !
 // Should have been notified before so we can set our text key
 // Draw at x,y with max width: width
-NotificationMenu.prototype._drawText = function (x, y, width) {
+// and opacity opacity, shadow is true if the text should have a shadow
+NotificationMenu.prototype._drawText = function (x, y, width, opacity, shadow) {
 	var data = global.get('menu-text-data')[this.name];
 	draw.writeText(
 		global.get('ctx'),
@@ -148,7 +157,10 @@ NotificationMenu.prototype._drawText = function (x, y, width) {
 		data.fontSize,
 		data.fontColor,
 		width,
-		data.spacing
+		data.spacing,
+		opacity,
+		shadow ? data.popupShadowColor : undefined,
+		shadow ? data.popupShadowDistance : undefined
 	);
 };
 

@@ -100,9 +100,12 @@ function drawBox(ctx, x, y, w, h, color) {
 	ctx.restore();
 }
 
-function fillText(ctx, text, x, y, font, fontSize, color) {
+function fillText(ctx, text, x, y, font, fontSize, color, opacity) {
 	ctx.save();
 
+	if (opacity) {
+		ctx.globalAlpha = opacity;
+	}
 	ctx.font = 'normal ' + fontSize + 'px ' + font;
 	ctx.fillStyle = color;
 	ctx.fillText(text, x, y);
@@ -110,14 +113,16 @@ function fillText(ctx, text, x, y, font, fontSize, color) {
 	ctx.restore();
 }
 
-function fillTextWithShadow(ctx, text, x, y, font, fontSize, color, shadowColor, shadowDistance) {
-	fillText(ctx, text, x + shadowDistance, y - shadowDistance, font, fontSize, shadowColor);
-	fillText(ctx, text, x, y, font, fontSize, color);
+function fillTextWithShadow(ctx, text, x, y, font, fontSize, color, opacity, shadowColor, shadowDistance) {
+	fillText(ctx, text, x + shadowDistance, y - shadowDistance, font, fontSize, shadowColor, opacity);
+	fillText(ctx, text, x, y, font, fontSize, color, opacity);
 }
 
 // Writes text to canvas positioned at x,y, no more than width wide. 
 // spacing === line spacing
-function writeText(ctx, text, x, y, font, fontSize, color, width, spacing) {
+// if opacity is supplied, draw with that opacity
+// if shadowColor is supplied, draw additionally a shadow with shadowColor and shadowDistance from original text
+function writeText(ctx, text, x, y, font, fontSize, color, width, spacing, opacity, shadowColor, shadowDistance) {
 	var charW = Math.floor(fontSize / 2); // ~width of 1 character
 	var maxNumChars = Math.floor(width / charW); // maximum number of characters per line
 	var words = text.split(' ');
@@ -163,7 +168,11 @@ function writeText(ctx, text, x, y, font, fontSize, color, width, spacing) {
 	// actually draw our lines now
 	var ourY = y;
 	for (var i = 0; i < lines.length; i++) {
-		fillText(ctx, lines[i], x, ourY, font, fontSize, color);
+		if (shadowColor) {
+			fillTextWithShadow(ctx, lines[i], x, ourY, font, fontSize, color, opacity, shadowColor, shadowDistance);
+		} else {
+			fillText(ctx, lines[i], x, ourY, font, fontSize, color, opacity);
+		}
 		ourY += fontSize * spacing;
 	}
 }

@@ -20,6 +20,8 @@ var menu_text_data = {
 		// popup notifiction
 		'popupTextWidth' : 171,
 		'popupTextHeight' : 36,
+		'popupShadowColor' : 'black',
+		'popupShadowDistance' : 2,
 		'first-chest' : 'You have found your first chest! ' +
 						'\n Each chest contains a song ' +
 						'idea I wrote. Click \'space\' to play! ' +
