@@ -11,11 +11,12 @@ var Song = global.get('class/Song');
 var collision = global.get('collision');
 var util = global.get('util');
 var draw = global.get('draw');
+var consts = global.get('consts');
 
 // local constants
 const songsPerPage = 6; // this.activeSongs should be max this length
 
-function AudioGUI (TOTALSONGS) {
+function AudioGUI () {
 	this.activeSongs = []; // songs displaying in menu at the moment, activeSongs[0] is also song displayed in game
 	// these are important variables maintaining where we are and what we are displaying from playerSongs
 	// looks something like this:
@@ -33,8 +34,6 @@ function AudioGUI (TOTALSONGS) {
 
 	this.upArrowSprite = global.get('imageHandler').getSprite('uparrow');
 	this.downArrowSprite = global.get('imageHandler').getSprite('downarrow');
-
-	this.TOTALSONGS = TOTALSONGS;
 
 	this.downloading = false; // audio manager notifies us, so we set this as true when
 						      // when we want to display the loading animation
@@ -251,7 +250,8 @@ AudioGUI.prototype.draw = function () {
 		// draw the total songs collected text and download all text
 		draw.fillText(
 			global.get('ctx'),
-			'Total songs collected: ' + global.get('audioManager').getPlayerSongs().length + '/' + this.TOTALSONGS,
+			// + 1 in the num chests because of title theme
+			'Total songs collected: ' + global.get('audioManager').getPlayerSongs().length + '/' + (consts.NUMCHESTS + 1),
 			data.totalSongPos[0],
 			data.totalSongPos[1],
 			data.font,

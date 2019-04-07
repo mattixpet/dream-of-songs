@@ -94,6 +94,8 @@ function update(dt) {
 	}
 
 	global.get('audioGui').update(dt);
+
+	global.get('notificationMenu').update(dt);
 }
 
 function draw() {
@@ -119,6 +121,9 @@ function draw() {
 
 		// well let's draw the audio player last
 		global.get('audioManager').drawGui();
+
+		// now let's draw the popup last (if we're in a popup)
+		global.get('notificationMenu').draw();
 	}
 }
 

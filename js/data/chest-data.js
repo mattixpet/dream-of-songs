@@ -4,6 +4,8 @@
 
 'use strict';
 
+var consts = global.get('consts');
+
 var chest_data = {
 	// format
 	// {
@@ -35,6 +37,21 @@ var chest_data = {
 		[258,17,false,true], [316,20,false,true]
 	]
 };
+
+// go over our data to set consts.NUMCHESTS and consts.NUMHIDDENCHESTS variables correctly
+var numChests = 0;
+var numHiddenChests = 0;
+for (var scene in chest_data) {
+	var chests = chest_data[scene];
+	for (var i = 0; i < chests.length; i++) {
+		if (chests[i][3]) {
+			numHiddenChests++;
+		}
+	}
+	numChests += chests.length;
+}
+consts.NUMCHESTS = numChests;
+consts.NUMHIDDENCHESTS = numHiddenChests;
 
 global.set('chest-data', chest_data);
 

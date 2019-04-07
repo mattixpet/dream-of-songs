@@ -75,6 +75,7 @@ function Player(posX, posY) {
 	this.inStillAnimation2 = false;
 
 	this.numChests = 0;
+	this.numHiddenChests = 0;
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -317,39 +318,49 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 Player.prototype._handleEntityCollision = function (entity) {
 	if (entity) {
 		if (entity.getName() === 'chest') {
-			// only handle as we really collided with this chest if our feet are touching it 
-			// (so you can't jump and open them with your hat :P )
-			// do that using our handy grid coordinates
-			var bg = global.get('background');
-			var gridWidth = bg.getGridWidth();
-			var gridHeight = bg.getGridHeight();
-			var chestY = util.pixelToGrid(entity.getX() + entity.getWidth(), entity.getY() + entity.getHeight(), 
-										  gridWidth, gridHeight)[1];
-			var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight)[1];
-			if (chestY === playerY && !entity.isLooted()) {
-				var songName = entity.loot(); // get that loot!
-
-				if (config.hiddenChestNotification && entity.isHidden()) {
-					// display hidden chest notification
-					global.get('notificationMenu').notify('hidden-chest');
-					global.get('notificationMenu').display();					
-				} else if (config.generalChestNotification && this.numChests === 0) {
-					// display first chest notification
-					global.get('notificationMenu').notify('first-chest');
-					global.get('notificationMenu').display();
-				} else if (config.generalChestNotification && this.numChests > 0) {
-					// display general new chest congratulations notification
-					global.get('notificationMenu').notify('general-chest', [this.numChests, 'nei', 'kannski']);
-					global.get('notificationMenu').display();
-				}
-
-				this.numChests++;
-			}
+			this._handleChestCollision(entity);
 		}
 		// else - we don't handle any more entities
 	}
 
 	return false;
+};
+
+Player.prototype._handleChestCollision = function (chest) {
+	// only handle as we really collided with this chest if our feet are touching it 
+	// (so you can't jump and open them with your hat :P )
+	// do that using our handy grid coordinates
+	var bg = global.get('background');
+	var gridWidth = bg.getGridWidth();
+	var gridHeight = bg.getGridHeight();
+	var chestY = util.pixelToGrid(chest.getX() + chest.getWidth(), chest.getY() + chest.getHeight(), 
+								  gridWidth, gridHeight)[1];
+	var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight)[1];
+	if (chestY === playerY && !chest.isLooted()) {
+		var songName = chest.loot(); // get that loot!
+
+		if (chest.isHidden() && this.numHiddenChests === 0) {
+			// display first hidden chest notification
+			this.numHiddenChests++;
+			global.get('notificationMenu').notify('first-hidden-chest');
+			global.get('notificationMenu').display();				
+		} else if (chest.isHidden() && this.numHiddenChests > 0) {
+			// display hidden chest popup
+			this.numHiddenChests++;
+			global.get('notificationMenu').notify('hidden-chest', [this.numHiddenChests, songName], 
+													this.x, this.y, this.width, this.height);
+		} else if (this.numChests === 0) {
+			// display first chest notification
+			global.get('notificationMenu').notify('first-chest');
+			global.get('notificationMenu').display();
+		} else if (this.numChests > 0) {
+			// display general new chest congratulations popup
+			global.get('notificationMenu').notify('general-chest', [this.numChests + 1, songName], 
+													this.x, this.y, this.width, this.height);
+		}
+
+		this.numChests++;
+	}
 };
 
 Player.prototype._findNextX = function (dt) {

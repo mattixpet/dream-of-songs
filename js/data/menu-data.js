@@ -32,8 +32,7 @@ var menu_data = {
 	'notificationMenu' : {
 		// 11 = margin
 		// 18 = font size
-		'continue' :    {'x':551-11, 'y':358-11-18, 'width':18/2*'continue'.length+2*11, 'height':18+2*11},
-		'toggleoff' :	{'x':140-11, 'y':358-11-18, 'width':18/2*'don\'t show again'.length+2*11, 'height':18+2*11}
+		'continue' :    {'x':551-11, 'y':358-11-18, 'width':18/2*'continue'.length+2*11, 'height':18+2*11}
 	}
 };
 

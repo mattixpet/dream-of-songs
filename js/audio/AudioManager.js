@@ -13,9 +13,8 @@ function AudioManager () {
 	this.player = new AudioPlayer();
 
 	this.songs = global.get('audio-data');
-	this.TOTALSONGS = this.songs.length; // keep this number for our records (e.g. 261 songs)
 
-	this.gui = new AudioGUI(this.TOTALSONGS);
+	this.gui = new AudioGUI();
 	global.set('audioGui', this.gui); // for the mouse events, so they can notify the gui and more of course..
 
 	this.songsDelivered = {}; // songs we've put in chests but player hasn't opened

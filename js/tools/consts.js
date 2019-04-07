@@ -6,6 +6,10 @@
 
 var consts = {};
 
+// facts
+consts['NUMCHESTS'] = undefined; // these should be set in data/chest-data.js
+consts['NUMHIDDENCHESTS'] = undefined;
+
 // input
 consts['KEY_W'] = 'W'.charCodeAt(0);
 consts['KEY_A'] = 'A'.charCodeAt(0);
