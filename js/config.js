@@ -15,6 +15,10 @@ config['gravity'] = true;
 config['clickToShowCoord'] = false;
 config['playTitleTheme'] = false;
 
+// player controlled
+config['generalChestNotification'] = true;
+config['hiddenChestNotification'] = true;
+
 // game values
 config['GRAVITYCONSTANT'] = 0.001;
 config['DEFAULTTERMINALSPEED'] = 0.5;

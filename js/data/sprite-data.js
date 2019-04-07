@@ -18,7 +18,7 @@ var sprite_data = {
 						[1960,45], [1955,1036], // stairs
 						[2468,66], [3110,70], [2502,1088] // still animation
 					  ],
-		'startingPosition' : [300, 110],
+		'startingPosition' : [300, -80],
 		// how much to alter bounding box/sprite drawing, see player.js for more explanation
 		'COLLISIONXDELTA' : 10,
 		'COLLISIONWIDTHREDUCTION' : 30,

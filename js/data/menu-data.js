@@ -28,6 +28,12 @@ var menu_data = {
 		'resume' :      {'x':80, 'y':123, 'width':210, 'height':68},
 		'settings' :    {'x':80, 'y':191, 'width':210, 'height':68},
 		'about' :      	{'x':80, 'y':259, 'width':210, 'height':68}
+	},
+	'notificationMenu' : {
+		// 11 = margin
+		// 18 = font size
+		'continue' :    {'x':551-11, 'y':358-11-18, 'width':18/2*'continue'.length+2*11, 'height':18+2*11},
+		'toggleoff' :	{'x':140-11, 'y':358-11-18, 'width':18/2*'don\'t show again'.length+2*11, 'height':18+2*11}
 	}
 };
 

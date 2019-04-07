@@ -13,6 +13,9 @@ var chest_data = {
 	// where xi, yi are coordinates of the chests to be spawned
 	// and flippedi is a boolean if the chest should face left or right respectively
 	// invis is true iff chest will not be drawn, but still present to be looted (hidden)
+	'clearsky' : [
+		[400,-200,true,false]
+	],
 	'smallcliff' : [
 		[380,80,false,false], [440,60,false,false]
 	],

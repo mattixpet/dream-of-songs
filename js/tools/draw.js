@@ -115,6 +115,53 @@ function fillTextWithShadow(ctx, text, x, y, font, fontSize, color, shadowColor,
 	fillText(ctx, text, x, y, font, fontSize, color);
 }
 
+// Writes text to canvas positioned at x,y, no more than width wide. 
+// spacing === line spacing
+function writeText(ctx, text, x, y, font, fontSize, color, width, spacing) {
+	var charW = Math.floor(fontSize / 2); // ~width of 1 character
+	var maxNumChars = Math.floor(width / charW); // maximum number of characters per line
+	var words = text.split(' ');
+
+	var lines = [];
+	var line = '';
+	for (var i = 0; i < words.length; i++) {
+		var word = words[i];
+		if (word === '\n\n') {
+			if (line) {
+				lines.push(line);
+				line = '';
+			}
+			lines.push(''); // the whole new line
+			continue;
+		} else if (word === '\n') {
+			if (line) {
+				lines.push(line);
+				line = '';
+			}
+			continue;
+		}
+		// lookahead one word, and if line is more than maxNumChars, we have our line
+		var nextLine = line + word + ' ';
+		if (nextLine.length <= maxNumChars) {
+			line = nextLine;
+		} else {
+			lines.push(line);
+			line = word + ' ';
+		}
+	}
+	// last line, less than maxNumChars
+	if (line) {
+		lines.push(line);
+	}
+
+	// actually draw our lines now
+	var ourY = y;
+	for (var i = 0; i < lines.length; i++) {
+		fillText(ctx, lines[i], x, ourY, font, fontSize, color);
+		ourY += fontSize * spacing;
+	}
+}
+
 draw['drawCirclePoint'] = drawCirclePoint;
 draw['drawCirclePointWithShadow'] = drawCirclePointWithShadow;
 draw['bezierCurve'] = bezierCurve;
@@ -122,6 +169,7 @@ draw['fillRect'] = fillRect;
 draw['drawBox'] = drawBox;
 draw['fillText'] = fillText;
 draw['fillTextWithShadow'] = fillTextWithShadow;
+draw['writeText'] = writeText;
 
 global.set('draw', draw); // export
 

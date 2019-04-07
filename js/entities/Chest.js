@@ -60,7 +60,16 @@ Chest.prototype.loot = function () {
 		this.animation = this.animation === NORMAL ? NORMALOPEN : FLIPPEDOPEN;
 		// let AudioManager know so he knows Player now has this song
 		global.get('audioManager').notifySongOpened(this.song);
+		return this.song;
 	}
+};
+
+Chest.prototype.isLooted = function () {
+	return this.looted;
+};
+
+Chest.prototype.isHidden = function () {
+	return this.invisible;
 };
 
 global.set('class/Chest', Chest);

@@ -73,6 +73,8 @@ function Player(posX, posY) {
 	 // set this as true only when drawing the still animations specifically (not stop e.g)
 	this.inStillAnimation1 = false;
 	this.inStillAnimation2 = false;
+
+	this.numChests = 0;
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -324,11 +326,27 @@ Player.prototype._handleEntityCollision = function (entity) {
 			var chestY = util.pixelToGrid(entity.getX() + entity.getWidth(), entity.getY() + entity.getHeight(), 
 										  gridWidth, gridHeight)[1];
 			var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight)[1];
-			if (chestY === playerY) {
-				entity.loot(); // get that loot!
+			if (chestY === playerY && !entity.isLooted()) {
+				var songName = entity.loot(); // get that loot!
+
+				if (config.hiddenChestNotification && entity.isHidden()) {
+					// display hidden chest notification
+					global.get('notificationMenu').notify('hidden-chest');
+					global.get('notificationMenu').display();					
+				} else if (config.generalChestNotification && this.numChests === 0) {
+					// display first chest notification
+					global.get('notificationMenu').notify('first-chest');
+					global.get('notificationMenu').display();
+				} else if (config.generalChestNotification && this.numChests > 0) {
+					// display general new chest congratulations notification
+					global.get('notificationMenu').notify('general-chest', [this.numChests, 'nei', 'kannski']);
+					global.get('notificationMenu').display();
+				}
+
+				this.numChests++;
 			}
 		}
-		// else we don't know how to handle any more entities
+		// else - we don't handle any more entities
 	}
 
 	return false;
