@@ -18,7 +18,7 @@ var menu_text_data = {
 		'textWidth' : 420, // px
 		'continueButtonPos' : [551,358],
 		// popup notifiction
-		'popupTextWidth' : 170,
+		'popupTextWidth' : 171,
 		'popupTextHeight' : 36,
 		'first-chest' : 'You have found your first chest! ' +
 						'\n Each chest contains a song ' +

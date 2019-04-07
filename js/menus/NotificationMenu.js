@@ -127,7 +127,7 @@ NotificationMenu.prototype._drawPopup = function () {
 		popupX = x - popupWidth;
 	}
 	var popupY = y - popupHeight - data.fontSize;
-	if (popupY < 0) {
+	if (popupY - data.fontSize < 0) {
 		popupY = y + h + data.fontSize;
 	}
 
