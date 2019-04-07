@@ -145,8 +145,14 @@ function writeText(ctx, text, x, y, font, fontSize, color, width, spacing) {
 		if (nextLine.length <= maxNumChars) {
 			line = nextLine;
 		} else {
-			lines.push(line);
-			line = word + ' ';
+			if (line) {
+				lines.push(line);
+				line = word + ' ';
+			} else {
+				// unless line is only one really long word (taking up more space than the width)
+				// in which just push that word directly as one line
+				lines.push(word);
+			}
 		}
 	}
 	// last line, less than maxNumChars
