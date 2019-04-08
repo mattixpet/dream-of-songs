@@ -4,12 +4,16 @@ describe("entityManager", function() {
   var util = global.get('util');
   var config = global.get('config');
   var ImageHandler = global.get('class/ImageHandler');
+  var AudioManager = global.get('class/AudioManager');
 
+  var audioManager;
   var imageHandler;
   var entityManager;
   var placeHolderSprite;
 
   beforeEach(function() {
+    audioManager = new AudioManager();
+    global.set('audioManager', audioManager);
     imageHandler = new ImageHandler();
     global.set('imageHandler', imageHandler);
     entityManager = new EntityManager();
