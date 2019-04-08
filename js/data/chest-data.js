@@ -38,6 +38,14 @@ var chest_data = {
 	],
 	'waterfallofdreams' : [
 		[258,17,false,true], [316,20,false,true]
+	],
+	'undergroundvault' : [
+		[102,-29,true,false], [162,-40,true,false], [222,-32,true,false], // topleft
+		[545,-36,false,false], [605,-41,false,false], [665,-20,false,false], // topright
+		[710,110,true,false], [650,112,true,false], [590,92,true,false], // midright
+		[40,99,false,false], [100,105,false,false], [160,110,false,false], // midleft
+		[47,330,false,false], [107,331,false,false], [167,327,false,false], // botleft
+		[601,320,true,false], [661,322,true,false], [721,328,true,false] // botright
 	]
 };
 
