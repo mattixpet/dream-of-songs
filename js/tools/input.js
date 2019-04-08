@@ -63,7 +63,7 @@ function handleMousedown(e) {
 	}
 
 	// notify the audio gui we clicked, if only we are in pause or in game
-	if (inMenu === 'pauseMenu' || !inMenu) {
+	if (inMenu === 'pauseMenu' || !inMenu || inMenu === 'notificationMenu') {
 		global.get('audioGui').notifyClick(x,y);
 	}
 

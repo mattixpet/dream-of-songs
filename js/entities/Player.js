@@ -343,7 +343,7 @@ Player.prototype._handleChestCollision = function (chest) {
 			// display first hidden chest notification
 			this.numHiddenChests++;
 			global.get('notificationMenu').notify('first-hidden-chest');
-			global.get('notificationMenu').display();				
+			global.get('notificationMenu').display();
 		} else if (chest.isHidden() && this.numHiddenChests > 0) {
 			// display hidden chest popup
 			this.numHiddenChests++;

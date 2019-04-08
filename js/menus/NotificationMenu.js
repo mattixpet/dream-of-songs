@@ -82,6 +82,7 @@ NotificationMenu.prototype.notify = function (type, values, x, y, width, height)
 NotificationMenu.prototype.display = function () {
 	MainLoop.stop();
 	Menu.prototype.display.call(this);
+	global.get('audioManager').drawGui(); // just to have the correct song displaying during pause
 };
 
 NotificationMenu.prototype.update = function (dt) {

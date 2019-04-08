@@ -136,6 +136,17 @@ AudioManager.prototype.getNewSong = function (special) {
 	return song.name;
 };
 
+// The chests should call this function once Player opens them, so we know
+// player has this song available, and we can draw it in the list of songs
+AudioManager.prototype.notifySongOpened = function (songName) {
+	this.playerSongs.push(this.songsDelivered[songName]);
+	// set as current song, unless some other song is playing :)
+	if (!this.isPlaying) {
+		this.currentSong = this.playerSongs.length - 1;
+	}
+	delete this.songsDelivered[songName];
+};
+
 AudioManager.prototype._downloadSong = function (songName) {
 	// first find the song to get the url
 	var song;
@@ -208,13 +219,6 @@ AudioManager.prototype._zipPlayerSongs = function () {
 	.catch(function(err){
 		global.get('audioManager').gui.notifyDownloadCompleted();
 	});	
-};
-
-// The chests should call this function once Player opens them, so we know
-// player has this song available, and we can draw it in the list of songs
-AudioManager.prototype.notifySongOpened = function (songName) {
-	this.playerSongs.push(this.songsDelivered[songName]);
-	delete this.songsDelivered[songName];
 };
 
 AudioManager.prototype.isSongPlaying = function (songName) {

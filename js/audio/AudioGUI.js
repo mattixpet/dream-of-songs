@@ -183,16 +183,19 @@ AudioGUI.prototype.update = function (dt) {
 AudioGUI.prototype.draw = function () {
 	var inMenu = global.get('inMenu');
 	var data = global.get('audio-gui-data')['Spacings'];
+	var audioManager = global.get('audioManager');
+	var playerSongs = audioManager.getPlayerSongs();
 
 	// draw if we are in game (set active songs as only this one we are playing)
-	if (!inMenu) {
+	// also draw if we are in the notification menu, since it doesn't block our player
+	// and only draw if player has gotten at least one chest ! (not counting the title theme)
+	if ((!inMenu || inMenu === 'notificationMenu') && playerSongs.length > 1) {
 		// if our length is 1, we have already created this array with one song to display while drawing
 		// in which case we just draw it. If however it is not 1 (the if clause) we create it
 		// However, if our length is one, but currentSong from audioManager has changed, we also have to
 		// create a new song and draw it
 		// Also if the current songs configuration is 'menu', we came from there and need to change it to game
-		var audioManager = global.get('audioManager');
-		var song = audioManager.getPlayerSongs()[audioManager.getCurrentSong()];
+		var song = playerSongs[audioManager.getCurrentSong()];
 		if (this.activeSongs.length !== 1 || 
 			(this.activeSongs.length > 0 && song.name !== this.activeSongs[0].name) ||
 			(this.activeSongs.length > 0 && this.activeSongs[0].getConfiguration() === 'menu')) {
@@ -222,8 +225,7 @@ AudioGUI.prototype.draw = function () {
 		// if a song which is currentSong is playing, no one else should display pause
 		for (var i = 0; i < this.activeSongs.length; i++) {
 			var song = this.activeSongs[i];
-			var audioManager = global.get('audioManager');
-			var isCurrentSong = song.getName() === audioManager.getPlayerSongs()[audioManager.getCurrentSong()].name;
+			var isCurrentSong = song.getName() === playerSongs[audioManager.getCurrentSong()].name;
 			if (song.isSetAsPlaying()) {
 				// only allow it to be displayed as playing if it's the same as current song
 				if (!isCurrentSong) {
@@ -252,7 +254,7 @@ AudioGUI.prototype.draw = function () {
 		draw.fillText(
 			global.get('ctx'),
 			// + 1 in the num chests because of title theme
-			'Total songs collected: ' + global.get('audioManager').getPlayerSongs().length + '/' + (consts.NUMCHESTS + 1),
+			'Total songs collected: ' + playerSongs.length + '/' + (consts.NUMCHESTS + 1),
 			data.totalSongPos[0],
 			data.totalSongPos[1],
 			data.font,
