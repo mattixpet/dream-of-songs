@@ -22,8 +22,10 @@ AudioPlayer.prototype.resume = function () {
 
 // Pause current song
 AudioPlayer.prototype.pause = function () {
-	this.currentSong.pause();
-	this.lastPos = this.currentSong.currentTime;
+	if (this.currentSong) {
+		this.currentSong.pause();
+		this.lastPos = this.currentSong.currentTime;
+	}
 };
 
 // Seek in current song where index is a number between 0 and 1
