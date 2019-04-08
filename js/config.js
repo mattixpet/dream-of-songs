@@ -26,7 +26,7 @@ config['SPRITEURL'] = 'img/spritesheets/';
 config['BACKGROUNDURL'] = 'img/backgrounds/';
 config['MENUITEMSURL'] = 'img/menuitems/';
 config['AUDIOGUIURL'] = 'img/audiogui/';
-config['SONGURL'] = 'http://matthiaspetursson.com/songs/';
+config['SONGURL'] = 'https://matthiaspetursson.com/songs/';
 
 global.set('config', config);
 
