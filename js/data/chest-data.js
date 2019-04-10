@@ -46,6 +46,9 @@ var chest_data = {
 		[40,99,false,false], [100,105,false,false], [160,110,false,false], // midleft
 		[47,330,false,false], [107,331,false,false], [167,327,false,false], // botleft
 		[601,320,true,false], [661,322,true,false], [721,328,true,false] // botright
+	],
+	'stalagmites' : [
+		[384,395,false,true]
 	]
 };
 
