@@ -52,6 +52,12 @@ var chest_data = {
 	],
 	'brickcave' : [
 		[17,-40,false,false]
+	],
+	'semivault' : [
+		// these are same as underground vault !! the right side
+		[545,-36,false,false], [605,-41,false,false], [665,-20,false,false], // topright
+		[710,110,true,false], [650,112,true,false], [590,92,true,false], // midright
+		[601,320,true,false], [661,322,true,false], [721,328,true,false] // botright
 	]
 };
 
