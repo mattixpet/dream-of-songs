@@ -49,6 +49,9 @@ var chest_data = {
 	],
 	'stalagmites' : [
 		[384,395,false,true]
+	],
+	'brickcave' : [
+		[17,-40,false,false]
 	]
 };
 
