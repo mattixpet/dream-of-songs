@@ -77,7 +77,6 @@ ImageHandler.prototype._handleBackground = function () {
 
 ImageHandler.prototype._handleGuiItems = function () {
 	var audio_gui_data = global.get('audio-gui-data');
-	var canvas = global.get('canvas');
 
 	for (var item in audio_gui_data) {
 		var itemInfo = audio_gui_data[item];

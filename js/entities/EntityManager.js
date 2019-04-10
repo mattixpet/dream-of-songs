@@ -7,6 +7,7 @@
 var config = global.get('config');
 var Chest = global.get('class/Chest');
 var Torch = global.get('class/Torch');
+var Water = global.get('class/Water');
 
 function EntityManager () {
 	// maintain all entities in game in this object
@@ -86,6 +87,23 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 				var torch = new Torch(torches[i][0], torches[i][1]);
 				this.register(torch, scene);
 			}
+		}
+	}
+
+	// Spawn all water animations (currently only in stalagmites)
+	data = global.get('water-data');
+	if (data.hasOwnProperty(scene)) {
+		var water = data[scene];
+		if (!this.scenesVisited[scene]) {
+			// first time in scene, always only one water in scene
+			this.register(
+				new Water(
+					global.get('imageHandler').getSprite(scene + '-water'),
+					water.x,
+					water.y
+				),
+				scene
+			);
 		}
 	}
 };

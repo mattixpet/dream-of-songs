@@ -39,6 +39,15 @@ var sprite_data = {
 		'srcWidth' : 428,
 		'srcHeight' : 636,
 		'positions' : [[0,6], [0, 643], [441, 9], [440, 641]]
+	},
+	// water animations (currently only in stalagmites scene)
+	'stalagmites-water' : {
+		'fileurl' : config.SPRITEURL + 'stalagmites-water-spritesheet.png',
+		'dispWidth' : 250, // 600/2.4
+		'dispHeight' : 63, // 150/2.4 (rounded up)
+		'srcWidth' : 600,
+		'srcHeight' : 150,
+		'positions' : [[0,0], [600,0], [0,150], [600,150], [0,300], [600,300]]
 	}
 };
 

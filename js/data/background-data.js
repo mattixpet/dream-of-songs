@@ -82,7 +82,7 @@ var background_data = {
 			'special' : {'scene' : 'cave', 'coords' : 'nochange'}
 		},
 		'brokenstairs' : {
-			'left' : undefined,
+			'left' : {'scene' : 'stalagmites', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : undefined,
 			'down' : undefined,
@@ -116,6 +116,27 @@ var background_data = {
 			'right' : undefined,
 			'down' : undefined,
 			'special' : {'scene' : 'undergroundvault', 'coords' : [390, 0]}
+		},
+		'brickcave' : {
+			'left' : {'scene' : 'brokenstairs', 'coords' : 'flip'},
+			'up' : undefined,
+			'right' : {'scene' : 'semivault', 'coords' : 'flip'},
+			'down' : undefined,
+			'special' : undefined
+		},
+		'semivault' : {
+			'left' : {'scene' : 'brickcave', 'coords' : 'flip'},
+			'up' : undefined,
+			'right' : undefined,
+			'down' : undefined,
+			'special' : undefined
+		},
+		'stalagmites' : {
+			'left' : undefined,
+			'up' : undefined,
+			'right' : {'scene' : 'brokenstairs', 'coords' : 'flip'},
+			'down' : undefined,
+			'special' : undefined
 		}
 	},
 	'clearsky' : [
@@ -689,6 +710,10 @@ var background_data = {
 // reused collision matrixes
 background_data.clearskyclouds = background_data.clearsky;
 background_data.clearskymoreclouds = background_data.clearsky;
+// TEMPORARY TESTING ONLY
+background_data.brickcave = background_data.clearsky;
+background_data.semivault = background_data.clearsky;
+background_data.stalagmites = background_data.clearsky;
 
 global.set('background-data', background_data);
 

@@ -52,6 +52,10 @@ Sprite.prototype.getHeight = function() {
 	return this.dispH;
 };
 
+Sprite.prototype.getNumPositions = function () {
+	return this.positions.length;
+};
+
 global.set('class/Sprite', Sprite);
 
 }());
