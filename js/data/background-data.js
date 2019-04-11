@@ -15,15 +15,15 @@
 'use strict';
 
 var background_data = {
-	// An object with the connections of all the background images where you should go next if you walk/go 
-	// to the left right up or down of a background image (constructing the bigger picture map basically)
-	// The format should be well apparent if you look at the connections object below undefined means no connecting
+	// An object with the connections of all the background images, where you should go next if you walk/go 
+	// to the left, right, up, or down of a background image (constructing the bigger picture map basically)
+	// The format should be well apparent if you look at the connections object below, undefined means no connecting
 	// background in that direction
-	// special means there is a movement between screens somewhere in the middle of the map not at the edges
+	// special means there is a movement between screens somewhere in the middle of the map, not at the edges
 	// format of the scene object:
 	// 'scene' : {	'left' : direction object, 'up' : ., 'right' : ., 'down' : .,
-	//				'special': ., [ 'secondary-special': .]}
-	// the direction object is e.g.
+	//				'special': . [, 'secondary-special': .]}
+	// the direction object, is e.g.
 	// 'left' : {'scene':'scene', 'coords':'flip'}
 	// possible coords values: 
 	// 		'flip' - means traditional left,up,right,down movement, only add width or height of canvas depending on direction
