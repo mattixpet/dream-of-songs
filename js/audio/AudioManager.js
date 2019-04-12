@@ -208,7 +208,14 @@ AudioManager.prototype._zipPlayerSongs = function () {
 	// After all the fetches are complete, zip it and saveAs to prompt download for user
 	Promise.all(fetchPromises).then(function (values) {
 		util.log('Zipping files.. this might take some time.');
-		zip.generateAsync({type: 'blob'}).then(function (value) {
+		var zipOptions = {
+			type: 'blob',
+			compression: 'DEFLATE',
+			compressionOptions: {
+		        level: 9
+		    }
+		};
+		zip.generateAsync(zipOptions).then(function (value) {
 			saveAs(value, "songs.zip"); // from FileSaver.min.js
 			global.get('audioManager').gui.notifyDownloadCompleted();
 		})
