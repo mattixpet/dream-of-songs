@@ -69,6 +69,10 @@ var chest_data = {
 	],
 	'hillhole' : [
 		[420,139,true,true], [499,142,true,true]
+	],
+	'hillbottom' : [
+		[160,198,true,false], [240,205,true,false],
+		[320,212,true,false], [400,225,true,false]
 	]
 };
 
