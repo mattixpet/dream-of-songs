@@ -48,7 +48,8 @@ var chest_data = {
 		[601,320,true,false], [661,322,true,false], [721,328,true,false] // botright
 	],
 	'stalagmites' : [
-		[384,395,false,true]
+		[384,395,false,true], // in water
+		[731,37,true,true]    // in top right corner
 	],
 	'brickcave' : [
 		[17,-40,false,false]
@@ -58,6 +59,13 @@ var chest_data = {
 		[545,-36,false,false], [605,-41,false,false], [665,-20,false,false], // topright
 		[710,110,true,false], [650,112,true,false], [590,92,true,false], // midright
 		[601,320,true,false], [661,322,true,false], [721,328,true,false] // botright
+	],
+	'cavepedestal' : [
+		[86,116,false,true], // hidden
+		[318,236,true,false], [386,254,false,false] // on pedestal
+	],
+	'tunnelstart' : [
+		[516,145,true,true], [601,151,true,true]
 	]
 };
 

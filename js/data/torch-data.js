@@ -72,6 +72,18 @@ var torch_data = {
 		'semivault' : [
 			//                  these two same as underground vault
 			[94,68], [341,200], [652,109], [655,278]
+		],
+		'cavepedestal' : [
+			[249,231], [484,230]
+		],
+		'tunnelstart' : [
+			[206,264], [580,266]
+		],
+		'tunnel' : [
+			[206,264], [580,266]
+		],
+		'tunnelflipped' : [
+			[206,266], [580,264]
 		]
 	}
 };
