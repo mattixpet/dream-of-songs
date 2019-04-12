@@ -19,7 +19,7 @@ var chest_data = {
 		[400,-200,true,false]
 	],
 	'insidecave' : [
-		[743,65,true,false]
+		[49,212,false,false]
 	],
 	'smallcliff' : [
 		[380,80,false,false], [440,60,false,false]
@@ -66,6 +66,9 @@ var chest_data = {
 	],
 	'tunnelstart' : [
 		[516,145,true,true], [601,151,true,true]
+	],
+	'hillhole' : [
+		[420,139,true,true], [499,142,true,true]
 	]
 };
 
