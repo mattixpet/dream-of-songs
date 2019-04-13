@@ -13,7 +13,8 @@ var collision = global.get('collision');
 
 function Background() {
 	this.scenes = {}; // scene = page, stage whatever you want to call it, one background image
-	this.currentScene = config.STARTINGSCENE;
+	this.currentScene = config.STARTINGSCENE
+	this.currentSceneTemplate = undefined; // this is set as e.g. 'sky' when scene is 'sky0' (reusable backgrounds)
 
 	// load collision data for each background image
 	this.cData = global.get('background-data');
@@ -50,7 +51,7 @@ Background.prototype.draw = function () {
 // dat name tho
 Background.prototype._drawBg = function () {
 	var imageHandler = global.get('imageHandler');
-	imageHandler.getSprite(this.currentScene).draw(0, 0);
+	imageHandler.getSprite(this.currentSceneTemplate ? this.currentSceneTemplate : this.currentScene).draw(0, 0);
 };
 
 Background.prototype._drawGrid = function () {
@@ -68,7 +69,7 @@ Background.prototype._drawGrid = function () {
 	var canvas = global.get('canvas');
 	var ctx = global.get('ctx');
 
-	var data = this.cData[this.currentScene];
+	var data = this.cData[this.currentSceneTemplate ? this.currentSceneTemplate : this.currentScene];
 	for (var i = 0; i < this.gridW; i++) {
 		for (var j = 0; j < this.gridH; j++) {
 			var block = data[j][i];
@@ -121,7 +122,7 @@ Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 	// check only parts of the grid which are bounded by the rectangle
 	var gridTopLeft = util.pixelToGrid(rX, rY, this.gridW, this.gridH); // pixel to grid sets to boundaries if out of bounds
 	var gridBotRight = util.pixelToGrid(rX + rW, rY + rH, this.gridW, this.gridH);
-	var data = this.cData[this.currentScene];
+	var data = this.cData[this.currentSceneTemplate ? this.currentSceneTemplate : this.currentScene];
 
 	// go from bot right to top left because we assume the most common
 	// collision is rectangle with ground
@@ -151,7 +152,7 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 	// check only the grid tiles under gridBotLeft up until gridBotRight (to see if he's on ground)
 	// the y coordinate should be fixed and same for botLeft, botRight (then we add 1 to it to check 'below')
 	// if no tile under gridBotLeft..gridBotRight is a 1 in the grid, player is not on ground
-	var data = this.cData[this.currentScene];
+	var data = this.cData[this.currentSceneTemplate ? this.currentSceneTemplate : this.currentScene];
 	for (var i = gridBotLeft[0]; i <= gridBotRight[0]; i++) {
 		// check for out of bounds of our +1 check for block below
 		if (gridBotLeft[1] + 1 < data.length) {
@@ -174,7 +175,19 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 Background.prototype.requestNextScene = function (entity, direction) {
 	var nextScene = this.cData['Connections'][this.currentScene][direction];
 	if (nextScene) {
-		this.currentScene = nextScene.scene;
+		// check if we are in one of the multi-use scenes (end with 0-9)
+		// e.g. sky0 means we use scene sky
+		// then we set the template for collision and drawing use
+		var scene = nextScene.scene;
+		if (Number.isInteger(Number.parseInt(scene[scene.length-1]))) {
+			this.currentSceneTemplate = scene.slice(0,scene.length-1);
+		} else {
+			this.currentSceneTemplate = undefined;
+		}
+
+		// update scene
+		this.currentScene = scene;
+
 		// let's not just change scene, let's also notify entityManager so he can
 		// spawn/take care of entities on that scene
 		global.get('entityManager').notifySceneChange(nextScene.scene);
