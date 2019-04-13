@@ -82,7 +82,12 @@ var chest_data = {
 		[68,65,true,true]
 	],
 	'skyvault' : undefined, // same as undergroundvault, reused see below this object declaration
-	'topskyvault' : undefined
+	'topskyvault' : undefined,
+	'hilltop' : [
+		[490,28,false,true], // hidden one on the cross
+		[590,80,false,false], [670,84,false,false], [310,87,false,false],
+		[390,89,false,false]
+	]
 };
 
 // reused chest coordinates
