@@ -37,7 +37,34 @@ describe("background-data", function() {
     it("should only contain scenes which are in background_data", function() {
       var conns = background_data['Connections'];
       for (var scene in conns) {
+        // handle the reusable scenes (sky0 etc. (which would resolve as sky))
+        if (Number.isInteger(Number.parseInt(scene[scene.length-1]))) {
+          scene = scene.slice(0,scene.length-1);
+        }
         expect(background_data[scene]).not.toBe(undefined);
+      }
+    });
+
+    it("should be interconnected, meaning if you can go left, that scene should go right back to the original", function() {
+      // object with the opposite directions listed
+      var opposites = {
+        'left' : 'right',
+        'up' : 'down',
+        'right' : 'left',
+        'down' : 'up'
+      };
+      var conns = background_data['Connections'];
+      for (var scene in conns) {
+        var dirs = conns[scene];
+        for (var dir in dirs) {
+          // only check, left, right, up, down, no special or secondary-special
+          // and don't check any undefineds..
+          if (dir.indexOf('special') < 0 && dirs[dir]) {
+            var destinationScene = dirs[dir].scene;
+            // going in opposite direction from destinationScene should bring us back to our scene
+            expect(conns[destinationScene][opposites[dir]].scene).toEqual(scene);
+          }
+        }
       }
     });
   });

@@ -223,7 +223,7 @@ var background_data = {
 		},
 		'skynoclouds0' : {
 			'left' : {'scene' : 'skystepping', 'coords' : 'flip'},
-			'up' : {'scene' : 'skynoclouds0', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky0', 'coords' : 'flip'},
 			'right' : undefined,
 			'down' : {'scene' : 'smallcliff', 'coords' : 'flip'},
 			'special' : undefined
