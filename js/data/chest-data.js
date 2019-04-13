@@ -5,6 +5,7 @@
 'use strict';
 
 var consts = global.get('consts');
+var util = global.get('util');
 
 var chest_data = {
 	// format
@@ -85,7 +86,7 @@ var chest_data = {
 };
 
 // reused chest coordinates
-chest_data.skyvault = chest_data.undergroundvault;
+chest_data.skyvault = util.deepCopy(chest_data.undergroundvault);
 // except for skyvault, we need to move 3 chests
 var skyvault = chest_data.skyvault;
 skyvault[skyvault.length-1][0] -= 220;
