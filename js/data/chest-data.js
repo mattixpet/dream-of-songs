@@ -35,7 +35,8 @@ var chest_data = {
 		[43,94,true,true] // hidden chest
 	],
 	'chasm' : [
-		[32,131,false,false], [91,161,false,false], [685,-30,true,false]
+		[32,131,false,false], [91,161,false,false], [685,-30,true,false],
+		[150,240,false,false]
 	],
 	'waterfallofdreams' : [
 		[258,17,false,true], [316,20,false,true]
@@ -91,6 +92,13 @@ var chest_data = {
 	'insidehill' : [
 		[335,228,false,false], [395,228,false,false],
 		[182,220,false,true], [246,219,false,true] // hidden ones
+	],
+	'caveshrub' : [
+		[188,97,true,true], [614,18,true,false], [680,25,true,false],
+		[744,39,true,false]
+	],
+	'spikes' :[
+		[727,3,true,false]
 	]
 };
 

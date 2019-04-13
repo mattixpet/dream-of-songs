@@ -19,7 +19,7 @@ config['playTitleTheme'] = false;
 config['GRAVITYCONSTANT'] = 0.001;
 config['DEFAULTTERMINALSPEED'] = 0.5;
 
-config['STARTINGSCENE'] = 'hilltopcorner';//'clearsky';
+config['STARTINGSCENE'] = 'caveshrub';//'clearsky';
 
 // paths/urls
 config['SPRITEURL'] = 'img/spritesheets/';
