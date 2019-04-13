@@ -245,9 +245,11 @@ Player.prototype.update = function (dt) {
 		sceneChangeSuccess = background.requestNextScene(this, 'right');
 	} else if (this.x <= -this.width) {
 		sceneChangeSuccess = background.requestNextScene(this, 'left');
-	} else if (this.y >= canvas.height) {
+	} else if (this.y >= canvas.height - this.height) {
+		// when moving down, teleport the moment we hit bottom with our feet
 		sceneChangeSuccess = background.requestNextScene(this, 'down');
 	} else if (this.y <= -this.height) {
+		// when moving up, teleport the moment our feet leave the frame
 		sceneChangeSuccess = background.requestNextScene(this, 'up');
 	}
 	// let's not move if we can't get another scene

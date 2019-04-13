@@ -71,8 +71,14 @@ var chest_data = {
 		[420,139,true,true], [499,142,true,true]
 	],
 	'hillbottom' : [
-		[160,198,true,false], [240,205,true,false],
-		[320,212,true,false], [400,225,true,false]
+		[160,198,true,false], [240,205,true,false], [320,212,true,false],
+		[400,225,true,false]
+	],
+	'hilltopcorner' : [
+		[570,99,true,true], [642,102,true,true]
+	],
+	'skystepping' : [
+		[68,65,true,true]
 	]
 };
 
