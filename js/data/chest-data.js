@@ -80,7 +80,8 @@ var chest_data = {
 	'skystepping' : [
 		[68,65,true,true]
 	],
-	'skyvault' : undefined // same as undergroundvault, reused see below this object declaration
+	'skyvault' : undefined, // same as undergroundvault, reused see below this object declaration
+	'topskyvault' : undefined
 };
 
 // reused chest coordinates
@@ -90,6 +91,8 @@ var skyvault = chest_data.skyvault;
 skyvault[skyvault.length-1][0] -= 220;
 skyvault[skyvault.length-6][0] += 280;
 skyvault[skyvault.length-5][0] += 160;
+//
+chest_data.topskyvault = chest_data.skyvault;
 
 
 // go over our data to set consts.NUMCHESTS and consts.NUMHIDDENCHESTS variables correctly
