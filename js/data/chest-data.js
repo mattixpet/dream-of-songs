@@ -87,6 +87,10 @@ var chest_data = {
 		[490,28,false,true], // hidden one on the cross
 		[590,80,false,false], [670,84,false,false], [310,87,false,false],
 		[390,89,false,false]
+	],
+	'insidehill' : [
+		[335,228,false,false], [395,228,false,false],
+		[182,220,false,true], [246,219,false,true] // hidden ones
 	]
 };
 
