@@ -49,7 +49,7 @@ var background_data = {
 		},
 		'smallcliff' : {
 			'left' : {'scene' : 'tophillhole', 'coords' : 'flip'},
-			'up' : undefined,
+			'up' : {'scene' : 'skynoclouds0', 'coords' : 'flip'},
 			'right' : {'scene' : 'clearskyclouds', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : undefined
@@ -181,7 +181,7 @@ var background_data = {
 		},
 		'tophillhole' : {
 			'left' : {'scene' : 'hillbottom', 'coords' : 'flip'},
-			'up' : undefined,
+			'up' : {'scene' : 'skystepping', 'coords' : 'flip'},
 			'right' : {'scene' : 'smallcliff', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : {'scene' : 'hillhole', 'coords' : [110, 40]}
@@ -195,7 +195,7 @@ var background_data = {
 		},
 		'hilltopcorner' : {
 			'left' : undefined,
-			'up' : undefined,
+			'up' : {'scene' : 'skynoclouds4', 'coords' : 'flip'},
 			'right' : {'scene' : 'skystepping', 'coords' : 'flip'},
 			'down' : {'scene' : 'hillbottom', 'coords' : 'flip'},
 			'special' : undefined
@@ -203,22 +203,78 @@ var background_data = {
 		'skystepping' : {
 			'left' : {'scene' : 'hilltopcorner', 'coords' : 'flip'},
 			'up' : {'scene' : 'skyvault', 'coords' : 'flip'},
-			'right' : undefined,
+			'right' : {'scene' : 'skynoclouds0', 'coords' : 'flip'}, // sky0 will resolve to sky for everything except the connections
 			'down' : {'scene' : 'tophillhole', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'skyvault' : {
-			'left' : undefined,
+			'left' : {'scene' : 'skynoclouds4', 'coords' : 'flip'},
 			'up' : {'scene' : 'topskyvault', 'coords' : 'flip'},
-			'right' : undefined,
+			'right' : {'scene' : 'sky0', 'coords' : 'flip'},
 			'down' : {'scene' : 'skystepping', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'topskyvault' : {
-			'left' : undefined,
+			'left' : {'scene' : 'skynoclouds3', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds2', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds1', 'coords' : 'flip'},
+			'down' : {'scene' : 'skyvault', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds0' : {
+			'left' : {'scene' : 'skystepping', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds0', 'coords' : 'flip'},
+			'right' : undefined,
+			'down' : {'scene' : 'smallcliff', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky0' : {
+			'left' : {'scene' : 'skyvault', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds1', 'coords' : 'flip'},
+			'right' : undefined,
+			'down' : {'scene' : 'skynoclouds0', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds1' : {
+			'left' : {'scene' : 'topskyvault', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky1', 'coords' : 'flip'},
+			'right' : undefined,
+			'down' : {'scene' : 'sky0', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky1' : {
+			'left' : {'scene' : 'skynoclouds2', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : undefined,
-			'down' : {'scene' : 'skyvault', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds1', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds2' : {
+			'left' : {'scene' : 'sky2', 'coords' : 'flip'},
+			'up' : undefined,
+			'right' : {'scene' : 'sky1', 'coords' : 'flip'},
+			'down' : {'scene' : 'topskyvault', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky2' : {
+			'left' : undefined,
+			'up' : undefined,
+			'right' : {'scene' : 'skynoclouds2', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds3', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds3' : {
+			'left' : undefined,
+			'up' : {'scene' : 'sky2', 'coords' : 'flip'},
+			'right' : {'scene' : 'topskyvault', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds4', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds4' : {
+			'left' : undefined,
+			'up' : {'scene' : 'skynoclouds3', 'coords' : 'flip'},
+			'right' : {'scene' : 'skyvault', 'coords' : 'flip'},
+			'down' : {'scene' : 'hilltopcorner', 'coords' : 'flip'},
 			'special' : undefined
 		}
 	},
@@ -1399,13 +1455,15 @@ var background_data = {
 '00000000000000000000000000000000000000033300000000000000000000000000000000000000',
 '00000000000000000000000000000000000000033300000000000000000000000000000000000000',
 '00000000000000000000000000000000000000033300000000000000000000000000000000000000'
-	]
+	],
+	'skynoclouds' : undefined // reusable, same as sky
 };
 
 // reused collision matrixes
 background_data.clearskyclouds = background_data.clearsky;
 background_data.clearskymoreclouds = background_data.clearsky;
 background_data.tunnelflipped = background_data.tunnel;
+background_data.skynoclouds = background_data.sky;
 
 global.set('background-data', background_data);
 
