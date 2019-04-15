@@ -49,6 +49,11 @@ function handleKeydown(e) {
 		}
 	}
 
+	// pause/play song
+	if (util.eatKey(consts.KEY_SPACE)) {
+		global.get('audioManager').notifySpacePress();
+	}
+
 	e.preventDefault();
 }
 

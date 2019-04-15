@@ -228,6 +228,22 @@ AudioManager.prototype._zipPlayerSongs = function () {
 	});	
 };
 
+// tools/input.js calls this if user presses Space bar
+AudioManager.prototype.notifySpacePress = function () {
+	if (this.isPlaying) {
+		this.pause();
+		this.gui.setCurrentSongAsPaused();
+	} else {
+		var currentSongName = this.playerSongs[this.currentSong].name;
+		if (currentSongName === this.player.getSongName()) {
+			this.resume();
+		} else {
+			this.playSong(currentSongName, true);
+		}
+		this.gui.setCurrentSongAsPlaying();
+	}
+};
+
 AudioManager.prototype.isSongPlaying = function (songName) {
 	return this.isPlaying && this.playerSongs[this.currentSong].name === songName;
 };

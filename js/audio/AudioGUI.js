@@ -17,7 +17,8 @@ var consts = global.get('consts');
 const songsPerPage = 6; // this.activeSongs should be max this length
 
 function AudioGUI () {
-	this.activeSongs = []; // songs displaying in menu at the moment, activeSongs[0] is also song displayed in game
+	// Song objects of songs displaying in menu at the moment, activeSongs[0] is also song displayed in game
+	this.activeSongs = [];
 	// these are important variables maintaining where we are and what we are displaying from playerSongs
 	// looks something like this:
 	//
@@ -298,6 +299,40 @@ AudioGUI.prototype._drawLoading = function () {
 	var c = data.downloadAnimationColor;
 
 	draw.drawCirclePointWithShadow(ctx, x, y, n, idx, thick, r, c);
+};
+
+
+AudioGUI.prototype.setCurrentSongAsPlaying = function () {
+	this._setCurrentSongAs('playing');
+};
+
+AudioGUI.prototype.setCurrentSongAsPaused = function () {
+	this._setCurrentSongAs('paused');
+};
+
+// status === 'playing' or 'paused'
+// This function should work if we are in game or in pause menu on the current song.
+AudioGUI.prototype._setCurrentSongAs = function (status) {
+	var activeSongsIndex = undefined;
+	if (this.activeSongs.length === 1) {
+		// in game
+		activeSongsIndex = 0;
+	} else {
+		var audioManager = global.get('audioManager');
+		var currentSongName = audioManager.getPlayerSongs()[audioManager.getCurrentSong()].name;
+		for (var i = 0; i < this.activeSongs.length; i++) {
+			if (this.activeSongs[i].getName() === currentSongName) {
+				activeSongsIndex = i;
+				break;
+			}
+		}
+	}
+
+	if (status === 'playing' && activeSongsIndex) {
+		this.activeSongs[activeSongsIndex].setAsPlaying();
+	} else {
+		this.activeSongs[activeSongsIndex].setAsPaused();
+	}
 };
 
 // since we don't really keep a counter of what is the current song during pause
