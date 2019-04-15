@@ -20,7 +20,8 @@ const COLLISIONHEIGHTREDUCTION = 10;
 
 // flip means which direction chest faces (left/right), flip is true if left
 // invisible is true iff chest is not supposed to be drawn (meaning player has to find it without seeing it)
-function Chest(posX, posY, flip, invisible) {
+// message is an optional message to display once we're looted (located in menu-text-data under notificationMenu)
+function Chest(posX, posY, flip, invisible, message) {
 	this.name = 'chest'; // remember to set name before calling Entity constructor so it can use the name
 
 	// use Entity constructor, then overwrite what we need to/ set what we need to after
@@ -36,6 +37,9 @@ function Chest(posX, posY, flip, invisible) {
 
 	// set as true once player has gotten the song from us
 	this.looted = false;
+
+	// optional message to display when we're looted
+	this.message = message;
 
 	// get our song !
 	this.song = global.get('audioManager').getNewSong();
@@ -60,6 +64,11 @@ Chest.prototype.loot = function () {
 		this.animation = this.animation === NORMAL ? NORMALOPEN : FLIPPEDOPEN;
 		// let AudioManager know so he knows Player now has this song
 		global.get('audioManager').notifySongOpened(this.song);
+		// display optional message
+		if (this.message) {
+			global.get('notificationMenu').notify(this.message);
+			global.get('notificationMenu').display();
+		}
 		return this.song;
 	}
 };
@@ -70,6 +79,10 @@ Chest.prototype.isLooted = function () {
 
 Chest.prototype.isHidden = function () {
 	return this.invisible;
+};
+
+Chest.prototype.containsMessage = function () {
+	return this.message ? true : false;
 };
 
 global.set('class/Chest', Chest);

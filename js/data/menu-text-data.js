@@ -35,7 +35,12 @@ var menu_text_data = {
 							'the naked eye. Well done.',
 		'hidden-chest' : 'Hidden chest! {}/' + consts.NUMHIDDENCHESTS + ' \n {}',
 		//                  {} === [[[yet]? again]?! [(for the xth time)]?]?
-		'dead-to-spikes' : 'Whoops! You are dead{} \n\n But you can\'t really die in this world, so I\'ll just spawn you again.'
+		'dead-to-spikes' : 'Whoops! You are dead{} \n\n ' + 
+						   'But you can\'t really die in this world, so I\'ll just spawn you again.',
+		'only-way-to-fly' : '        What\'s the only way to fly? \n\n ' +
+							'        (hint: try to get some R&R)',
+		'raven' : 	'      Why am I like a writing desk? \n\n ' +
+					'              - Raven'
 	}
 };
 

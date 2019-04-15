@@ -10,13 +10,15 @@ var util = global.get('util');
 var chest_data = {
 	// format
 	// {
-	//		'sceneName' : [{'x':x0,'y':y0,'flipped':flipped0,'hidden':invis0}, 
-	// 					   {'x':x1,'y':y1,'flipped':flipped1,'hidden':invis1}, ..],
+	//		'sceneName' : [{'x':x0,'y':y0,'flipped':flipped0,'hidden':invis0 [,'message':msg0]}, 
+	// 					   {'x':x1,'y':y1,'flipped':flipped1,'hidden':invis1 [,'message':msg1]}, ..],
 	//      'anotherScene' : ..
 	//	} 
 	// where xi, yi are coordinates of the chests to be spawned
 	// and flippedi is a boolean if the chest should face left or right respectively
 	// invis is true iff chest will not be drawn, but still present to be looted (hidden)
+	// message is the key of optional message to prompt to user located in
+	//   data/menu-text-data.js in notificationMenu
 	'clearsky' : [
 		{'x':400,'y':-200,'flipped':true,'hidden':false}
 	],
@@ -88,7 +90,8 @@ var chest_data = {
 	'skyvault' : undefined, // same as undergroundvault, reused see below this object declaration
 	'topskyvault' : undefined,
 	'hilltop' : [
-		{'x':490,'y':28,'flipped':false,'hidden':true}, // hidden one on the cross
+		// hidden one on the cross with the raven, message is key in data/menu-text-data.js.notificationMenu
+		{'x':490,'y':28,'flipped':false,'hidden':true,'message':'raven'},
 		{'x':590,'y':80,'flipped':false,'hidden':false}, {'x':670,'y':84,'flipped':false,'hidden':false}, 
 		{'x':310,'y':87,'flipped':false,'hidden':false}, {'x':390,'y':89,'flipped':false,'hidden':false}
 	],
@@ -101,7 +104,7 @@ var chest_data = {
 		{'x':680,'y':25,'flipped':true,'hidden':false},	{'x':744,'y':39,'flipped':true,'hidden':false}
 	],
 	'spikes' :[
-		{'x':727,'y':3,'flipped':true,'hidden':false}
+		{'x':727,'y':3,'flipped':true,'hidden':false,'message':'only-way-to-fly'}
 	]
 };
 

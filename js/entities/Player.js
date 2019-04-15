@@ -344,15 +344,20 @@ Player.prototype._handleChestCollision = function (chest) {
 		if (chest.isHidden() && this.numHiddenChests === 0) {
 			// display first hidden chest notification
 			this.numHiddenChests++;
-			global.get('notificationMenu').notify('first-hidden-chest');
-			global.get('notificationMenu').display();
+			// skip this notification if chest already has message which will be displayed
+			// in the rare chance that is players first hidden chest
+			if (!chest.containsMessage()) {
+				global.get('notificationMenu').notify('first-hidden-chest');
+				global.get('notificationMenu').display();
+			}
 		} else if (chest.isHidden() && this.numHiddenChests > 0) {
 			// display hidden chest popup
 			this.numHiddenChests++;
 			global.get('notificationMenu').notify('hidden-chest', [this.numHiddenChests, songName], 
 													this.x, this.y, this.width, this.height);
-		} else if (this.numChests === 0) {
-			// display first chest notification
+		} else if (this.numChests === 0 && !chest.containsMessage()) {
+			// display first chest notification, unless the chest has a message
+			// (super unlikely that is players first chest, but just in case)
 			global.get('notificationMenu').notify('first-chest');
 			global.get('notificationMenu').display();
 		} else if (this.numChests > 0) {
