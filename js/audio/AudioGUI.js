@@ -188,8 +188,7 @@ AudioGUI.prototype.draw = function () {
 
 	// draw if we are in game (set active songs as only this one we are playing)
 	// also draw if we are in the notification menu, since it doesn't block our player
-	// and only draw if player has gotten at least one chest ! (not counting the title theme)
-	if ((!inMenu || inMenu === 'notificationMenu') && playerSongs.length > 1) {
+	if ((!inMenu || inMenu === 'notificationMenu')) {
 		// if our length is 1, we have already created this array with one song to display while drawing
 		// in which case we just draw it. If however it is not 1 (the if clause) we create it
 		// However, if our length is one, but currentSong from audioManager has changed, we also have to

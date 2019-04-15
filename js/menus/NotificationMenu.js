@@ -85,9 +85,10 @@ NotificationMenu.prototype.notify = function (type, values, x, y, width, height)
 
 // we overwrite this from Menu base class because we need to pause game
 NotificationMenu.prototype.display = function () {
-	MainLoop.stop();
 	Menu.prototype.display.call(this);
-	global.get('audioManager').drawGui(); // just to have the correct song displaying during pause
+	// stop after here because we want to get one cycle in to redraw the gui with the current song
+	// timeout necessary to get in at least one cycle after song is updated
+	setTimeout(function(){MainLoop.stop();}, 60);
 };
 
 NotificationMenu.prototype.update = function (dt) {
