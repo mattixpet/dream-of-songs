@@ -10,95 +10,98 @@ var util = global.get('util');
 var chest_data = {
 	// format
 	// {
-	//		'sceneName' : [[x0,y0,flipped0,invis0], [x1,y1,flipped1,invis1], ..],
+	//		'sceneName' : [{'x':x0,'y':y0,'flipped':flipped0,'hidden':invis0}, 
+	// 					   {'x':x1,'y':y1,'flipped':flipped1,'hidden':invis1}, ..],
 	//      'anotherScene' : ..
 	//	} 
 	// where xi, yi are coordinates of the chests to be spawned
 	// and flippedi is a boolean if the chest should face left or right respectively
 	// invis is true iff chest will not be drawn, but still present to be looted (hidden)
 	'clearsky' : [
-		[400,-200,true,false]
+		{'x':400,'y':-200,'flipped':true,'hidden':false}
 	],
 	'insidecave' : [
-		[49,212,false,false]
+		{'x':49,'y':212,'flipped':false,'hidden':false}
 	],
 	'smallcliff' : [
-		[380,80,false,false], [440,60,false,false]
+		{'x':380,'y':80,'flipped':false,'hidden':false}, {'x':440,'y':60,'flipped':false,'hidden':false}
 	],
 	'abovecave' : [
-		[16,0,false,false], [103,-20,false,false], [209,-40,true,false]
+		{'x':16,'y':0,'flipped':false,'hidden':false}, {'x':103,'y':-20,'flipped':false,'hidden':false}, 
+		{'x':209,'y':-40,'flipped':true,'hidden':false}
 	],
 	'brokenstairs' : [
-		[535,-20,false,false], [600,-40,false,false], [664,-60,false,false]
+		{'x':535,'y':-20,'flipped':false,'hidden':false}, {'x':600,'y':-40,'flipped':false,'hidden':false}, 
+		{'x':664,'y':-60,'flipped':false,'hidden':false}
 	],
 	'cavestairs' : [
-		[43,94,true,true] // hidden chest
+		{'x':43,'y':94,'flipped':true,'hidden':true} // hidden chest
 	],
 	'chasm' : [
-		[32,131,false,false], [91,161,false,false], [685,-30,true,false],
-		[150,240,false,false]
+		{'x':32,'y':131,'flipped':false,'hidden':false}, {'x':91,'y':161,'flipped':false,'hidden':false}, 
+		{'x':685,'y':-30,'flipped':true,'hidden':false}, {'x':150,'y':240,'flipped':false,'hidden':false}
 	],
 	'waterfallofdreams' : [
-		[258,17,false,true], [316,20,false,true]
+		{'x':258,'y':17,'flipped':false,'hidden':true}, {'x':316,'y':20,'flipped':false,'hidden':true}
 	],
 	'undergroundvault' : [
-		[102,-29,true,false], [162,-40,true,false], [222,-32,true,false], // topleft
-		[545,-36,false,false], [605,-41,false,false], [665,-20,false,false], // topright
-		[710,110,true,false], [650,112,true,false], [590,92,true,false], // midright
-		[40,99,false,false], [100,105,false,false], [160,110,false,false], // midleft
-		[47,330,false,false], [107,331,false,false], [167,327,false,false], // botleft
-		[601,320,true,false], [661,322,true,false], [721,328,true,false] // botright
+		{'x':102,'y':-29,'flipped':true,'hidden':false}, {'x':162,'y':-40,'flipped':true,'hidden':false}, {'x':222,'y':-32,'flipped':true,'hidden':false}, // topleft
+		{'x':545,'y':-36,'flipped':false,'hidden':false}, {'x':605,'y':-41,'flipped':false,'hidden':false}, {'x':665,'y':-20,'flipped':false,'hidden':false}, // topright
+		{'x':710,'y':110,'flipped':true,'hidden':false}, {'x':650,'y':112,'flipped':true,'hidden':false}, {'x':590,'y':92,'flipped':true,'hidden':false}, // midright
+		{'x':40,'y':99,'flipped':false,'hidden':false}, {'x':100,'y':105,'flipped':false,'hidden':false}, {'x':160,'y':110,'flipped':false,'hidden':false}, // midleft
+		{'x':47,'y':330,'flipped':false,'hidden':false}, {'x':107,'y':331,'flipped':false,'hidden':false}, {'x':167,'y':327,'flipped':false,'hidden':false}, // botleft
+		{'x':601,'y':320,'flipped':true,'hidden':false}, {'x':661,'y':322,'flipped':true,'hidden':false}, {'x':721,'y':328,'flipped':true,'hidden':false} // botright
 	],
 	'stalagmites' : [
-		[384,395,false,true], // in water
-		[731,37,true,true]    // in top right corner
+		{'x':384,'y':395,'flipped':false,'hidden':true}, // in water
+		{'x':731,'y':37,'flipped':true,'hidden':true}    // in top right corner
 	],
 	'brickcave' : [
-		[17,-40,false,false]
+		{'x':17,'y':-40,'flipped':false,'hidden':false}
 	],
 	'semivault' : [
 		// these are same as underground vault !! the right side
-		[545,-36,false,false], [605,-41,false,false], [665,-20,false,false], // topright
-		[710,110,true,false], [650,112,true,false], [590,92,true,false], // midright
-		[601,320,true,false], [661,322,true,false], [721,328,true,false] // botright
+		{'x':545,'y':-36,'flipped':false,'hidden':false}, {'x':605,'y':-41,'flipped':false,'hidden':false}, {'x':665,'y':-20,'flipped':false,'hidden':false}, // topright
+		{'x':710,'y':110,'flipped':true,'hidden':false}, {'x':650,'y':112,'flipped':true,'hidden':false}, {'x':590,'y':92,'flipped':true,'hidden':false}, // midright
+		{'x':601,'y':320,'flipped':true,'hidden':false}, {'x':661,'y':322,'flipped':true,'hidden':false}, {'x':721,'y':328,'flipped':true,'hidden':false} // botright
 	],
 	'cavepedestal' : [
-		[86,116,false,true], // hidden
-		[318,236,true,false], [386,254,false,false] // on pedestal
+		{'x':86,'y':116,'flipped':false,'hidden':true}, // hidden
+		{'x':318,'y':236,'flipped':true,'hidden':false}, {'x':386,'y':254,'flipped':false,'hidden':false} // on pedestal
 	],
 	'tunnelstart' : [
-		[516,145,true,true], [601,151,true,true]
+		{'x':516,'y':145,'flipped':true,'hidden':true}, {'x':601,'y':151,'flipped':true,'hidden':true}
 	],
 	'hillhole' : [
-		[420,139,true,true], [499,142,true,true]
+		{'x':420,'y':139,'flipped':true,'hidden':true}, {'x':499,'y':142,'flipped':true,'hidden':true}
 	],
 	'hillbottom' : [
-		[160,198,true,false], [240,205,true,false], [320,212,true,false],
-		[400,225,true,false]
+		{'x':160,'y':198,'flipped':true,'hidden':false}, {'x':240,'y':205,'flipped':true,'hidden':false}, 
+		{'x':320,'y':212,'flipped':true,'hidden':false}, {'x':400,'y':225,'flipped':true,'hidden':false}
 	],
 	'hilltopcorner' : [
-		[570,99,true,true], [642,102,true,true]
+		{'x':570,'y':99,'flipped':true,'hidden':true}, {'x':642,'y':102,'flipped':true,'hidden':true}
 	],
 	'skystepping' : [
-		[68,65,true,true]
+		{'x':68,'y':65,'flipped':true,'hidden':true}
 	],
 	'skyvault' : undefined, // same as undergroundvault, reused see below this object declaration
 	'topskyvault' : undefined,
 	'hilltop' : [
-		[490,28,false,true], // hidden one on the cross
-		[590,80,false,false], [670,84,false,false], [310,87,false,false],
-		[390,89,false,false]
+		{'x':490,'y':28,'flipped':false,'hidden':true}, // hidden one on the cross
+		{'x':590,'y':80,'flipped':false,'hidden':false}, {'x':670,'y':84,'flipped':false,'hidden':false}, 
+		{'x':310,'y':87,'flipped':false,'hidden':false}, {'x':390,'y':89,'flipped':false,'hidden':false}
 	],
 	'insidehill' : [
-		[335,228,false,false], [395,228,false,false],
-		[182,220,false,true], [246,219,false,true] // hidden ones
+		{'x':335,'y':228,'flipped':false,'hidden':false}, {'x':395,'y':228,'flipped':false,'hidden':false},
+		{'x':182,'y':220,'flipped':false,'hidden':true}, {'x':246,'y':219,'flipped':false,'hidden':true} // hidden ones
 	],
 	'caveshrub' : [
-		[188,97,true,true], [614,18,true,false], [680,25,true,false],
-		[744,39,true,false]
+		{'x':188,'y':97,'flipped':true,'hidden':true}, {'x':614,'y':18,'flipped':true,'hidden':false}, 
+		{'x':680,'y':25,'flipped':true,'hidden':false},	{'x':744,'y':39,'flipped':true,'hidden':false}
 	],
 	'spikes' :[
-		[727,3,true,false]
+		{'x':727,'y':3,'flipped':true,'hidden':false}
 	]
 };
 
@@ -106,9 +109,9 @@ var chest_data = {
 chest_data.skyvault = util.deepCopy(chest_data.undergroundvault);
 // except for skyvault, we need to move 3 chests
 var skyvault = chest_data.skyvault;
-skyvault[skyvault.length-1][0] -= 220;
-skyvault[skyvault.length-6][0] += 280;
-skyvault[skyvault.length-5][0] += 160;
+skyvault[skyvault.length-1].x -= 220;
+skyvault[skyvault.length-6].x += 280;
+skyvault[skyvault.length-5].x += 160;
 //
 chest_data.topskyvault = chest_data.skyvault;
 
@@ -119,7 +122,7 @@ var numHiddenChests = 0;
 for (var scene in chest_data) {
 	var chests = chest_data[scene];
 	for (var i = 0; i < chests.length; i++) {
-		if (chests[i][3]) {
+		if (chests[i].hidden) {
 			numHiddenChests++;
 		}
 	}

@@ -69,7 +69,7 @@ EntityManager.prototype._spawnChests = function (scene) {
 		for (var i = 0; i < chests.length; i++) {
 			if (!this.scenesVisited[scene]) {
 				// first time here
-				var chest = new Chest(chests[i][0], chests[i][1], chests[i][2], chests[i][3]);
+				var chest = new Chest(chests[i].x, chests[i].y, chests[i].flipped, chests[i].hidden);
 				this.register(chest, scene);
 			} else {
 				// we've been here before, still let's reset chests to their starting coordinates
