@@ -8,6 +8,7 @@ var config = global.get('config');
 var Chest = global.get('class/Chest');
 var Torch = global.get('class/Torch');
 var Water = global.get('class/Water');
+var Spikes = global.get('class/Spikes');
 
 function EntityManager () {
 	// maintain all entities in game in this object
@@ -55,7 +56,13 @@ EntityManager.prototype.notifySceneChange = function (scene) {
 };
 
 EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
-	// Spawn all chests we need to spawn
+	this._spawnChests(scene);
+	this._spawnTorches(scene);
+	this._spawnWater(scene);
+	this._spawnSpikes(scene);
+};
+
+EntityManager.prototype._spawnChests = function (scene) {
 	var data = global.get('chest-data');
 	if (data.hasOwnProperty(scene)) {
 		var chests = data[scene];
@@ -76,9 +83,10 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 		}
 	}
 	// else no chests on scene
+};
 
-	// Spawn all torches if any
-	data = global.get('torch-data')['spawns'];
+EntityManager.prototype._spawnTorches = function (scene) {
+	var data = global.get('torch-data')['spawns'];
 	if (data.hasOwnProperty(scene)) {
 		var torches = data[scene];
 		for (var i = 0; i < torches.length; i++) {
@@ -89,9 +97,11 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 			}
 		}
 	}
+};
 
-	// Spawn all water animations (currently only in stalagmites)
-	data = global.get('water-data');
+// Spawn all water animations (currently only in stalagmites)
+EntityManager.prototype._spawnWater = function (scene) {
+	var data = global.get('water-data');
 	if (data.hasOwnProperty(scene)) {
 		var water = data[scene];
 		if (!this.scenesVisited[scene]) {
@@ -101,6 +111,26 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 					global.get('imageHandler').getSprite(scene + '-water'),
 					water.x,
 					water.y
+				),
+				scene
+			);
+		}
+	}
+};
+
+EntityManager.prototype._spawnSpikes = function (scene) {
+	var data = global.get('spike-data');
+	if (data.hasOwnProperty(scene)) {
+		var spike = data[scene];
+		if (!this.scenesVisited[scene]) {
+			// first time in scene, always only one spike in scene
+			this.register(
+				new Spikes(
+					spike.x,
+					spike.y,
+					spike.width,
+					spike.height,
+					scene
 				),
 				scene
 			);
