@@ -280,7 +280,7 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 		var bg = global.get('background');
 		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
 		if (!this.inStairs
-			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).gridY
+			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y
 			&& this.y < nextY) {
 			// halt
 			if (config.gravity) {
