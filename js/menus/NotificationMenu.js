@@ -51,6 +51,10 @@ NotificationMenu.prototype._handleContinue = function () {
 	MainLoop.start();
 };
 
+NotificationMenu.prototype.onEnter = function () {
+	this._handleContinue();
+};
+
 // Player calls us (or someone) with type corresponding to keys in 'notificationMenu'
 // in data/menu-text-data.js. Values is a single string value
 // or an array of values to place in text in order at designated text replacement spots

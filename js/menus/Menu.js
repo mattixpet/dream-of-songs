@@ -48,6 +48,13 @@ Menu.prototype.notifyClick = function (x, y) {
 	this._handleClick(x, y);
 };
 
+// Every menu has a handler for user pressing enter
+// should overwrite this function.
+// Usually Enter means going forward, start game, unpause, etc.
+Menu.prototype.onEnter = function () {
+
+};
+
 // handle a click from user and process if it is within a button
 Menu.prototype._handleClick = function (x, y) {
 	var buttonClicked = this._pixelWithinButton(x, y);

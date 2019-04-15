@@ -33,6 +33,10 @@ PauseMenu.prototype._handleAbout = function () {
 	global.get('aboutMenu').display();
 };
 
+PauseMenu.prototype.onEnter = function () {
+	this._handleResume();
+};
+
 // we overwrite this from Menu base class because we need to draw the audio gui as well
 // whenever we draw ourselves
 PauseMenu.prototype.display = function () {

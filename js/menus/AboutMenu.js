@@ -22,6 +22,10 @@ AboutMenu.prototype._handleBack = function () {
 	global.get(this.previousMenu).display();
 };
 
+AboutMenu.prototype.onEnter = function () {
+	this._handleBack();
+};
+
 global.set('class/AboutMenu', AboutMenu);
 
 }());

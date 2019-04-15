@@ -28,6 +28,7 @@ consts['KEY_G'] = 'G'.charCodeAt(0);
 consts['KEY_I'] = 'I'.charCodeAt(0);
 consts['KEY_B'] = 'B'.charCodeAt(0);
 consts['KEY_C'] = 'C'.charCodeAt(0);
+consts['KEY_ENTER'] = 13;
 
 // background consts
 consts['NOBLOCK'] = '0';

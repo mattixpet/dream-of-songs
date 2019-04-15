@@ -18,7 +18,7 @@ global.set('inSingleCycle', false);
 function handleKeydown(e) {
 	keys[e.keyCode] = true;
 
-	// quit
+	// pause without bringing menu
 	if (keys[consts.KEY_Q]) {
 		util.log('Quitting.');
 		MainLoop.stop();
@@ -26,12 +26,16 @@ function handleKeydown(e) {
 
 	// pause/resume
 	if (util.eatKey(consts.KEY_P)) {
-		if (MainLoop.isRunning()) {
-			MainLoop.stop();
-			global.get('pauseMenu').display(); // this will also draw the gui
+		pauseOrResumeGame();
+	}
+
+	if (util.eatKey(consts.KEY_ENTER)) {
+		var inMenu = global.get('inMenu');
+		if (inMenu) {
+			global.get(inMenu).onEnter();
 		} else {
-			global.get('pauseMenu').hide();
-			MainLoop.start();
+			// enter works as pause when pressed in game
+			pauseOrResumeGame();
 		}
 	}
 
@@ -46,6 +50,17 @@ function handleKeydown(e) {
 	}
 
 	e.preventDefault();
+}
+
+// Brings up pause menu or removes it depending on game state
+function pauseOrResumeGame() {
+	if (MainLoop.isRunning()) {
+		MainLoop.stop();
+		global.get('pauseMenu').display(); // this will also draw the gui
+	} else {
+		global.get('pauseMenu').hide();
+		MainLoop.start();
+	}
 }
 
 function handleKeyup(e) {
