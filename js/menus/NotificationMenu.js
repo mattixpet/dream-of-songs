@@ -57,6 +57,11 @@ NotificationMenu.prototype._handleContinue = function () {
 // x, y, width, height only supplied with the popup notifications (general-chest and hidden-chest)
 // and corresponds to the entity whose popup we show above (or below or left/right)
 NotificationMenu.prototype.notify = function (type, values, x, y, width, height) {
+	// remove the popup if we get a text notification
+	if (this.inPopup) {
+		this.inPopup = false;
+	}
+	
 	this.currentTextType = type;
 	var text = global.get('menu-text-data')[this.name][type];
 	if (typeof(values) === 'object') {
