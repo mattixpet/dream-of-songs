@@ -26,14 +26,14 @@ var audio_gui_data = {
 		'songHeight' : Math.floor(iconWidth * 1.1), // height of one song item (one of 5 songs on screen)
 		'iconWidth' : iconWidth,
 		// positions of up/down arrow in pause menu
-		'upArrowPos' : [canvasWidth - iconWidth - 12, 12],
-		'downArrowPos' : [canvasWidth - iconWidth - 12, canvasHeight - iconWidth - 12],
+		'upArrowPos' : {'x':canvasWidth - iconWidth - 12, 'y':12},
+		'downArrowPos' : {'x':canvasWidth - iconWidth - 12, 'y':canvasHeight - iconWidth - 12},
 		// total songs collected and download all text locations
-		'totalSongPos' : [430, 36],
-		'downloadAllPos' : [495, canvasHeight - 30],
+		'totalSongPos' : {'x':430, 'y':36},
+		'downloadAllPos' : {'x':495, 'y':canvasHeight - 30},
 		'downloadMargin' : 8,
-		'menuDownloadAnimationPos' : [650, 412],
-		'gameDownloadAnimationPos' : [700, 420],
+		'menuDownloadAnimationPos' : {'x':650, 'y':412},
+		'gameDownloadAnimationPos' : {'x':700, 'y':420},
 		'downloadRadius' : 20,
 		'downloadPointThickness' : 6,
 		'downloadNumPoints' : 12,

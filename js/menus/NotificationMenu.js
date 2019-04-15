@@ -107,7 +107,7 @@ NotificationMenu.prototype.draw = function () {
 	if (global.get('inMenu')) {
 		var data = global.get('menu-text-data')[this.name];
 		this.itemsSprite.draw(0,0);
-		this._drawText(data.textPos[0], data.textPos[1], data.textWidth);
+		this._drawText(data.textPos.x, data.textPos.y, data.textWidth);
 		this._drawContinue();
 	}
 	if (this.inPopup) {
@@ -177,8 +177,8 @@ NotificationMenu.prototype._drawContinue = function () {
 	draw.fillText(
 		global.get('ctx'),
 		'continue', 
-		data.continueButtonPos[0],
-		data.continueButtonPos[1],
+		data.continueButtonPos.x,
+		data.continueButtonPos.y,
 		data.font,
 		data.fontSize,
 		data.fontColor

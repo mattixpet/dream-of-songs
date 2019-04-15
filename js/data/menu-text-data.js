@@ -14,9 +14,9 @@ var menu_text_data = {
 		'fontColor' : 'white',
 		'spacing' : 1.5, // line spacing
 		// pausing notification
-		'textPos' : [160, 130],
+		'textPos' : {'x':160,'y':130},
 		'textWidth' : 420, // px
-		'continueButtonPos' : [551,358],
+		'continueButtonPos' : {'x':551,'y':358},
 		// popup notifiction
 		'popupTextWidth' : 171,
 		'popupTextHeight' : 36,

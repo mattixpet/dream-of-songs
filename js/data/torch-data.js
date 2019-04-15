@@ -50,40 +50,40 @@ var torch_data = {
 	'spawns' : {
 		// format
 		// {
-		//		'sceneName' : [[x0,y0], [x1,y1], ..],
+		//		'sceneName' : [{x:x0,y:y0}, {x:x1,y:y1}, ..],
 		//      'anotherScene' : ..
 		//	} 
 		// where xi, yi are top left coordinates of the torch to be spawned
 		'insidecave' : [
-			[680,184]
+			{'x':680,'y':184}
 		],
 		'cavestairs' : [
-			[633,252], [736, 310]
+			{'x':633,'y':252}, {'x':736,'y':310}
 		],
 		'brokenstairs' : [
-			[392,160], [633,262]
+			{'x':392,'y':160}, {'x':633,'y':262}
 		],
 		'undergroundvault' : [
-			[154,107], [652,109], [655,278], [151,280]
+			{'x':154,'y':107}, {'x':652,'y':109}, {'x':655,'y':278}, {'x':151,'y':280}
 		],
 		'brickcave' : [
-			[63,263], [240,263], [636,52]
+			{'x':63,'y':263}, {'x':240,'y':263}, {'x':636,'y':52}
 		],
 		'semivault' : [
-			//                  these two same as underground vault
-			[94,68], [341,200], [652,109], [655,278]
+			//                                  these two same as underground vault
+			{'x':94,'y':68}, {'x':341,'y':200}, {'x':652,'y':109}, {'x':655,'y':278}
 		],
 		'cavepedestal' : [
-			[249,231], [484,230]
+			{'x':249,'y':231}, {'x':484,'y':230}
 		],
 		'tunnelstart' : [
-			[206,264], [580,266]
+			{'x':206,'y':264}, {'x':580,'y':266}
 		],
 		'tunnel' : [
-			[206,264], [580,266]
+			{'x':206,'y':264}, {'x':580,'y':266}
 		],
 		'tunnelflipped' : [
-			[206,266], [580,264]
+			{'x':206,'y':266}, {'x':580,'y':264}
 		]
 	}
 };

@@ -53,7 +53,7 @@ CollisionManager.prototype._collidingWithEntity = function (entity, x, y) {
 CollisionManager.prototype.isEntityOnGround = function (entity, x, y) {
 	// background.isEntityOnGround takes arguments of botLeft and botRight coords
 	var onGround = global.get('background')
-					.isEntityOnGround([x, y + entity.height], [x + entity.width, y + entity.height]);
+					.isEntityOnGround({'x':x,'y':y + entity.height}, {'x':x + entity.width,'y':y + entity.height});
 	return onGround;
 };
 

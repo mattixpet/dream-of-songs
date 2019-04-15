@@ -126,8 +126,8 @@ Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 
 	// go from bot right to top left because we assume the most common
 	// collision is rectangle with ground
-	for (var j = gridBotRight[1]; j >= gridTopLeft[1]; j--) {
-		for (var i = gridBotRight[0]; i >= gridTopLeft[0]; i--) {
+	for (var j = gridBotRight.gridY; j >= gridTopLeft.gridY; j--) {
+		for (var i = gridBotRight.gridX; i >= gridTopLeft.gridX; i--) {
 			var block = data[j][i];
 			if (block !== consts.NOBLOCK) {
 				// collision
@@ -144,20 +144,20 @@ Background.prototype.isRectangleCollidingWith = function (rX, rY, rW, rH) {
 };
 
 // Check if Entity is touching the ground anywhere (it's feet on something of the background)
-// botLeft, botRight are [x,y] coordinates in pixels of the bottom cornerpoints of the entity (rectangle collision)
+// botLeft, botRight are {'x':x,'y':y} coordinates in pixels of the bottom cornerpoints of the entity (rectangle collision)
 Background.prototype.isEntityOnGround = function (botLeft, botRight) {
-	var gridBotLeft = util.pixelToGrid(botLeft[0], botLeft[1], this.gridW, this.gridH);
-	var gridBotRight = util.pixelToGrid(botRight[0], botRight[1], this.gridW, this.gridH);
+	var gridBotLeft = util.pixelToGrid(botLeft.x, botLeft.y, this.gridW, this.gridH);
+	var gridBotRight = util.pixelToGrid(botRight.x, botRight.y, this.gridW, this.gridH);
 
 	// check only the grid tiles under gridBotLeft up until gridBotRight (to see if he's on ground)
 	// the y coordinate should be fixed and same for botLeft, botRight (then we add 1 to it to check 'below')
 	// if no tile under gridBotLeft..gridBotRight is a 1 in the grid, player is not on ground
 	var data = this.cData[this.currentSceneTemplate ? this.currentSceneTemplate : this.currentScene];
-	for (var i = gridBotLeft[0]; i <= gridBotRight[0]; i++) {
+	for (var i = gridBotLeft.gridX; i <= gridBotRight.gridX; i++) {
 		// check for out of bounds of our +1 check for block below
-		if (gridBotLeft[1] + 1 < data.length) {
+		if (gridBotLeft.gridY + 1 < data.length) {
 			// "if data[grid..] is in standableBlocks"
-			var block = data[gridBotLeft[1] + 1][i];
+			var block = data[gridBotLeft.gridY + 1][i];
 			if (this.standableBlocks.indexOf(block) >= 0) { // 57
 				return block;
 			}
@@ -215,9 +215,8 @@ Background.prototype.requestNextScene = function (entity, direction) {
 		} else if (coords === 'nochange') {
 			// do nothing to entities coordinates
 		} else {
-			// coordinates is [x,y]
-			entity.setX(coords[0]);
-			entity.setY(coords[1]);
+			entity.setX(coords.x);
+			entity.setY(coords.y);
 		}
 
 		return true;

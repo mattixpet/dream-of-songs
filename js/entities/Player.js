@@ -280,7 +280,7 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 		var bg = global.get('background');
 		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
 		if (!this.inStairs
-			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight())[1]
+			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).gridY
 			&& this.y < nextY) {
 			// halt
 			if (config.gravity) {
@@ -302,7 +302,7 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 		// TELEBLOCK/SECONDARYTELEBLOCK only teleports you to next scene if your feet are touching it
 		// check if y grid coordinate of our feet match the y grid coordinate of the collision
 		var bg = global.get('background');
-		if (util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight())[1] === collision.gridY) {
+		if (util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight()).gridY === collision.gridY) {
 			var direction = collision.block === consts.TELEBLOCK ? 'special' : 'secondary-special';
 			global.get('background').requestNextScene(this, direction);
 		} else {
@@ -336,8 +336,8 @@ Player.prototype._handleChestCollision = function (chest) {
 	var gridWidth = bg.getGridWidth();
 	var gridHeight = bg.getGridHeight();
 	var chestY = util.pixelToGrid(chest.getX() + chest.getWidth(), chest.getY() + chest.getHeight(), 
-								  gridWidth, gridHeight)[1];
-	var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight)[1];
+								  gridWidth, gridHeight).gridY;
+	var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight).gridY;
 	if (chestY === playerY && !chest.isLooted()) {
 		var songName = chest.loot(); // get that loot!
 

@@ -97,7 +97,7 @@ EntityManager.prototype._spawnTorches = function (scene) {
 		for (var i = 0; i < torches.length; i++) {
 			if (!this.scenesVisited[scene]) {
 				// first time here
-				var torch = new Torch(torches[i][0], torches[i][1]);
+				var torch = new Torch(torches[i].x, torches[i].y);
 				this.register(torch, scene);
 			}
 		}

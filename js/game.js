@@ -172,7 +172,7 @@ function initGame() {
 	global.set('collisionManager', collisionManager);
 
 	var playerStartPos = global.get('sprite-data').player.startingPosition;
-	var player = new Player(playerStartPos[0], playerStartPos[1]);
+	var player = new Player(playerStartPos.x, playerStartPos.y);
 	entityManager.register(player, config.STARTINGSCENE);
 	global.set('player', player); // used for drawing player last
 

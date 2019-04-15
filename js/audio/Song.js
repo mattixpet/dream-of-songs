@@ -16,6 +16,7 @@
 
 var draw = global.get('draw');
 var collision = global.get('collision');
+var util = global.get('util');
 
 // x, y is topleft coord of bounding box of song
 // year and duration are strings
@@ -85,31 +86,34 @@ Song.prototype._populateRects = function (x, y) {
 	// 
 	// and this whole pos is not the best use of the sizes we got in audio-gui-data (kind of magic), 
 	// but whatever, time to finish this game
-	this.playPos = [this.x + margin, this.y + margin];
+	this.playPos = {'x':this.x + margin, 'y':this.y + margin};
 	// download rect is to right of play button in menu configuration
-	this.downloadPos = [this.playPos[0] + this.iconW + itemMarginR,
-						this.playPos[1]];
+	this.downloadPos = {'x':this.playPos.x + this.iconW + itemMarginR,
+						'y':this.playPos.y};
 	// since we had the positions of first two icons already for the menu mode, let's just use them
 	// and add ours/modify them to our needs for game (as opposed to menu)
 	if (this.configuration === 'game') {
 		this.previousPos = this.playPos;
 		this.playPos = this.downloadPos;
-		this.nextPos = [this.playPos[0] + this.iconW + itemMarginR,
-						this.playPos[1]];
-		this.downloadPos = [this.nextPos[0] + this.iconW + itemMarginR,
-							this.nextPos[1]];
+		this.nextPos = {'x':this.playPos.x + this.iconW + itemMarginR,
+						'y':this.playPos.y};
+		this.downloadPos = {'x':this.nextPos.x + this.iconW + itemMarginR,
+							'y':this.nextPos.y};
 	}
 
 	// this is common to menu and game configuration
-	this.namePos = [this.downloadPos[0] + this.iconW + Math.floor(itemMarginR * 2),
-					this.y + Math.floor(this.iconW / 1.75)];
-	this.barPos = [this.namePos[0] - Math.floor(itemMarginR * 0.5), this.playPos[1] + Math.floor(this.iconW / 2.75)];
-	this.timePos = [this.barPos[0] + this.barW + itemMarginR, this.barPos[1] + Math.floor(itemMarginR * 1.5)]; // not really proper use of right margin in the y coord here but who cares
-	this.seekerPos = [this.barPos[0] + Math.floor(margin/2), this.barPos[1] + Math.floor(this.barH/8)];
+	this.namePos = {'x':this.downloadPos.x + this.iconW + Math.floor(itemMarginR * 2),
+					'y':this.y + Math.floor(this.iconW / 1.75)};
+	this.barPos = {	'x':this.namePos.x - Math.floor(itemMarginR * 0.5), 
+					'y':this.playPos.y + Math.floor(this.iconW / 2.75)};
+	this.timePos = {'x':this.barPos.x + this.barW + itemMarginR, 
+					'y':this.barPos.y + Math.floor(itemMarginR * 1.5)}; // not really proper use of right margin in the y coord here but who cares
+	this.seekerPos = {	'x':this.barPos.x + Math.floor(margin/2), 
+						'y':this.barPos.y + Math.floor(this.barH/8)};
 
-	this.startingSeekerPos = this.seekerPos.slice(); // copy
+	this.startingSeekerPos = util.shallowCopy(this.seekerPos);
 	// set the valid bar length as the bar length - left margin * 3 because why not
-	this.validBarLength = this.barW - (this.seekerPos[0] - this.barPos[0]) * 3;
+	this.validBarLength = this.barW - (this.seekerPos.x - this.barPos.x) * 3;
 };
 
 // Only do something if the click is within our rects for play/pause, download, or the bar
@@ -118,31 +122,31 @@ Song.prototype._populateRects = function (x, y) {
 // or download
 Song.prototype.click = function (x, y) {
 	// check for clicking play
-	if (collision.pixelWithinRect(	x, y, this.playPos[0], this.playPos[1], 
+	if (collision.pixelWithinRect(	x, y, this.playPos.x, this.playPos.y, 
 									this.iconW, this.iconW)) {
 		this.isPlaying = !this.isPlaying;
 		return {'command': this.isPlaying ? 'play' : 'pause', 'value': this.name};
 	}
 	// check for download
-	if (collision.pixelWithinRect(	x, y, this.downloadPos[0], this.downloadPos[1],
+	if (collision.pixelWithinRect(	x, y, this.downloadPos.x, this.downloadPos.y,
 									this.iconW, this.iconW)) {
 		return {'command': 'download', 'value' : this.name};
 	}
 	// check for the seeking bar
-	if (collision.pixelWithinRect(	x, y, this.barPos[0], this.barPos[1],
+	if (collision.pixelWithinRect(	x, y, this.barPos.x, this.barPos.y,
 									this.barW, this.barH)) {
 		return {'command': 'seek', 'value': this._getSeekerPos(x)};
 	}
 
 	if (this.configuration === 'game') {
 		// check for previous button
-		if (collision.pixelWithinRect(	x, y, this.previousPos[0], this.previousPos[1],
+		if (collision.pixelWithinRect(	x, y, this.previousPos.x, this.previousPos.y,
 										this.iconW, this.iconW)) {
 			return {'command': 'previous', 'value' : undefined};
 		}
 
 		// check for next button
-		if (collision.pixelWithinRect(	x, y, this.nextPos[0], this.nextPos[1],
+		if (collision.pixelWithinRect(	x, y, this.nextPos.x, this.nextPos.y,
 										this.iconW, this.iconW)) {
 			return {'command': 'next', 'value' : undefined};
 		}
@@ -156,13 +160,13 @@ Song.prototype.click = function (x, y) {
 // so we display it at the correct spot compared to where the song is playing
 Song.prototype._updateSeekerPos = function (pos) {
 	if (pos || pos === 0) {
-		this.seekerPos[0] = this.startingSeekerPos[0] + Math.floor(pos * this.validBarLength);
+		this.seekerPos.x = this.startingSeekerPos.x + Math.floor(pos * this.validBarLength);
 	}	
 };
 
 // calculate the value between 0 and 1 given a pixel x within our bar
 Song.prototype._getSeekerPos = function (x) {
-	var pos = (x - this.startingSeekerPos[0]) / this.validBarLength;
+	var pos = (x - this.startingSeekerPos.x) / this.validBarLength;
 	if (pos < 0) {
 		pos = 0;
 	} else if (pos > 1) {
@@ -186,24 +190,24 @@ Song.prototype.draw = function (x, y) {
 	}
 
 	if (!this.isPlaying) {
-		this.playSprite.draw(this.playPos[0], this.playPos[1]);
+		this.playSprite.draw(this.playPos.x, this.playPos.y);
 	} else {
-		this.pauseSprite.draw(this.playPos[0], this.playPos[1]);
+		this.pauseSprite.draw(this.playPos.x, this.playPos.y);
 	}
-	this.downloadSprite.draw(this.downloadPos[0], this.downloadPos[1]);
+	this.downloadSprite.draw(this.downloadPos.x, this.downloadPos.y);
 
-	draw.fillText(	global.get('ctx'), this.name + ' (' + this.year + ')', this.namePos[0], this.namePos[1],
+	draw.fillText(	global.get('ctx'), this.name + ' (' + this.year + ')', this.namePos.x, this.namePos.y,
 					this.font, this.fontSize, this.fontColor);
-	draw.fillText(	global.get('ctx'), this.duration, this.timePos[0], this.timePos[1],
+	draw.fillText(	global.get('ctx'), this.duration, this.timePos.x, this.timePos.y,
 					this.font, this.fontSize, this.fontColor);
 
-	this.barSprite.draw(this.barPos[0], this.barPos[1]);
-	this.seekerSprite.draw(this.seekerPos[0], this.seekerPos[1]);
+	this.barSprite.draw(this.barPos.x, this.barPos.y);
+	this.seekerSprite.draw(this.seekerPos.x, this.seekerPos.y);
 
 	// if we're in game, also draw previous/next buttons
 	if (this.configuration === 'game') {
-		this.previousSprite.draw(this.previousPos[0], this.previousPos[1]);
-		this.nextSprite.draw(this.nextPos[0], this.nextPos[1]);
+		this.previousSprite.draw(this.previousPos.x, this.previousPos.y);
+		this.nextSprite.draw(this.nextPos.x, this.nextPos.y);
 	}
 };
 

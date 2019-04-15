@@ -34,29 +34,29 @@ describe("util", function() {
 
     // these should go both ways in the pixel/grid transformations
     var pixelCoords = [
-      [0, 0],
-      [50, 200],
-      [790, 440]
+      {'x':0,'y':0},
+      {'x':50,'y':200},
+      {'x':790,'y':440}
     ];
     var gridCoords = [
-      [0, 0],
-      [5, 20],
-      [79, 44]
+      {'gridX':0,'gridY':0},
+      {'gridX':5,'gridY':20},
+      {'gridX':79,'gridY':44}
     ];
 
     it("with normal grid should correctly transform pixel coords to grid coords", function() {
       for (var i = 0; i < pixelCoords.length; i++) {
-        expect(util.pixelToGrid(pixelCoords[i][0], pixelCoords[i][1], gridW, gridH))
+        expect(util.pixelToGrid(pixelCoords[i].x, pixelCoords[i].y, gridW, gridH))
           .toEqual(gridCoords[i]);
       }
 
       // extra tests
-      expect(util.pixelToGrid(667, 309, gridW, gridH)).toEqual([66, 30]);
+      expect(util.pixelToGrid(667, 309, gridW, gridH)).toEqual({'gridX':66,'gridY':30});
     });
 
     it("with normal grid should correctly transform grid coords to pixel coords", function() {
       for (var i = 0; i < gridCoords.length; i++) {
-        expect(util.gridToPixel(gridCoords[i][0], gridCoords[i][1], gridW, gridH))
+        expect(util.gridToPixel(gridCoords[i].gridX, gridCoords[i].gridY, gridW, gridH))
           .toEqual(pixelCoords[i]);
       }
     });
@@ -66,28 +66,28 @@ describe("util", function() {
 
     // these should go both ways in the pixel/grid transformations
     var tinyPixelCoords = [
-      [0, 0],
-      [200, 150],
-      [600, 300]
+      {'x':0,'y':0},
+      {'x':200,'y':150},
+      {'x':600,'y':300}
     ];
     var tinyGridCoords = [
-      [0, 0],
-      [1, 1],
-      [3, 2]
+      {'gridX':0,'gridY':0},
+      {'gridX':1,'gridY':1},
+      {'gridX':3,'gridY':2}
     ];
 
     it("with tiny grid should correctly transform pixel coords to grid coords", function() {
       for (var i = 0; i < tinyPixelCoords.length; i++) {
-        expect(util.pixelToGrid(tinyPixelCoords[i][0], tinyPixelCoords[i][1], tinyGridW, tinyGridH))
+        expect(util.pixelToGrid(tinyPixelCoords[i].x, tinyPixelCoords[i].y, tinyGridW, tinyGridH))
           .toEqual(tinyGridCoords[i]);
       }
 
-      expect(util.pixelToGrid(667, 309, tinyGridW, tinyGridH)).toEqual([3, 2]);
+      expect(util.pixelToGrid(667, 309, tinyGridW, tinyGridH)).toEqual({'gridX':3,'gridY':2});
     });
 
     it("with tiny grid should correctly transform grid coords to pixel coords", function() {
       for (var i = 0; i < tinyGridCoords.length; i++) {
-        expect(util.gridToPixel(tinyGridCoords[i][0], tinyGridCoords[i][1], tinyGridW, tinyGridH))
+        expect(util.gridToPixel(tinyGridCoords[i].gridX, tinyGridCoords[i].gridY, tinyGridW, tinyGridH))
           .toEqual(tinyPixelCoords[i]);
       }
     });
@@ -118,12 +118,23 @@ describe("util", function() {
 
   describe("deep copy", function() {
     it("should be able to copy arrays with objects", function() {
-      var a = [{x:2, y:3}, {'wow':1234}];
+      var a = [{'x':2, 'y':3}, {'wow':1234}];
       var b = util.deepCopy(a);
       expect(a).not.toBe(b);
       expect(a[0].x).toEqual(b[0].x);
       b[0].x = 567;
       expect(a[0].x).not.toEqual(b[0].x);
+    });
+  });
+
+  describe("shallow copy", function() {
+    it("should be able to copy object with numbers", function() {
+      var a = {'x':2, 'y':3};
+      var b = util.shallowCopy(a);
+      expect(a).not.toBe(b);
+      expect(a.x).toEqual(b.x);
+      b.x = 567;
+      expect(a.x).not.toEqual(b.x);
     });
   });
 });

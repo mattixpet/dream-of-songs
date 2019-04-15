@@ -66,15 +66,15 @@ var background_data = {
 			'up' : undefined,
 			'right' : {'scene' : 'arrowsky', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'cavestairs', 'coords' : [550,-85]}
+			'special' : {'scene' : 'cavestairs', 'coords' : {'x':550,'y':-85}}
 		},
 		'cavestairs' : {
 			'left' : {'scene' : 'insidecave', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : {'scene' : 'chasm', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'abovecave', 'coords' : [160,-10]},
-			'secondary-special' : {'scene' : 'brokenstairs', 'coords' : [30,-50]}
+			'special' : {'scene' : 'abovecave', 'coords' : {'x':160,'y':-10}},
+			'secondary-special' : {'scene' : 'brokenstairs', 'coords' : {'x':30,'y':-50}}
 		},
 		'insidecave' : {
 			'left' : undefined,
@@ -82,22 +82,22 @@ var background_data = {
 			'right' : {'scene' : 'cavestairs', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : {'scene' : 'cave', 'coords' : 'nochange'},
-			'secondary-special' : {'scene' : 'tunnelstart', 'coords' : [240,-35]}
+			'secondary-special' : {'scene' : 'tunnelstart', 'coords' : {'x':240,'y':-35}}
 		},
 		'brokenstairs' : {
 			'left' : {'scene' : 'stalagmites', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : {'scene' : 'brickcave', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'cavestairs', 'coords' : [730,320]}
+			'special' : {'scene' : 'cavestairs', 'coords' : {'x':730,'y':320}}
 		},
 		'chasm' : {
 			'left' : {'scene' : 'cavestairs', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : {'scene' : 'caveshrub', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'waterfallofdreams', 'coords' : [70,50]},
-			'secondary-special' : {'scene' : 'cavestairs', 'coords' : [760,160]}
+			'special' : {'scene' : 'waterfallofdreams', 'coords' : {'x':70,'y':50}},
+			'secondary-special' : {'scene' : 'cavestairs', 'coords' : {'x':760,'y':160}}
 		},
 		'waterfallofdreams' : {
 			'left' : undefined,
@@ -111,14 +111,14 @@ var background_data = {
 			'up' : undefined,
 			'right' : undefined,
 			'down' : undefined,
-			'special' : {'scene' : 'arrowsky', 'coords' : [640,330]}
+			'special' : {'scene' : 'arrowsky', 'coords' : {'x':640,'y':330}}
 		},
 		'arrowsky' : {
 			'left' : {'scene' : 'abovecave', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : undefined,
 			'down' : undefined,
-			'special' : {'scene' : 'undergroundvault', 'coords' : [390,0]}
+			'special' : {'scene' : 'undergroundvault', 'coords' : {'x':390,'y':0}}
 		},
 		'brickcave' : {
 			'left' : {'scene' : 'brokenstairs', 'coords' : 'flip'},
@@ -139,7 +139,7 @@ var background_data = {
 			'up' : undefined,
 			'right' : {'scene' : 'brokenstairs', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'cavestairs', 'coords' : [730,320]}
+			'special' : {'scene' : 'cavestairs', 'coords' : {'x':730,'y':320}}
 		},
 		'cavepedestal' : {
 			'left' : {'scene' : 'tunnelstart', 'coords' : 'flip'},
@@ -153,16 +153,16 @@ var background_data = {
 			'up' : undefined,
 			'right' : {'scene' : 'cavepedestal', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'tunnel', 'coords' : [750,-35]},
-			'secondary-special' : {'scene' : 'insidecave', 'coords' : [20,175]}
+			'special' : {'scene' : 'tunnel', 'coords' : {'x':750,'y':-35}},
+			'secondary-special' : {'scene' : 'insidecave', 'coords' : {'x':20,'y':175}}
 		},
 		'tunnel' : {
 			'left' : {'scene' : 'tunnelflipped', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : {'scene' : 'tunnelstart', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'tunnelflipped', 'coords' : [750,-35]},
-			'secondary-special' : {'scene' : 'tunnelstart', 'coords' : [20,-35]}
+			'special' : {'scene' : 'tunnelflipped', 'coords' : {'x':750,'y':-35}},
+			'secondary-special' : {'scene' : 'tunnelstart', 'coords' : {'x':20,'y':-35}}
 		},
 		'tunnelflipped' : {
 			'left' : {'scene' : 'hillhole', 'coords' : 'flip'},
@@ -170,21 +170,21 @@ var background_data = {
 			'right' : {'scene' : 'tunnel', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : undefined,
-			'secondary-special' : {'scene' : 'tunnel', 'coords' : [20,-35]}
+			'secondary-special' : {'scene' : 'tunnel', 'coords' : {'x':20,'y':-35}}
 		},
 		'hillhole' : {
 			'left' : undefined,
 			'up' : undefined,
 			'right' : {'scene' : 'tunnelflipped', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'tophillhole', 'coords' : [60, 150]}
+			'special' : {'scene' : 'tophillhole', 'coords' : {'x':60,'y':150}}
 		},
 		'tophillhole' : {
 			'left' : {'scene' : 'hillbottom', 'coords' : 'flip'},
 			'up' : {'scene' : 'skystepping', 'coords' : 'flip'},
 			'right' : {'scene' : 'smallcliff', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : {'scene' : 'hillhole', 'coords' : [110, 40]}
+			'special' : {'scene' : 'hillhole', 'coords' : {'x':110,'y':40}}
 		},
 		'hillbottom' : {
 			'left' : {'scene' : 'insidehill', 'coords' : 'flip'},

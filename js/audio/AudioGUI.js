@@ -64,7 +64,7 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 	// in addition, if we're not paused, we should definitely not do anything
 	if (playerSongs.length > songsPerPage && global.get('inMenu') === 'pauseMenu') {
 		if (collision.pixelWithinRect(	x, y, 
-										data.downArrowPos[0], data.downArrowPos[1], 
+										data.downArrowPos.x, data.downArrowPos.y, 
 										data.iconWidth, data.iconWidth)) {
 			// down
 			// first update our playerSong indices, shift them one down (up arrow means down in array)
@@ -87,7 +87,7 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 			// let's not forget to draw the changes
 			this.draw();
 		} else if (collision.pixelWithinRect(	x, y, 
-												data.upArrowPos[0], data.upArrowPos[1], 
+												data.upArrowPos.x, data.upArrowPos.y, 
 												data.iconWidth, data.iconWidth)) {
 			// up
 			// first update our playerSong indices, shift them one up (down arrow means higher in array)
@@ -119,12 +119,12 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 	
 	// check if user clicked 'Download all' button
 	// data.downloadAllPos is bottom left pos (because canvas draws text like that)
-	var downloadButtonTopLeft = [data.downloadAllPos[0] - data.downloadMargin, 
-								data.downloadAllPos[1] - data.fontSize - data.downloadMargin];
+	var downloadButtonTopLeft = [data.downloadAllPos.x - data.downloadMargin, 
+								data.downloadAllPos.y - data.fontSize - data.downloadMargin];
 	// fontSize * 0.67 because width of letters is approximately 2/3 of height (font size)
 	var downloadButtonWidth = data.downloadMargin * 2 + 'Download all'.length * data.fontSize * 0.67;
 	var downloadButtonHeight = data.downloadMargin * 2 + data.fontSize;
-	if (collision.pixelWithinRect(	x, y, downloadButtonTopLeft[0], downloadButtonTopLeft[1],
+	if (collision.pixelWithinRect(	x, y, downloadButtonTopLeft.x, downloadButtonTopLeft.y,
 									downloadButtonWidth, downloadButtonHeight) &&
 		global.get('inMenu') === 'pauseMenu') {
 		global.get('audioManager').notifyCommand('download all', undefined);
@@ -246,16 +246,16 @@ AudioGUI.prototype.draw = function () {
 		}
 
 		// draw the up/down arrows to scroll, up arrow in top right corner, down arrow in top left corner
-		this.upArrowSprite.draw(data.upArrowPos[0], data.upArrowPos[1]);
-		this.downArrowSprite.draw(data.downArrowPos[0], data.downArrowPos[1]);
+		this.upArrowSprite.draw(data.upArrowPos.x, data.upArrowPos.y);
+		this.downArrowSprite.draw(data.downArrowPos.x, data.downArrowPos.y);
 
 		// draw the total songs collected text and download all text
 		draw.fillText(
 			global.get('ctx'),
 			// + 1 in the num chests because of title theme
 			'Total songs collected: ' + playerSongs.length + '/' + (consts.NUMCHESTS + 1),
-			data.totalSongPos[0],
-			data.totalSongPos[1],
+			data.totalSongPos.x,
+			data.totalSongPos.y,
 			data.font,
 			data.fontSize,
 			data.fontColor
@@ -263,8 +263,8 @@ AudioGUI.prototype.draw = function () {
 		draw.fillText(
 			global.get('ctx'),
 			'Download all',
-			data.downloadAllPos[0],
-			data.downloadAllPos[1],
+			data.downloadAllPos.x,
+			data.downloadAllPos.y,
 			data.font,
 			data.fontSize,
 			data.fontColor
@@ -282,12 +282,12 @@ AudioGUI.prototype._drawLoading = function () {
 	var inMenu = global.get('inMenu');
 	var x,y;
 	if (!inMenu) {
-		x = data.gameDownloadAnimationPos[0];
-		y = data.gameDownloadAnimationPos[1];
+		x = data.gameDownloadAnimationPos.x;
+		y = data.gameDownloadAnimationPos.y;
 	}
 	if (inMenu === 'pauseMenu') {
-		x = data.menuDownloadAnimationPos[0];
-		y = data.menuDownloadAnimationPos[1];
+		x = data.menuDownloadAnimationPos.x;
+		y = data.menuDownloadAnimationPos.y;
 	}
 
 	var ctx = global.get('ctx');

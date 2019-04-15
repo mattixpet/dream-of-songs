@@ -11,6 +11,14 @@ function deepCopy(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+function shallowCopy(obj) {
+	var newObj = {};
+	for (var key in obj) {
+		newObj[key] = obj[key];
+	}
+	return newObj;
+}
+
 function containsDuplicates(arr) {
 	return (new Set(arr)).size !== arr.length;
 }
@@ -36,7 +44,7 @@ function randInt(min, max) {
 
 // x,y pixel coordinate to most approximate grid number
 // in a gridW x gridH long grid (e.g. collision array)
-// returns [gridX,gridY]
+// returns {gridX:gridX,gridY:gridY}
 // if gridX, gridY is out of bounds of [0,..,gridW-1 or gridH-1] then it sets to boundaries
 function pixelToGrid(pixelX, pixelY, gridW, gridH) {
 	var canvas = global.get('canvas');
@@ -54,18 +62,18 @@ function pixelToGrid(pixelX, pixelY, gridW, gridH) {
 	} else if (gridY >= gridH) {
 		gridY = gridH - 1;
 	}
-	return [gridX, gridY];
+	return {'gridX':gridX,'gridY':gridY};
 }
 
 // opposite of pixelToGrid, gives the top left pixel coordinate
 // of the supplied grid block
-// returns [x,y]
+// returns {'x':x,'y':y}
 function gridToPixel(gridX, gridY, gridW, gridH) {
 	var canvas = global.get('canvas');
-	return [
-		Math.floor(gridX / gridW * canvas.width),
-		Math.floor(gridY / gridH * canvas.height)
-	];
+	return {
+		'x':Math.floor(gridX / gridW * canvas.width),
+		'y':Math.floor(gridY / gridH * canvas.height)
+	};
 }
 
 // for input toggles, set immediately as false in global.keys array
@@ -103,6 +111,7 @@ function _getDateMilliseconds() {
 }
 
 util['deepCopy'] = deepCopy;
+util['shallowCopy'] = shallowCopy;
 util['containsDuplicates'] = containsDuplicates;
 util['circularIdx'] = circularIdx;
 util['stringDurationToSecs'] = stringDurationToSecs;

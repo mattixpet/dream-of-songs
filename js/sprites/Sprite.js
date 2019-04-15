@@ -12,8 +12,7 @@ function Sprite(img, displayWidth, displayHeight, srcWidth, srcHeight, positions
 	this.srcW = srcWidth;
 	this.srcH = srcHeight;
 	// Positions top left in src image of sprite animations
-	// e.g.     x, y      x,   y  ..
-	//       [[23,400], [103, 400], [163, 200]]
+	// e.g. [{x:23,y:400}, {x:103,y:400}, {x:163,y:200}]
 	this.positions = positions;
 }
 
@@ -24,7 +23,7 @@ Sprite.prototype.draw = function(x, y, position) {
 		var pos = this.positions[position];
 		ctx.drawImage(
 			this.img,
-			pos[0], pos[1], this.srcW, this.srcH,
+			pos.x, pos.y, this.srcW, this.srcH,
 			x, y, this.dispW, this.dispH
 		);
 	} else {

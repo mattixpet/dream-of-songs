@@ -13,12 +13,12 @@ var sprite_data = {
 		'dispHeight' : 108, // disp height - heightrecuction == 100
 		'srcWidth' : 423,
 		'srcHeight' : 895,
-		'positions' : [	[141,74], [738,74], [1344,72], [139,1072], [741,1072], // walking
-						[1293,1080], // jump
-						[1960,45], [1955,1036], // stairs
-						[2468,66], [3110,70], [2502,1088] // still animation
+		'positions' : [	{'x':141,'y':74}, {'x':738,'y':74}, {'x':1344,'y':72}, {'x':139,'y':1072}, {'x':741,'y':1072}, // walking
+						{'x':1293,'y':1080}, // jump
+						{'x':1960,'y':45}, {'x':1955,'y':1036}, // stairs
+						{'x':2468,'y':66}, {'x':3110,'y':70}, {'x':2502,'y':1088} // still animation
 					  ],
-		'startingPosition' : [300, -80],
+		'startingPosition' : {'x':300,'y':-80},
 		// how much to alter bounding box/sprite drawing, see player.js for more explanation
 		'COLLISIONXDELTA' : 10,
 		'COLLISIONWIDTHREDUCTION' : 30,
@@ -38,7 +38,7 @@ var sprite_data = {
 		'dispHeight' : 50,
 		'srcWidth' : 428,
 		'srcHeight' : 636,
-		'positions' : [[0,6], [0, 643], [441, 9], [440, 641]]
+		'positions' : [{'x':0,'y':6}, {'x':0,'y':643}, {'x':441,'y':9}, {'x':440,'y':641}]
 	},
 	// water animations (currently only in stalagmites scene)
 	'stalagmites-water' : {
@@ -47,7 +47,8 @@ var sprite_data = {
 		'dispHeight' : 63, // 150/2.4 (rounded up)
 		'srcWidth' : 600,
 		'srcHeight' : 150,
-		'positions' : [[0,0], [600,0], [0,150], [600,150], [0,300], [600,300]]
+		'positions' : [	{'x':0,'y':0}, {'x':600,'y':0}, {'x':0,'y':150}, 
+						{'x':600,'y':150}, {'x':0,'y':300}, {'x':600,'y':300}]
 	}
 };
 
