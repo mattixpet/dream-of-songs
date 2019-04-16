@@ -15,8 +15,10 @@
 'use strict';
 
 // imports
-var Menu = global.get('class/Menu');
 var draw = global.get('draw');
+
+var Menu = global.get('class/Menu');
+var Popup = global.get('class/Popup');
 
 function NotificationMenu () {
 	this.name = 'notificationMenu';
@@ -27,21 +29,11 @@ function NotificationMenu () {
 
 	this.buttonActions['continue'] = this._handleContinue;
 
-	// we change this if player notifies us what happened (first chest, hidden chest, etc.)
-	// this is a key in data/menu-text-data.js 'notificationMenu'
-	this.currentTextType = '';
-	this.currentText = '';
+	this.currentText = ''; // text being displayed which is not a popup
 
-	// this is set as true during a 'new song!' or a 'hidden chest!' or any notification
-	// which appears and then disappears (a popup)
-	this.inPopup = false;
-	this.popupTime = 0;
-	this.POPUPDURATION = 2500; // ms total display time of popup
-	this.POPUPFADETIME = 1000; // will fade for last 1000 ms of popupduration 
-	this.entityX = undefined; // entity which prompted the popup!
-	this.entityY = undefined;
-	this.entityWidth = undefined;
-	this.entityHeight = undefined;
+	// popup notification we have at the moment
+	// (always overwrite, have only one)
+	this.popup = undefined;
 }
 
 NotificationMenu.prototype = Object.create(Menu.prototype);
@@ -61,12 +53,6 @@ NotificationMenu.prototype.onEnter = function () {
 // x, y, width, height only supplied with the popup notifications (general-chest and hidden-chest)
 // and corresponds to the entity whose popup we show above (or below or left/right)
 NotificationMenu.prototype.notify = function (type, values, x, y, width, height) {
-	// remove the popup if we get a text notification
-	if (this.inPopup) {
-		this.inPopup = false;
-	}
-	
-	this.currentTextType = type;
 	var text = global.get('menu-text-data')[this.name][type];
 	if (typeof(values) === 'object') {
 		for (var i = 0; i < values.length; i++) {
@@ -75,16 +61,24 @@ NotificationMenu.prototype.notify = function (type, values, x, y, width, height)
 	} else if (typeof(values) === 'string') {
 		text = text.replace('{}', values);
 	}
-	this.currentText = text;
 
 	if (type === 'general-chest' || type === 'hidden-chest') {
-		this.inPopup = true;
-		this.popupTime = 0;
-		this.entityX = x;
-		this.entityY = y;
-		this.entityWidth = width;
-		this.entityHeight = height;
+		this.popup = new Popup(
+			text,
+			x,
+			y,
+			width,
+			height
+		);
+	} else {
+		this.currentText = text;
 	}
+};
+
+// Callback for popups to call when they are done, so we can remove them from our list
+// Since we only have one popup, delete that one on the done call.
+NotificationMenu.prototype.popupDone = function (popup) {
+	this.popup = undefined;
 };
 
 // we overwrite this from Menu base class because we need to pause game
@@ -96,61 +90,23 @@ NotificationMenu.prototype.display = function () {
 };
 
 NotificationMenu.prototype.update = function (dt) {
-	if (this.inPopup) {
-		this.popupTime += dt;
-		if (this.popupTime > this.POPUPDURATION) {
-			// end
-			this.popupTime = 0;
-			this.inPopup = false;
-		}
+	if (this.popup) {
+		this.popup.update(dt);
 	}
 };
 
 // We overwrite the draw, because we don't paint the waterfallofdreams background
 NotificationMenu.prototype.draw = function () {
+	if (this.popup) {
+		this.popup.draw();
+	}
+
 	if (global.get('inMenu')) {
 		var data = global.get('menu-text-data')[this.name];
 		this.itemsSprite.draw(0,0);
 		this._drawText(data.textPos.x, data.textPos.y, data.textWidth);
 		this._drawContinue();
 	}
-	if (this.inPopup) {
-		this._drawPopup();
-	}
-};
-
-// We draw popup default to the right and above player.
-// If that is out of screen in any direction, mirror with respective axis
-// (center of player) so it is on screen
-// Popup will last for this.POPUPDURATION
-// and will be fading away for this.POPUPFADETIME 'milliseconds'
-NotificationMenu.prototype._drawPopup = function () {
-	var x = this.entityX;
-	var y = this.entityY;
-	var w = this.entityWidth;
-	var h = this.entityHeight;
-
-	var data = global.get('menu-text-data')[this.name];
-	var popupWidth = data.popupTextWidth;
-	var popupHeight = data.popupTextHeight;
-
-	var canvas = global.get('canvas');
-
-	var popupX = x + w;
-	if (popupX > canvas.width - popupWidth) {
-		popupX = x - popupWidth;
-	}
-	var popupY = y - popupHeight - data.fontSize;
-	if (popupY - data.fontSize < 0) {
-		popupY = y + h + data.fontSize;
-	}
-
-	var opacity = undefined;
-	var fadeTime = this.popupTime - (this.POPUPDURATION - this.POPUPFADETIME); // time we've been fading
-	if (fadeTime > 0) {
-		opacity = (this.POPUPFADETIME - fadeTime) / this.POPUPFADETIME; // goes from 1 - 0 in POPUPFADETIME ms
-	}
-	this._drawText(popupX, popupY, popupWidth, opacity, true);
 };
 
 // Draw our designated text !
