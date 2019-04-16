@@ -72,6 +72,54 @@ AudioManager.prototype.notifyCommand = function (command, value) {
 	}
 };
 
+// tools/input.js calls this if user presses Space bar
+AudioManager.prototype.notifySpacePress = function () {
+	if (this.isPlaying) {
+		this.pause();
+		this.gui.setCurrentSongAsPaused();
+	} else {
+		var currentSongName = this.playerSongs[this.currentSong].name;
+		if (currentSongName === this.player.getSongName()) {
+			this.resume();
+		} else {
+			this.playSong(currentSongName, true);
+		}
+		this.gui.setCurrentSongAsPlaying();
+	}
+};
+
+// The chests should call this function once Player opens them, so we know
+// player has this song available, and we can draw it in the list of songs
+AudioManager.prototype.notifySongOpened = function (songName) {
+	this.playerSongs.push(this.songsDelivered[songName]);
+	// set as current song, unless some other song is playing :)
+	if (!this.isPlaying) {
+		this.currentSong = this.playerSongs.length - 1;
+	}
+	delete this.songsDelivered[songName];
+};
+
+// Returns the name of a random song, and moves the song itself to this.songsDelivered
+// Used by the chests on initialization.
+// If special === 'title', get our chosen title theme, should be called in audiomanager constructor
+// otherwise get random song
+AudioManager.prototype.getNewSong = function (special) {
+	var rndIdx = util.randInt(0, this.songs.length);
+	if (special === 'title') {
+		// find our index of 'title' theme, which is called: sofa
+		for (var i = 0; i < this.songs.length; i++) {
+			if (this.songs[i].name === 'sofa') {
+				rndIdx = i; // cheat to get our song !
+				break;
+			}
+		}
+	}
+	var song = this.songs[rndIdx];
+	this.songs.splice(rndIdx, 1); // delete song from our song array
+	this.songsDelivered[song.name] = song; // log it here
+	return song.name;
+};
+
 // Resume current song or play it from 0 if that's where we're at
 AudioManager.prototype.resume = function () {
 	this.player.resume();
@@ -109,42 +157,6 @@ AudioManager.prototype.playSong = function (songName, play) {
 	}
 
 	this.isPlaying = play;
-};
-
-AudioManager.prototype.drawGui = function () {
-	this.gui.draw();
-};
-
-// Returns the name of a random song, and moves the song itself to this.songsDelivered
-// Used by the chests on initialization.
-// If special === 'title', get our chosen title theme, should be called in audiomanager constructor
-// otherwise get random song
-AudioManager.prototype.getNewSong = function (special) {
-	var rndIdx = util.randInt(0, this.songs.length);
-	if (special === 'title') {
-		// find our index of 'title' theme, which is called: sofa
-		for (var i = 0; i < this.songs.length; i++) {
-			if (this.songs[i].name === 'sofa') {
-				rndIdx = i; // cheat to get our song !
-				break;
-			}
-		}
-	}
-	var song = this.songs[rndIdx];
-	this.songs.splice(rndIdx, 1); // delete song from our song array
-	this.songsDelivered[song.name] = song; // log it here
-	return song.name;
-};
-
-// The chests should call this function once Player opens them, so we know
-// player has this song available, and we can draw it in the list of songs
-AudioManager.prototype.notifySongOpened = function (songName) {
-	this.playerSongs.push(this.songsDelivered[songName]);
-	// set as current song, unless some other song is playing :)
-	if (!this.isPlaying) {
-		this.currentSong = this.playerSongs.length - 1;
-	}
-	delete this.songsDelivered[songName];
 };
 
 AudioManager.prototype._downloadSong = function (songName) {
@@ -228,22 +240,6 @@ AudioManager.prototype._zipPlayerSongs = function () {
 	});	
 };
 
-// tools/input.js calls this if user presses Space bar
-AudioManager.prototype.notifySpacePress = function () {
-	if (this.isPlaying) {
-		this.pause();
-		this.gui.setCurrentSongAsPaused();
-	} else {
-		var currentSongName = this.playerSongs[this.currentSong].name;
-		if (currentSongName === this.player.getSongName()) {
-			this.resume();
-		} else {
-			this.playSong(currentSongName, true);
-		}
-		this.gui.setCurrentSongAsPlaying();
-	}
-};
-
 AudioManager.prototype.isSongPlaying = function (songName) {
 	return this.isPlaying && this.playerSongs[this.currentSong].name === songName;
 };
@@ -302,6 +298,10 @@ AudioManager.prototype.stopIntervalForSongInMenu = function () {
 
 AudioManager.prototype.playTitleTheme = function () {
 	this.playSong(this.playerSongs[0].name, true); // title is always first song we have
+};
+
+AudioManager.prototype.drawGui = function () {
+	this.gui.draw();
 };
 
 global.set('class/AudioManager', AudioManager);

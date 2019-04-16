@@ -68,63 +68,18 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 
 	// now check if our up/down arrows are being interacted with
 	var data = global.get('audio-gui-data')['Spacings'];
-	var audioManager = global.get('audioManager');
-	var playerSongs = audioManager.getPlayerSongs();
-	var currentSong = audioManager.getCurrentSong();
+	var playerSongs = global.get('audioManager').getPlayerSongs();
 	// if playerSongs is less than songsPerPage, our up/down arrows aren't supposed to do anything anyway
 	// in addition, if we're not paused, we should definitely not do anything
 	if (playerSongs.length > songsPerPage && global.get('inMenu') === 'pauseMenu') {
 		if (collision.pixelWithinRect(	x, y, 
 										data.downArrowPos.x, data.downArrowPos.y, 
 										data.iconWidth, data.iconWidth)) {
-			// down
-			// first update our playerSong indices, shift them one down (up arrow means down in array)
-			this.playerSongLeftIndex = util.circularIdx(this.playerSongLeftIndex - 1, playerSongs.length);
-			this.playerSongRightIndex = util.circularIdx(this.playerSongRightIndex - 1, playerSongs.length);
-
-			this.activeSongs.shift(); // remove first entry, move rest down
-			// set last entry as new song (just updated index here above)
-			var pSong = playerSongs[this.playerSongRightIndex];
-			this.activeSongs[songsPerPage - 1] = new Song(
-				pSong['name'], 
-				data.pauseMenuXCoord, 
-				data.pauseMenuYCoord + data.songHeight * (songsPerPage - 1), 
-				pSong['year'], 
-				pSong['duration'],
-				'menu',
-				// set position of the song as 0 unless we are at a currently playing song
-				pSong === playerSongs[currentSong] ? audioManager.getCurrentSongPosition() : 0
-			);
-			// let's not forget to draw the changes
-			this.draw();
+			this._handleDownArrowClick();
 		} else if (collision.pixelWithinRect(	x, y, 
 												data.upArrowPos.x, data.upArrowPos.y, 
 												data.iconWidth, data.iconWidth)) {
-			// up
-			// first update our playerSong indices, shift them one up (down arrow means higher in array)
-			this.playerSongLeftIndex = util.circularIdx(this.playerSongLeftIndex + 1, playerSongs.length);
-			this.playerSongRightIndex = util.circularIdx(this.playerSongRightIndex + 1, playerSongs.length);
-
-			var pSong = playerSongs[this.playerSongLeftIndex];
-			// add our song in the start of the array
-			this.activeSongs.splice(
-				0, 0, 
-				new Song(
-					pSong['name'], 
-					data.pauseMenuXCoord, 
-					data.pauseMenuYCoord, 
-					pSong['year'], 
-					pSong['duration'],
-					'menu',
-					// set position of the song as 0 unless we are at a currently playing song
-					pSong === playerSongs[currentSong] ? audioManager.getCurrentSongPosition() : 0
-				)
-			);
-			// delet the last entry
-			this.activeSongs.splice(
-				this.activeSongs.length - 1, 1);
-			// let's not forget to draw what we changed
-			this.draw();
+			this._handleUpArrowClick();
 		}
 	}
 	
@@ -157,6 +112,65 @@ AudioGUI.prototype.notifyMousemove = function () {
 		}
 	}
 	this.mouseStillTime = 0;
+};
+
+AudioGUI.prototype._handleDownArrowClick = function () {
+	var data = global.get('audio-gui-data')['Spacings'];
+	var audioManager = global.get('audioManager');
+	var playerSongs = audioManager.getPlayerSongs();
+	var currentSong = audioManager.getCurrentSong();
+
+	// first update our playerSong indices, shift them one down (up arrow means down in array)
+	this.playerSongLeftIndex = util.circularIdx(this.playerSongLeftIndex - 1, playerSongs.length);
+	this.playerSongRightIndex = util.circularIdx(this.playerSongRightIndex - 1, playerSongs.length);
+
+	this.activeSongs.shift(); // remove first entry, move rest down
+	// set last entry as new song (just updated index here above)
+	var pSong = playerSongs[this.playerSongRightIndex];
+	this.activeSongs[songsPerPage - 1] = new Song(
+		pSong['name'], 
+		data.pauseMenuXCoord, 
+		data.pauseMenuYCoord + data.songHeight * (songsPerPage - 1), 
+		pSong['year'], 
+		pSong['duration'],
+		'menu',
+		// set position of the song as 0 unless we are at a currently playing song
+		pSong === playerSongs[currentSong] ? audioManager.getCurrentSongPosition() : 0
+	);
+	// let's not forget to draw the changes
+	this.draw();
+};
+
+AudioGUI.prototype._handleUpArrowClick = function () {
+	var data = global.get('audio-gui-data')['Spacings'];
+	var audioManager = global.get('audioManager');
+	var playerSongs = audioManager.getPlayerSongs();
+	var currentSong = audioManager.getCurrentSong();
+
+	// first update our playerSong indices, shift them one up (down arrow means higher in array)
+	this.playerSongLeftIndex = util.circularIdx(this.playerSongLeftIndex + 1, playerSongs.length);
+	this.playerSongRightIndex = util.circularIdx(this.playerSongRightIndex + 1, playerSongs.length);
+
+	var pSong = playerSongs[this.playerSongLeftIndex];
+	// add our song in the start of the array
+	this.activeSongs.splice(
+		0, 0, 
+		new Song(
+			pSong['name'], 
+			data.pauseMenuXCoord, 
+			data.pauseMenuYCoord, 
+			pSong['year'], 
+			pSong['duration'],
+			'menu',
+			// set position of the song as 0 unless we are at a currently playing song
+			pSong === playerSongs[currentSong] ? audioManager.getCurrentSongPosition() : 0
+		)
+	);
+	// delet the last entry
+	this.activeSongs.splice(
+		this.activeSongs.length - 1, 1);
+	// let's not forget to draw what we changed
+	this.draw();
 };
 
 // Fills this.activeSongs with Song objects to be drawn at the pause menu
