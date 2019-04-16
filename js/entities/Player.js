@@ -237,23 +237,8 @@ Player.prototype.update = function (dt) {
 		}
 	}
 
-	// check for scene change
-	var canvas = global.get('canvas');
-	var background = global.get('background');
-	var sceneChangeSuccess = true;
-	if (this.x >= canvas.width) {
-		sceneChangeSuccess = background.requestNextScene(this, 'right');
-	} else if (this.x <= -this.width) {
-		sceneChangeSuccess = background.requestNextScene(this, 'left');
-	} else if (this.y >= canvas.height - this.height) {
-		// when moving down, teleport the moment we hit bottom with our feet
-		sceneChangeSuccess = background.requestNextScene(this, 'down');
-	} else if (this.y <= -this.height) {
-		// when moving up, teleport the moment our feet leave the frame
-		sceneChangeSuccess = background.requestNextScene(this, 'up');
-	}
 	// let's not move if we can't get another scene
-	if (!sceneChangeSuccess) {
+	if (!this._checkForSceneChange()) {
 		this.x = oldX;
 		this.y = oldY;
 	}
@@ -280,7 +265,7 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 		var bg = global.get('background');
 		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
 		if (!this.inStairs
-			&& this.y + this.height < util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y
+			&& this.y + this.height <= util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y
 			&& this.y < nextY) {
 			// halt
 			if (config.gravity) {
@@ -368,6 +353,24 @@ Player.prototype._handleChestCollision = function (chest) {
 
 		this.numChests++;
 	}
+};
+
+Player.prototype._checkForSceneChange = function () {
+	var canvas = global.get('canvas');
+	var background = global.get('background');
+	var sceneChangeSuccess = true;
+	if (this.x >= canvas.width) {
+		sceneChangeSuccess = background.requestNextScene(this, 'right');
+	} else if (this.x <= -this.width) {
+		sceneChangeSuccess = background.requestNextScene(this, 'left');
+	} else if (this.y >= canvas.height - this.height) {
+		// when moving down, teleport the moment we hit bottom with our feet
+		sceneChangeSuccess = background.requestNextScene(this, 'down');
+	} else if (this.y <= -this.height) {
+		// when moving up, teleport the moment our feet leave the frame
+		sceneChangeSuccess = background.requestNextScene(this, 'up');
+	}
+	return sceneChangeSuccess;
 };
 
 Player.prototype._findNextX = function (dt) {
