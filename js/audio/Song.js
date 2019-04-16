@@ -175,7 +175,8 @@ Song.prototype._getSeekerPos = function (x) {
 	return pos;
 };
 
-Song.prototype.draw = function (x, y) {
+// Opacity is optional, default 1
+Song.prototype.draw = function (x, y, opacity) {
 	// if we get coordinates to draw function, change ours and reinitialize
 	if (x || x === 0) {
 		this.x = x;
@@ -190,24 +191,25 @@ Song.prototype.draw = function (x, y) {
 	}
 
 	if (!this.isPlaying) {
-		this.playSprite.draw(this.playPos.x, this.playPos.y);
+		// undefined is the optional position argument, see Sprite.js
+		this.playSprite.draw(this.playPos.x, this.playPos.y, undefined, opacity);
 	} else {
-		this.pauseSprite.draw(this.playPos.x, this.playPos.y);
+		this.pauseSprite.draw(this.playPos.x, this.playPos.y, undefined, opacity);
 	}
-	this.downloadSprite.draw(this.downloadPos.x, this.downloadPos.y);
+	this.downloadSprite.draw(this.downloadPos.x, this.downloadPos.y, undefined, opacity);
 
 	draw.fillText(	global.get('ctx'), this.name + ' (' + this.year + ')', this.namePos.x, this.namePos.y,
-					this.font, this.fontSize, this.fontColor);
+					this.font, this.fontSize, this.fontColor, opacity);
 	draw.fillText(	global.get('ctx'), this.duration, this.timePos.x, this.timePos.y,
-					this.font, this.fontSize, this.fontColor);
+					this.font, this.fontSize, this.fontColor, opacity);
 
-	this.barSprite.draw(this.barPos.x, this.barPos.y);
-	this.seekerSprite.draw(this.seekerPos.x, this.seekerPos.y);
+	this.barSprite.draw(this.barPos.x, this.barPos.y, undefined, opacity);
+	this.seekerSprite.draw(this.seekerPos.x, this.seekerPos.y, undefined, opacity);
 
 	// if we're in game, also draw previous/next buttons
 	if (this.configuration === 'game') {
-		this.previousSprite.draw(this.previousPos.x, this.previousPos.y);
-		this.nextSprite.draw(this.nextPos.x, this.nextPos.y);
+		this.previousSprite.draw(this.previousPos.x, this.previousPos.y, undefined, opacity);
+		this.nextSprite.draw(this.nextPos.x, this.nextPos.y, undefined, opacity);
 	}
 };
 

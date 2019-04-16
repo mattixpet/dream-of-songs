@@ -92,9 +92,19 @@ function handleMousedown(e) {
 	}
 }
 
+// handleMousemove is used to fade the audio player
+// in if user hovers over canvas and out if user moves mouse out of canvas
+// (or if it is still for a period of time)
+function handleMousemove(e) {
+	if (global.get('gameStarted')) {
+		global.get('audioGui').notifyMousemove();
+	}
+}
+
 window.addEventListener("keydown", handleKeydown);
 window.addEventListener("keyup", handleKeyup);
 canvas.addEventListener("mousedown", handleMousedown);
+canvas.addEventListener("mousemove", handleMousemove);
 
 global.set('keys', keys);
 

@@ -27,6 +27,8 @@ global.set('ctx', canvas.getContext('2d')); // context
 var ctx = global.get('ctx');
 
 function startLoading() {
+	global.set('gameStarted', false);
+
 	var loadingBar = new LoadingBar();
 	global.set('loadingBar', loadingBar);
 
@@ -188,6 +190,7 @@ function initGame() {
 function startGame() {
 	//  Start the game !
 	MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
+	global.set('gameStarted', true);
 }
 
 function displayDiagnostics(fps) {

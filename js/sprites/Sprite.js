@@ -16,8 +16,13 @@ function Sprite(img, displayWidth, displayHeight, srcWidth, srcHeight, positions
 	this.positions = positions;
 }
 
-Sprite.prototype.draw = function(x, y, position) {
+// Opacity and position are optional arguments
+Sprite.prototype.draw = function(x, y, position, opacity) {
 	var ctx = global.get('ctx');
+	ctx.save();
+	if (opacity) {
+		ctx.globalAlpha = opacity;
+	}
 
 	if (this.positions) {
 		var pos = this.positions[position];
@@ -32,14 +37,16 @@ Sprite.prototype.draw = function(x, y, position) {
 			x, y, this.dispW, this.dispH
 		);
 	}
+
+	ctx.restore();
 };
 
-Sprite.prototype.drawMirrored = function(x, y, position) {
+Sprite.prototype.drawMirrored = function(x, y, position, opacity) {
 	var ctx = global.get('ctx');
 	ctx.save();
 	ctx.translate(x + this.dispW, y);
 	ctx.scale(-1,1);
-	this.draw(0, 0, position);
+	this.draw(0, 0, position, opacity);
 	ctx.restore();
 };
 

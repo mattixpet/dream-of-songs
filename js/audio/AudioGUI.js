@@ -15,6 +15,8 @@ var consts = global.get('consts');
 
 // local constants
 const songsPerPage = 6; // this.activeSongs should be max this length
+const FADETIME = 1000; // approx half a second fade time for player in game (on mouse move)
+const MOUSESTILLTIME = 2500; // time until we fade player out if mouse has been still
 
 function AudioGUI () {
 	// Song objects of songs displaying in menu at the moment, activeSongs[0] is also song displayed in game
@@ -40,6 +42,14 @@ function AudioGUI () {
 						      // when we want to display the loading animation
 	this.downloadTime = 0; // used only for loading animation xD
 	this.downloadPointIndex = 0; // index .= [0,audio-gui-data.Spacings.downloadNumPoints-1]
+
+	// fadeIn/fadeOut flags set for respective operations
+	// fade for audio player in game
+	this.fadeIn = false;
+	this.fadeOut = false;
+	this.fadeTime = 0;
+	this.mouseStillTime = 0; // after this reaches MOUSESTILLTIME we fade player out
+	this.controlsVisible = false; // is song displaying in game?
 }
 
 // Mouse event handling calls this function so we can know what to do
@@ -137,6 +147,18 @@ AudioGUI.prototype.notifyPause = function () {
 	this._populateActiveSongs();
 };
 
+AudioGUI.prototype.notifyMousemove = function () {
+	if (!this.controlsVisible) {
+		// set our fade in flag, and remove/reset rest
+		this.fadeIn = true;
+		if (this.fadeOut) {
+			this.fadeOut = false;
+			this.fadeTime = 0;
+		}
+	}
+	this.mouseStillTime = 0;
+};
+
 // Fills this.activeSongs with Song objects to be drawn at the pause menu
 // From playerSongs[currentSong..currentSong + songsPerPage - 1]
 // Meaning draw songsPerPage songs starting at current song in playerSongs.
@@ -179,6 +201,30 @@ AudioGUI.prototype.update = function (dt) {
 			this.downloadTime = 0;
 		}
 	}
+
+	this.mouseStillTime += dt;
+	if (this.mouseStillTime > MOUSESTILLTIME && this.controlsVisible) {
+		// set our fade out flag, and remove/reset rest
+		this.fadeOut = true;
+		if (this.fadeIn) {
+			this.fadeIn = false;
+			this.fadeTime = 0;
+		}
+	}
+
+	if (this.fadeIn || this.fadeOut) {
+		if (this.fadeIn) {
+			// so that it is drawn during the fade in
+			this.controlsVisible = true;
+		}
+		this.fadeTime += dt;
+		if (this.fadeTime > FADETIME) {
+			this.fadeTime = 0;
+			this.controlsVisible = this.fadeIn ? true : false; // after fade out/in we have our status
+			this.fadeIn = false;
+			this.fadeOut = false;
+		}
+	}
 };
 
 AudioGUI.prototype.draw = function () {
@@ -189,7 +235,8 @@ AudioGUI.prototype.draw = function () {
 
 	// draw if we are in game (set active songs as only this one we are playing)
 	// also draw if we are in the notification menu, since it doesn't block our player
-	if ((!inMenu || inMenu === 'notificationMenu')) {
+	// draw is also dependent on our controls visible flag of course
+	if ((!inMenu || inMenu === 'notificationMenu') && this.controlsVisible) {
 		// if our length is 1, we have already created this array with one song to display while drawing
 		// in which case we just draw it. If however it is not 1 (the if clause) we create it
 		// However, if our length is one, but currentSong from audioManager has changed, we also have to
@@ -213,7 +260,15 @@ AudioGUI.prototype.draw = function () {
 			}
 		}
 
-		this.activeSongs[0].draw();
+		var opacity = undefined;
+		if (this.fadeIn) {
+			opacity = this.fadeTime / FADETIME;
+		} else if (this.fadeOut) {
+			opacity = Math.max(1 - (this.fadeTime / FADETIME), 0);
+		}
+
+		// undefined's are optional x,y coordinates to song draw
+		this.activeSongs[0].draw(undefined, undefined, opacity);
 	}
 
 	// draw if we are in menu
