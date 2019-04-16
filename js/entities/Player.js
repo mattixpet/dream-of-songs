@@ -355,8 +355,11 @@ Player.prototype._handleChestCollision = function (chest) {
 		} else if (this.numChests === 0 && !chest.containsMessage()) {
 			// display first chest notification, unless the chest has a message
 			// (super unlikely that is players first chest, but just in case)
+			// also make the audio player visible
+			global.get('audioGui').showControls();
 			global.get('notificationMenu').notify('first-chest');
 			global.get('notificationMenu').display();
+
 		} else if (this.numChests > 0) {
 			// display general new chest congratulations popup
 			global.get('notificationMenu').notify('general-chest', [this.numChests + 1, songName], 

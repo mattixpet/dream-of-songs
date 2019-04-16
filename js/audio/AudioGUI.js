@@ -16,7 +16,7 @@ var consts = global.get('consts');
 // local constants
 const songsPerPage = 6; // this.activeSongs should be max this length
 const FADETIME = 1000; // approx half a second fade time for player in game (on mouse move)
-const MOUSESTILLTIME = 2500; // time until we fade player out if mouse has been still
+const MOUSESTILLTIME = 3000; // time until we fade player out if mouse has been still
 
 function AudioGUI () {
 	// Song objects of songs displaying in menu at the moment, activeSongs[0] is also song displayed in game
@@ -105,13 +105,25 @@ AudioGUI.prototype.notifyPause = function () {
 AudioGUI.prototype.notifyMousemove = function () {
 	if (!this.controlsVisible) {
 		// set our fade in flag, and remove/reset rest
-		this.fadeIn = true;
-		if (this.fadeOut) {
-			this.fadeOut = false;
-			this.fadeTime = 0;
-		}
+		this._triggerFadeIn();
 	}
 	this.mouseStillTime = 0;
+};
+
+AudioGUI.prototype._triggerFadeIn = function () {
+	this.fadeIn = true;
+	if (this.fadeOut) {
+		this.fadeOut = false;
+		this.fadeTime = 0;
+	}
+};
+
+AudioGUI.prototype._triggerFadeOut = function () {
+	this.fadeOut = true;
+	if (this.fadeIn) {
+		this.fadeIn = false;
+		this.fadeTime = 0;
+	}
 };
 
 AudioGUI.prototype._handleDownArrowClick = function () {
@@ -219,11 +231,7 @@ AudioGUI.prototype.update = function (dt) {
 	this.mouseStillTime += dt;
 	if (this.mouseStillTime > MOUSESTILLTIME && this.controlsVisible) {
 		// set our fade out flag, and remove/reset rest
-		this.fadeOut = true;
-		if (this.fadeIn) {
-			this.fadeIn = false;
-			this.fadeTime = 0;
-		}
+		this._triggerFadeOut();
 	}
 
 	if (this.fadeIn || this.fadeOut) {
@@ -425,6 +433,11 @@ AudioGUI.prototype.notifyDownloadInProgress = function () {
 AudioGUI.prototype.notifyDownloadCompleted = function () {
 	this.downloading = false;
 	util.log('Download completed or error.');
+};
+
+// Trigger fade in of player, to make it visible
+AudioGUI.prototype.showControls = function () {
+	this.controlsVisible = true;
 };
 
 global.set('class/AudioGUI', AudioGUI);
