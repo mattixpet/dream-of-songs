@@ -383,7 +383,7 @@ AudioGUI.prototype._setCurrentSongAs = function (status) {
 		}
 	}
 
-	if (status === 'playing' && activeSongsIndex) {
+	if (status === 'playing' && (activeSongsIndex || activeSongsIndex === 0)) {
 		this.activeSongs[activeSongsIndex].setAsPlaying();
 	} else {
 		this.activeSongs[activeSongsIndex].setAsPaused();
