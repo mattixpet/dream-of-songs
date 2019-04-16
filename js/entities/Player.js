@@ -283,12 +283,24 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 		}		
 		// treat as 'no collision'
 		return false;
-	} else if (collision.block === consts.TELEBLOCK || collision.block === consts.SECONDARYTELEBLOCK) {
-		// TELEBLOCK/SECONDARYTELEBLOCK only teleports you to next scene if your feet are touching it
+	} else if (	collision.block === consts.TELEBLOCK || collision.block === consts.SECONDARYTELEBLOCK ||
+				collision.block === consts.TERTIARYTELEBLOCK) {
+		// TELEBLOCKS only teleport you to next scene if your feet are touching it
 		// check if y grid coordinate of our feet match the y grid coordinate of the collision
 		var bg = global.get('background');
 		if (util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight()).gridY === collision.gridY) {
-			var direction = collision.block === consts.TELEBLOCK ? 'special' : 'secondary-special';
+			var direction;
+			switch (collision.block) {
+				case consts.SECONDARYTELEBLOCK:
+					direction = 'secondary-special';
+					break;
+				case consts.TERTIARYTELEBLOCK:
+					direction = 'tertiary-special';
+					break;
+				default:
+					direction = 'special';
+					break;
+			}
 			global.get('background').requestNextScene(this, direction);
 		} else {
 			// treat as 'no collision'

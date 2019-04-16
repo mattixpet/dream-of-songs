@@ -39,7 +39,8 @@ consts['STAIRBLOCK'] = '3';
 consts['TELEBLOCK'] = '4'; // teleport block, special within each scene to go to another scene
 consts['STAIRTOPBLOCK'] = '5'; // the top of all stairs (which you can stand on, as opposed to regular stair blocks)
 consts['SECONDARYTELEBLOCK'] = '6'; // if there are two teleports on one scene, this behaves exactly as teleblock otherwise
-								  // requests the 'secondary-special' from background instead of the normal special	
+								  	// requests the 'secondary-special' from background instead of the normal special
+consts['TERTIARYTELEBLOCK'] = '7'; // three teleports on scene
 
 global.set('consts', consts);
 
