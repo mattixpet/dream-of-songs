@@ -43,7 +43,7 @@ var menu_text_data = {
 		'general-chest' : 'New song! {}/' + (consts.NUMCHESTS+1) + ' \n {}', //+ 1 here because of title theme
 		'first-hidden-chest' : 	'Congratulations you found a hidden chest! \n Hidden chests ' +
 							'are much rarer than normal chests and can\'t be seen with ' +
-							'the naked eye. Well done.',
+							'the naked eye. Well done. (1/' + consts.NUMHIDDENCHESTS + ')',
 		'hidden-chest' : 'Hidden chest! {}/' + consts.NUMHIDDENCHESTS + ' \n {}',
 		//                  {} === [[[yet]? again]?! [(for the xth time)]?]?
 		'dead-to-spikes' : 'Whoops! You are dead{} \n\n ' + 

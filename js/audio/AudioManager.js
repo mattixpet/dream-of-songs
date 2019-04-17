@@ -28,6 +28,9 @@ function AudioManager () {
 
 	// is a song playing at the moment? (audio audible)
 	this.isPlaying = false;
+
+	// start next song automatically
+	this.autoplay = true;
 }
 
 // Audio GUI calls this, when user asks us to do any command (play, pause, rewind, etc.)
@@ -267,7 +270,16 @@ AudioManager.prototype.getCurrentSongPosition = function () {
 	}
 };
 
-AudioManager.prototype.setCurrentSongPosition = function (pos) {
+AudioManager.prototype.songEnded = function () {
+	this._setCurrentSongPosition(0);
+	if (this.autoplay) {
+		// play next song
+		this.currentSong = (this.currentSong + 1) % this.playerSongs.length;
+		this.playSong(this.playerSongs[this.currentSong].name, true);
+	}
+};
+
+AudioManager.prototype._setCurrentSongPosition = function (pos) {
 	var song = this.playerSongs[this.currentSong];
 	this.player.setPosition(pos * util.stringDurationToSecs(song.duration));
 	if (pos === 0) {

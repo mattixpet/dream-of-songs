@@ -26,9 +26,9 @@ var canvas = global.get('canvas');
 global.set('ctx', canvas.getContext('2d')); // context
 var ctx = global.get('ctx');
 
-function startLoading() {
-	global.set('gameStarted', false);
+global.set('gameStarted', false);
 
+function startLoading() {
 	var loadingBar = new LoadingBar();
 	global.set('loadingBar', loadingBar);
 

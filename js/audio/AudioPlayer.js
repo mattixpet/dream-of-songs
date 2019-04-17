@@ -54,7 +54,7 @@ AudioPlayer.prototype.playSong = function (songName, songUrl, play) {
 
 	// set back to beginning once it ends
 	this.currentSong.addEventListener('ended', function () {
-		global.get('audioManager').setCurrentSongPosition(0);
+		global.get('audioManager').songEnded();
 	});
 
 	if (play) {
