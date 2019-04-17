@@ -25,9 +25,6 @@ var audio_gui_data = {
 		'inGameYCoord' : 380,
 		'songHeight' : Math.floor(iconWidth * 1.1), // height of one song item (one of 5 songs on screen)
 		'iconWidth' : iconWidth,
-		// positions of up/down arrow in pause menu
-		'upArrowPos' : {'x':canvasWidth - iconWidth - 12, 'y':12},
-		'downArrowPos' : {'x':canvasWidth - iconWidth - 12, 'y':canvasHeight - iconWidth - 12},
 		// total songs collected and download all text locations
 		'totalSongPos' : {'x':430, 'y':36},
 		'downloadAllPos' : {'x':495, 'y':canvasHeight - 30},

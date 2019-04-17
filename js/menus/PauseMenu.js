@@ -5,20 +5,21 @@
 'use strict';
 
 // imports
-var Menu = global.get('class/Menu');
+var ScrollableMenu = global.get('class/ScrollableMenu');
 
 function PauseMenu () {
 	this.name = 'pauseMenu';
 
-	// call Menu constructor (it uses the .name property, so we must set it before calling)
-	Menu.call(this);
+	var data = global.get('menu-text-data')[this.name];
+	// call ScrollableMenu constructor (it uses the .name property, so we must set it before calling)
+	ScrollableMenu.call(this, data.upArrowPos, data.downArrowPos);
 
 	this.buttonActions['resume'] = this._handleResume;
 	this.buttonActions['settings'] = this._handleSettings;
 	this.buttonActions['about'] = this._handleAbout;
 }
 
-PauseMenu.prototype = Object.create(Menu.prototype);
+PauseMenu.prototype = Object.create(ScrollableMenu.prototype);
 
 PauseMenu.prototype._handleResume = function () {
 	this.hide();
@@ -33,6 +34,15 @@ PauseMenu.prototype._handleAbout = function () {
 	global.get('aboutMenu').display();
 };
 
+// The scrollable functions
+PauseMenu.prototype._handleUp = function () {
+	global.get('audioGui').notifyUp();
+};
+
+PauseMenu.prototype._handleDown = function () {
+	global.get('audioGui').notifyDown();
+};
+
 PauseMenu.prototype.onEnter = function () {
 	this._handleResume();
 };
@@ -41,14 +51,14 @@ PauseMenu.prototype.onEnter = function () {
 // whenever we draw ourselves
 PauseMenu.prototype.display = function () {
 	global.get('audioGui').notifyPause(); // so audio gui can prep for display
-	Menu.prototype.display.call(this);
+	ScrollableMenu.prototype.display.call(this);
 	global.get('audioManager').drawGui();
 	// let audio manager know we are in pause so he can update the drawing songs
 	global.get('audioManager').setIntervalForSongInMenu();
 };
 
 PauseMenu.prototype.hide = function () {
-	Menu.prototype.hide.call(this);
+	ScrollableMenu.prototype.hide.call(this);
 	// let audio manager know to stop the periodic updates of drawing the songs
 	global.get('audioManager').stopIntervalForSongInMenu();
 };

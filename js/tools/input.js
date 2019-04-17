@@ -59,12 +59,14 @@ function handleKeydown(e) {
 
 // Brings up pause menu or removes it depending on game state
 function pauseOrResumeGame() {
-	if (MainLoop.isRunning()) {
-		MainLoop.stop();
-		global.get('pauseMenu').display(); // this will also draw the gui
-	} else {
-		global.get('pauseMenu').hide();
-		MainLoop.start();
+	if (global.get('gameStarted')) {
+		if (MainLoop.isRunning()) {
+			MainLoop.stop();
+			global.get('pauseMenu').display(); // this will also draw the gui
+		} else {
+			global.get('pauseMenu').hide();
+			MainLoop.start();
+		}	
 	}
 }
 
