@@ -178,7 +178,7 @@ AudioManager.prototype._downloadSong = function (songName) {
 
 	this.gui.notifyDownloadInProgress();
 
-	fetch(config.SONGURL + song.url, {mode: 'cors'})
+	fetch(config.SONGURL + song.url, {mode: config.fetchMode})
 	.then(function(response){
 		if (response.ok) {
 			return response.blob();
@@ -205,7 +205,7 @@ AudioManager.prototype._zipPlayerSongs = function () {
 		// grab each song from wherever we are storing the songs (config.SONGURL) using CORS
 		var song = this.playerSongs[i];
 		fetchPromises.push(
-			fetch(config.SONGURL + song.url, {mode: 'cors'})
+			fetch(config.SONGURL + song.url, {mode: config.fetchMode})
 			.then(function(response){
 				// last item in this array is our file name, e.g. 'sofa.mp3'
 				var urlSplit = decodeURI(response.url).split('/');

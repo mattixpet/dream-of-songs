@@ -66,8 +66,8 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 	// check if user clicked 'Download all' button
 	var data = global.get('audio-gui-data')['Spacings'];
 	// data.downloadAllPos is bottom left pos (because canvas draws text like that)
-	var downloadButtonTopLeft = [data.downloadAllPos.x - data.downloadMargin, 
-								data.downloadAllPos.y - data.fontSize - data.downloadMargin];
+	var downloadButtonTopLeft = {'x':data.downloadAllPos.x - data.downloadMargin, 
+								 'y':data.downloadAllPos.y - data.fontSize - data.downloadMargin};
 	// fontSize * 0.67 because width of letters is approximately 2/3 of height (font size)
 	var downloadButtonWidth = data.downloadMargin * 2 + 'Download all'.length * data.fontSize * 0.67;
 	var downloadButtonHeight = data.downloadMargin * 2 + data.fontSize;

@@ -13,7 +13,12 @@ config['drawBoundingBoxes'] = false;
 config['snakeMode'] = false;
 config['gravity'] = true;
 config['clickToShowCoord'] = false;
+
+// misc
 config['playTitleTheme'] = false;
+// options: no-cors, cors, same-origin, depending on where your audio is located
+// see config.SONGURL
+config['fetchMode'] = 'cors';
 
 // game values
 config['GRAVITYCONSTANT'] = 0.001;
