@@ -194,6 +194,7 @@ Player.prototype.update = function (dt) {
 	if (this.inStairs) {
 		this.speedY = 0.0;
 		this.inStairs = false; // if we are still in stairs, this should be set back to true during collision check
+		this.onGround = false;
 	}
 	// collision is false if no collision, otherwise object with 
 	// {'bgCollision': {.block, .gridX and .gridY}, 'entityCollision' : entity (or false)}
