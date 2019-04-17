@@ -114,17 +114,18 @@ NotificationMenu.prototype.draw = function () {
 // Draw at x,y with max width: width
 // and opacity opacity, shadow is true if the text should have a shadow
 NotificationMenu.prototype._drawText = function (x, y, width, opacity, shadow) {
+	var common = global.get('menu-text-data')['Common'];
 	var data = global.get('menu-text-data')[this.name];
 	draw.writeText(
 		global.get('ctx'),
 		this.currentText,
 		x,
 		y,
-		data.font,
-		data.fontSize,
-		data.fontColor,
+		common.font,
+		common.fontSize,
+		common.fontColor,
 		width,
-		data.spacing,
+		common.spacing,
 		opacity,
 		shadow ? data.popupShadowColor : undefined,
 		shadow ? data.popupShadowDistance : undefined
@@ -133,15 +134,16 @@ NotificationMenu.prototype._drawText = function (x, y, width, opacity, shadow) {
 
 // Draws the 'continue' button
 NotificationMenu.prototype._drawContinue = function () {
+	var common = global.get('menu-text-data')['Common'];
 	var data = global.get('menu-text-data')[this.name];
 	draw.fillText(
 		global.get('ctx'),
 		'continue', 
 		data.continueButtonPos.x,
 		data.continueButtonPos.y,
-		data.font,
-		data.fontSize,
-		data.fontColor
+		common.font,
+		common.fontSize,
+		common.fontColor
 	);
 };
 

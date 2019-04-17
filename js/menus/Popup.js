@@ -40,6 +40,7 @@ Popup.prototype.draw = function () {
 	var w = this.entityWidth;
 	var h = this.entityHeight;
 
+	var common = global.get('menu-text-data')['Common'];
 	var data = global.get('menu-text-data')['notificationMenu'];
 	var popupWidth = data.popupTextWidth;
 	var popupHeight = data.popupTextHeight;
@@ -50,9 +51,9 @@ Popup.prototype.draw = function () {
 	if (popupX > canvas.width - popupWidth) {
 		popupX = x - popupWidth;
 	}
-	var popupY = y - popupHeight - data.fontSize;
-	if (popupY - data.fontSize < 0) {
-		popupY = y + h + data.fontSize;
+	var popupY = y - popupHeight - common.fontSize;
+	if (popupY - common.fontSize < 0) {
+		popupY = y + h + common.fontSize;
 	}
 
 	var opacity = undefined;
@@ -68,17 +69,18 @@ Popup.prototype.draw = function () {
 // not 100% dry, this is also in notificationmenu almost the same, but to be fair
 // it is only a function call
 Popup.prototype._drawText = function (x, y, width, opacity, shadow) {
+	var common = global.get('menu-text-data')['Common'];
 	var data = global.get('menu-text-data')['notificationMenu'];
 	draw.writeText(
 		global.get('ctx'),
 		this.text,
 		x,
 		y,
-		data.font,
-		data.fontSize,
-		data.fontColor,
+		common.font,
+		common.fontSize,
+		common.fontColor,
 		width,
-		data.spacing,
+		common.spacing,
 		opacity,
 		shadow ? data.popupShadowColor : undefined,
 		shadow ? data.popupShadowDistance : undefined

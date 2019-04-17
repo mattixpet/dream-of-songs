@@ -17,18 +17,13 @@ var menu_text_data = {
 		'font' : 'Monospace',
 		'fontSize' : 18,
 		'fontColor' : 'white',
-		'spacing' : 1.5, // line spacing
+		'spacing' : 1.5 // line spacing
 	},
 	'pauseMenu' : {
 		'upArrowPos' : {'x':canvasWidth - iconWidth - 12, 'y':12},
 		'downArrowPos' : {'x':canvasWidth - iconWidth - 12, 'y':canvasHeight - iconWidth - 12}
 	},
 	'notificationMenu' : {
-		// common
-		'font' : 'Monospace',
-		'fontSize' : 18,
-		'fontColor' : 'white',
-		'spacing' : 1.5, // line spacing
 		// pausing notification
 		'textPos' : {'x':160,'y':130},
 		'textWidth' : 420, // px
