@@ -22,7 +22,7 @@ var menu_data = {
 		'about' : 		{'x':292, 'y':335, 'width':210, 'height':68}
 	},
 	'aboutMenu' : {
-		'back' :  		{'x':627, 'y':400, 'width':100, 'height':70}
+		'back' :  		{'x':638, 'y':170, 'width':90, 'height':100}
 	},
 	'pauseMenu' : {
 		'resume' :      {'x':80, 'y':123, 'width':210, 'height':68},

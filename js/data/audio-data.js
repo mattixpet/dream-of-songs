@@ -1602,13 +1602,6 @@ var audio_data = [
 		'cover' : false
 	},
 	{
-		'name' : 'demo af synth shitti',
-		'url' : 'Tonlist_haha/2013/demo af synth shitti.mp3',
-		'year' : 2013,
-		'duration' : '6:40',
-		'cover' : false
-	},
-	{
 		'name' : 'Drungalegt_',
 		'url' : 'Tonlist_haha/2013/Drungalegt_.mp3',
 		'year' : 2013,

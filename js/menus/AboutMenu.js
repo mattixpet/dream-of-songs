@@ -7,24 +7,30 @@
 // imports
 var draw = global.get('draw');
 
-var Menu = global.get('class/Menu');
+var ScrollableMenu = global.get('class/ScrollableMenu');
 
 function AboutMenu () {
 	this.name = 'aboutMenu';
 
-	// call Menu constructor (it uses the .name property, so we must set it before calling)
-	Menu.call(this);
+	var data = global.get('menu-text-data')[this.name];
+	// call ScrollableMenu constructor (it uses the .name property, so we must set it before calling)
+	ScrollableMenu.call(this, data.upArrowPos, data.downArrowPos);
 
 	this.buttonActions['back'] = this._handleBack;
-
-	this.upArrowSprite = global.get('imageHandler').getSprite('uparrow');
-	this.downArrowSprite = global.get('imageHandler').getSprite('downarrow');
 }
 
-AboutMenu.prototype = Object.create(Menu.prototype);
+AboutMenu.prototype = Object.create(ScrollableMenu.prototype);
 
 AboutMenu.prototype._handleBack = function () {
 	global.get(this.previousMenu).display();
+};
+
+AboutMenu.prototype._handleUp = function () {
+	console.log('up');
+};
+
+AboutMenu.prototype._handleDown = function () {
+	console.log('down');
 };
 
 AboutMenu.prototype.onEnter = function () {
@@ -33,11 +39,10 @@ AboutMenu.prototype.onEnter = function () {
 
 AboutMenu.prototype.draw = function () {
 	// draw the background and canvas for our text
-	Menu.prototype.draw.call(this);
+	ScrollableMenu.prototype.draw.call(this);
 
 	this._drawText();
 	this._drawBackButton();
-	this._drawUpDownArrows();
 };
 
 AboutMenu.prototype._drawText = function () {
@@ -63,20 +68,23 @@ AboutMenu.prototype._drawBackButton = function () {
 
 	draw.fillText(
 		global.get('ctx'),
-		'go back', 
+		'go', 
 		data.backButtonPos.x,
 		data.backButtonPos.y,
 		common.font,
 		common.fontSize,
 		common.fontColor
 	);
-};
 
-AboutMenu.prototype._drawUpDownArrows = function () {
-	// our up/down arrows have same position as in audio gui
-	var data = global.get('audio-gui-data')['Spacings'];
-	this.upArrowSprite.draw(data.upArrowPos.x, data.upArrowPos.y);
-	this.downArrowSprite.draw(data.downArrowPos.x, data.downArrowPos.y);
+	draw.fillText(
+		global.get('ctx'),
+		'back', 
+		data.backButtonPos.x - common.fontSize * 0.6,
+		data.backButtonPos.y + common.fontSize * common.spacing,
+		common.font,
+		common.fontSize,
+		common.fontColor
+	);
 };
 
 global.set('class/AboutMenu', AboutMenu);
