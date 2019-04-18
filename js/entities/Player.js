@@ -119,9 +119,7 @@ Player.prototype.draw = function () {
 		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, this.y, this.currentSprite);
 	}
 
-	if (config.drawBoundingBoxes) {
-		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
-	}
+	this._drawBoundingBox();
 };
 
 Player.prototype._drawStillAnimation = function () {
@@ -319,11 +317,27 @@ Player.prototype._handleEntityCollision = function (entity) {
 	if (entity) {
 		if (entity.getName() === 'chest') {
 			this._handleChestCollision(entity);
+		} else if (entity.getName() === 'raven') {
+			this._handleRavenCollision(entity);
 		}
 		// else - we don't handle any more entities
 	}
 
 	return false;
+};
+
+Player.prototype._handleRavenCollision = function (raven) {
+	var bg = global.get('background');
+	var gridWidth = bg.getGridWidth();
+	var gridHeight = bg.getGridHeight();
+	var ravenY = util.pixelToGrid(raven.getX() + raven.getWidth(), raven.getY() + raven.getHeight(), 
+								  gridWidth, gridHeight).gridY;
+	var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight).gridY;
+	// if we have a collision (our bounding box touching his) then we chase him away
+	// if our feet are touching his or even further
+	if (playerY <= ravenY) {
+		raven.chaseAway();
+	}
 };
 
 Player.prototype._handleChestCollision = function (chest) {

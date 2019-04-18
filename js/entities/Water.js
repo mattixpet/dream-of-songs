@@ -9,7 +9,7 @@
 
 var Entity = global.get('class/Entity');
 
-// Constants
+// constants
 const ANIMATIONTIME = 100; // animate every .. milliseconds
 
 function Water(sprite, posX, posY) {

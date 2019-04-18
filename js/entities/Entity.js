@@ -33,6 +33,10 @@ function Entity(sprite, posX, posY, affectedByGravity) {
 Entity.prototype.draw = function () {
 	this.sprite.draw(this.x, this.y, 0);
 
+	this._drawBoundingBox();
+};
+
+Entity.prototype._drawBoundingBox = function () {
 	if (config.drawBoundingBoxes) {
 		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
 	}

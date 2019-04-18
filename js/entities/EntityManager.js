@@ -9,6 +9,7 @@ var Chest = global.get('class/Chest');
 var Torch = global.get('class/Torch');
 var Water = global.get('class/Water');
 var Spikes = global.get('class/Spikes');
+var Raven = global.get('class/Raven');
 
 function EntityManager () {
 	// maintain all entities in game in this object
@@ -60,6 +61,7 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 	this._spawnTorches(scene);
 	this._spawnWater(scene);
 	this._spawnSpikes(scene);
+	this._spawnRavens(scene);
 };
 
 EntityManager.prototype._spawnChests = function (scene) {
@@ -143,6 +145,23 @@ EntityManager.prototype._spawnSpikes = function (scene) {
 	}
 };
 
+// Spawn that one raven on the cross in hilltop..
+EntityManager.prototype._spawnRavens = function (scene) {
+	var data = global.get('raven-data');
+	if (data.hasOwnProperty(scene)) {
+		var raven = data[scene];
+		if (!this.scenesVisited[scene]) {
+			this.register(
+				new Raven(
+					raven.x,
+					raven.y
+				),
+				scene
+			);
+		}
+	}
+};
+
 EntityManager.prototype._movePlayerToScene = function (lastScene, newScene) {
 	if (lastScene === newScene) {
 		return; // initial call
@@ -167,6 +186,11 @@ EntityManager.prototype.getEntities = function () {
 
 EntityManager.prototype._delete = function (id, scene) {
 	delete this.entities[scene][id];
+};
+
+EntityManager.prototype.destroy = function (id) {
+	// things should only die on the current scene we are on
+	this._delete(id, this.currentScene);
 };
 
 global.set('class/EntityManager', EntityManager);

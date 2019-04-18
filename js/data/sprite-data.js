@@ -49,6 +49,15 @@ var sprite_data = {
 		'srcHeight' : 150,
 		'positions' : [	{'x':0,'y':0}, {'x':600,'y':0}, {'x':0,'y':150}, 
 						{'x':600,'y':150}, {'x':0,'y':300}, {'x':600,'y':300}]
+	},
+	'raven' : {
+		'fileurl' : config.SPRITEURL + 'raven-spritesheet.png',
+		'dispWidth' : 65,
+		'dispHeight' : 65,
+		'srcWidth' : 1144,
+		'srcHeight' : 966,
+		'positions' : [	{'x':0,'y':966}, {'x':1144,'y':966}, {'x':0,'y':0}, 
+						{'x':1144,'y':966}]
 	}
 };
 
