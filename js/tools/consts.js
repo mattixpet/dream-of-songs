@@ -30,6 +30,7 @@ consts['KEY_B'] = 'B'.charCodeAt(0);
 consts['KEY_C'] = 'C'.charCodeAt(0);
 consts['KEY_ENTER'] = 13;
 consts['KEY_SPACE'] = 32;
+consts['KEY_H'] = 'H'.charCodeAt(0);
 
 // background consts
 consts['NOBLOCK'] = '0';

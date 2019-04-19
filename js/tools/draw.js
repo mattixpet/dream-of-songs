@@ -6,6 +6,33 @@
 
 var draw = {};
 
+// Draws the outline of a star with color [color] at [x,y] (almost center of star, the 'crotch' of it)
+// [size] is only approximate, not a specific width or height
+// thought to be approximate diameter
+function drawStar(ctx, x, y, size, lineWidth, color) {
+	var floor = Math.floor;
+
+	ctx.save();
+
+	ctx.lineWidth = lineWidth;
+	ctx.strokeStyle = color;
+	ctx.beginPath();
+	ctx.moveTo(x,y);
+	ctx.lineTo(x-floor(0.5*size), y+floor(0.4*size));
+	ctx.lineTo(x-floor(0.3*size), y-floor(0.2*size));
+	ctx.lineTo(x-floor(0.7*size), y-floor(0.6*size));
+	ctx.lineTo(x-floor(0.2*size), y-floor(0.5*size));
+	ctx.lineTo(x,                 y-floor(1.1*size));
+	ctx.lineTo(x+floor(0.2*size), y-floor(0.5*size));
+	ctx.lineTo(x+floor(0.7*size), y-floor(0.6*size));
+	ctx.lineTo(x+floor(0.3*size), y-floor(0.2*size));
+	ctx.lineTo(x+floor(0.5*size), y+floor(0.4*size));
+	ctx.lineTo(x,y);
+	ctx.stroke();
+
+	ctx.restore();
+}
+
 // Draw a [thickness] thick point at index [index] (if numPoints is 5, index is [0,4])
 // of [numPoints] granularity in a circle with radius [radius] centered at [x,y] with color [color]
 // optional [alpha] between 0 and 1 to set the alpha of the canvas (draw half transparent things for example)
@@ -177,6 +204,7 @@ function writeText(ctx, text, x, y, font, fontSize, color, width, spacing, opaci
 	}
 }
 
+draw['drawStar'] = drawStar;
 draw['drawCirclePoint'] = drawCirclePoint;
 draw['drawCirclePointWithShadow'] = drawCirclePointWithShadow;
 draw['bezierCurve'] = bezierCurve;

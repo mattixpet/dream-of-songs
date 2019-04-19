@@ -67,6 +67,11 @@ function begin() {
 		global.get('player').setAsFlying(config.snakeMode);
 	}
 
+	if (util.eatKey(consts.KEY_H)) {
+		util.log('Toggling hidden chests.');
+		config.showHiddenChests = !config.showHiddenChests;
+	}
+
 	// click to show coordinate clicked
 	if (util.eatKey(consts.KEY_C)) {
 		util.log('Toggling click to show coord.');

@@ -52,9 +52,29 @@ Chest.prototype.draw = function () {
 		this.sprite.draw(this.x, this.y - COLLISIONYDELTA, this.animation);
 	}
 
-	if (config.drawBoundingBoxes) {
-		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
+	this._drawBoundingBox();
+
+	if (this.invisible && config.showHiddenChests) {
+		this._drawHint(); // draw something so player can see us
 	}
+};
+
+// Draw a few stars at our location so player can see us
+Chest.prototype._drawHint = function () {
+	var starSize = 10;
+	var lineWidth = 1.2;
+	var mX = this.x + Math.floor(this.width / 2);
+	var mY = this.y + Math.floor(this.height / 2);
+	// draw three stars
+	draw.drawStar(global.get('ctx'), 
+		mX-Math.floor(this.width/4), mY-Math.floor(this.height/4), 
+		starSize, lineWidth, 'blue');
+	draw.drawStar(global.get('ctx'), 
+		mX+Math.floor(this.width/4), mY-Math.floor(this.height/8), 
+		starSize, lineWidth, 'blue');
+	draw.drawStar(global.get('ctx'), 
+		mX-Math.floor(this.width/8), mY+Math.floor(this.height/4), 
+		starSize, lineWidth, 'blue');
 };
 
 // Player calls this when he loots us
