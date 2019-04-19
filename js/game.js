@@ -64,7 +64,7 @@ function begin() {
 	if (util.eatKey(consts.KEY_O)) {
 		util.log('Toggling snake mode.');
 		config.snakeMode = !config.snakeMode;
-		config.gravity = !config.gravity;
+		global.get('player').setAsFlying(config.snakeMode);
 	}
 
 	// click to show coordinate clicked

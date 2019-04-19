@@ -81,6 +81,8 @@ function Player(posX, posY) {
 
 	this.numChests = 0;
 	this.numHiddenChests = 0;
+
+	this.affectedByGravity = true;
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -244,7 +246,7 @@ Player.prototype.update = function (dt) {
 	}
 
 	// Do all updates !
-	if (config.gravity && !this.inStairs) {
+	if (config.gravity && this.affectedByGravity && !this.inStairs) {
 		// only check when we move if we are not on ground anymore (check background under us for collision)
 		// also check if we are pressing down (so we can move down stairs)
 		if (!this.isStationary) {
@@ -290,11 +292,8 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 			 playerGridY === collision.gridY - 1)) {
 			return 'regBlockInAir';
 		}
-
 		// halt
-		if (config.gravity) {
-			this.speedY = 0;
-		}
+		this.speedY = 0;
 	} else if (collision.block === consts.PLATFORMBLOCK || collision.block === consts.STAIRTOPBLOCK) {
 		// check for top of stairs block
 		if (collision.block === consts.STAIRTOPBLOCK && this._isUpOrDownPressed()) {
@@ -310,9 +309,7 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 			&& this.y + this.height <= util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y
 			&& this.y < nextY) {
 			// halt
-			if (config.gravity) {
-				this.speedY = 0;
-			}
+			this.speedY = 0;
 		} else {
 			// treat as 'no collision'
 			return false
@@ -484,7 +481,7 @@ Player.prototype._findNextY = function (dt) {
 		}
 	}
 	// normal gravity
-	if (config.gravity && !this.inStairs) {
+	if (config.gravity && this.affectedByGravity && !this.inStairs) {
 		nextY = this._applyAcceleration(this.y, this.speedY, this.accelerationY, dt);
 	}
 	return nextY;
@@ -515,7 +512,12 @@ Player.prototype._isUpOrDownPressed = function () {
 
 Player.prototype._isDownPressed = function () {
 	return global.get('keys')[consts.KEY_S] || global.get('keys')[consts.KEY_DOWN];
-}
+};
+
+// value === true or false
+Player.prototype.setAsFlying = function (value) {
+	this.affectedByGravity = !value;
+};
 
 global.set('class/Player', Player); // export
 
