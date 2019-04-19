@@ -13,6 +13,7 @@ config['drawBoundingBoxes'] = false;
 config['snakeMode'] = false;
 config['gravity'] = true;
 config['clickToShowCoord'] = false;
+config['showHiddenChests'] = false;
 
 // misc
 config['playTitleTheme'] = false;

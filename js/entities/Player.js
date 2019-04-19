@@ -241,6 +241,7 @@ Player.prototype.update = function (dt) {
 	// we want only to stop in x direction
 	// (also doesn't work in snake mode)
 	if (bgCollision === 'regBlockInAir') {
+		console.log('hello..');
 		this._updatePos(this.x, nextY);
 	}
 
@@ -282,14 +283,20 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 	if (!collision) {
 		return false;
 	} else if (collision.block === consts.REGBLOCK) {
-		// check if we are colliding on either side with our feet
+		// check if we are colliding on either side, then we return 'regBlockInAir' (e.g. stairs or wall)
+		// this is to prevent being able do press right/left and get stuck in air
 		var bg = global.get('background');
-		var playerGridY = util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight()).gridY;
+		var leftGridX = util.pixelToGrid(nextX, nextY, bg.getGridWidth(), bg.getGridHeight()).gridX;
+		var rightGridX = util.pixelToGrid(nextX + this.width, nextY, bg.getGridWidth(), bg.getGridHeight()).gridX;
+		var forwardGridX = this.orientation === 'right' ? rightGridX : leftGridX;
 		if (!this.onGround && !config.snakeMode &&
-			(playerGridY === collision.gridY ||
-			 playerGridY === collision.gridY + 1 ||
-			 playerGridY === collision.gridY - 1)) {
-			return 'regBlockInAir';
+			forwardGridX === collision.gridX) {
+			// now make sure we are also not bumping our head into regblock (so check that collision.gridY
+			// is not our head and that we are not going up at the same time)
+			var playerGridY = util.pixelToGrid(nextX, nextY, bg.getGridWidth(), bg.getGridHeight()).gridY;
+			if (playerGridY !== collision.gridY || (playerGridY === collision.gridY && this.y < nextY)) {
+				return 'regBlockInAir';
+			}
 		}
 		// halt
 		this.speedY = 0;

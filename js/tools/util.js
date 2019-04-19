@@ -6,6 +6,11 @@
 
 var util = {};
 
+// Return true if a in [b-delta,b+delta]
+function almostEqual(a, b, delta) {
+	return a === b || (a <= b+delta && a >= b-delta);
+}
+
 // yah..
 function deepCopy(obj) {
 	return JSON.parse(JSON.stringify(obj));
@@ -110,6 +115,7 @@ function _getDateMilliseconds() {
 		date.getMilliseconds();
 }
 
+util['almostEqual'] = almostEqual;
 util['deepCopy'] = deepCopy;
 util['shallowCopy'] = shallowCopy;
 util['containsDuplicates'] = containsDuplicates;
