@@ -84,9 +84,12 @@ var torch_data = {
 		],
 		'tunnelflipped' : [
 			{'x':206,'y':266}, {'x':580,'y':264}
-		]
+		],
+		'semivaulttop' : undefined // reused
 	}
 };
+
+torch_data.spawns.semivaulttop = torch_data.spawns.semivault.slice(2,4); // only most right two torches reused
 
 // add our bezier curves as explained above (kinda)
 // interpolate changing only x coord of the base curves (ANIMATION0) to the left and right

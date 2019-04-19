@@ -108,14 +108,17 @@ var chest_data = {
 		{'x':188,'y':97,'flipped':true,'hidden':true}, {'x':614,'y':18,'flipped':true,'hidden':false}, 
 		{'x':680,'y':25,'flipped':true,'hidden':false},	{'x':744,'y':39,'flipped':true,'hidden':false}
 	],
-	'spikes' :[
+	'spikes' : [
 		{'x':727,'y':3,'flipped':true,'hidden':false,'message':'only-way-to-fly'}
-	]
+	],
+	'semivaulttop' : undefined // reuse from semivault
 };
 
 // reused chest coordinates
+chest_data.semivaulttop = chest_data.semivault.slice(0,6); // only top two rows of chests from semivault
+
+// except for skyvault/topskyvault, we need to move 3 chests
 chest_data.skyvault = util.deepCopy(chest_data.undergroundvault);
-// except for skyvault, we need to move 3 chests
 var skyvault = chest_data.skyvault;
 skyvault[skyvault.length-1].x -= 220;
 skyvault[skyvault.length-6].x += 280;
