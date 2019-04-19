@@ -26,7 +26,8 @@ var chest_data = {
 		{'x':49,'y':212,'flipped':false,'hidden':false}
 	],
 	'smallcliff' : [
-		{'x':380,'y':80,'flipped':false,'hidden':false}, {'x':440,'y':60,'flipped':false,'hidden':false}
+		{'x':380,'y':80,'flipped':false,'hidden':false}, {'x':440,'y':60,'flipped':false,'hidden':false},
+		{'x':589,'y':-20,'flipped':false,'hidden':true}
 	],
 	'abovecave' : [
 		{'x':16,'y':0,'flipped':false,'hidden':false}, {'x':103,'y':-20,'flipped':false,'hidden':false}, 
