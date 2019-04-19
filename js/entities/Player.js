@@ -25,6 +25,8 @@ const STILLRIGHT1 = 8;
 const STILLRIGHT2 = 9;
 const STILLLEFT1 = STILLRIGHT2; // makes sense because it is mirrored
 const STILLLEFT2 = 10;
+const FLYING1 = 11;
+const FLYING2 = 12;
 
 // since everything starts from top left, this is the offset for collision
 // meaning not count the first COLLISIONXDELTA pixels of the player sprite for collision
@@ -39,6 +41,8 @@ const COLLISIONHEIGHTREDUCTION = sprite_data.player.COLLISIONHEIGHTREDUCTION;
 // how much to shift drawing of sprite if in stairs, because of how I crop it from the spritesheet man
 const STAIRMARGIN = sprite_data.player.STAIRMARGIN;
 const STILLMARGIN = sprite_data.player.STILLMARGIN;
+const FLYINGMARGINX = sprite_data.player.FLYINGMARGINX;
+const FLYINGMARGINY = sprite_data.player.FLYINGMARGINY;
 sprite_data = undefined;
 
 function Player(posX, posY) {
@@ -68,6 +72,7 @@ function Player(posX, posY) {
 	// array of order of sprite animations to use for walking
 	this.WALKINGANIMATIONS = [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3];
 	this.STAIRSANIMATIONS = [STAIR1, STAIR2];
+	this.FLYINGANIMATIONS = [FLYING1, FLYING2];
 
 	this.timeStill = 0; // how long have we been standing still?
 	 // set this as true only when drawing the still animations specifically (not stop e.g)
@@ -104,19 +109,35 @@ Player.prototype.draw = function () {
 							 ];
 	}
 
+	if (config.snakeMode) {
+		this.currentSprite = this.FLYINGANIMATIONS[
+								Math.floor(
+									(this.distanceTraveledY + this.distanceTraveledX)
+										/ this.ANIMATIONDISTANCE / 3
+								)	% this.FLYINGANIMATIONS.length
+							 ];
+	}
+
 	if (this.isStationary) {
 		this._drawStillAnimation();
 	}
 
+	// do sprite shifting to draw, so it makes sense compared to different animations
+	// and the bounding box fits our body and not e.g. our wings
 	var x = this.x;
+	var y = this.y;
 	if (this.orientation === 'right') {
 		x -= this.inStairs ? STAIRMARGIN : 0;
 		x -= this.inStillAnimation1 ? STILLMARGIN : 0;
-		this.sprite.draw(x - COLLISIONXDELTA, this.y, this.currentSprite);
+		x -= config.snakeMode ? FLYINGMARGINX : 0;
+		y -= config.snakeMode ? FLYINGMARGINY : 0;
+		this.sprite.draw(x - COLLISIONXDELTA, y, this.currentSprite);
 	} else {
 		x += this.inStairs ? STAIRMARGIN : 0;
 		x += this.inStillAnimation2 ? STILLMARGIN : 0;
-		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, this.y, this.currentSprite);
+		x += config.snakeMode ? FLYINGMARGINX : 0;
+		y += config.snakeMode ? FLYINGMARGINY : 0;
+		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, y, this.currentSprite);
 	}
 
 	this._drawBoundingBox();
@@ -186,6 +207,12 @@ Player.prototype.update = function (dt) {
 	} else {
 		this.isStationary = false;
 		this.timeStill = 0;
+	}
+
+	if (config.snakeMode) {
+		this.timeFlying += dt;
+	} else {
+		this.timeFlying = 0;
 	}
 
 	// reset stairs

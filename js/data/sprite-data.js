@@ -16,7 +16,8 @@ var sprite_data = {
 		'positions' : [	{'x':141,'y':74}, {'x':738,'y':74}, {'x':1344,'y':72}, {'x':139,'y':1072}, {'x':741,'y':1072}, // walking
 						{'x':1293,'y':1080}, // jump
 						{'x':1960,'y':45}, {'x':1955,'y':1036}, // stairs
-						{'x':2468,'y':66}, {'x':3110,'y':70}, {'x':2502,'y':1088} // still animation
+						{'x':2468,'y':66}, {'x':3110,'y':70}, {'x':2502,'y':1088}, // still animation
+						{'x':3600, 'y':0}, {'x':3600, 'y':1000} // flying
 					  ],
 		'startingPosition' : {'x':300,'y':-80},
 		// how much to alter bounding box/sprite drawing, see player.js for more explanation
@@ -26,6 +27,8 @@ var sprite_data = {
 		'COLLISIONHEIGHTREDUCTION' : 8,
 		'STAIRMARGIN' : -5,
 		'STILLMARGIN' : 20,
+		'FLYINGMARGINX' : 27,
+		'FLYINGMARGINY' : 7,
 		'stillAnimationRadius' : 40,
 		'stillAnimationThickness' : 12,
 		'stillAnimationNumPoints' : 48,
