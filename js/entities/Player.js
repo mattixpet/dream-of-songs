@@ -197,8 +197,9 @@ Player.prototype.update = function (dt) {
 	// collision is false if no collision, otherwise object with 
 	// {'bgCollision': {.block, .gridX and .gridY}, 'entityCollision' : entity (or false)}
 	var collision = this.isColliding(nextX, nextY);
+	var bgCollision;
 	if (collision) {
-		var bgCollision = this._handleBackgroundCollision(collision.bgCollision, nextX, nextY);
+		bgCollision = this._handleBackgroundCollision(collision.bgCollision, nextX, nextY);
 		var entCollision = this._handleEntityCollision(collision.entityCollision);
 		if (!bgCollision && !entCollision) {
 			collision = false;
@@ -208,7 +209,12 @@ Player.prototype.update = function (dt) {
 	if (!this.isStationary && !collision) {
 		this._updatePos(nextX, nextY);
 	}
-
+	// special case, where this._handleBackgroundCollision, means
+	// we hit a regblock on either side (with feet) but are still in air, meaning
+	// we want only to stop in x direction
+	if (bgCollision === 'regBlockInAir') {
+		this._updatePos(this.x, nextY);
+	}
 
 	// Do all updates !
 	if (config.gravity && !this.inStairs) {
@@ -248,6 +254,16 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 	if (!collision) {
 		return false;
 	} else if (collision.block === consts.REGBLOCK) {
+		// check if we are colliding on either side with our feet
+		var bg = global.get('background');
+		var playerGridY = util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight()).gridY;
+		if (!this.onGround && 
+			(playerGridY === collision.gridY ||
+			 playerGridY === collision.gridY + 1 ||
+			 playerGridY === collision.gridY - 1)) {
+			return 'regBlockInAir';
+		}
+
 		// halt
 		if (config.gravity) {
 			this.speedY = 0;
