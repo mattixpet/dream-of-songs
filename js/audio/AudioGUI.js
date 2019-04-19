@@ -321,7 +321,6 @@ AudioGUI.prototype.draw = function () {
 
 		// draw the total songs collected text and download all text
 		draw.fillText(
-			global.get('ctx'),
 			// + 1 in the num chests because of title theme
 			'Total songs collected: ' + playerSongs.length + '/' + (consts.NUMCHESTS + 1),
 			data.totalSongPos.x,
@@ -331,7 +330,6 @@ AudioGUI.prototype.draw = function () {
 			data.fontColor
 		);
 		draw.fillText(
-			global.get('ctx'),
 			'Download all',
 			data.downloadAllPos.x,
 			data.downloadAllPos.y,
@@ -360,14 +358,13 @@ AudioGUI.prototype._drawLoading = function () {
 		y = data.menuDownloadAnimationPos.y;
 	}
 
-	var ctx = global.get('ctx');
 	var n = data.downloadNumPoints;
 	var idx = this.downloadPointIndex;
 	var thick = data.downloadPointThickness;
 	var r = data.downloadRadius;
 	var c = data.downloadAnimationColor;
 
-	draw.drawCirclePointWithShadow(ctx, x, y, n, idx, thick, r, c);
+	draw.drawCirclePointWithShadow(x, y, n, idx, thick, r, c);
 };
 
 

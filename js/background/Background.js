@@ -67,8 +67,6 @@ Background.prototype._drawGrid = function () {
 	// i is x
 	// j is y
 	var canvas = global.get('canvas');
-	var ctx = global.get('ctx');
-
 	var data = this.cData[this.currentSceneTemplate ? this.currentSceneTemplate : this.currentScene];
 	for (var i = 0; i < this.gridW; i++) {
 		for (var j = 0; j < this.gridH; j++) {
@@ -92,7 +90,7 @@ Background.prototype._drawGrid = function () {
 				// collision block, draw it
 				var x = Math.floor(i / this.gridW * canvas.width);
 				var y = Math.floor(j / this.gridH * canvas.height);
-				draw.drawBox(ctx, x, y, this.blockWidth, this.blockHeight, color);
+				draw.drawBox(x, y, this.blockWidth, this.blockHeight, color);
 			}
 		}
 	}
@@ -102,10 +100,9 @@ Background.prototype._drawGrid = function () {
 // Draws a size by size pixel grid to see better where pixels are.
 Background.prototype._drawPixelGrid = function (size) {
 	var canvas = global.get('canvas');
-	var ctx = global.get('ctx')
 	for (var i = 0; i < canvas.width; i+=size) {
 		for (var j = 0; j < canvas.height; j+=size) {
-			draw.drawBox(ctx, i, j, size, size, 'blue');
+			draw.drawBox(i, j, size, size, 'blue');
 		}
 	}
 };

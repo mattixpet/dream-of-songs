@@ -117,7 +117,6 @@ NotificationMenu.prototype._drawText = function (x, y, width, opacity, shadow) {
 	var common = global.get('menu-text-data')['Common'];
 	var data = global.get('menu-text-data')[this.name];
 	draw.writeText(
-		global.get('ctx'),
 		this.currentText,
 		x,
 		y,
@@ -137,7 +136,6 @@ NotificationMenu.prototype._drawContinue = function () {
 	var common = global.get('menu-text-data')['Common'];
 	var data = global.get('menu-text-data')[this.name];
 	draw.fillText(
-		global.get('ctx'),
 		'continue', 
 		data.continueButtonPos.x,
 		data.continueButtonPos.y,

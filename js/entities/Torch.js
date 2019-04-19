@@ -103,7 +103,7 @@ Torch.prototype.draw = function () {
 	var curves = this.bezierCurves[this.currentAnimation];
 	for (var i = 0; i < curves.length; i++) {
 		var c = curves[i];
-		draw.bezierCurve(global.get('ctx'), c.sx, c.sy, c.cp1x, c.cp1y, c.cp2x, c.cp2y, c.ex, c.ey, c.color);
+		draw.bezierCurve(c.sx, c.sy, c.cp1x, c.cp1y, c.cp2x, c.cp2y, c.ex, c.ey, c.color);
 	}
 };
 

@@ -38,7 +38,7 @@ Entity.prototype.draw = function () {
 
 Entity.prototype._drawBoundingBox = function () {
 	if (config.drawBoundingBoxes) {
-		draw.drawBox(global.get('ctx'), this.x, this.y, this.width, this.height, 'red');
+		draw.drawBox(this.x, this.y, this.width, this.height, 'red');
 	}
 };
 

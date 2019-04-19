@@ -9,7 +9,9 @@ var draw = {};
 // Draws the outline of a star with color [color] at [x,y] (almost center of star, the 'crotch' of it)
 // [size] is only approximate, not a specific width or height
 // thought to be approximate diameter
-function drawStar(ctx, x, y, size, lineWidth, color) {
+function drawStar(x, y, size, lineWidth, color) {
+	var ctx = global.get('ctx');
+	
 	var floor = Math.floor;
 
 	ctx.save();
@@ -50,7 +52,9 @@ function drawStar(ctx, x, y, size, lineWidth, color) {
 // And of course if you have numPoints high enough, it's just like an animated drawing
 // of a circle
 // Writing this function should be a fun exercise in geometry, time for some cosines and sines
-function drawCirclePoint(ctx, x, y, numPoints, index, thickness, radius, color, alpha, borderColor) {
+function drawCirclePoint(x, y, numPoints, index, thickness, radius, color, alpha, borderColor) {
+	var ctx = global.get('ctx');
+	
 	var angleDelta = 2 * Math.PI / numPoints; // 2*pi = whole circle in radians
 	var angle = angleDelta * index;
 	var circleX = Math.floor(x + Math.cos(angle) * radius);
@@ -76,7 +80,9 @@ function drawCirclePoint(ctx, x, y, numPoints, index, thickness, radius, color, 
 	ctx.restore();
 }
 
-function drawCirclePointWithShadow(ctx, x, y, numPoints, index, thickness, radius, color, borderColor) {
+function drawCirclePointWithShadow(x, y, numPoints, index, thickness, radius, color, borderColor) {
+	var ctx = global.get('ctx');
+	
 	var n = numPoints;
 	var idx = index;
 	var thick = thickness;
@@ -84,18 +90,20 @@ function drawCirclePointWithShadow(ctx, x, y, numPoints, index, thickness, radiu
 	var c = color;
 	var bC = borderColor;
 	// draw main point
-	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 1.00, bC);
+	drawCirclePoint(x, y, n, idx, thick, r, c, 1.00, bC);
 	// draw shadow behind it (opacity .67)
 	idx = idx - 1 < 0 ? n - 1 : idx - 1;
-	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.67, bC);
+	drawCirclePoint(x, y, n, idx, thick, r, c, 0.67, bC);
 	// draw shadow of shadow (opacity .33)
 	idx = idx - 1 < 0 ? n - 1 : idx - 1;
-	drawCirclePoint(ctx, x, y, n, idx, thick, r, c, 0.33, bC);
+	drawCirclePoint(x, y, n, idx, thick, r, c, 0.33, bC);
 }
 
 // Draw a bezier curve starting at sx, sy, control points cp1, cp2 and
 // end point ex, ey with color color
-function bezierCurve(ctx, sx, sy, cp1x, cp1y, cp2x, cp2y, ex, ey, color) {
+function bezierCurve(sx, sy, cp1x, cp1y, cp2x, cp2y, ex, ey, color) {
+	var ctx = global.get('ctx');
+	
 	ctx.save();
 
 	ctx.lineWidth = '2.0';
@@ -108,7 +116,9 @@ function bezierCurve(ctx, sx, sy, cp1x, cp1y, cp2x, cp2y, ex, ey, color) {
 	ctx.restore();
 }
 
-function fillRect(ctx, x, y, w, h, color) {
+function fillRect(x, y, w, h, color) {
+	var ctx = global.get('ctx');
+	
 	ctx.save();
 
 	ctx.fillStyle = color;
@@ -118,7 +128,9 @@ function fillRect(ctx, x, y, w, h, color) {
 }
 
 // draw outline of rect
-function drawBox(ctx, x, y, w, h, color) {
+function drawBox(x, y, w, h, color) {
+	var ctx = global.get('ctx');
+	
 	ctx.save();
 
 	ctx.strokeStyle = color;
@@ -127,7 +139,9 @@ function drawBox(ctx, x, y, w, h, color) {
 	ctx.restore();
 }
 
-function fillText(ctx, text, x, y, font, fontSize, color, opacity) {
+function fillText(text, x, y, font, fontSize, color, opacity) {
+	var ctx = global.get('ctx');
+	
 	ctx.save();
 
 	if (opacity) {
@@ -140,16 +154,16 @@ function fillText(ctx, text, x, y, font, fontSize, color, opacity) {
 	ctx.restore();
 }
 
-function fillTextWithShadow(ctx, text, x, y, font, fontSize, color, opacity, shadowColor, shadowDistance) {
-	fillText(ctx, text, x + shadowDistance, y - shadowDistance, font, fontSize, shadowColor, opacity);
-	fillText(ctx, text, x, y, font, fontSize, color, opacity);
+function fillTextWithShadow(text, x, y, font, fontSize, color, opacity, shadowColor, shadowDistance) {
+	fillText(text, x + shadowDistance, y - shadowDistance, font, fontSize, shadowColor, opacity);
+	fillText(text, x, y, font, fontSize, color, opacity);
 }
 
 // Writes text to canvas positioned at x,y, no more than width wide. 
 // spacing === line spacing
 // if opacity is supplied, draw with that opacity
 // if shadowColor is supplied, draw additionally a shadow with shadowColor and shadowDistance from original text
-function writeText(ctx, text, x, y, font, fontSize, color, width, spacing, opacity, shadowColor, shadowDistance) {
+function writeText(text, x, y, font, fontSize, color, width, spacing, opacity, shadowColor, shadowDistance) {
 	var charW = Math.floor(fontSize / 2); // ~width of 1 character
 	var maxNumChars = Math.floor(width / charW); // maximum number of characters per line
 	var words = text.split(' ');
@@ -196,9 +210,9 @@ function writeText(ctx, text, x, y, font, fontSize, color, width, spacing, opaci
 	var ourY = y;
 	for (var i = 0; i < lines.length; i++) {
 		if (shadowColor) {
-			fillTextWithShadow(ctx, lines[i], x, ourY, font, fontSize, color, opacity, shadowColor, shadowDistance);
+			fillTextWithShadow(lines[i], x, ourY, font, fontSize, color, opacity, shadowColor, shadowDistance);
 		} else {
-			fillText(ctx, lines[i], x, ourY, font, fontSize, color, opacity);
+			fillText(lines[i], x, ourY, font, fontSize, color, opacity);
 		}
 		ourY += fontSize * spacing;
 	}

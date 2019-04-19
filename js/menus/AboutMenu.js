@@ -60,7 +60,6 @@ AboutMenu.prototype._drawText = function () {
 	var data = global.get('menu-text-data')[this.name];
 
 	draw.writeText(
-		global.get('ctx'),
 		this.text[this.textIndex],
 		data.textPos.x,
 		data.textPos.y,
@@ -77,7 +76,6 @@ AboutMenu.prototype._drawBackButton = function () {
 	var data = global.get('menu-text-data')[this.name];
 
 	draw.fillText(
-		global.get('ctx'),
 		'go', 
 		data.backButtonPos.x,
 		data.backButtonPos.y,
@@ -87,7 +85,6 @@ AboutMenu.prototype._drawBackButton = function () {
 	);
 
 	draw.fillText(
-		global.get('ctx'),
 		'back', 
 		data.backButtonPos.x - common.fontSize * 0.6,
 		data.backButtonPos.y + common.fontSize * common.spacing,

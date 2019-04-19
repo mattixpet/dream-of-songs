@@ -198,9 +198,9 @@ Song.prototype.draw = function (x, y, opacity) {
 	}
 	this.downloadSprite.draw(this.downloadPos.x, this.downloadPos.y, undefined, opacity);
 
-	draw.fillText(	global.get('ctx'), this.name + ' (' + this.year + ')', this.namePos.x, this.namePos.y,
+	draw.fillText(	this.name + ' (' + this.year + ')', this.namePos.x, this.namePos.y,
 					this.font, this.fontSize, this.fontColor, opacity);
-	draw.fillText(	global.get('ctx'), this.duration, this.timePos.x, this.timePos.y,
+	draw.fillText(	this.duration, this.timePos.x, this.timePos.y,
 					this.font, this.fontSize, this.fontColor, opacity);
 
 	this.barSprite.draw(this.barPos.x, this.barPos.y, undefined, opacity);

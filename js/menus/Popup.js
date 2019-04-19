@@ -72,7 +72,6 @@ Popup.prototype._drawText = function (x, y, width, opacity, shadow) {
 	var common = global.get('menu-text-data')['Common'];
 	var data = global.get('menu-text-data')['notificationMenu'];
 	draw.writeText(
-		global.get('ctx'),
 		this.text,
 		x,
 		y,

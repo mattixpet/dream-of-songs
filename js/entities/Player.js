@@ -193,7 +193,7 @@ Player.prototype._drawStillAnimation = function () {
 			var relativeIndex = Math.floor(delta / totalAnimationTime * ourN);
 			var index = relativeIndex === ourN - 1 ? 0 : ourN + relativeIndex + 1;
 
-			draw.drawCirclePointWithShadow(global.get('ctx'), x, y, n, index, thick, r, c, bC);
+			draw.drawCirclePointWithShadow(x, y, n, index, thick, r, c, bC);
 		}
 	}
 };

@@ -66,15 +66,27 @@ Chest.prototype._drawHint = function () {
 	var mX = this.x + Math.floor(this.width / 2);
 	var mY = this.y + Math.floor(this.height / 2);
 	// draw three stars
-	draw.drawStar(global.get('ctx'), 
-		mX-Math.floor(this.width/4), mY-Math.floor(this.height/4), 
-		starSize, lineWidth, 'blue');
-	draw.drawStar(global.get('ctx'), 
-		mX+Math.floor(this.width/4), mY-Math.floor(this.height/8), 
-		starSize, lineWidth, 'blue');
-	draw.drawStar(global.get('ctx'), 
-		mX-Math.floor(this.width/8), mY+Math.floor(this.height/4), 
-		starSize, lineWidth, 'blue');
+	draw.drawStar( 
+		mX-Math.floor(this.width/4), 
+		mY-Math.floor(this.height/4), 
+		starSize, 
+		lineWidth, 
+		'blue'
+	);
+	draw.drawStar(
+		mX+Math.floor(this.width/4), 
+		mY-Math.floor(this.height/8), 
+		starSize, 
+		lineWidth, 
+		'blue'
+	);
+	draw.drawStar(
+		mX-Math.floor(this.width/8), 
+		mY+Math.floor(this.height/4), 
+		starSize, 
+		lineWidth, 
+		'blue'
+	);
 };
 
 // Player calls this when he loots us
