@@ -63,6 +63,9 @@ function Player(posX, posY) {
 	this.isStationary = false;
 	this.inStairs = false;
 	this.disableJump = false; // used for stairs for example, temporary flag, not allow player to jump
+	// set as true when we hit a wall while in air ('regBlockInAir') and then
+	// reset anytime our x changes or we hit ground
+	this.upAgainstWall = false;
 	this.currentSprite = STOP;
 	this.orientation = 'right'; // 'left'
 	// for sprite animations, keep record of distance traveled
@@ -224,24 +227,21 @@ Player.prototype.update = function (dt) {
 	// collision is false if no collision, otherwise object with 
 	// {'bgCollision': {.block, .gridX and .gridY}, 'entityCollision' : entity (or false)}
 	var collision = this.isColliding(nextX, nextY);
-	var bgCollision;
 	if (collision) {
-		bgCollision = this._handleBackgroundCollision(collision.bgCollision, nextX, nextY);
+		var bgCollision = this._handleBackgroundCollision(collision.bgCollision, nextX, nextY);
 		var entCollision = this._handleEntityCollision(collision.entityCollision);
 		if (!bgCollision && !entCollision) {
 			collision = false;
 		}
 	}
 	// move if no collision or collision with something which set us as no collision
-	if (!this.isStationary && !collision) {
+	if (!this.isStationary && !collision && !this.upAgainstWall) {
 		this._updatePos(nextX, nextY);
 	}
-	// special case, where this._handleBackgroundCollision, means
 	// we hit a regblock on either side (with feet) but are still in air, meaning
 	// we want only to stop in x direction
 	// (also doesn't work in snake mode)
-	if (bgCollision === 'regBlockInAir') {
-		console.log('hello..');
+	if (this.upAgainstWall) {
 		this._updatePos(this.x, nextY);
 	}
 
@@ -256,6 +256,9 @@ Player.prototype.update = function (dt) {
 			// Don't check for ground if we are moving up!
 			if (!(nextY < oldY)) {
 				this.onGround = this.isOnGround(); // returns false, or the block we're on (1,2,5 (or REGBLOCK, etc..))
+				if (this.onGround) {
+					this.upAgainstWall = false;
+				}
 			}
 		}
 
@@ -268,6 +271,17 @@ Player.prototype.update = function (dt) {
 		if (!this.disableJump && this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
 			this.speedY -= this.JUMPSPEED;
 			this.onGround = false;
+		}
+
+		// reallow jump if we move in x coordinate (for coming up from stairs)
+		// and realize we are not against wall anymore
+		if (oldX !== this.x) {
+			this.disableJump = false;
+			this.upAgainstWall = false;
+		}
+
+		if (!collision) {
+			this.upAgainstWall = false;
 		}
 	}
 
@@ -295,7 +309,8 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 			// is not our head and that we are not going up at the same time)
 			var playerGridY = util.pixelToGrid(nextX, nextY, bg.getGridWidth(), bg.getGridHeight()).gridY;
 			if (playerGridY !== collision.gridY || (playerGridY === collision.gridY && this.y < nextY)) {
-				return 'regBlockInAir';
+				this.upAgainstWall = true;
+				return false;
 			}
 		}
 		// halt
@@ -325,7 +340,7 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 		// only treat player as in stairs if he's using up or down key
 		if (this._isUpOrDownPressed()) {
 			this.inStairs = true;
-		}		
+		}
 		// treat as 'no collision'
 		return false;
 	} else if (	collision.block === consts.TELEBLOCK || collision.block === consts.SECONDARYTELEBLOCK ||
@@ -497,10 +512,6 @@ Player.prototype._findNextY = function (dt) {
 Player.prototype._updatePos = function (nextX, nextY) {
 	this.distanceTraveledX += Math.abs(nextX - this.x);
 	this.distanceTraveledY += Math.abs(nextY - this.y);
-	// reallow jump if we move in x coordinate (for coming up from stairs)
-	if (this.x !== nextX) {
-		this.disableJump = false;
-	}
 
 	this.x = nextX;
 	this.y = nextY;

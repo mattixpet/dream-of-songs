@@ -86,6 +86,8 @@ Background.prototype._drawGrid = function () {
 					color = 'orange';
 				} else if (block === consts.SECONDARYTELEBLOCK) {
 					color = '#00ff00';
+				} else if (block === consts.TERTIARYTELEBLOCK) {
+					color = 'teal';
 				}
 				// collision block, draw it
 				var x = Math.floor(i / this.gridW * canvas.width);
@@ -158,7 +160,7 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 		if (gridBotLeft.gridY + 1 < data.length) {
 			// "if data[grid..] is in standableBlocks"
 			var block = data[gridBotLeft.gridY + 1][i];
-			if (this.standableBlocks.indexOf(block) >= 0) { // 57
+			if (this.standableBlocks.indexOf(block) >= 0) {
 				return block;
 			}
 		} else {
