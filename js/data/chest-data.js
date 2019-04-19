@@ -72,7 +72,12 @@ var chest_data = {
 		{'x':318,'y':236,'flipped':true,'hidden':false}, {'x':386,'y':254,'flipped':false,'hidden':false} // on pedestal
 	],
 	'tunnelstart' : [
-		{'x':516,'y':145,'flipped':true,'hidden':true}, {'x':601,'y':151,'flipped':true,'hidden':true}
+		{'x':516,'y':145,'flipped':true,'hidden':true}, {'x':601,'y':151,'flipped':true,'hidden':true},
+		{'x':36,'y':5,'flipped':false,'hidden':true}, {'x':107,'y':4,'flipped':false,'hidden':true}
+	],
+	'tunnelflipped' : [
+		{'x':555,'y':5,'flipped':false,'hidden':true}, {'x':21,'y':5,'flipped':false,'hidden':true},
+		{'x':97,'y':3,'flipped':false,'hidden':true}
 	],
 	'hillhole' : [
 		{'x':420,'y':139,'flipped':true,'hidden':true}, {'x':499,'y':142,'flipped':true,'hidden':true}
