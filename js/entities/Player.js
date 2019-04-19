@@ -127,18 +127,16 @@ Player.prototype.draw = function () {
 	// do sprite shifting to draw, so it makes sense compared to different animations
 	// and the bounding box fits our body and not e.g. our wings
 	var x = this.x;
-	var y = this.y;
+	var y = config.snakeMode ? this.y - FLYINGMARGINY : this.y;
 	if (this.orientation === 'right') {
 		x -= this.inStairs ? STAIRMARGIN : 0;
 		x -= this.inStillAnimation1 ? STILLMARGIN : 0;
 		x -= config.snakeMode ? FLYINGMARGINX : 0;
-		y -= config.snakeMode ? FLYINGMARGINY : 0;
 		this.sprite.draw(x - COLLISIONXDELTA, y, this.currentSprite);
 	} else {
 		x += this.inStairs ? STAIRMARGIN : 0;
 		x += this.inStillAnimation2 ? STILLMARGIN : 0;
 		x += config.snakeMode ? FLYINGMARGINX : 0;
-		y += config.snakeMode ? FLYINGMARGINY : 0;
 		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, y, this.currentSprite);
 	}
 
@@ -241,6 +239,7 @@ Player.prototype.update = function (dt) {
 	// special case, where this._handleBackgroundCollision, means
 	// we hit a regblock on either side (with feet) but are still in air, meaning
 	// we want only to stop in x direction
+	// (also doesn't work in snake mode)
 	if (bgCollision === 'regBlockInAir') {
 		this._updatePos(this.x, nextY);
 	}
@@ -286,7 +285,7 @@ Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY)
 		// check if we are colliding on either side with our feet
 		var bg = global.get('background');
 		var playerGridY = util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight()).gridY;
-		if (!this.onGround && 
+		if (!this.onGround && !config.snakeMode &&
 			(playerGridY === collision.gridY ||
 			 playerGridY === collision.gridY + 1 ||
 			 playerGridY === collision.gridY - 1)) {
