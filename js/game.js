@@ -106,32 +106,28 @@ function update(dt) {
 }
 
 function draw() {
-	// this conditional seems to be necessary, because for some reason
-	// after calling MainLoop.stop during an update, it does one last draw after it has been stopped
-	if (MainLoop.isRunning()) {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-		var background = global.get('background');
-		background.draw();
+	var background = global.get('background');
+	background.draw();
 
-		var entityManager = global.get('entityManager');
-		var entities = entityManager.getEntities();
-		var player = global.get('player');
-		for (var key in entities) {
-			var entity = entities[key];
-			if (entity !== player) {
-				entities[key].draw();
-			}
+	var entityManager = global.get('entityManager');
+	var entities = entityManager.getEntities();
+	var player = global.get('player');
+	for (var key in entities) {
+		var entity = entities[key];
+		if (entity !== player) {
+			entities[key].draw();
 		}
-		// special case, let's always draw Player last (so he's in foreground)
-		player.draw();
-
-		// well let's draw the audio player last
-		global.get('audioManager').drawGui();
-
-		// now let's draw the popup last (if we're in a popup)
-		global.get('notificationMenu').draw();
 	}
+	// special case, let's always draw Player last (so he's in foreground)
+	player.draw();
+
+	// well let's draw the audio player last
+	global.get('audioManager').drawGui();
+
+	// now let's draw the popup last (if we're in a popup)
+	global.get('notificationMenu').draw();
 }
 
 function end(fps, panic) {
