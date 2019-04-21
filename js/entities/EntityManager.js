@@ -40,7 +40,9 @@ EntityManager.prototype.register = function (entity, scene) {
 };
 
 // Background calls us here when he changes scene
-EntityManager.prototype.notifySceneChange = function (scene) {
+// [[entity]] is an optional argument of the entity which is moving
+// between screens so we can respawn them on the next one
+EntityManager.prototype.notifySceneChange = function (scene, entity) {
 	var oldScene = this.currentScene;
 	var newScene = scene;
 	if (!this.entities.hasOwnProperty(scene)) {
@@ -49,7 +51,7 @@ EntityManager.prototype.notifySceneChange = function (scene) {
 	}
 
 	// spawn all entities on this scene and move player to this scene
-	this._movePlayerToScene(oldScene, newScene);
+	this._moveEntityToScene(oldScene, newScene, entity);
 	this._spawnEntitiesOnScene(newScene);
 	this.currentScene = newScene;
 
@@ -163,22 +165,14 @@ EntityManager.prototype._spawnRavens = function (scene) {
 };
 
 // YA
-EntityManager.prototype._movePlayerToScene = function (lastScene, newScene) {
-	if (lastScene === newScene) {
+EntityManager.prototype._moveEntityToScene = function (lastScene, newScene, entity) {
+	if (lastScene === newScene || !entity) {
 		return; // initial call
 	}
-	var oldEntities = this.entities[lastScene];
-	for (var key in oldEntities) {
-		var ent = oldEntities[key];
-		if (ent.getName() === 'player') {
-			var id = ent.getId();
-			this.entities[newScene][id] = ent;
-			// delete player from old scene
-			this._delete(id, lastScene);
-			return;
-		}
-	}
-	util.warn('Warning, something wrong, did not manage to move player from: ' + lastScene + ' to: ' + newScene);
+	// delete entity from lastScene
+	this._delete(entity.getId(), lastScene);
+	// move the entity to newScene
+	this.entities[newScene][entity.getId()] = entity;
 };
 
 EntityManager.prototype.getEntities = function () {

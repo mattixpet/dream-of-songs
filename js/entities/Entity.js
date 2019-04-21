@@ -84,14 +84,6 @@ Entity.prototype._updateSpeed = function (speed, acceleration, dt) {
 	return newSpeed;
 };
 
-Entity.prototype.getId = function () {
-	return this.id;
-};
-
-Entity.prototype.setId = function (id) {
-	this.id = id;
-};
-
 // check whether entity is colliding given top left position x, y
 Entity.prototype.isColliding = function (x, y) {
 	return global.get('collisionManager').isColliding(this, x, y);
@@ -150,6 +142,14 @@ Entity.prototype.resetToStartingPosition = function () {
 
 Entity.prototype.getName = function () {
 	return this.name;
+};
+
+Entity.prototype.getId = function () {
+	return this.id;
+};
+
+Entity.prototype.setId = function (id) {
+	this.id = id;
 };
 
 global.set('class/Entity', Entity);

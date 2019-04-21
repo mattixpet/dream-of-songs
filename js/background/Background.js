@@ -13,7 +13,7 @@ var collision = global.get('collision');
 
 function Background() {
 	this.scenes = {}; // scene = page, stage whatever you want to call it, one background image
-	this.currentScene = config.STARTINGSCENE
+	this.currentScene = config.STARTINGSCENE;
 	this.currentSceneTemplate = undefined; // this is set as e.g. 'sky' when scene is 'sky0' (reusable backgrounds)
 
 	// load collision data for each background image
@@ -188,8 +188,8 @@ Background.prototype.requestNextScene = function (entity, direction) {
 		this.currentScene = scene;
 
 		// let's not just change scene, let's also notify entityManager so he can
-		// spawn/take care of entities on that scene
-		global.get('entityManager').notifySceneChange(nextScene.scene);
+		// spawn/take care of entities on that scene and move entity between scenes
+		global.get('entityManager').notifySceneChange(nextScene.scene, entity);
 
 		var coords = nextScene.coords;
 		var canvas = global.get('canvas');
