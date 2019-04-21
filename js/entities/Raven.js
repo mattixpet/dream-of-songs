@@ -19,8 +19,8 @@ const WINGS1 = 2;
 const WINGS2 = 3;
 
 // just for the bounding box/collision
-const COLLISIONWIDTHREDUCTION = 20;
-const COLLISIONHEIGHTREDUCTION = 5;
+const COLLISIONWIDTHREDUCTION = global.get('sprite-data').raven.COLLISIONWIDTHREDUCTION;
+const COLLISIONHEIGHTREDUCTION = global.get('sprite-data').raven.COLLISIONHEIGHTREDUCTION;
 
 function Raven(posX, posY) {
 	this.name = 'raven';

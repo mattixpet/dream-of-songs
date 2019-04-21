@@ -15,8 +15,8 @@ const FLIPPED = 2;
 const FLIPPEDOPEN = 3;
 
 // draw the sprite a bit lower than the collision box because of semi-3d
-const COLLISIONYDELTA = 5;
-const COLLISIONHEIGHTREDUCTION = 10;
+const COLLISIONYDELTA = global.get('sprite-data').chest.COLLISIONYDELTA;
+const COLLISIONHEIGHTREDUCTION = global.get('sprite-data').chest.COLLISIONHEIGHTREDUCTION;
 
 // flip means which direction chest faces (left/right), flip is true if left
 // invisible is true iff chest is not supposed to be drawn (meaning player has to find it without seeing it)

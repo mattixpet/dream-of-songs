@@ -6,9 +6,6 @@
 
 var Entity = global.get('class/Entity');
 
-// Constants
-const ANIMATIONTIME = 100; // animate every .. milliseconds
-
 function Spikes(posX, posY, width, height, scene) {
 	this.name = 'spikes';
 

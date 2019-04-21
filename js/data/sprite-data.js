@@ -42,7 +42,9 @@ var sprite_data = {
 		'dispHeight' : 50,
 		'srcWidth' : 428,
 		'srcHeight' : 636,
-		'positions' : [{'x':0,'y':6}, {'x':0,'y':643}, {'x':441,'y':9}, {'x':440,'y':641}]
+		'positions' : [{'x':0,'y':6}, {'x':0,'y':643}, {'x':441,'y':9}, {'x':440,'y':641}],
+		'COLLISIONYDELTA' : 5,
+		'COLLISIONHEIGHTREDUCTION' : 10
 	},
 	// water animations (currently only in stalagmites scene)
 	'stalagmites-water' : {
@@ -61,7 +63,9 @@ var sprite_data = {
 		'srcWidth' : 1144,
 		'srcHeight' : 966,
 		'positions' : [	{'x':0,'y':966}, {'x':1144,'y':966}, {'x':0,'y':0}, 
-						{'x':1144,'y':0}]
+						{'x':1144,'y':0}],
+		'COLLISIONWIDTHREDUCTION' : 20,
+		'COLLISIONHEIGHTREDUCTION' : 5
 	}
 };
 
