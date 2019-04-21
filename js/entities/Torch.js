@@ -22,7 +22,7 @@ const FLICKERINTERVAL = 100; // flicker every .. milliseconds
 // posX, posY are top left position
 // and flame is no larger than approximately width * height
 function Torch(posX, posY) {
-	this.name = 'torch'; // remember to set name before calling Entity constructor so it can use the name
+	this.name = 'torch';
 
 	// use Entity constructor with placeholder sprite (we don't have a sprite),
 	// then overwrite what we need to/ set what we need to after

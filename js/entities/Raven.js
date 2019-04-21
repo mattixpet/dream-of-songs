@@ -4,7 +4,7 @@
 
 'use strict';
 
-var Entity = global.get('class/Entity');
+var AnimatingEntity = global.get('class/AnimatingEntity');
 
 // constants
 const LEFTDURATION = 4000; // stay still (head turned left) for x milliseconds
@@ -25,78 +25,54 @@ const COLLISIONHEIGHTREDUCTION = 5;
 function Raven(posX, posY) {
 	this.name = 'raven';
 
-	Entity.call(this, global.get('imageHandler').getSprite('raven'), posX, posY, false);
+	AnimatingEntity.call(this, global.get('imageHandler').getSprite('raven'), posX, posY, false);
 
 	this.width -= COLLISIONWIDTHREDUCTION;
 	this.height -= COLLISIONHEIGHTREDUCTION;
 
 	this.speed = 0.2; // how fast can we flyyy.
 
-	this.timeElapsed = 0;
-	this.prevAnimation = WINGS1;
-	this.animation = LEFT;
 	this.mode = 'still'; // still or flying
+	this._addAnimation(
+		'still', 
+		[LEFT, RIGHT, LEFT, WINGS1], 
+		[LEFTDURATION, RIGHTDURATION, LEFTDURATION, WINGSDURATION],
+		'sequential',
+		'time'
+	);
+	this._addAnimation(
+		'flying',
+		[WINGS1, WINGS2],
+		FLYINGANIMATIONTIME,
+		'sequential',
+		'time'
+	);
+	this._setAnimation(this.mode);
 }
 
-Raven.prototype = Object.create(Entity.prototype);
+Raven.prototype = Object.create(AnimatingEntity.prototype);
 
 // Entities which collide with me can chase me away :(
 // I'm such a lonesome raven.
 Raven.prototype.chaseAway = function () {
 	this.mode = 'flying';
+	this._setAnimation(this.mode);
 };
 
 Raven.prototype.update = function (dt) {
-	this.timeElapsed += dt; // dt is in milliseconds
+	AnimatingEntity.prototype.update.call(this, dt);
 
-	if (this.mode === 'still') {
-		this._stillUpdate();
-	} else if (this.mode === 'flying') {
-		this._flyingUpdate(dt);
+	if (this.mode === 'flying') {
+		// fly diagonally away up and left!
+		var s = this.speed * dt; // s is distance
+		this.x -= s;
+		this.y -= s;
 	}
 
 	// 'destroy' us when we leave the screen, never to return
 	if (this.y < -this.height) {
 		global.get('entityManager').destroy(this.id);
 	}
-};
-
-// In still mode, stay still for LEFTDURATION and
-// then look RIGHT or flap WINGS1 for a moment at random
-Raven.prototype._stillUpdate = function () {
-	if (this.timeElapsed > LEFTDURATION && this.animation === LEFT && this.prevAnimation === WINGS1) {
-		this.timeElapsed = 0;
-		this.animation = RIGHT;
-	} else if (this.timeElapsed > RIGHTDURATION && this.animation === RIGHT) {
-		this.timeElapsed = 0;
-		this.animation = LEFT;
-		this.prevAnimation = RIGHT;
-	} else if (this.timeElapsed > LEFTDURATION && this.animation === LEFT && this.prevAnimation === RIGHT) {
-		this.timeElapsed = 0;
-		this.animation = WINGS1;
-	} else if (this.timeElapsed > WINGSDURATION && this.animation === WINGS1) {
-		this.timeElapsed = 0;
-		this.animation = LEFT;
-		this.prevAnimation = WINGS1;
-	}
-};
-
-Raven.prototype._flyingUpdate = function (dt) {
-	if (this.timeElapsed > FLYINGANIMATIONTIME) {
-		this.timeElapsed = 0;
-		this.animation = this.animation === WINGS1 ? WINGS2 : WINGS1; // alternate
-	}
-
-	// fly diagonally away up and left!
-	var s = this.speed * dt; // s is distance
-	this.x -= s;
-	this.y -= s;
-};
-
-Raven.prototype.draw = function () {
-	this.sprite.draw(this.x, this.y, this.animation);
-
-	this._drawBoundingBox();
 };
 
 global.set('class/Raven', Raven);

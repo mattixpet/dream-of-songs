@@ -7,7 +7,7 @@
 
 'use strict';
 
-var Entity = global.get('class/Entity');
+var AnimatingEntity = global.get('class/AnimatingEntity');
 
 // constants
 const ANIMATIONTIME = 100; // animate every .. milliseconds
@@ -15,28 +15,18 @@ const ANIMATIONTIME = 100; // animate every .. milliseconds
 function Water(sprite, posX, posY) {
 	this.name = 'water';
 
-	Entity.call(this, sprite, posX, posY, false);
+	AnimatingEntity.call(this, sprite, posX, posY, false);
 
-	// Every ANIMATIONTIME milliseconds, reset this to 0 and change animation
-	this.timeElapsed = 0;
+	this.animations = [];
+	for (var i = 0; i < this.sprite.getNumPositions(); i++) {
+		this.animations[i] = i;
+	}
 
-	this.NUMANIMATIONS = this.sprite.getNumPositions();
-	this.animation = 0; // 0..this.NUMANIMATIONS-1
+	this._addAnimation('normal', this.animations, ANIMATIONTIME, 'sequential', 'time');
+	this._setAnimation('normal');
 }
 
-Water.prototype = Object.create(Entity.prototype);
-
-Water.prototype.update = function (dt) {
-	this.timeElapsed += dt; // dt is in milliseconds
-	if (this.timeElapsed > ANIMATIONTIME) {
-		this.timeElapsed = 0;
-		this.animation = (this.animation + 1) % this.NUMANIMATIONS;
-	}
-};
-
-Water.prototype.draw = function () {
-	this.sprite.draw(this.x, this.y, this.animation);
-};
+Water.prototype = Object.create(AnimatingEntity.prototype);
 
 global.set('class/Water', Water);
 

@@ -9,7 +9,7 @@ var config = global.get('config');
 var consts = global.get('consts');
 var draw = global.get('draw');
 var util = global.get('util');
-var Entity = global.get('class/Entity');
+var AnimatingEntity = global.get('class/AnimatingEntity');
 
 // LOCAL CONSTS
 // animations
@@ -43,13 +43,14 @@ const STAIRMARGIN = sprite_data.player.STAIRMARGIN;
 const STILLMARGIN = sprite_data.player.STILLMARGIN;
 const FLYINGMARGINX = sprite_data.player.FLYINGMARGINX;
 const FLYINGMARGINY = sprite_data.player.FLYINGMARGINY;
+const ANIMATIONDISTANCE = sprite_data.player.ANIMATIONDISTANCE;
 sprite_data = undefined;
 
 function Player(posX, posY) {
 	this.name = 'player';
-	this.sprite = global.get('imageHandler').getSprite(this.name);
-	this.x = posX;
-	this.y = posY;
+
+	AnimatingEntity.call(this, global.get('imageHandler').getSprite(this.name), posX, posY, true);
+
 	this.speedX = 0.2;
 	this.speedY = 0.0;
 	this.accelerationY = config.GRAVITYCONSTANT;
@@ -66,16 +67,30 @@ function Player(posX, posY) {
 	// set as true when we hit a wall while in air ('regBlockInAir') and then
 	// reset anytime our x changes or we hit ground
 	this.upAgainstWall = false;
-	this.currentSprite = STOP;
 	this.orientation = 'right'; // 'left'
-	// for sprite animations, keep record of distance traveled
-	this.distanceTraveledX = 0;
-	this.distanceTraveledY = 0;
-	this.ANIMATIONDISTANCE = 30; // swap animations every X pixels in x or y direction
-	// array of order of sprite animations to use for walking
-	this.WALKINGANIMATIONS = [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3];
-	this.STAIRSANIMATIONS = [STAIR1, STAIR2];
-	this.FLYINGANIMATIONS = [FLYING1, FLYING2];
+
+	// add our animations
+	this._addAnimation(
+		'walking',
+		[STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3],
+		ANIMATIONDISTANCE,
+		'sequential',
+		'distanceX'
+	);
+	this._addAnimation(
+		'stairs',
+		[STAIR1, STAIR2],
+		ANIMATIONDISTANCE * 2, // update stair sprite twice as slow as walking sprite
+		'sequential',
+		'distanceY'
+	);
+	this._addAnimation(
+		'flying',
+		[FLYING1, FLYING2],
+		ANIMATIONDISTANCE * 3,
+		'sequential',
+		'distanceXY'
+	);
 
 	this.timeStill = 0; // how long have we been standing still?
 	 // set this as true only when drawing the still animations specifically (not stop e.g)
@@ -84,43 +99,22 @@ function Player(posX, posY) {
 
 	this.numChests = 0;
 	this.numHiddenChests = 0;
-
-	this.affectedByGravity = true;
 }
 
-Player.prototype = Object.create(Entity.prototype);
+Player.prototype = Object.create(AnimatingEntity.prototype);
 
 Player.prototype.draw = function () {
 	// sprite calculations
-	if (!this.onGround) {
-		// always do same animation in air
-		this.currentSprite = JUMP;
-	} else if (this.isStationary) {
-		this.currentSprite = STOP;
-	} else {
-		this.currentSprite = this.WALKINGANIMATIONS[
-								Math.floor(
-									this.distanceTraveledX / this.ANIMATIONDISTANCE
-								)	% this.WALKINGANIMATIONS.length
-							 ];
-	}
-
-	if (this.inStairs) {
-		// update stair sprite twice as slow as walking sprite (the / 2)
-		this.currentSprite = this.STAIRSANIMATIONS[
-								Math.floor(
-									this.distanceTraveledY / this.ANIMATIONDISTANCE / 2
-								)	% this.STAIRSANIMATIONS.length
-							 ];
-	}
-
-	if (config.snakeMode) {
-		this.currentSprite = this.FLYINGANIMATIONS[
-								Math.floor(
-									(this.distanceTraveledY + this.distanceTraveledX)
-										/ this.ANIMATIONDISTANCE / 3
-								)	% this.FLYINGANIMATIONS.length
-							 ];
+	if (!this.onGround && !config.snakeMode && !this.inStairs) {
+		this.spritePosition = JUMP;
+	} else if (this.isStationary && !config.snakeMode && !this.inStairs) {
+		this.spritePosition = STOP;
+	} else if (!this.isStationary && !config.snakeMode && !this.inStairs) {
+		this._setAnimation('walking');
+	} else if (this.inStairs && !config.snakeMode) {
+		this._setAnimation('stairs');
+	} else if (config.snakeMode) {
+		this._setAnimation('flying');
 	}
 
 	if (this.isStationary) {
@@ -135,12 +129,12 @@ Player.prototype.draw = function () {
 		x -= this.inStairs ? STAIRMARGIN : 0;
 		x -= this.inStillAnimation1 ? STILLMARGIN : 0;
 		x -= config.snakeMode ? FLYINGMARGINX : 0;
-		this.sprite.draw(x - COLLISIONXDELTA, y, this.currentSprite);
+		this.sprite.draw(x - COLLISIONXDELTA, y, this.spritePosition);
 	} else {
 		x += this.inStairs ? STAIRMARGIN : 0;
 		x += this.inStillAnimation2 ? STILLMARGIN : 0;
 		x += config.snakeMode ? FLYINGMARGINX : 0;
-		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, y, this.currentSprite);
+		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, y, this.spritePosition);
 	}
 
 	this._drawBoundingBox();
@@ -160,15 +154,18 @@ Player.prototype._drawStillAnimation = function () {
 		// depending on where we are, we draw the parts of the still animation
 		if (delta < totalAnimationTime / 4) {
 			// first step, show still animation 1
-			this.currentSprite = this.orientation === 'right' ? STILLRIGHT1 : STILLLEFT1;
+			this.spritePosition = this.orientation === 'right' ? STILLRIGHT1 : STILLLEFT1;
 			this.inStillAnimation1 = true;
-		} else if (delta > totalAnimationTime / 4 && delta < 3 * totalAnimationTime / 4) {
+		} else if (delta >= totalAnimationTime / 4 && delta < 3 * totalAnimationTime / 4) {
 			// second step, show normal stop animation
-			this.currentSprite = STOP;
-		} else if (delta > totalAnimationTime && delta < 5 * totalAnimationTime / 4) {
+			this.spritePosition = STOP;
+		} else if (delta >= totalAnimationTime && delta < 5 * totalAnimationTime / 4) {
 			// third and final step, show still animation 2
-			this.currentSprite = this.orientation === 'right' ? STILLRIGHT2 : STILLLEFT2;
+			this.spritePosition = this.orientation === 'right' ? STILLRIGHT2 : STILLLEFT2;
 			this.inStillAnimation2 = true;
+		} else {
+			// while waiting for next animation
+			this.spritePosition = STOP;
 		}
 
 		if (delta < totalAnimationTime) {
@@ -204,18 +201,12 @@ Player.prototype.update = function (dt) {
 	var nextX = this._findNextX(dt);
 	var nextY = this._findNextY(dt);
 
-	if (nextX === this.x && nextY === this.y && this.onGround) {
+	if (nextX === this.x && nextY === this.y && this.onGround && this.affectedByGravity) {
 		this.isStationary = true;
 		this.timeStill += dt;
 	} else {
 		this.isStationary = false;
 		this.timeStill = 0;
-	}
-
-	if (config.snakeMode) {
-		this.timeFlying += dt;
-	} else {
-		this.timeFlying = 0;
 	}
 
 	// reset stairs
@@ -246,6 +237,8 @@ Player.prototype.update = function (dt) {
 	}
 
 	// Do all updates !
+	this._updateAnimations(dt);
+
 	if (config.gravity && this.affectedByGravity && !this.inStairs) {
 		// only check when we move if we are not on ground anymore (check background under us for collision)
 		// also check if we are pressing down (so we can move down stairs)
@@ -506,15 +499,6 @@ Player.prototype._findNextY = function (dt) {
 		nextY = this._applyAcceleration(this.y, this.speedY, this.accelerationY, dt);
 	}
 	return nextY;
-};
-
-// Helper function to move player (update x,y)
-Player.prototype._updatePos = function (nextX, nextY) {
-	this.distanceTraveledX += Math.abs(nextX - this.x);
-	this.distanceTraveledY += Math.abs(nextY - this.y);
-
-	this.x = nextX;
-	this.y = nextY;
 };
 
 Player.prototype.getSpeedY = function () {

@@ -162,6 +162,7 @@ EntityManager.prototype._spawnRavens = function (scene) {
 	}
 };
 
+// YA
 EntityManager.prototype._movePlayerToScene = function (lastScene, newScene) {
 	if (lastScene === newScene) {
 		return; // initial call

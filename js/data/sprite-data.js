@@ -33,7 +33,8 @@ var sprite_data = {
 		'stillAnimationThickness' : 12,
 		'stillAnimationNumPoints' : 48,
 		'stillAnimationColor' : '#e4e4e4',
-		'stillAnimationBorderColor' : '#b3d8f5'
+		'stillAnimationBorderColor' : '#b3d8f5',
+		'ANIMATIONDISTANCE' : 30 // how far to walk/fly whatever before changing animation
 	},
 	'chest' : {
 		'fileurl' : config.SPRITEURL + 'chest-spritesheet.png',
@@ -60,7 +61,7 @@ var sprite_data = {
 		'srcWidth' : 1144,
 		'srcHeight' : 966,
 		'positions' : [	{'x':0,'y':966}, {'x':1144,'y':966}, {'x':0,'y':0}, 
-						{'x':1144,'y':966}]
+						{'x':1144,'y':0}]
 	}
 };
 

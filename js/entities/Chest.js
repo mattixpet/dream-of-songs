@@ -22,7 +22,7 @@ const COLLISIONHEIGHTREDUCTION = 10;
 // invisible is true iff chest is not supposed to be drawn (meaning player has to find it without seeing it)
 // message is an optional message to display once we're looted (located in menu-text-data under notificationMenu)
 function Chest(posX, posY, flip, invisible, message) {
-	this.name = 'chest'; // remember to set name before calling Entity constructor so it can use the name
+	this.name = 'chest';
 
 	// use Entity constructor, then overwrite what we need to/ set what we need to after
 	Entity.call(this, global.get('imageHandler').getSprite('chest'),

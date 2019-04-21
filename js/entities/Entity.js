@@ -112,6 +112,12 @@ Entity.prototype.clipToGround = function () {
 	this.y = -1 + Math.ceil(this.y / gridBrickSize) * gridBrickSize;
 };
 
+// Helper function to move player (update x,y)
+Entity.prototype._updatePos = function (nextX, nextY) {
+	this.x = nextX;
+	this.y = nextY;
+};
+
 Entity.prototype.getX = function () {
 	return this.x;
 };
