@@ -55,11 +55,11 @@ Background.prototype._drawBg = function () {
 };
 
 Background.prototype._drawGrid = function () {
-	// iterate over the cData for the current scene, which is a double array
+	// iterate over the cData for the current scene, which is an array of strings
 	// with 0 for no collision, >0 for collision
 	// e.g. [
-	//			[0,0,0,0,0,0],
-	//			[0,0,1,1,1,0],
+	//			'000000',
+	//			'001110',
 	//			..
 	//		]
 	// and draw a different colored box for each place a collision could happen, 

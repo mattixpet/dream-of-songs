@@ -9,7 +9,7 @@ var config = global.get('config');
 var consts = global.get('consts');
 var draw = global.get('draw');
 var util = global.get('util');
-var AnimatingEntity = global.get('class/AnimatingEntity');
+var MovingEntity = global.get('class/MovingEntity');
 
 // LOCAL CONSTS
 // animations
@@ -49,48 +49,43 @@ sprite_data = undefined;
 function Player(posX, posY) {
 	this.name = 'player';
 
-	AnimatingEntity.call(this, global.get('imageHandler').getSprite(this.name), posX, posY, true);
+	var movements = {
+		'still' : {
+			'positions' : STOP,
+		},
+		'walk' : {
+			'positions' : [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3],
+			'distance' : ANIMATIONDISTANCE
+		},
+		'jump' : {
+			'positions' : JUMP
+		},
+		'stairs' : {
+			'positions' : [STAIR1, STAIR2],
+			'distance' : ANIMATIONDISTANCE * 2
+		},
+		'fly' : {
+			'positions' : [FLYING1, FLYING2],
+			'distance' : ANIMATIONDISTANCE * 3
+		}
+	};
+	MovingEntity.call(
+		this, 
+		global.get('imageHandler').getSprite(this.name),
+		posX,
+		posY,
+		true, // affected by gravity
+		movements,
+		0.2, // speedX
+		0, // speedY
+		true, // move through scenes (go to next scene if we can)
+		this._handleEntityCollision,
+		0.4 // jump speed (singular increase in -y velocity on jump command)
+	);
 
-	this.speedX = 0.2;
-	this.speedY = 0.0;
-	this.accelerationY = config.GRAVITYCONSTANT;
-	this.JUMPSPEED = 0.4;
-	this.TERMINALSPEED = config.DEFAULTTERMINALSPEED; // maximum speed character can go in y+ direction through acceleration of gravity
 	// collision width/height
 	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
 	this.height = this.sprite.getHeight() - COLLISIONHEIGHTREDUCTION;
-	// status variables
-	this.onGround = false; // start in the air (can also take value of the block underneat, REGBLOCK, etc.)
-	this.isStationary = false;
-	this.inStairs = false;
-	this.disableJump = false; // used for stairs for example, temporary flag, not allow player to jump
-	// set as true when we hit a wall while in air ('regBlockInAir') and then
-	// reset anytime our x changes or we hit ground
-	this.upAgainstWall = false;
-	this.orientation = 'right'; // 'left'
-
-	// add our animations
-	this._addAnimation(
-		'walking',
-		[STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3],
-		ANIMATIONDISTANCE,
-		'sequential',
-		'distanceX'
-	);
-	this._addAnimation(
-		'stairs',
-		[STAIR1, STAIR2],
-		ANIMATIONDISTANCE * 2, // update stair sprite twice as slow as walking sprite
-		'sequential',
-		'distanceY'
-	);
-	this._addAnimation(
-		'flying',
-		[FLYING1, FLYING2],
-		ANIMATIONDISTANCE * 3,
-		'sequential',
-		'distanceXY'
-	);
 
 	this.timeStill = 0; // how long have we been standing still?
 	 // set this as true only when drawing the still animations specifically (not stop e.g)
@@ -101,22 +96,10 @@ function Player(posX, posY) {
 	this.numHiddenChests = 0;
 }
 
-Player.prototype = Object.create(AnimatingEntity.prototype);
+Player.prototype = Object.create(MovingEntity.prototype);
 
+// Overwrite MovingEntities default .draw function to do our thing uninterrupted
 Player.prototype.draw = function () {
-	// sprite calculations
-	if (!this.onGround && !config.snakeMode && !this.inStairs) {
-		this.spritePosition = JUMP;
-	} else if (this.isStationary && !config.snakeMode && !this.inStairs) {
-		this.spritePosition = STOP;
-	} else if (!this.isStationary && !config.snakeMode && !this.inStairs) {
-		this._setAnimation('walking');
-	} else if (this.inStairs && !config.snakeMode) {
-		this._setAnimation('stairs');
-	} else if (config.snakeMode) {
-		this._setAnimation('flying');
-	}
-
 	if (this.isStationary) {
 		this._drawStillAnimation();
 	}
@@ -196,175 +179,34 @@ Player.prototype._drawStillAnimation = function () {
 };
 
 Player.prototype.update = function (dt) {
-	var oldX = this.x;
-	var oldY = this.y;
-	var nextX = this._findNextX(dt);
-	var nextY = this._findNextY(dt);
+	this._handleInput(); // call this.moveLeft, moveJump, etc. if player is pressing the right keys
 
-	if (nextX === this.x && nextY === this.y && this.onGround && this.affectedByGravity) {
-		this.isStationary = true;
+	MovingEntity.prototype.update.call(this, dt);
+
+	if (this.isStationary) {
 		this.timeStill += dt;
 	} else {
-		this.isStationary = false;
 		this.timeStill = 0;
-	}
-
-	// reset stairs
-	if (this.inStairs) {
-		this.speedY = 0.0;
-		this.inStairs = false; // if we are still in stairs, this should be set back to true during collision check
-		this.onGround = false;
-	}
-	// collision is false if no collision, otherwise object with 
-	// {'bgCollision': {.block, .gridX and .gridY}, 'entityCollision' : entity (or false)}
-	var collision = this.isColliding(nextX, nextY);
-	if (collision) {
-		var bgCollision = this._handleBackgroundCollision(collision.bgCollision, nextX, nextY);
-		var entCollision = this._handleEntityCollision(collision.entityCollision);
-		if (!bgCollision && !entCollision) {
-			collision = false;
-		}
-	}
-	// move if no collision or collision with something which set us as no collision
-	if (!this.isStationary && !collision && !this.upAgainstWall) {
-		this._updatePos(nextX, nextY);
-	}
-	// we hit a regblock on either side (with feet) but are still in air, meaning
-	// we want only to stop in x direction
-	// (also doesn't work in snake mode)
-	if (this.upAgainstWall) {
-		this._updatePos(this.x, nextY);
-	}
-
-	// Do all updates !
-	this._updateAnimations(dt);
-
-	if (config.gravity && this.affectedByGravity && !this.inStairs) {
-		// only check when we move if we are not on ground anymore (check background under us for collision)
-		// also check if we are pressing down (so we can move down stairs)
-		if (!this.isStationary) {
-			if (this.onGround && collision) {
-				this.clipToGround();
-			}
-			// Don't check for ground if we are moving up!
-			if (!(nextY < oldY)) {
-				this.onGround = this.isOnGround(); // returns false, or the block we're on (1,2,5 (or REGBLOCK, etc..))
-				if (this.onGround) {
-					this.upAgainstWall = false;
-				}
-			}
-		}
-
-		// update speedY with acceleration
-		if (!this.onGround) {
-			this.speedY = this._updateSpeed(this.speedY, this.accelerationY, dt);
-		}
-
-		// jump !
-		if (!this.disableJump && this.onGround && (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W))) {
-			this.speedY -= this.JUMPSPEED;
-			this.onGround = false;
-		}
-
-		// reallow jump if we move in x coordinate (for coming up from stairs)
-		// and realize we are not against wall anymore
-		if (oldX !== this.x) {
-			this.disableJump = false;
-			this.upAgainstWall = false;
-		}
-
-		if (!collision) {
-			this.upAgainstWall = false;
-		}
-	}
-
-	// let's not move if we can't get another scene
-	if (!this._checkForSceneChange()) {
-		this.x = oldX;
-		this.y = oldY;
 	}
 };
 
-Player.prototype._handleBackgroundCollision = function (collision, nextX, nextY) {
-	// Handle all the different blocks we could be colliding with.
-	if (!collision) {
-		return false;
-	} else if (collision.block === consts.REGBLOCK) {
-		// check if we are colliding on either side, then we return 'regBlockInAir' (e.g. stairs or wall)
-		// this is to prevent being able do press right/left and get stuck in air
-		var bg = global.get('background');
-		var leftGridX = util.pixelToGrid(nextX, nextY, bg.getGridWidth(), bg.getGridHeight()).gridX;
-		var rightGridX = util.pixelToGrid(nextX + this.width, nextY, bg.getGridWidth(), bg.getGridHeight()).gridX;
-		var forwardGridX = this.orientation === 'right' ? rightGridX : leftGridX;
-		if (!this.onGround && !config.snakeMode &&
-			forwardGridX === collision.gridX) {
-			// now make sure we are also not bumping our head into regblock (so check that collision.gridY
-			// is not our head and that we are not going up at the same time)
-			var playerGridY = util.pixelToGrid(nextX, nextY, bg.getGridWidth(), bg.getGridHeight()).gridY;
-			if (playerGridY !== collision.gridY || (playerGridY === collision.gridY && this.y < nextY)) {
-				this.upAgainstWall = true;
-				return false;
-			}
-		}
-		// halt
-		this.speedY = 0;
-	} else if (collision.block === consts.PLATFORMBLOCK || collision.block === consts.STAIRTOPBLOCK) {
-		// check for top of stairs block
-		if (collision.block === consts.STAIRTOPBLOCK && this._isUpOrDownPressed()) {
-			this.inStairs = true;
-			this.disableJump = true; // so we don't jump directly out of stairs, is reset on x movement
-		}
+Player.prototype._handleInput = function () {
+	var keys = global.get('keys');
 
-		var gridX = collision.gridX;
-		var gridY = collision.gridY;
-		var bg = global.get('background');
-		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
-		if (!this.inStairs
-			&& this.y + this.height <= util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y
-			&& this.y < nextY) {
-			// halt
-			this.speedY = 0;
-		} else {
-			// treat as 'no collision'
-			return false
-		}
-
-	} else if (collision.block === consts.STAIRBLOCK) {
-		// only treat player as in stairs if he's using up or down key
-		if (this._isUpOrDownPressed()) {
-			this.inStairs = true;
-		}
-		// treat as 'no collision'
-		return false;
-	} else if (	collision.block === consts.TELEBLOCK || collision.block === consts.SECONDARYTELEBLOCK ||
-				collision.block === consts.TERTIARYTELEBLOCK) {
-		// TELEBLOCKS only teleport you to next scene if your feet are touching it
-		// check if y grid coordinate of our feet match the y grid coordinate of the collision
-		var bg = global.get('background');
-		if (util.pixelToGrid(this.x, this.y + this.height, bg.getGridWidth(), bg.getGridHeight()).gridY === collision.gridY) {
-			var direction;
-			switch (collision.block) {
-				case consts.SECONDARYTELEBLOCK:
-					direction = 'secondary-special';
-					break;
-				case consts.TERTIARYTELEBLOCK:
-					direction = 'tertiary-special';
-					break;
-				default:
-					direction = 'special';
-					break;
-			}
-			global.get('background').requestNextScene(this, direction);
-		} else {
-			// treat as 'no collision'
-			return false;
-		}
-	} else {
-		util.warn('Warning, unhandled bgcollision, treating like no collision.');
-		return false;
+	if (keys[consts.KEY_RIGHT] || keys[consts.KEY_D]) {
+		this.moveRight();
+	}
+	if (keys[consts.KEY_LEFT] || keys[consts.KEY_A]) {
+		this.moveLeft();
+	}
+	if (keys[consts.KEY_UP] || keys[consts.KEY_W]) {
+		this.moveJump(); // jump and up are same keys for us
+		this.moveUp();
+	}
+	if (keys[consts.KEY_DOWN] || keys[consts.KEY_S]) {
+		this.moveDown();
 	}
 
-	return true;
 };
 
 Player.prototype._handleEntityCollision = function (entity) {
@@ -437,87 +279,6 @@ Player.prototype._handleChestCollision = function (chest) {
 
 		this.numChests++;
 	}
-};
-
-Player.prototype._checkForSceneChange = function () {
-	var canvas = global.get('canvas');
-	var background = global.get('background');
-	var sceneChangeSuccess = true;
-	if (this.x >= canvas.width) {
-		sceneChangeSuccess = background.requestNextScene(this, 'right');
-	} else if (this.x <= -this.width) {
-		sceneChangeSuccess = background.requestNextScene(this, 'left');
-	} else if (this.y >= canvas.height - this.height) {
-		// when moving down, teleport the moment we hit bottom with our feet
-		sceneChangeSuccess = background.requestNextScene(this, 'down');
-	} else if (this.y <= -this.height) {
-		// when moving up, teleport the moment our feet leave the frame
-		sceneChangeSuccess = background.requestNextScene(this, 'up');
-	}
-	return sceneChangeSuccess;
-};
-
-Player.prototype._findNextX = function (dt) {
-	var keys = global.get('keys');
-
-	var nextX = this.x;
-	if (keys[consts.KEY_RIGHT] || keys[consts.KEY_D]) {
-		nextX = this.x + Math.floor(this.speedX * dt);
-		this.orientation = 'right';
-	} 
-	if (keys[consts.KEY_LEFT] || keys[consts.KEY_A]) {
-		nextX = this.x - Math.floor(this.speedX * dt);
-		this.orientation = 'left';
-	}
-	return nextX;
-};
-
-Player.prototype._findNextY = function (dt) {
-	var keys = global.get('keys');
-
-	var nextY = this.y;
-	// snake mode and stairs
-	if (config.snakeMode || this.inStairs) {
-		this.speedY = this.speedX;
-		if (keys[consts.KEY_UP] || keys[consts.KEY_W]) {
-			nextY = this.y - Math.floor(this.speedY * dt);
-		} 
-		if (keys[consts.KEY_DOWN] || keys[consts.KEY_S]) {
-			nextY = this.y + Math.floor(this.speedY * dt);
-		}
-	}
-	// allow down movement if we are on top of stairs
-	if (this.onGround === consts.STAIRTOPBLOCK || this.disableJump) {
-		if (keys[consts.KEY_DOWN] || keys[consts.KEY_S]) {
-			this.inStairs = true;
-			this.speedY = this.speedX;
-			nextY = this.y + Math.floor(this.speedY * dt);
-		}
-	}
-	// normal gravity
-	if (config.gravity && this.affectedByGravity && !this.inStairs) {
-		nextY = this._applyAcceleration(this.y, this.speedY, this.accelerationY, dt);
-	}
-	return nextY;
-};
-
-Player.prototype.getSpeedY = function () {
-	return this.speedY;
-};
-
-// true if either w, s, up or down are being pressed (trying to move player up or down)
-Player.prototype._isUpOrDownPressed = function () {
-	return global.get('keys')[consts.KEY_W] || global.get('keys')[consts.KEY_S]
-			|| global.get('keys')[consts.KEY_UP] || global.get('keys')[consts.KEY_DOWN];
-};
-
-Player.prototype._isDownPressed = function () {
-	return global.get('keys')[consts.KEY_S] || global.get('keys')[consts.KEY_DOWN];
-};
-
-// value === true or false
-Player.prototype.setAsFlying = function (value) {
-	this.affectedByGravity = !value;
 };
 
 global.set('class/Player', Player); // export
