@@ -132,7 +132,7 @@ MovingEntity.prototype.update = function (dt) {
 	if (this.inStairs) {
 		this.speedY = 0.0;
 		this.inStairs = false; // if we are still in stairs, this should be set back to true during collision check
-		this.onGround = false;
+		this.onGround = this.isOnGround(); // need to check for this here
 	}
 
 	// collision is false if no collision, otherwise object with 
