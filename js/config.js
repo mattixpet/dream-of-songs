@@ -22,7 +22,7 @@ config['gravity'] = true;
 config['clickToShowCoord'] = false;
 
 // settings menu checkboxes
-config['audioControlsAlwaysOn'] = false; // always visible or default: fade out
+config['audioControlsFade'] = false; // always visible or fade in/out, default: no fade
 config['autoplay'] = true; // autoplay next song, default: yes
 config['allowParallelSongs'] = false; // only play one song at a time or not, default: one song at a time
 config['repeatSongs'] = false; // repeat the current song, default: no

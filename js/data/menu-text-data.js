@@ -83,8 +83,8 @@ var menu_text_data = {
 		},
 		'checkboxes' : [
 			{
-				'label' : 'Audio controls always visible',
-				'variable' : 'audioControlsAlwaysOn' // variable in config.js
+				'label' : 'Audio controls fade in/out',
+				'variable' : 'audioControlsFade' // variable in config.js
 			},
 			{
 				'label' : 'Autoplay next song',
