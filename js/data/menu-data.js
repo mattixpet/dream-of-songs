@@ -33,8 +33,13 @@ var menu_data = {
 		// 11 = margin
 		// 18 = font size
 		'continue' :    {'x':551-11, 'y':358-11-18, 'width':18/2*'continue'.length+2*11, 'height':18+2*11}
+	},
+	'settingsMenu' : {
+		'back' : undefined // reuse aboutMenu
 	}
 };
+
+menu_data['settingsMenu'].back = menu_data['aboutMenu'].back;
 
 global.set('menu-data', menu_data);
 

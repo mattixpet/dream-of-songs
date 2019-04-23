@@ -12,7 +12,7 @@ var collision = {};
 function rectCollision(aX, aY, aW, aH, bX, bY, bW, bH) {
 	// rect A collides with rect B if any of the corner
 	// points of A is within B
-	// OR lets not forget (lol) if B is within A ! (IMPLEMENT PLEASE BITCH)
+	// OR lets not forget (lol) if B is within A !
 
 	return _oneOfPointsWithinRect(aX, aY, aW, aH, bX, bY, bW, bH) ||
 				_oneOfPointsWithinRect(bX, bY, bW, bH, aX, aY, aW, aH);

@@ -4,6 +4,7 @@
 
 'use strict';
 
+var config = global.get('config');
 var util = global.get('util');
 
 function AudioPlayer () {
@@ -45,7 +46,7 @@ AudioPlayer.prototype.seek = function (index) {
 // Play song by url
 // Play is true if we want to play it straight away otherwise we just load it
 AudioPlayer.prototype.playSong = function (songName, songUrl, play) {
-	if (this.currentSong) {
+	if (this.currentSong && !config.allowParallelSongs) {
 		this.pause(); // stop our current song when we play a new one
 	}
 	this.currentSong = new Audio(songUrl);
@@ -75,6 +76,7 @@ AudioPlayer.prototype.getPosition = function () {
 AudioPlayer.prototype.setPosition = function (pos) {
 	if (this.currentSong) {
 		this.currentSong.currentTime = pos;
+		this.lastPos = pos;
 	}
 };
 

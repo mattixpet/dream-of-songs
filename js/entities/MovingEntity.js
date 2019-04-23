@@ -11,9 +11,7 @@
 
 var config = global.get('config');
 var util = global.get('util');
-// might need to remove these
 var consts = global.get('consts');
-//
 var AnimatingEntity = global.get('class/AnimatingEntity');
 
 // [[movements]] is an object with the possible movements of the entity

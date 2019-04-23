@@ -18,17 +18,28 @@ global.set('inSingleCycle', false);
 function handleKeydown(e) {
 	keys[e.keyCode] = true;
 
-	// pause without bringing menu
-	if (keys[consts.KEY_Q]) {
-		util.log('Quitting.');
-		MainLoop.stop();
+	if (config.devMode) {
+		// pause without bringing menu
+		if (keys[consts.KEY_L]) {
+			util.log('Pausing.');
+			MainLoop.stop();
+		}	
+		// single step
+		if (util.eatKey(consts.KEY_K)) {
+			if (!MainLoop.isRunning()) {
+				if (!global.get('inSingleCycle')) {
+					MainLoop.start();
+					global.set('inSingleCycle', true);
+				}
+			}
+		}
 	}
 
 	// pause/resume
 	if (util.eatKey(consts.KEY_P)) {
 		pauseOrResumeGame();
 	}
-
+	// default menu interaction (start game, back etc.)
 	if (util.eatKey(consts.KEY_ENTER)) {
 		var inMenu = global.get('inMenu');
 		if (inMenu) {
@@ -38,17 +49,6 @@ function handleKeydown(e) {
 			pauseOrResumeGame();
 		}
 	}
-
-	// single step
-	if (util.eatKey(consts.KEY_K)) {
-		if (!MainLoop.isRunning()) {
-			if (!global.get('inSingleCycle')) {
-				MainLoop.start();
-				global.set('inSingleCycle', true);
-			}
-		}
-	}
-
 	// pause/play song
 	if (util.eatKey(consts.KEY_SPACE)) {
 		global.get('audioManager').notifySpacePress();

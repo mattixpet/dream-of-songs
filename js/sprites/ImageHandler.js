@@ -21,12 +21,14 @@ function ImageHandler() {
 	var menu_data = global.get('menu-data');
 	var background_data = global.get('background-data');
 	var audio_gui_data = global.get('audio-gui-data');
+	var settings_data = global.get('menu-text-data')['settingsMenu']; // the checkbox/mark/typebox
 
 	// total number of images to be loaded here, to update progress of loading bar
 	// the -1 is because background_data has a Connections object which does not correspond to an image
 	// and likewise audio_gui_data has a Spacings object
 	this.totalImageCount = 	util.objLen(sprite_data) + util.objLen(menu_data) + 
-							util.objLen(audio_gui_data) - 1 + util.objLen(background_data) - 1;
+							util.objLen(audio_gui_data) - 1 + util.objLen(background_data) - 1 +
+							util.objLen(settings_data.sprites);
 
 	// load all the images !
 	this._handleSprites();
@@ -53,10 +55,20 @@ ImageHandler.prototype._handleMenuItems = function () {
 	var menu_data = global.get('menu-data');
 	var canvas = global.get('canvas');
 
+	// first load the mindividual menucontrols
 	for (var menu in menu_data) {
 		this._createSpriteFromImage(
 			menu, config.MENUITEMSURL + menu.toLowerCase() + '.png',
 			canvas.width, canvas.height
+		);
+	}
+
+	// then load the icons/stuff for checkbox/typebox
+	var settings_data = global.get('menu-text-data')['settingsMenu'];
+	for (var item in settings_data.sprites) {
+		this._createSpriteFromImage(
+			item, config.MENUITEMSURL + item + '.png',
+			settings_data.sprites[item].width, settings_data.sprites[item].height
 		);
 	}
 };

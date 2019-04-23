@@ -37,7 +37,7 @@ StartMenu.prototype._handleStart = function () {
 };
 
 StartMenu.prototype._handleSettings = function () {
-	// we don't do anything at the moment for settings
+	global.get('settingsMenu').display();
 };
 
 StartMenu.prototype._handleAbout = function () {

@@ -6,14 +6,26 @@
 
 var config = {};
 
+// allowed in game after code is typed correctly
+config['hiddenChestsEnabled'] = false;
+config['snakeModeEnabled'] = false;
+// these are the actual toggles on/off
+config['showHiddenChests'] = false;
+config['snakeMode'] = false;
+
 // diagnostics
+config['devMode'] = true; // obv let's not forget to set this as false on release
 config['drawBackgroundGrid'] = false;
 config['drawPixelGrid'] = false;
 config['drawBoundingBoxes'] = false;
-config['snakeMode'] = false;
 config['gravity'] = true;
 config['clickToShowCoord'] = false;
-config['showHiddenChests'] = false;
+
+// settings menu checkboxes
+config['audioControlsAlwaysOn'] = false; // always visible or default: fade out
+config['autoplay'] = true; // autoplay next song, default: yes
+config['allowParallelSongs'] = false; // only play one song at a time or not, default: one song at a time
+config['repeatSongs'] = false; // repeat the current song, default: no
 
 // misc
 config['playTitleTheme'] = false;
@@ -24,6 +36,7 @@ config['fetchMode'] = 'cors';
 // game values
 config['GRAVITYCONSTANT'] = 0.001;
 config['DEFAULTTERMINALSPEED'] = 0.5;
+config['DEFAULTJUMPSPEED'] = 0.4;
 
 config['STARTINGSCENE'] = 'clearsky';
 

@@ -27,7 +27,7 @@ PauseMenu.prototype._handleResume = function () {
 };
 
 PauseMenu.prototype._handleSettings = function () {
-	// we don't do anything at the moment for settings
+	global.get('settingsMenu').display();
 };
 
 PauseMenu.prototype._handleAbout = function () {

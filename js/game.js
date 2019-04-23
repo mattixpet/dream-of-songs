@@ -19,6 +19,7 @@ var StartMenu = global.get('class/StartMenu');
 var AboutMenu = global.get('class/AboutMenu');
 var PauseMenu = global.get('class/PauseMenu');
 var NotificationMenu = global.get('class/NotificationMenu');
+var SettingsMenu = global.get('class/SettingsMenu');
 var AudioManager = global.get('class/AudioManager');
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
@@ -51,45 +52,46 @@ function begin() {
 	var keys = global.get('keys');
 
 	// handle in game input logic (other logic is in input.js)
-	if (util.eatKey(consts.KEY_G)) {
-		util.log('Toggling grid.');
-		config.drawBackgroundGrid = !config.drawBackgroundGrid;
-	}
-
-	if (util.eatKey(consts.KEY_B)) {
-		util.log('Toggling bounding boxes.');
-		config.drawBoundingBoxes = !config.drawBoundingBoxes;
-	}
-
-	if (util.eatKey(consts.KEY_O)) {
-		util.log('Toggling snake mode.');
-		config.snakeMode = !config.snakeMode;
-		global.get('player').setAsFlying(config.snakeMode);
-	}
-
-	if (util.eatKey(consts.KEY_H)) {
-		util.log('Toggling hidden chests.');
-		config.showHiddenChests = !config.showHiddenChests;
-	}
-
-	// click to show coordinate clicked
-	if (util.eatKey(consts.KEY_C)) {
-		util.log('Toggling click to show coord.');
-		config.clickToShowCoord = !config.clickToShowCoord;
-	}
-
-	// print player info!
-	if (util.eatKey(consts.KEY_I)) {
-		var out = '';
-		var player = global.get('player');
-		for (var prop in player) {
-			if (player.hasOwnProperty(prop)) {
-				out += '\n' + prop + ': ' + player[prop];
-			}
+	if (config.hiddenChestsEnabled || config.devMode) {
+		if (util.eatKey(consts.KEY_H)) {
+			config.showHiddenChests = !config.showHiddenChests;
+			util.log('Toggling hidden chests ' + (config.showHiddenChests ? 'on.' : 'off.'));
 		}
-		util.log('\nPlayer information: ' +
-			out
-		);
+	}
+	if (config.snakeModeEnabled || config.devMode) {
+		if (util.eatKey(consts.KEY_O)) {
+			config.snakeMode = !config.snakeMode;
+			global.get('player').setAsFlying(config.snakeMode);
+			util.log('Toggling snake mode ' + (config.snakeMode ? 'on.' : 'off.'));
+		}
+	}
+	if (config.devMode) {
+		if (util.eatKey(consts.KEY_G)) {
+			config.drawBackgroundGrid = !config.drawBackgroundGrid;
+			util.log('Toggling grid ' + (config.drawBackgroundGrid ? 'on.' : 'off.'));
+		}
+		if (util.eatKey(consts.KEY_B)) {
+			config.drawBoundingBoxes = !config.drawBoundingBoxes;
+			util.log('Toggling bounding boxes ' + (config.drawBoundingBoxes ? 'on.' : 'off.'));
+		}
+		// click to show coordinate clicked
+		if (util.eatKey(consts.KEY_C)) {
+			config.clickToShowCoord = !config.clickToShowCoord;
+			util.log('Toggling click to show coord ' + (config.clickToShowCoord ? 'on.' : 'off.'));
+		}
+		// print player info!
+		if (util.eatKey(consts.KEY_I)) {
+			var out = '';
+			var player = global.get('player');
+			for (var prop in player) {
+				if (player.hasOwnProperty(prop)) {
+					out += '\n' + prop + ': ' + player[prop];
+				}
+			}
+			util.log('\nPlayer information: ' +
+				out
+			);
+		}	
 	}
 }
 
@@ -160,6 +162,8 @@ function initGame() {
 	global.set('pauseMenu', pauseMenu);
 	var notificationMenu = new NotificationMenu();
 	global.set('notificationMenu', notificationMenu);
+	var settingsMenu = new SettingsMenu();
+	global.set('settingsMenu', settingsMenu);
 
 	// call 1-800-AUDIOMANAGER for everything audio
 	var audioManager = new AudioManager();

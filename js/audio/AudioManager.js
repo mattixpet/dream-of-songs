@@ -28,9 +28,6 @@ function AudioManager () {
 
 	// is a song playing at the moment? (audio audible)
 	this.isPlaying = false;
-
-	// start next song automatically
-	this.autoplay = true;
 }
 
 // Audio GUI calls this, when user asks us to do any command (play, pause, rewind, etc.)
@@ -272,7 +269,12 @@ AudioManager.prototype.getCurrentSongPosition = function () {
 
 AudioManager.prototype.songEnded = function () {
 	this._setCurrentSongPosition(0);
-	if (this.autoplay) {
+	if (config.repeatSongs) {
+		this.player.resume();
+		this.isPlaying = true;
+		return;
+	}
+	if (config.autoplay) {
 		// play next song
 		this.currentSong = (this.currentSong + 1) % this.playerSongs.length;
 		this.playSong(this.playerSongs[this.currentSong].name, true);

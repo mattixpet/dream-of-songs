@@ -7,11 +7,12 @@
 'use strict';
 
 // imports
-var Song = global.get('class/Song');
+var config = global.get('config');
 var collision = global.get('collision');
 var util = global.get('util');
 var draw = global.get('draw');
 var consts = global.get('consts');
+var Song = global.get('class/Song');
 
 // local constants
 const songsPerPage = 6; // this.activeSongs should be max this length
@@ -84,7 +85,7 @@ AudioGUI.prototype.notifyPause = function () {
 };
 
 AudioGUI.prototype.notifyMousemove = function () {
-	if (!this.controlsVisible) {
+	if (!this.controlsVisible && !config.audioControlsAlwaysOn) {
 		// set our fade in flag, and remove/reset rest
 		this._triggerFadeIn();
 	}
@@ -225,12 +226,12 @@ AudioGUI.prototype.update = function (dt) {
 	}
 
 	this.mouseStillTime += dt;
-	if (this.mouseStillTime > MOUSESTILLTIME && this.controlsVisible) {
+	if (this.mouseStillTime > MOUSESTILLTIME && this.controlsVisible && !config.audioControlsAlwaysOn) {
 		// set our fade out flag, and remove/reset rest
 		this._triggerFadeOut();
 	}
 
-	if (this.fadeIn || this.fadeOut) {
+	if (!config.audioControlsAlwaysOn && (this.fadeIn || this.fadeOut)) {
 		if (this.fadeIn) {
 			// so that it is drawn during the fade in
 			this.controlsVisible = true;
@@ -242,6 +243,10 @@ AudioGUI.prototype.update = function (dt) {
 			this.fadeIn = false;
 			this.fadeOut = false;
 		}
+	}
+
+	if (config.audioControlsAlwaysOn) {
+		this.controlsVisible = true;
 	}
 };
 
@@ -278,7 +283,7 @@ AudioGUI.prototype.draw = function () {
 			}
 		}
 
-		var opacity = undefined;
+		var opacity = 1.0;
 		if (this.fadeIn) {
 			opacity = this.fadeTime / FADETIME;
 		} else if (this.fadeOut) {
@@ -424,9 +429,12 @@ AudioGUI.prototype.notifyDownloadCompleted = function () {
 	util.log('Download completed or error.');
 };
 
-// Trigger fade in of player, to make it visible
+// Show controls for just a moment, so player can see the player
 AudioGUI.prototype.showControls = function () {
-	this.controlsVisible = true;
+	config.audioControlsAlwaysOn = true;
+	this.fadeIn = false;
+	this.fadeOut = false;
+	setTimeout(function(){global.get('config').audioControlsAlwaysOn = false;}, 15000);
 };
 
 global.set('class/AudioGUI', AudioGUI);
