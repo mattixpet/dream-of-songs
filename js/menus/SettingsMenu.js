@@ -5,6 +5,9 @@
 'use strict';
 
 // imports
+var config = global.get('config');
+var util = global.get('util');
+var consts = global.get('consts');
 var draw = global.get('draw');
 var Menu = global.get('class/Menu');
 var ScrollableMenu = global.get('class/ScrollableMenu');
@@ -19,6 +22,10 @@ function SettingsMenu () {
 	ScrollableMenu.call(this, data.upArrowPos, data.downArrowPos);
 
 	this.buttonActions['back'] = this._handleBack;
+	this.buttonActions['continue'] = this._handleContinue; // only when in notification
+
+	this.notificationSprite = global.get('imageHandler').getSprite('notificationMenu');
+	this.inNotification = false; // are we in notification after user types successful cheat code?
 
 	// create our checkboxes/typeboxes to be drawn later
 	this.checkboxes = [];
@@ -33,15 +40,23 @@ function SettingsMenu () {
 	// we only have the 'Enter code' typebox
 	this.typebox = new Typebox(
 		data.typebox.label,
-		this.enteringCode
+		this.handleTypedWord
 	);
 }
 
 SettingsMenu.prototype = Object.create(ScrollableMenu.prototype);
 
 SettingsMenu.prototype._handleBack = function () {
+	this.typebox.stopEnteringCode();
 	global.get(this.previousMenu).display();
-	//this.textIndex = 0;
+};
+
+// Only does anything when we pop a notification up, then this will remove the notification
+SettingsMenu.prototype._handleContinue = function () {
+	if (this.inNotification) {
+		this.inNotification = false;
+		this.draw();
+	}
 };
 
 SettingsMenu.prototype._handleUp = function () {
@@ -55,7 +70,11 @@ SettingsMenu.prototype._handleDown = function () {
 };
 
 SettingsMenu.prototype.onEnter = function () {
-	this._handleBack();
+	if (this.inNotification) {
+		this._handleContinue();
+	} else {
+		this._handleBack();
+	}
 };
 
 SettingsMenu.prototype._handleClick = function (x, y) {
@@ -68,10 +87,31 @@ SettingsMenu.prototype._handleClick = function (x, y) {
 	this.typebox.click(x, y);
 };
 
-// This function is called by our typebox when user clicks it
-// means we grab the input and analyse what user writes
-SettingsMenu.prototype.enteringCode = function () {
-	console.log('ENTERING CODE BIATCH');
+// Called by our typebox when user types a word and hits Return
+SettingsMenu.prototype.handleTypedWord = function (word) {
+	util.log('Settings called with word: ' + word);
+	this.draw();
+
+	if (word.toLowerCase() === consts.WHYISARAVENLIKEAWRITINGDESK) {
+		this.typebox.stopEnteringCode();
+		config.hiddenChestsEnabled = true;
+		config.showHiddenChests = true;
+
+		this.inNotification = true;
+		this._drawBigNotification(global.get('menu-text-data')[this.name]['raven-notification']);
+	} else if (word.toLowerCase() === consts.THEONLYWAYTOFLY) {
+		this.typebox.stopEnteringCode();
+		config.snakeModeEnabled = true;
+		config.snakeMode = true;
+
+		this.inNotification = true;
+		this._drawBigNotification(global.get('menu-text-data')[this.name]['flying-notification']);
+	} else if (word.toLowerCase() === consts.THEONLYWAYTODEVMODE) {
+		config.devMode = !config.devMode;
+		util.log('Dev mode: ' + config.devMode);
+	} else {
+		this._drawSmallNotification('Nothing happened.');
+	}
 };
 
 SettingsMenu.prototype.draw = function () {
@@ -119,6 +159,51 @@ SettingsMenu.prototype._drawBackButton = function () {
 		'back', 
 		data.backButtonPos.x - common.fontSize * 0.6,
 		data.backButtonPos.y + common.fontSize * common.spacing,
+		common.font,
+		common.fontSize,
+		common.fontColor
+	);
+};
+
+SettingsMenu.prototype._drawBigNotification = function (text) {
+	this.draw(); // get rid of 'Nothing happened.' if present
+	this.notificationSprite.draw(0,0);
+	var common = global.get('menu-text-data')['Common'];
+	var data = global.get('menu-text-data')['notificationMenu'];
+	draw.writeText(
+		text,
+		data.textPos.x,
+		Math.floor(data.textPos.y * 0.85), // let our notification text start a little higher than notificationmenus
+		common.font,
+		common.fontSize,
+		common.fontColor,
+		data.textWidth,
+		common.spacing
+	);
+	this._drawContinue();
+};
+
+SettingsMenu.prototype._drawSmallNotification = function (text) {
+	var common = global.get('menu-text-data')['Common'];
+	var data = global.get('menu-text-data')[this.name];
+	draw.fillText(
+		text, 
+		data.smallNotificationPos.x,
+		data.smallNotificationPos.y,
+		common.font,
+		common.fontSize,
+		common.fontColor
+	);
+};
+
+// Draws the 'continue' button
+SettingsMenu.prototype._drawContinue = function () {
+	var common = global.get('menu-text-data')['Common'];
+	var data = global.get('menu-text-data')['notificationMenu'];
+	draw.fillText(
+		'continue', 
+		data.continueButtonPos.x,
+		data.continueButtonPos.y,
 		common.font,
 		common.fontSize,
 		common.fontColor

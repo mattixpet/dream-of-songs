@@ -1,4 +1,4 @@
-// An object of constats, accessed by consts.val
+// An object of constants, accessed by global.get('consts').val
 
 (function () {
 
@@ -31,6 +31,7 @@ consts['KEY_C'] = 'C'.charCodeAt(0);
 consts['KEY_ENTER'] = 13;
 consts['KEY_SPACE'] = 32;
 consts['KEY_H'] = 'H'.charCodeAt(0);
+consts['KEY_BACKSPACE'] = 8;
 
 // background consts
 consts['NOBLOCK'] = '0';
@@ -42,6 +43,14 @@ consts['STAIRTOPBLOCK'] = '5'; // the top of all stairs (which you can stand on,
 consts['SECONDARYTELEBLOCK'] = '6'; // if there are two teleports on one scene, this behaves exactly as teleblock otherwise
 								  	// requests the 'secondary-special' from background instead of the normal special
 consts['TERTIARYTELEBLOCK'] = '7'; // three teleports on scene
+
+// c h e a t s
+// if you're looking at this STOP NOW
+// just kidding.. cool I guess. But you could have figured this out from the riddles in the game!
+consts['WHYISARAVENLIKEAWRITINGDESK'] = 'alice';
+consts['THEONLYWAYTOFLY'] = 'mescaline';
+// now this is just for advanced users :P
+consts['THEONLYWAYTODEVMODE'] = 'renaissance';
 
 global.set('consts', consts);
 

@@ -76,6 +76,8 @@ var menu_text_data = {
 		'checkboxMargin' : 10,
 		'labelMargin' : 30,
 		'checkboxHeight' : iconWidth + 10 + 10, // iconWidth + checkboxMargin * 2
+		'smallNotificationPos' : {'x':200, 'y':400},
+		'typeboxPadding' : 20,
 		'typebox' : {
 			'label' : 'Enter code'
 		},
@@ -97,6 +99,16 @@ var menu_text_data = {
 				'variable' : 'repeatSongs'
 			}
 		],
+		'raven-notification' : 	'Nice! You figured out the riddle of the raven. \n ' +
+								'This means you can see where hidden chests are located now! ' +
+								'That doesn\'t mean they\'ll necessarily be easy to find, but ' +
+								'certainly a lot easier than without the code. Keep an eye out ' +
+								'for three blue stars to guide your way. \n\n ' +
+								'You can always toggle this off/on with the \'h\' key now.',
+		'flying-notification' : 'Good job! You figured out the only way to fly. \n ' +
+								'This means you now have wings and can FLY ! ' +
+								'May your wings take you wherever you desire. \n\n ' +
+								'You can always toggle this off/on with the \'o\' key now.',
 		'sprites' : {
 			'checkbox' : {'width' : iconWidth, 'height' : iconWidth},
 			'checkmark' : {'width' : iconWidth, 'height' : iconWidth},

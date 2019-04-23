@@ -17,6 +17,14 @@ global.set('inSingleCycle', false);
 
 function handleKeydown(e) {
 	keys[e.keyCode] = true;
+	e.preventDefault();
+
+	// if we are typing in a typebox, we must not do anything else with the input
+	if (global.get('activeTypebox') && util.eatKey(e.keyCode)) {
+		// send our keyCode to the typebox for handling
+		global.get('activeTypebox').handleTypedCharacter(e);
+		return;
+	}
 
 	if (config.devMode) {
 		// pause without bringing menu
@@ -53,8 +61,6 @@ function handleKeydown(e) {
 	if (util.eatKey(consts.KEY_SPACE)) {
 		global.get('audioManager').notifySpacePress();
 	}
-
-	e.preventDefault();
 }
 
 // Brings up pause menu or removes it depending on game state

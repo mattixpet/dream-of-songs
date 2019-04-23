@@ -35,11 +35,13 @@ var menu_data = {
 		'continue' :    {'x':551-11, 'y':358-11-18, 'width':18/2*'continue'.length+2*11, 'height':18+2*11}
 	},
 	'settingsMenu' : {
-		'back' : undefined // reuse aboutMenu
+		'back' : undefined, // reuse aboutMenu
+		'continue' : undefined // reuse notificationMenu
 	}
 };
 
 menu_data['settingsMenu'].back = menu_data['aboutMenu'].back;
+menu_data['settingsMenu'].continue = menu_data['notificationMenu'].continue;
 
 global.set('menu-data', menu_data);
 
