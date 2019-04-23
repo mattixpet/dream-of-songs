@@ -112,7 +112,11 @@ var chest_data = {
 	'spikes' : [
 		{'x':727,'y':3,'flipped':true,'hidden':false,'message':'only-way-to-fly'}
 	],
-	'semivaulttop' : undefined // reuse from semivault
+	'semivaulttop' : undefined, // reuse from semivault
+	'mountain' : [
+		{'x':666,'y':170,'flipped':true,'hidden':false}, {'x':716,'y':140,'flipped':true,'hidden':false},
+		{'x':761,'y':110,'flipped':true,'hidden':false}
+	]
 };
 
 // reused chest coordinates
