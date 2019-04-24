@@ -52,7 +52,8 @@ var menu_text_data = {
 		'only-way-to-fly' : '        What\'s the only way to fly? \n\n ' +
 							'        (hint: try to get some R&R)',
 		'raven' : 	'      Why am I like a writing desk? \n\n ' +
-					'              - Raven'
+					'              - Raven',
+		'welcome-to-heaven' : '      Welcome to the Dream of Heaven.'
 		},
 	'aboutMenu' : {
 		'textPos' : {'x':170,'y':50},

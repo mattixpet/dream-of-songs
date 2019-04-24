@@ -36,6 +36,8 @@ function Background() {
 		this.blockHeight = Math.floor(this.blockHeight);
 		this.blockWidth = Math.floor(this.blockWidth);
 	}
+
+	this.heavenNotification = false; // display notification on player entering skyvault or topskyvault
 }
 
 Background.prototype.draw = function () {
@@ -186,6 +188,13 @@ Background.prototype.requestNextScene = function (entity, direction) {
 
 		// update scene
 		this.currentScene = scene;
+
+		// let player know he is in heaven ! (only once though)
+		if (!this.heavenNotification && (scene === 'skyvault00' || scene === 'topskyvault00')) {
+			global.get('notificationMenu').notify('welcome-to-heaven');
+			global.get('notificationMenu').display();
+			this.heavenNotification = true;
+		}
 
 		// let's not just change scene, let's also notify entityManager so he can
 		// spawn/take care of entities on that scene and move entity between scenes
