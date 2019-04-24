@@ -116,6 +116,10 @@ var chest_data = {
 	'mountain' : [
 		{'x':666,'y':170,'flipped':true,'hidden':false}, {'x':716,'y':140,'flipped':true,'hidden':false},
 		{'x':761,'y':110,'flipped':true,'hidden':false}
+	],
+	'singlecloud' : [
+		{'x':466,'y':237,'flipped':false,'hidden':false}, {'x':516,'y':280,'flipped':false,'hidden':false},
+		{'x':631,'y':280,'flipped':true,'hidden':false}, {'x':681,'y':237,'flipped':true,'hidden':false}
 	]
 };
 
