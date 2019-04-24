@@ -129,6 +129,10 @@ var chest_data = {
 	],
 	'tunnel' : [
 		{'x':349,'y':273,'flipped':true,'hidden':false}, {'x':419,'y':272,'flipped':false,'hidden':false}
+	],
+	'mountainwater' : [
+		{'x':15,'y':174,'flipped':false,'hidden':false}, {'x':99,'y':174,'flipped':false,'hidden':false},
+		{'x':186,'y':174,'flipped':false,'hidden':false}
 	]
 };
 
