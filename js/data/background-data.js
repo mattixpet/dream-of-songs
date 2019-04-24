@@ -39,14 +39,14 @@ var background_data = {
 	'Connections' : {
 		'clearsky' : {
 			'left' : {'scene' : 'clearskyclouds', 'coords' : 'flip'},
-			'up' : undefined,
+			'up' : {'scene' : 'singlecloud', 'coords' : 'flip'},
 			'right' : {'scene' : 'cave', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : undefined
 		},
 		'clearskyclouds' : {
 			'left' : {'scene' : 'smallcliff', 'coords' : 'flip'},
-			'up' : undefined,
+			'up' : {'scene' : 'sky04', 'coords' : 'flip'},
 			'right' : {'scene' : 'clearsky', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : undefined
@@ -60,14 +60,14 @@ var background_data = {
 		},
 		'cave' : {
 			'left' : {'scene' : 'clearsky', 'coords' : 'flip'},
-			'up' : undefined,
+			'up' : {'scene' : 'skystepping00', 'coords' : 'flip'},
 			'right' : {'scene' : 'abovecave', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : {'scene' : 'insidecave', 'coords' : 'nochange'}
 		},
 		'abovecave' : {
 			'left' : {'scene' : 'cave', 'coords' : 'flip'},
-			'up' : undefined,
+			'up' : {'scene' : 'skynoclouds12', 'coords' : 'flip'},
 			'right' : {'scene' : 'arrowsky', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : {'scene' : 'cavestairs', 'coords' : {'x':550,'y':-85}}
@@ -109,7 +109,7 @@ var background_data = {
 			'up' : undefined,
 			'right' : {'scene' : 'mountain', 'coords' : 'flip'},
 			'down' : undefined,
-			'special' : undefined
+			'special' : {'scene' : 'skyvault00', 'coords' : 'nochange'}
 		},
 		'undergroundvault' : {
 			'left' : undefined,
@@ -120,8 +120,8 @@ var background_data = {
 		},
 		'arrowsky' : {
 			'left' : {'scene' : 'abovecave', 'coords' : 'flip'},
-			'up' : undefined,
-			'right' : undefined,
+			'up' : {'scene' : 'sky11', 'coords' : 'flip'},
+			'right' : {'scene' : 'actuallyclearsky', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : {'scene' : 'undergroundvault', 'coords' : {'x':390,'y':0}}
 		},
@@ -207,7 +207,7 @@ var background_data = {
 		},
 		'hilltop' : {
 			'left' : undefined,
-			'up' : undefined,
+			'up' : {'scene' : 'skynoclouds05', 'coords' : 'flip'},
 			'right' : {'scene' : 'hilltopcorner', 'coords' : 'flip'},
 			'down' : {'scene' : 'insidehill', 'coords' : 'flip'},
 			'special' : undefined // WILL CHANGE
@@ -243,6 +243,13 @@ var background_data = {
 		'mountain' : {
 			'left' : {'scene' : 'waterfallofdreams', 'coords' : 'flip'},
 			'up' : undefined,
+			'right' : undefined,
+			'down' : undefined,
+			'special' : undefined
+		},
+		'actuallyclearsky' : {
+			'left' : {'scene' : 'arrowsky', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds15', 'coords' : 'flip'},
 			'right' : undefined,
 			'down' : undefined,
 			'special' : undefined
@@ -672,7 +679,7 @@ var background_data = {
 '00000000000000000000000000000000000000000000000000000000000000000000000000000000',
 '00000000000000000000000000000000000000000000000000000000000000000000000000000000'
 	],
-	'clearskymoreclouds' : undefined,
+	'actuallyclearsky' : undefined,
 	'chasm' : [
 '00000000000000000000000000000000000000000000000000000000000000000000000000000000',
 '00000000000000000000000000000000000000000000000000000000000000000000000000000000',
@@ -1806,7 +1813,7 @@ var background_data = {
 
 // reused collision matrixes
 background_data.clearskyclouds = background_data.clearsky;
-background_data.clearskymoreclouds = background_data.clearsky;
+background_data.actuallyclearsky = background_data.clearsky;
 background_data.skynoclouds = background_data.sky;
 
 // the sky is so big, we put it in a share file (the connections and reused collision matrices e.g. sky01)

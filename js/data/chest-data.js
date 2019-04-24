@@ -120,7 +120,9 @@ var chest_data = {
 	'singlecloud' : [
 		{'x':466,'y':237,'flipped':false,'hidden':false}, {'x':516,'y':280,'flipped':false,'hidden':false},
 		{'x':631,'y':280,'flipped':true,'hidden':false}, {'x':681,'y':237,'flipped':true,'hidden':false}
-	]
+	],
+	'skyvault00' : undefined,
+	'topskyvault00' : undefined
 };
 
 // reused chest coordinates
@@ -134,7 +136,8 @@ skyvault[skyvault.length-6].x += 280;
 skyvault[skyvault.length-5].x += 160;
 //
 chest_data.topskyvault = chest_data.skyvault;
-
+chest_data.skyvault00 = chest_data.skyvault;
+chest_data.topskyvault00 = chest_data.skyvault;
 
 // go over our data to set consts.NUMCHESTS and consts.NUMHIDDENCHESTS variables correctly
 var numChests = 0;
