@@ -122,7 +122,11 @@ var chest_data = {
 		{'x':631,'y':280,'flipped':true,'hidden':false}, {'x':681,'y':237,'flipped':true,'hidden':false}
 	],
 	'skyvault00' : undefined,
-	'topskyvault00' : undefined
+	'topskyvault00' : undefined,
+	'skystepping00' : [
+		{'x':18,'y':65,'flipped':false,'hidden':true}, {'x':68,'y':65,'flipped':false,'hidden':true},
+		{'x':147,'y':-40,'flipped':false,'hidden':true}
+	]
 };
 
 // reused chest coordinates
