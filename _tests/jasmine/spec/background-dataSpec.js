@@ -38,8 +38,8 @@ describe("background-data", function() {
       var conns = background_data['Connections'];
       for (var scene in conns) {
         // handle the reusable scenes (sky0 etc. (which would resolve as sky))
-        if (Number.isInteger(Number.parseInt(scene[scene.length-1]))) {
-          scene = scene.slice(0,scene.length-1);
+        if (Number.isInteger(Number.parseInt(scene.substring(scene.length-2)))) {
+          scene = scene.slice(0,scene.length-2);
         }
         expect(background_data[scene]).not.toBe(undefined);
       }

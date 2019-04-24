@@ -50,7 +50,7 @@ var background_data = {
 		},
 		'smallcliff' : {
 			'left' : {'scene' : 'tophillhole', 'coords' : 'flip'},
-			'up' : {'scene' : 'skynoclouds0', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds00', 'coords' : 'flip'},
 			'right' : {'scene' : 'clearskyclouds', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : undefined
@@ -197,7 +197,7 @@ var background_data = {
 		},
 		'hilltopcorner' : {
 			'left' : {'scene' : 'hilltop', 'coords' : 'flip'},
-			'up' : {'scene' : 'skynoclouds4', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds04', 'coords' : 'flip'},
 			'right' : {'scene' : 'skystepping', 'coords' : 'flip'},
 			'down' : {'scene' : 'hillbottom', 'coords' : 'flip'},
 			'special' : undefined
@@ -205,76 +205,76 @@ var background_data = {
 		'skystepping' : {
 			'left' : {'scene' : 'hilltopcorner', 'coords' : 'flip'},
 			'up' : {'scene' : 'skyvault', 'coords' : 'flip'},
-			'right' : {'scene' : 'skynoclouds0', 'coords' : 'flip'}, // sky0 will resolve to sky for everything except the connections
+			'right' : {'scene' : 'skynoclouds00', 'coords' : 'flip'}, // sky0 will resolve to sky for everything except the connections
 			'down' : {'scene' : 'tophillhole', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'skyvault' : {
-			'left' : {'scene' : 'skynoclouds4', 'coords' : 'flip'},
+			'left' : {'scene' : 'skynoclouds04', 'coords' : 'flip'},
 			'up' : {'scene' : 'topskyvault', 'coords' : 'flip'},
-			'right' : {'scene' : 'sky0', 'coords' : 'flip'},
+			'right' : {'scene' : 'sky00', 'coords' : 'flip'},
 			'down' : {'scene' : 'skystepping', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'topskyvault' : {
-			'left' : {'scene' : 'skynoclouds3', 'coords' : 'flip'},
-			'up' : {'scene' : 'skynoclouds2', 'coords' : 'flip'},
-			'right' : {'scene' : 'skynoclouds1', 'coords' : 'flip'},
+			'left' : {'scene' : 'skynoclouds03', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds02', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds01', 'coords' : 'flip'},
 			'down' : {'scene' : 'skyvault', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'skynoclouds0' : {
+		'skynoclouds00' : {
 			'left' : {'scene' : 'skystepping', 'coords' : 'flip'},
-			'up' : {'scene' : 'sky0', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky00', 'coords' : 'flip'},
 			'right' : undefined,
 			'down' : {'scene' : 'smallcliff', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'sky0' : {
+		'sky00' : {
 			'left' : {'scene' : 'skyvault', 'coords' : 'flip'},
-			'up' : {'scene' : 'skynoclouds1', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds01', 'coords' : 'flip'},
 			'right' : undefined,
-			'down' : {'scene' : 'skynoclouds0', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds00', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'skynoclouds1' : {
+		'skynoclouds01' : {
 			'left' : {'scene' : 'topskyvault', 'coords' : 'flip'},
-			'up' : {'scene' : 'sky1', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky01', 'coords' : 'flip'},
 			'right' : undefined,
-			'down' : {'scene' : 'sky0', 'coords' : 'flip'},
+			'down' : {'scene' : 'sky00', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'sky1' : {
-			'left' : {'scene' : 'skynoclouds2', 'coords' : 'flip'},
+		'sky01' : {
+			'left' : {'scene' : 'skynoclouds02', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : undefined,
-			'down' : {'scene' : 'skynoclouds1', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds01', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'skynoclouds2' : {
-			'left' : {'scene' : 'sky2', 'coords' : 'flip'},
+		'skynoclouds02' : {
+			'left' : {'scene' : 'sky02', 'coords' : 'flip'},
 			'up' : undefined,
-			'right' : {'scene' : 'sky1', 'coords' : 'flip'},
+			'right' : {'scene' : 'sky01', 'coords' : 'flip'},
 			'down' : {'scene' : 'topskyvault', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'sky2' : {
+		'sky02' : {
 			'left' : undefined,
 			'up' : undefined,
-			'right' : {'scene' : 'skynoclouds2', 'coords' : 'flip'},
-			'down' : {'scene' : 'skynoclouds3', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds02', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds03', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'skynoclouds3' : {
+		'skynoclouds03' : {
 			'left' : undefined,
-			'up' : {'scene' : 'sky2', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky02', 'coords' : 'flip'},
 			'right' : {'scene' : 'topskyvault', 'coords' : 'flip'},
-			'down' : {'scene' : 'skynoclouds4', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds04', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'skynoclouds4' : {
+		'skynoclouds04' : {
 			'left' : undefined,
-			'up' : {'scene' : 'skynoclouds3', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds03', 'coords' : 'flip'},
 			'right' : {'scene' : 'skyvault', 'coords' : 'flip'},
 			'down' : {'scene' : 'hilltopcorner', 'coords' : 'flip'},
 			'special' : undefined

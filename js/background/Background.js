@@ -174,12 +174,12 @@ Background.prototype.isEntityOnGround = function (botLeft, botRight) {
 Background.prototype.requestNextScene = function (entity, direction) {
 	var nextScene = this.cData['Connections'][this.currentScene][direction];
 	if (nextScene) {
-		// check if we are in one of the multi-use scenes (end with 0-9)
-		// e.g. sky0 means we use scene sky
+		// check if we are in one of the multi-use scenes (end with 00-99)
+		// e.g. sky00 means we use scene sky
 		// then we set the template for collision and drawing use
 		var scene = nextScene.scene;
-		if (Number.isInteger(Number.parseInt(scene[scene.length-1]))) {
-			this.currentSceneTemplate = scene.slice(0,scene.length-1);
+		if (Number.isInteger(Number.parseInt(scene.substring(scene.length-2)))) {
+			this.currentSceneTemplate = scene.slice(0,scene.length-2);
 		} else {
 			this.currentSceneTemplate = undefined;
 		}
