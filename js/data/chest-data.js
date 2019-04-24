@@ -126,6 +126,9 @@ var chest_data = {
 	'skystepping00' : [
 		{'x':18,'y':65,'flipped':false,'hidden':true}, {'x':68,'y':65,'flipped':false,'hidden':true},
 		{'x':147,'y':-40,'flipped':false,'hidden':true}
+	],
+	'tunnel' : [
+		{'x':349,'y':273,'flipped':true,'hidden':false}, {'x':419,'y':272,'flipped':false,'hidden':false}
 	]
 };
 
