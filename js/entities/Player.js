@@ -103,6 +103,8 @@ function Player(posX, posY) {
 
 	this.numChests = 0;
 	this.numHiddenChests = 0;
+
+	this.noMoreSongs = false;
 }
 
 Player.prototype = Object.create(MovingEntity.prototype);
@@ -267,35 +269,48 @@ Player.prototype._handleChestCollision = function (chest) {
 	var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight).gridY;
 	 // special case for when swimming or flying, open chest if we collide anywhere (the !this.affectedByGravity part)
 	if ((!this.affectedByGravity || util.almostEqual(chestY, playerY, 1)) && !chest.isLooted()) {
-		var songName = chest.loot(); // get that loot!
+		var songName = chest.loot(); // get that loot! (songName is undefined if we are out of songs)
+		if (songName) {
+			if (chest.isHidden() && this.numHiddenChests === 0) {
+				// display first hidden chest notification
+				this.numHiddenChests++;
+				// skip this notification if chest already has message which will be displayed
+				// in the rare chance that is players first hidden chest
+				if (!chest.containsMessage()) {
+					global.get('notificationMenu').notify('first-hidden-chest');
+					global.get('notificationMenu').display();
+				}
+			} else if (chest.isHidden() && this.numHiddenChests > 0) {
+				// display hidden chest popup
+				this.numHiddenChests++;
+				global.get('notificationMenu').notify('hidden-chest', [this.numHiddenChests, songName], 
+														this.x, this.y, this.width, this.height);
+			} else if (this.numChests === 0 && !chest.containsMessage()) {
+				// display first chest notification, unless the chest has a message
+				// (super unlikely that is players first chest, but just in case)
+				global.get('notificationMenu').notify('first-chest');
+				global.get('notificationMenu').display();
 
-		if (chest.isHidden() && this.numHiddenChests === 0) {
-			// display first hidden chest notification
-			this.numHiddenChests++;
-			// skip this notification if chest already has message which will be displayed
-			// in the rare chance that is players first hidden chest
-			if (!chest.containsMessage()) {
-				global.get('notificationMenu').notify('first-hidden-chest');
+			} else if (this.numChests > 0) {
+				// display general new chest congratulations popup
+				global.get('notificationMenu').notify('general-chest', [this.numChests + 1, songName], 
+														this.x, this.y, this.width, this.height);
+			}
+
+			this.numChests++;
+
+			if (this.numChests >= consts.NUMCHESTS) {
+				global.get('notificationMenu').notify('won-game');
 				global.get('notificationMenu').display();
 			}
-		} else if (chest.isHidden() && this.numHiddenChests > 0) {
-			// display hidden chest popup
-			this.numHiddenChests++;
-			global.get('notificationMenu').notify('hidden-chest', [this.numHiddenChests, songName], 
-													this.x, this.y, this.width, this.height);
-		} else if (this.numChests === 0 && !chest.containsMessage()) {
-			// display first chest notification, unless the chest has a message
-			// (super unlikely that is players first chest, but just in case)
-			global.get('notificationMenu').notify('first-chest');
-			global.get('notificationMenu').display();
-
-		} else if (this.numChests > 0) {
-			// display general new chest congratulations popup
-			global.get('notificationMenu').notify('general-chest', [this.numChests + 1, songName], 
-													this.x, this.y, this.width, this.height);
+		} else {
+			// no song ! display message only once
+			if (!this.noMoreSongs) {
+				global.get('notificationMenu').notify('no-song');
+				global.get('notificationMenu').display();
+				this.noMoreSongs = true;
+			}
 		}
-
-		this.numChests++;
 	}
 };
 

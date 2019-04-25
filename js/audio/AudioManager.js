@@ -104,6 +104,10 @@ AudioManager.prototype.notifySongOpened = function (songName) {
 // If special === 'title', get our chosen title theme, should be called in audiomanager constructor
 // otherwise get random song
 AudioManager.prototype.getNewSong = function (special) {
+	if (this.songs.length === 0) {
+		util.warn('No more songs left to add to chests.');
+		return;
+	}
 	var rndIdx = util.randInt(0, this.songs.length);
 	if (special === 'title') {
 		// find our index of 'title' theme, which is called: sofa

@@ -1,9 +1,13 @@
 // Raven on the cross. Stays still until you jump him, then flies away. As a raven do.
+// Flies to 3 other scenes, one at a time, and flies either right or left.
+// After you chase him away from the third scene (his fourth), he flies back
+//   to the cross and starts 'chilling'. :)
 
 (function () {
 
 'use strict';
 
+var util = global.get('util');
 var AnimatingEntity = global.get('class/AnimatingEntity');
 
 // constants
@@ -32,7 +36,8 @@ function Raven(posX, posY) {
 
 	this.speed = 0.2; // how fast can we flyyy.
 
-	this.mode = 'still'; // still or flying
+	// still, flying or chilling (chilling only after we have gone to all scenes and back at the cross)
+	this.mode = 'still'; 
 	this._addAnimation(
 		'still', 
 		[LEFT, RIGHT, LEFT, WINGS1], 
@@ -48,31 +53,86 @@ function Raven(posX, posY) {
 		'time'
 	);
 	this._setAnimation(this.mode);
+
+	// goes from zeroth (starting scene) to first, second to third to fourth (last) 
+	//   (see raven-hidden-data in raven-data.js)
+	this.numberOfScene = 'zeroth';
+	this.flyingDirection = 'left'; // default is left, but it is modified in chaseAway and depends on raven-hidden-data
+	this.orientation = 'left'; // default
 }
 
 Raven.prototype = Object.create(AnimatingEntity.prototype);
 
 // Entities which collide with me can chase me away :(
 // I'm such a lonesome raven.
+// Unless when I'm chillin, then I'm the life of the party.
 Raven.prototype.chaseAway = function () {
-	this.mode = 'flying';
-	this._setAnimation(this.mode);
+	// can't be bothered if we're chilling
+	if (this.mode !== 'chilling') {
+		this.mode = 'flying';
+		this._setAnimation(this.mode);
+
+		// add our new scene to raven_data so we will be spawned there by entityManager
+		//   when the time comes
+		var raven_data = global.get('raven-data');
+		// Make sure to only do this once for each scene though
+		if (util.objLen(raven_data) === 0) {
+			var hidden_data = global.get('raven-hidden-data');
+			switch (this.numberOfScene) {
+				case 'zeroth':
+					this.numberOfScene = 'first';
+					break;
+				case 'first':
+					this.numberOfScene = 'second';
+					break;
+				case 'second':
+					this.numberOfScene = 'third';
+					break;
+				case 'third':
+					this.numberOfScene = 'fourth';
+					break;
+				default:
+					util.warn('Something wrong with raven being chased away!');
+					return;
+			}
+
+			raven_data[hidden_data[this.numberOfScene].scene] = hidden_data[this.numberOfScene].coords;
+			this.flyingDirection = hidden_data[this.numberOfScene].direction;
+			this.orientation = this.flyingDirection;
+		}
+	}
 };
 
 Raven.prototype.update = function (dt) {
 	AnimatingEntity.prototype.update.call(this, dt);
 
 	if (this.mode === 'flying') {
-		// fly diagonally away up and left!
+		// fly diagonally away up and left or right!
 		var s = this.speed * dt; // s is distance
-		this.x -= s;
+		this.x = this.flyingDirection === 'left' ? this.x - s : this.x + s;
 		this.y -= s;
 	}
 
-	// 'destroy' us when we leave the screen, never to return
-	if (this.y < -this.height) {
-		global.get('entityManager').destroy(this.id);
+	// when we leave the screen just stop changing coordinates
+	// unless it's when we are almost at our cross for the second time !
+	if (this.y < -this.height - COLLISIONHEIGHTREDUCTION) {
+		this.orientation = 'left'; // always look left while stationary
+		this.mode = 'still';
+		this._setAnimation(this.mode);
+		if (this.numberOfScene === 'fourth') {
+			this.mode = 'chilling';
+		}
 	}
+};
+
+Raven.prototype.draw = function () {
+	if (this.orientation === 'left') {
+		this.sprite.draw(this.x, this.y, this.spritePosition);
+	} else {
+		this.sprite.drawMirrored(this.x - COLLISIONWIDTHREDUCTION, this.y, this.spritePosition);
+	}
+
+	this._drawBoundingBox();
 };
 
 global.set('class/Raven', Raven);

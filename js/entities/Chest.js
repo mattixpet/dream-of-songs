@@ -92,6 +92,13 @@ Chest.prototype._drawHint = function () {
 
 // Player calls this when he loots us
 Chest.prototype.loot = function () {
+	// we ran out of songs, so we couldn't get a song from AudioManager
+	if (!this.song) {
+		this.looted = true;
+		this.animation = this.animation === NORMAL ? NORMALOPEN : FLIPPEDOPEN;
+		return undefined;
+	}
+
 	if (!this.looted) {
 		this.looted = true;
 		this.animation = this.animation === NORMAL ? NORMALOPEN : FLIPPEDOPEN;

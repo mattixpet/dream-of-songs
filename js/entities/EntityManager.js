@@ -26,6 +26,9 @@ function EntityManager () {
 
 	this._lastId = -1;
 
+	this.raven = undefined; // will contain our Raven entity (since we need to move him between scenes)
+	this.ravenLastScene = undefined;
+
 	this.notifySceneChange(config.STARTINGSCENE); // initial spawns
 }
 
@@ -152,16 +155,27 @@ EntityManager.prototype._spawnSpikes = function (scene) {
 EntityManager.prototype._spawnRavens = function (scene) {
 	var data = global.get('raven-data');
 	if (data.hasOwnProperty(scene)) {
-		var raven = data[scene];
-		if (!this.scenesVisited[scene]) {
+		var ravenData = data[scene];
+		// since we don't check if this is our first time on the scene (because raven flies and respawns)
+		// let's make sure we delete the raven data from raven_data
+		if (!this.raven) {
+			this.raven = 	new Raven(
+								ravenData.x,
+								ravenData.y
+							);
 			this.register(
-				new Raven(
-					raven.x,
-					raven.y
-				),
+				this.raven,
 				scene
 			);
+			this.ravenLastScene = scene;
+		} else {
+			// we have spawned him before, but now we need to move him since he's moved to this scene
+			this._moveEntityToScene(this.ravenLastScene, scene, this.raven);
+			this.raven.setX(ravenData.x);
+			this.raven.setY(ravenData.y);
+			this.ravenLastScene = scene;
 		}
+		delete data[scene];
 	}
 };
 

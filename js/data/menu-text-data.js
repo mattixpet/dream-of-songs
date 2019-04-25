@@ -53,7 +53,19 @@ var menu_text_data = {
 							'        (hint: try to get some R&R)',
 		'raven' : 	'      Why am I like a writing desk? \n\n ' +
 					'              - Raven',
-		'welcome-to-heaven' : '      Welcome to the Dream of Heaven.'
+		'welcome-to-heaven' : '      Welcome to the Dream of Heaven.',
+		'no-song' : 'Whoops you seem to have finished all the available songs! \n ' +
+					'This isn\'t really supposed to happen, but I\'m glad I at least ' +
+					'anticipated this and wrote this fine error message. ' +
+					'Technically, it is still possible they are in chests you have seen but not ' +
+					'opened yet, or in hidden chests somewhere where you\'ve been. \n ' +
+					'Have a nice day :)',
+		'won-game' : 	'Congratulations you have managed to open all the chests! \n ' +
+						'Since this is kind of ridiculously hard to achieve ' +
+						'(did you get the raven hinting at the water puzzle?) and ' +
+						'I\'m not sure anybody will ever read this I\'d like to share ' +
+						'the fact that I always pee sitting down. \n\n ' +
+						'Hope you enjoy'
 		},
 	'aboutMenu' : {
 		'textPos' : {'x':170,'y':50},
