@@ -20,7 +20,7 @@ function Background() {
 	this.cData = global.get('background-data');
 
 	// blocks entity can stand on
-	this.standableBlocks = [consts.REGBLOCK, consts.PLATFORMBLOCK, consts.STAIRTOPBLOCK];
+	this.standableBlocks = [consts.REGBLOCK, consts.PLATFORMBLOCK, consts.STAIRTOPBLOCK, consts.WATERTOPBLOCK];
 
 	// depending on our cData, set the granularity of our grid/ widths etc.
 	// split map into blocks, depending on the cData array (>0 is collision brick, 0 is not)
@@ -88,6 +88,10 @@ Background.prototype._drawGrid = function () {
 					color = '#00ff00';
 				} else if (block === consts.TERTIARYTELEBLOCK) {
 					color = 'teal';
+				} else if (block === consts.WATERBLOCK) {
+					color = 'black';
+				} else if (block === consts.WATERTOPBLOCK) {
+					color = '#888888';
 				}
 				// collision block, draw it
 				var x = Math.floor(i / this.gridW * canvas.width);

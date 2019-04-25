@@ -22,6 +22,7 @@ var AnimatingEntity = global.get('class/AnimatingEntity');
 //		['walk' : { 'positions' : [0,1,2,1,0,3,4,3], 'distance' : 30 },
 // 		'stairs' : { 'positions' : [6,7], 'distance' : 60 },
 //		'jump' : { 'positions' : 5 },
+//      'swim' : { 'positions' : [4,5,6], 'distance' : 60 },
 //      'fly' : { 'positions' : [11,12], 'distance' : 90 }]
 // }
 // Where position and positions are the sprite positions to be used for each animation (see Sprite.js)
@@ -47,7 +48,7 @@ function MovingEntity(
 	AnimatingEntity.call(this, sprite, posX, posY, affectedByGravity);
 
 	// Add our movement animations and set our flags (e.g. this.walks, this.jumps, this.flies, this.climbsStairs)
-	this.walks = this.climbsStairs = this.jumps = this.flies = false; // becomes true if supplied with movements
+	this.walks = this.climbsStairs = this.jumps = this.swims = this.flies = false; // becomes true if supplied with movements
 	for (var move in movements) {
 		// set our flags (this.jumps etc.) and find out which distance metric to use in case of multiple sprite animation
 		var distanceMetric;
@@ -63,6 +64,10 @@ function MovingEntity(
 			case 'jump':
 				this.jumps = true;
 				distanceMetric = 'distanceXY'; // not executed if jump is single sprite
+				break;
+			case 'swim':
+				this.swims = true;
+				distanceMetric = 'distanceXY';
 				break;
 			case 'fly':
 				this.flies = true;
@@ -133,6 +138,13 @@ MovingEntity.prototype.update = function (dt) {
 		this.speedY = 0.0;
 		this.inStairs = false; // if we are still in stairs, this should be set back to true during collision check
 		this.onGround = this.isOnGround(); // need to check for this here
+	}
+	// reset water
+	if (this.inWater) {
+		this.affectedByGravity = false;
+		this.inWater = false; // should get set back to true if we are still in water on collision check
+	} else {
+		this.affectedByGravity = true;
 	}
 
 	// collision is false if no collision, otherwise object with 
@@ -256,6 +268,8 @@ MovingEntity.prototype._chooseAnimation = function () {
 		this._setAnimation('walk');
 	} else if (this.climbsStairs && this.inStairs && this.affectedByGravity) {
 		this._setAnimation('stairs');
+	} else if (this.inWater) {
+		this._setAnimation('swim');
 	} else if (this.flies && !this.affectedByGravity) {
 		this._setAnimation('fly');
 	} else {
@@ -288,8 +302,9 @@ MovingEntity.prototype._findNextY = function (dt) {
 			nextY = this.y + Math.floor(this.speedY * dt);
 		}
 	}
-	// allow down movement if we are on top of stairs
-	if (this.onGround === consts.STAIRTOPBLOCK || this.disableJump) {
+	// allow down movement if we are on top of stairs or top of water
+	if (this.onGround === consts.STAIRTOPBLOCK || this.disableJump || 
+		this.onGround === consts.WATERTOPBLOCK) {
 		if (this.movingDown) {
 			this.inStairs = true;
 			this.speedY = this.speedX;
@@ -326,18 +341,22 @@ MovingEntity.prototype._handleBackgroundCollision = function (collision, nextX, 
 		}
 		// halt
 		this.speedY = 0;
-	} else if (collision.block === consts.PLATFORMBLOCK || collision.block === consts.STAIRTOPBLOCK) {
+	} else if (	collision.block === consts.PLATFORMBLOCK || collision.block === consts.STAIRTOPBLOCK ||
+				collision.block === consts.WATERTOPBLOCK) {
 		// check for top of stairs block
 		if (collision.block === consts.STAIRTOPBLOCK && (this.movingUp || this.movingDown)) {
 			this.inStairs = true;
 			this.disableJump = true; // so we don't jump directly out of stairs, is reset on x movement
+		}
+		if (collision.block === consts.WATERTOPBLOCK && (this.movingUp || this.movingDown)) {
+			this.inWater = true;
 		}
 
 		var gridX = collision.gridX;
 		var gridY = collision.gridY;
 		var bg = global.get('background');
 		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
-		if (!this.inStairs
+		if (!this.inStairs && !this.inWater
 			&& this.y + this.height <= util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y
 			&& this.y < nextY) {
 			// halt
@@ -347,10 +366,13 @@ MovingEntity.prototype._handleBackgroundCollision = function (collision, nextX, 
 			return false
 		}
 
-	} else if (collision.block === consts.STAIRBLOCK) {
+	} else if (collision.block === consts.STAIRBLOCK || collision.block === consts.WATERBLOCK) {
 		// only treat player as in stairs if he's moving up or down
 		if (this.movingUp || this.movingDown) {
 			this.inStairs = true;
+		}
+		if (collision.block === consts.WATERBLOCK) {
+			this.inWater = true; // for the animation
 		}
 		// treat as 'no collision'
 		return false;
@@ -377,6 +399,10 @@ MovingEntity.prototype._handleBackgroundCollision = function (collision, nextX, 
 			// treat as 'no collision'
 			return false;
 		}
+	} else if (collision.block === consts.WATERBLOCK && this.swims) {
+		// swimming anyone?
+		this.inWater = true;
+		//return false;
 	} else {
 		util.warn('Warning, unhandled bgcollision, treating like no collision.');
 		return false;

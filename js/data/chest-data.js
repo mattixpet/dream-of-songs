@@ -133,6 +133,14 @@ var chest_data = {
 	'mountainwater' : [
 		{'x':15,'y':174,'flipped':false,'hidden':false}, {'x':99,'y':174,'flipped':false,'hidden':false},
 		{'x':186,'y':174,'flipped':false,'hidden':false}
+	],
+	'cavewater' : [
+		{'x':133,'y':70,'flipped':false,'hidden':false}, {'x':191,'y':109,'flipped':false,'hidden':false},
+		{'x':71,'y':163,'flipped':false,'hidden':false}, {'x':289,'y':197,'flipped':false,'hidden':false},
+		{'x':350,'y':252,'flipped':false,'hidden':false}, {'x':122,'y':254,'flipped':false,'hidden':false},
+		{'x':109,'y':363,'flipped':false,'hidden':false}, {'x':224,'y':356,'flipped':false,'hidden':false},
+		{'x':344,'y':361,'flipped':false,'hidden':false}, {'x':455,'y':363,'flipped':false,'hidden':false},
+		{'x':555,'y':359,'flipped':false,'hidden':false}, {'x':193,'y':193,'flipped':false,'hidden':false}
 	]
 };
 

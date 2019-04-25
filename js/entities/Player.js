@@ -64,6 +64,10 @@ function Player(posX, posY) {
 			'positions' : [STAIR1, STAIR2],
 			'distance' : ANIMATIONDISTANCE * 2
 		},
+		'swim' : {
+			'positions' : [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3], // same as walking
+			'distance' : ANIMATIONDISTANCE * 2
+		},
 		'fly' : {
 			'positions' : [FLYING1, FLYING2],
 			'distance' : ANIMATIONDISTANCE * 3
