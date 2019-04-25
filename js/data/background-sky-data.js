@@ -131,7 +131,7 @@ var background_sky_data = {
 		'skynoclouds08' : {
 			'left' : {'scene' : 'sky01', 'coords' : 'flip'},
 			'up' : undefined,
-			'right' : {'scene' : 'sky07', 'coords' : 'flip'},
+			'right' : {'scene' : 'msky', 'coords' : 'flip'},
 			'down' : {'scene' : 'sky05', 'coords' : 'flip'},
 			'special' : undefined
 		},
@@ -151,12 +151,12 @@ var background_sky_data = {
 		},
 		'skynoclouds09' : {
 			'left' : {'scene' : 'sky05', 'coords' : 'flip'},
-			'up' : {'scene' : 'sky07', 'coords' : 'flip'},
+			'up' : {'scene' : 'msky', 'coords' : 'flip'},
 			'right' : {'scene' : 'sky09', 'coords' : 'flip'},
 			'down' : {'scene' : 'sky06', 'coords' : 'flip'},
 			'special' : undefined
 		},
-		'sky07' : {
+		'msky' : {
 			'left' : {'scene' : 'skynoclouds08', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : {'scene' : 'skynoclouds11', 'coords' : 'flip'},
@@ -185,7 +185,7 @@ var background_sky_data = {
 			'special' : undefined
 		},
 		'skynoclouds11' : {
-			'left' : {'scene' : 'sky07', 'coords' : 'flip'},
+			'left' : {'scene' : 'msky', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : {'scene' : 'topskyvault00', 'coords' : 'flip'},
 			'down' : {'scene' : 'sky09', 'coords' : 'flip'},

@@ -144,7 +144,9 @@ MovingEntity.prototype.update = function (dt) {
 		this.affectedByGravity = false;
 		this.inWater = false; // should get set back to true if we are still in water on collision check
 	} else {
-		this.affectedByGravity = true;
+		if (!config.snakeMode) {
+			this.affectedByGravity = true;
+		}
 	}
 
 	// collision is false if no collision, otherwise object with 

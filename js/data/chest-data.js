@@ -142,6 +142,17 @@ var chest_data = {
 		{'x':109,'y':363,'flipped':false,'hidden':false}, {'x':224,'y':356,'flipped':false,'hidden':false},
 		{'x':344,'y':361,'flipped':false,'hidden':false}, {'x':455,'y':363,'flipped':false,'hidden':false},
 		{'x':555,'y':359,'flipped':false,'hidden':false}, {'x':193,'y':219,'flipped':false,'hidden':false,'flying':true}
+	],
+	'msky' : [
+		{'x':103,'y':315,'flipped':false,'hidden':false,'flying':true}, {'x':138,'y':256,'flipped':false,'hidden':false,'flying':true},
+		{'x':172,'y':199,'flipped':false,'hidden':false,'flying':true}, {'x':207,'y':139,'flipped':false,'hidden':false,'flying':true},
+		{'x':242,'y':89,'flipped':false,'hidden':false,'flying':true}, {'x':279,'y':37,'flipped':false,'hidden':false,'flying':true},
+		{'x':325,'y':89,'flipped':false,'hidden':false,'flying':true}, {'x':363,'y':143,'flipped':false,'hidden':false,'flying':true},
+		{'x':387,'y':193,'flipped':false,'hidden':false,'flying':true}, {'x':422,'y':143,'flipped':false,'hidden':false,'flying':true},
+		{'x':444,'y':89,'flipped':false,'hidden':false,'flying':true}, {'x':489,'y':43,'flipped':false,'hidden':false,'flying':true},
+		{'x':532,'y':87,'flipped':false,'hidden':false,'flying':true}, {'x':564,'y':139,'flipped':false,'hidden':false,'flying':true},
+		{'x':598,'y':193,'flipped':false,'hidden':false,'flying':true}, {'x':624,'y':255,'flipped':false,'hidden':false,'flying':true},
+		{'x':652,'y':313,'flipped':false,'hidden':false,'flying':true}
 	]
 };
 

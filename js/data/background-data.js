@@ -1919,13 +1919,15 @@ var background_data = {
 '01000000000000000000000000000000000000000000000000000000000000000000000010000000',
 '01111111111111111111111111111111111111111111111111111111111111111111111110000000',
 '00000000000000000000000000000000000000000000000000000000000000000000000000000000'
-	]
+	],
+	'msky' : undefined
 };
 
 // reused collision matrixes
 background_data.clearskyclouds = background_data.clearsky;
 background_data.actuallyclearsky = background_data.clearsky;
 background_data.skynoclouds = background_data.sky;
+background_data.msky = background_data.sky;
 
 // the sky is so big, we put it in a share file (the connections and reused collision matrices e.g. sky01)
 // now add that data to our Connections object
