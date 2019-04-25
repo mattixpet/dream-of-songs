@@ -77,7 +77,8 @@ EntityManager.prototype._spawnChests = function (scene) {
 					chests[i].x, chests[i].y, 
 					chests[i].flipped, 
 					chests[i].hidden,
-					chests[i].message // optional
+					chests[i].message, // optional
+					chests[i].flying // also optional
 				);
 				this.register(chest, scene);
 			} else {

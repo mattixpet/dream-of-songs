@@ -21,12 +21,13 @@ const COLLISIONHEIGHTREDUCTION = global.get('sprite-data').chest.COLLISIONHEIGHT
 // flip means which direction chest faces (left/right), flip is true if left
 // invisible is true iff chest is not supposed to be drawn (meaning player has to find it without seeing it)
 // message is an optional message to display once we're looted (located in menu-text-data under notificationMenu)
-function Chest(posX, posY, flip, invisible, message) {
+// flying is true if chest should not fall with gravity and just float in air
+function Chest(posX, posY, flip, invisible, message, flying) {
 	this.name = 'chest';
 
 	// use Entity constructor, then overwrite what we need to/ set what we need to after
 	Entity.call(this, global.get('imageHandler').getSprite('chest'),
-				posX, posY, true);
+				posX, posY, !flying);
 
 	this.animation = flip ? FLIPPED : NORMAL;
 

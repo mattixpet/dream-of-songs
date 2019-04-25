@@ -10,8 +10,8 @@ var util = global.get('util');
 var chest_data = {
 	// format
 	// {
-	//		'sceneName' : [{'x':x0,'y':y0,'flipped':flipped0,'hidden':invis0 [,'message':msg0]}, 
-	// 					   {'x':x1,'y':y1,'flipped':flipped1,'hidden':invis1 [,'message':msg1]}, ..],
+	//		'sceneName' : [{'x':x0,'y':y0,'flipped':flipped0,'hidden':invis0 [,'message':msg0, 'flying':fly0]}, 
+	// 					   {'x':x1,'y':y1,'flipped':flipped1,'hidden':invis1 [,'message':msg1, 'flying':fly1]}, ..],
 	//      'anotherScene' : ..
 	//	} 
 	// where xi, yi are coordinates of the chests to be spawned
@@ -19,6 +19,7 @@ var chest_data = {
 	// invis is true iff chest will not be drawn, but still present to be looted (hidden)
 	// message is the key of optional message to prompt to user located in
 	//   data/menu-text-data.js in notificationMenu
+	// flying is optional and means whether or not to have them fall with gravity or be stuck in the air
 	'clearsky' : [
 		{'x':400,'y':-200,'flipped':true,'hidden':false}
 	],
@@ -135,12 +136,12 @@ var chest_data = {
 		{'x':186,'y':174,'flipped':false,'hidden':false}
 	],
 	'cavewater' : [
-		{'x':133,'y':70,'flipped':false,'hidden':false}, {'x':191,'y':109,'flipped':false,'hidden':false},
-		{'x':71,'y':163,'flipped':false,'hidden':false}, {'x':289,'y':197,'flipped':false,'hidden':false},
-		{'x':350,'y':252,'flipped':false,'hidden':false}, {'x':122,'y':254,'flipped':false,'hidden':false},
+		{'x':133,'y':89,'flipped':false,'hidden':false,'flying':true}, {'x':190,'y':119,'flipped':false,'hidden':false,'flying':true},
+		{'x':71,'y':169,'flipped':false,'hidden':false,'flying':true}, {'x':289,'y':209,'flipped':false,'hidden':false,'flying':true},
+		{'x':350,'y':259,'flipped':false,'hidden':false,'flying':true}, {'x':122,'y':259,'flipped':false,'hidden':false,'flying':true},
 		{'x':109,'y':363,'flipped':false,'hidden':false}, {'x':224,'y':356,'flipped':false,'hidden':false},
 		{'x':344,'y':361,'flipped':false,'hidden':false}, {'x':455,'y':363,'flipped':false,'hidden':false},
-		{'x':555,'y':359,'flipped':false,'hidden':false}, {'x':193,'y':193,'flipped':false,'hidden':false}
+		{'x':555,'y':359,'flipped':false,'hidden':false}, {'x':193,'y':219,'flipped':false,'hidden':false,'flying':true}
 	]
 };
 
