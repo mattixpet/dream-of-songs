@@ -38,7 +38,7 @@ config['GRAVITYCONSTANT'] = 0.001;
 config['DEFAULTTERMINALSPEED'] = 0.5;
 config['DEFAULTJUMPSPEED'] = 0.4;
 
-config['STARTINGSCENE'] = 'clearsky';
+config['STARTINGSCENE'] = 'hilltopcorner';//'clearsky';
 
 // paths/urls
 config['SPRITEURL'] = 'img/spritesheets/';
