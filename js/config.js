@@ -22,7 +22,7 @@ config['gravity'] = true;
 config['clickToShowCoord'] = false;
 
 // settings menu checkboxes
-config['audioControlsFade'] = true; // always visible or fade in/out, default: no fade
+config['audioControlsFade'] = false; // always visible or fade in/out, default: no fade
 config['autoplay'] = true; // autoplay next song, default: yes
 config['allowParallelSongs'] = false; // only play one song at a time or not, default: one song at a time
 config['repeatSongs'] = false; // repeat the current song, default: no
@@ -38,7 +38,7 @@ config['GRAVITYCONSTANT'] = 0.001;
 config['DEFAULTTERMINALSPEED'] = 0.5;
 config['DEFAULTJUMPSPEED'] = 0.4;
 
-config['STARTINGSCENE'] = 'cavewater';//'clearsky';
+config['STARTINGSCENE'] = 'clearsky';
 
 // paths/urls
 config['SPRITEURL'] = 'img/spritesheets/';

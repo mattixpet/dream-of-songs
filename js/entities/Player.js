@@ -265,7 +265,8 @@ Player.prototype._handleChestCollision = function (chest) {
 	var chestY = util.pixelToGrid(chest.getX() + chest.getWidth(), chest.getY() + chest.getHeight(), 
 								  gridWidth, gridHeight).gridY;
 	var playerY = util.pixelToGrid(this.x + this.width, this.y + this.height, gridWidth, gridHeight).gridY;
-	if (util.almostEqual(chestY, playerY, 1) && !chest.isLooted()) {
+	 // special case for when swimming or flying, open chest if we collide anywhere (the !this.affectedByGravity part)
+	if ((!this.affectedByGravity || util.almostEqual(chestY, playerY, 1)) && !chest.isLooted()) {
 		var songName = chest.loot(); // get that loot!
 
 		if (chest.isHidden() && this.numHiddenChests === 0) {

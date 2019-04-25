@@ -153,6 +153,27 @@ var chest_data = {
 		{'x':532,'y':87,'flipped':false,'hidden':false,'flying':true}, {'x':564,'y':139,'flipped':false,'hidden':false,'flying':true},
 		{'x':598,'y':193,'flipped':false,'hidden':false,'flying':true}, {'x':624,'y':255,'flipped':false,'hidden':false,'flying':true},
 		{'x':652,'y':313,'flipped':false,'hidden':false,'flying':true}
+	],
+	'youwin' : [
+		{'x':58,'y':-2,'flipped':false,'hidden':false,'flying':true}, {'x':236,'y':2,'flipped':false,'hidden':false,'flying':true},
+		{'x':370,'y':2,'flipped':false,'hidden':false,'flying':true}, {'x':528,'y':13,'flipped':false,'hidden':false,'flying':true},
+		{'x':669,'y':6,'flipped':false,'hidden':false,'flying':true}, {'x':100,'y':41,'flipped':false,'hidden':false,'flying':true},
+		{'x':186,'y':45,'flipped':false,'hidden':false,'flying':true}, {'x':314,'y':47,'flipped':false,'hidden':false,'flying':true},
+		{'x':423,'y':52,'flipped':false,'hidden':false,'flying':true}, {'x':529,'y':85,'flipped':false,'hidden':false,'flying':true},
+		{'x':669,'y':71,'flipped':false,'hidden':false,'flying':true}, {'x':141,'y':100,'flipped':false,'hidden':false,'flying':true},
+		{'x':278,'y':100,'flipped':false,'hidden':false,'flying':true}, {'x':446,'y':112,'flipped':false,'hidden':false,'flying':true},
+		{'x':143,'y':162,'flipped':false,'hidden':false,'flying':true}, {'x':322,'y':158,'flipped':false,'hidden':false,'flying':true},
+		{'x':400,'y':170,'flipped':false,'hidden':false,'flying':true}, {'x':541,'y':145,'flipped':false,'hidden':false,'flying':true},
+		{'x':670,'y':133,'flipped':false,'hidden':false,'flying':true}, {'x':615,'y':176,'flipped':false,'hidden':false,'flying':true},
+		{'x':67,'y':228,'flipped':false,'hidden':false,'flying':true}, {'x':257,'y':231,'flipped':false,'hidden':false,'flying':true},
+		{'x':379,'y':236,'flipped':false,'hidden':false,'flying':true}, {'x':498,'y':227,'flipped':false,'hidden':false,'flying':true},
+		{'x':635,'y':235,'flipped':false,'hidden':false,'flying':true}, {'x':557,'y':268,'flipped':false,'hidden':false,'flying':true},
+		{'x':86,'y':292,'flipped':false,'hidden':false,'flying':true}, {'x':236,'y':291,'flipped':false,'hidden':false,'flying':true},
+		{'x':382,'y':295,'flipped':false,'hidden':false,'flying':true}, {'x':503,'y':297,'flipped':false,'hidden':false,'flying':true},
+		{'x':636,'y':284,'flipped':false,'hidden':false,'flying':true}, {'x':597,'y':315,'flipped':false,'hidden':false,'flying':true},
+		{'x':160,'y':315,'flipped':false,'hidden':false,'flying':true}, {'x':107,'y':361,'flipped':false,'hidden':false,'flying':true},
+		{'x':211,'y':362,'flipped':false,'hidden':false,'flying':true}, {'x':383,'y':364,'flipped':false,'hidden':false,'flying':true},
+		{'x':507,'y':361,'flipped':false,'hidden':false,'flying':true}, {'x':636,'y':362,'flipped':false,'hidden':false,'flying':true}
 	]
 };
 
