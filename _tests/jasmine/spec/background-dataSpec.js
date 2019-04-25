@@ -41,6 +41,9 @@ describe("background-data", function() {
         if (Number.isInteger(Number.parseInt(scene.substring(scene.length-2)))) {
           scene = scene.slice(0,scene.length-2);
         }
+        if (!background_data[scene]) {
+          console.log(scene);
+        }
         expect(background_data[scene]).not.toBe(undefined);
       }
     });
@@ -54,12 +57,14 @@ describe("background-data", function() {
         'down' : 'up'
       };
       var conns = background_data['Connections'];
+      var nonChecks = ['water00', 'water01', 'underwater00', 'underwater01', 'youwin'];
       for (var scene in conns) {
         var dirs = conns[scene];
         for (var dir in dirs) {
           // only check, left, right, up, down, no special or secondary-special
           // and don't check any undefineds..
-          if (dir.indexOf('special') < 0 && dirs[dir]) {
+          // also don't check water scenes (because they circle) or the youwin screen
+          if (dir.indexOf('special') < 0 && dirs[dir] && nonChecks.indexOf(scene) < 0) {
             var destinationScene = dirs[dir].scene;
             // going in opposite direction from destinationScene should bring us back to our scene
             expect(conns[destinationScene][opposites[dir]].scene).toEqual(scene);

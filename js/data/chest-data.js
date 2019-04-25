@@ -154,6 +154,7 @@ var chest_data = {
 		{'x':598,'y':193,'flipped':false,'hidden':false,'flying':true}, {'x':624,'y':255,'flipped':false,'hidden':false,'flying':true},
 		{'x':652,'y':313,'flipped':false,'hidden':false,'flying':true}
 	],
+	// wowsa
 	'youwin' : [
 		{'x':58,'y':-2,'flipped':false,'hidden':false,'flying':true}, {'x':236,'y':2,'flipped':false,'hidden':false,'flying':true},
 		{'x':370,'y':2,'flipped':false,'hidden':false,'flying':true}, {'x':528,'y':13,'flipped':false,'hidden':false,'flying':true},
@@ -174,6 +175,12 @@ var chest_data = {
 		{'x':160,'y':315,'flipped':false,'hidden':false,'flying':true}, {'x':107,'y':361,'flipped':false,'hidden':false,'flying':true},
 		{'x':211,'y':362,'flipped':false,'hidden':false,'flying':true}, {'x':383,'y':364,'flipped':false,'hidden':false,'flying':true},
 		{'x':507,'y':361,'flipped':false,'hidden':false,'flying':true}, {'x':636,'y':362,'flipped':false,'hidden':false,'flying':true}
+	],
+	'sky17' : [
+		{'x':650,'y':50,'flipped':true,'hidden':false,'flying':true}
+	],
+	'tinycloud' : [
+		{'x':100,'y':50,'flipped':false,'hidden':false,'flying':true}
 	]
 };
 

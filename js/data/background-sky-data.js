@@ -87,21 +87,21 @@ var background_sky_data = {
 		},
 		//
 		'skynoclouds05' : {
-			'left' : undefined,
+			'left' : {'scene' : 'sky20', 'coords' : 'flip'},
 			'up' : {'scene' : 'sky03', 'coords' : 'flip'},
 			'right' : {'scene' : 'skynoclouds04', 'coords' : 'flip'},
 			'down' : {'scene' : 'hilltop', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'sky03' : {
-			'left' : undefined,
+			'left' : {'scene' : 'skynoclouds21', 'coords' : 'flip'},
 			'up' : {'scene' : 'skynoclouds06', 'coords' : 'flip'},
 			'right' : {'scene' : 'skynoclouds03', 'coords' : 'flip'},
 			'down' : {'scene' : 'skynoclouds05', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'skynoclouds06' : {
-			'left' : undefined,
+			'left' : {'scene' : 'sky19', 'coords' : 'flip'},
 			'up' : undefined,
 			'right' : {'scene' : 'sky02', 'coords' : 'flip'},
 			'down' : {'scene' : 'sky03', 'coords' : 'flip'},
@@ -250,29 +250,141 @@ var background_sky_data = {
 		'skynoclouds15' : {
 			'left' : {'scene' : 'sky11', 'coords' : 'flip'},
 			'up' : {'scene' : 'sky13', 'coords' : 'flip'},
-			'right' : undefined,
+			'right' : {'scene' : 'sky15', 'coords' : 'flip'},
 			'down' : {'scene' : 'actuallyclearsky', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'sky13' : {
 			'left' : {'scene' : 'skynoclouds13', 'coords' : 'flip'},
 			'up' : {'scene' : 'skynoclouds16', 'coords' : 'flip'},
-			'right' : undefined,
+			'right' : {'scene' : 'skynoclouds17', 'coords' : 'flip'},
 			'down' : {'scene' : 'skynoclouds15', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'skynoclouds16' : {
 			'left' : {'scene' : 'sky12', 'coords' : 'flip'},
 			'up' : {'scene' : 'sky14', 'coords' : 'flip'},
-			'right' : undefined,
+			'right' : {'scene' : 'sky16', 'coords' : 'flip'},
 			'down' : {'scene' : 'sky13', 'coords' : 'flip'},
 			'special' : undefined
 		},
 		'sky14' : {
 			'left' : {'scene' : 'skynoclouds14', 'coords' : 'flip'},
 			'up' : undefined,
-			'right' : undefined,
+			'right' : {'scene' : 'skynoclouds18', 'coords' : 'flip'},
 			'down' : {'scene' : 'skynoclouds16', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky15' : {
+			'left' : {'scene' : 'skynoclouds15', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds17', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds20', 'coords' : 'flip'},
+			'down' : {'scene' : 'beach', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds17' : {
+			'left' : {'scene' : 'sky13', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky16', 'coords' : 'flip'},
+			'right' : {'scene' : 'sky18', 'coords' : 'flip'},
+			'down' : {'scene' : 'sky15', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky16' : {
+			'left' : {'scene' : 'skynoclouds16', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds18', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds19', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds17', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds18' : {
+			'left' : {'scene' : 'sky14', 'coords' : 'flip'},
+			'up' : undefined,
+			'right' : {'scene' : 'sky17', 'coords' : 'flip'},
+			'down' : {'scene' : 'sky16', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds20' : {
+			'left' : {'scene' : 'sky15', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky18', 'coords' : 'flip'},
+			'right' : undefined,
+			'down' : {'scene' : 'water01', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky18' : {
+			'left' : {'scene' : 'skynoclouds17', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds19', 'coords' : 'flip'},
+			'right' : undefined,
+			'down' : {'scene' : 'skynoclouds20', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds19' : {
+			'left' : {'scene' : 'sky16', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky17', 'coords' : 'flip'},
+			'right' : undefined,
+			'down' : {'scene' : 'sky18', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky17' : {
+			'left' : {'scene' : 'skynoclouds18', 'coords' : 'flip'},
+			'up' : undefined,
+			'right' : undefined,
+			'down' : {'scene' : 'skynoclouds19', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky19' : {
+			'left' : {'scene' : 'tinycloud', 'coords' : 'flip'},
+			'up' : undefined,
+			'right' : {'scene' : 'skynoclouds06', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds21', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds21' : {
+			'left' : {'scene' : 'sky21', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky19', 'coords' : 'flip'},
+			'right' : {'scene' : 'sky03', 'coords' : 'flip'},
+			'down' : {'scene' : 'sky20', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky20' : {
+			'left' : {'scene' : 'skynoclouds24', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds21', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds05', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds22', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds22' : {
+			'left' : {'scene' : 'sky22', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky20', 'coords' : 'flip'},
+			'right' : {'scene' : 'hilltop', 'coords' : 'flip'},
+			'down' : {'scene' : 'hillbeach', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky22' : {
+			'left' : undefined,
+			'up' : {'scene' : 'skynoclouds24', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds22', 'coords' : 'flip'},
+			'down' : {'scene' : 'water00', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'skynoclouds24' : {
+			'left' : undefined,
+			'up' : {'scene' : 'sky21', 'coords' : 'flip'},
+			'right' : {'scene' : 'sky20', 'coords' : 'flip'},
+			'down' : {'scene' : 'sky22', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'sky21' : {
+			'left' : undefined,
+			'up' : {'scene' : 'tinycloud', 'coords' : 'flip'},
+			'right' : {'scene' : 'skynoclouds21', 'coords' : 'flip'},
+			'down' : {'scene' : 'skynoclouds24', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'tinycloud' : {
+			'left' : undefined,
+			'up' : undefined,
+			'right' : {'scene' : 'sky19', 'coords' : 'flip'},
+			'down' : {'scene' : 'sky21', 'coords' : 'flip'},
 			'special' : undefined
 		}
 	}

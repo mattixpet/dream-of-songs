@@ -104,7 +104,8 @@ var background_data = {
 			'right' : {'scene' : 'caveshrub', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : {'scene' : 'waterfallofdreams', 'coords' : {'x':70,'y':50}},
-			'secondary-special' : {'scene' : 'cavestairs', 'coords' : {'x':755,'y':160}}
+			'secondary-special' : {'scene' : 'cavestairs', 'coords' : {'x':755,'y':160}},
+			'tertiary-special' : {'scene' : 'darkchasm', 'coords' : {'x':385,'y':280}}
 		},
 		'waterfallofdreams' : {
 			'left' : {'scene' : 'mountainwater', 'coords' : 'flip'},
@@ -208,7 +209,7 @@ var background_data = {
 			'special' : undefined
 		},
 		'hilltop' : {
-			'left' : undefined,
+			'left' : {'scene' : 'skynoclouds22', 'coords' : 'flip'},
 			'up' : {'scene' : 'skynoclouds05', 'coords' : 'flip'},
 			'right' : {'scene' : 'hilltopcorner', 'coords' : 'flip'},
 			'down' : {'scene' : 'insidehill', 'coords' : 'flip'},
@@ -252,7 +253,7 @@ var background_data = {
 		'actuallyclearsky' : {
 			'left' : {'scene' : 'arrowsky', 'coords' : 'flip'},
 			'up' : {'scene' : 'skynoclouds15', 'coords' : 'flip'},
-			'right' : undefined,
+			'right' : {'scene' : 'beach', 'coords' : 'flip'},
 			'down' : undefined,
 			'special' : undefined
 		},
@@ -270,6 +271,55 @@ var background_data = {
 			'down' : undefined,
 			'special' : {'scene' : 'stalagmites', 'coords' : {'x':332,'y':329}},
 			'secondary-special' : {'scene' : 'stalagmites', 'coords' : {'x':461,'y':329}}
+		},
+		'darkchasm' : {
+			'left' : undefined,
+			'up' : undefined,
+			'right' : undefined,
+			'down' : undefined,
+			'special' : {'scene' : 'chasm', 'coords' : {'x':600,'y':20}},
+		},
+		'beach' : {
+			'left' : {'scene' : 'actuallyclearsky', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky15', 'coords' : 'flip'},
+			'right' : {'scene' : 'water01', 'coords' : 'flip'},
+			'down' : undefined,
+			'special' : undefined
+		},
+		'water01' : {
+			'left' : {'scene' : 'beach', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds20', 'coords' : 'flip'},
+			'right' : {'scene' : 'water01', 'coords' : 'flip'},
+			'down' : {'scene' : 'underwater01', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'underwater01' : {
+			'left' : {'scene' : 'underwater01', 'coords' : 'flip'},
+			'up' : {'scene' : 'water01', 'coords' : 'flip'},
+			'right' : {'scene' : 'underwater01', 'coords' : 'flip'},
+			'down' : {'scene' : 'underwater01', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'hillbeach' : {
+			'left' : {'scene' : 'water00', 'coords' : 'flip'},
+			'up' : {'scene' : 'skynoclouds22', 'coords' : 'flip'},
+			'right' : undefined,
+			'down' : undefined,
+			'special' : {'scene' : 'underwater01', 'coords' : {'x':20,'y':280}}
+		},
+		'water00' : {
+			'left' : {'scene' : 'water00', 'coords' : 'flip'},
+			'up' : {'scene' : 'sky22', 'coords' : 'flip'},
+			'right' : {'scene' : 'hillbeach', 'coords' : 'flip'},
+			'down' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'special' : undefined
+		},
+		'underwater00' : {
+			'left' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'up' : {'scene' : 'water00', 'coords' : 'flip'},
+			'right' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'down' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'special' : undefined
 		}
 	},
 	'clearsky' : [
@@ -1969,6 +2019,11 @@ var background_data = {
 '88888888888888888888888888888888888888888888888888888888888888888888888888888888'
 	],
 	'youwin' : undefined, //reuse underwater
+	'tinycloud' : undefined, // reuse sky
+	'water' : undefined, // to be done
+	'darkchasm' : undefined,
+	'beach' : undefined,
+	'hillbeach' : undefined // LATER
 };
 
 // reused collision matrixes
@@ -1977,6 +2032,12 @@ background_data.actuallyclearsky = background_data.clearsky;
 background_data.skynoclouds = background_data.sky;
 background_data.msky = background_data.sky;
 background_data.youwin = background_data.underwater;
+background_data.tinycloud = background_data.sky;
+// TESTING ONLY
+background_data.water = background_data.underwater;
+background_data.darkchasm = background_data.underwater;
+background_data.beach = background_data.underwater;
+background_data.hillbeach = background_data.underwater;
 
 // the sky is so big, we put it in a share file (the connections and reused collision matrices e.g. sky01)
 // now add that data to our Connections object
