@@ -34,7 +34,16 @@ var sprite_data = {
 		'stillAnimationNumPoints' : 48,
 		'stillAnimationColor' : '#e4e4e4',
 		'stillAnimationBorderColor' : '#b3d8f5',
-		'ANIMATIONDISTANCE' : 30 // how far to walk/fly whatever before changing animation
+		'ANIMATIONDISTANCE' : 30, // how far to walk/fly whatever before changing animation
+		'gogglesRelativePos' : {'x':6,'y':17} // what do subtract from playerX,playerY for goggles sprite draw
+	},
+	'player-goggles' : {
+		'fileurl' : config.SPRITEURL + 'goggles.png',
+		'dispWidth' : 30,
+		'dispHeight' : 41,
+		'srcWidth' : undefined, // this is just a regular sprite, not a spritesheet
+		'srcHeight' : undefined,
+		'positions' : undefined
 	},
 	'chest' : {
 		'fileurl' : config.SPRITEURL + 'chest-spritesheet.png',

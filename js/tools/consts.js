@@ -46,6 +46,9 @@ consts['TERTIARYTELEBLOCK'] = '7'; // three teleports on scene
 consts['WATERBLOCK'] = '8';
 consts['WATERTOPBLOCK'] = '9';
 
+// scenes which player should have swimming goggles on for the entire time
+consts['FULLWATERSCENES'] = ['cavewater'];
+
 // c h e a t s
 // if you're looking at this STOP NOW
 // just kidding.. cool I guess. But you could have figured this out from the riddles in the game!

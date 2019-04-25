@@ -250,6 +250,10 @@ Background.prototype.getStandableBlocks = function () {
 	return this.standableBlocks.slice();
 };
 
+Background.prototype.getCurrentScene = function () {
+	return this.currentScene;
+};
+
 global.set('class/Background', Background);
 
 }());

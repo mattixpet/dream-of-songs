@@ -44,6 +44,9 @@ const STILLMARGIN = sprite_data.player.STILLMARGIN;
 const FLYINGMARGINX = sprite_data.player.FLYINGMARGINX;
 const FLYINGMARGINY = sprite_data.player.FLYINGMARGINY;
 const ANIMATIONDISTANCE = sprite_data.player.ANIMATIONDISTANCE;
+
+// other data
+const gogglesRelativePos = sprite_data.player.gogglesRelativePos;
 sprite_data = undefined;
 
 function Player(posX, posY) {
@@ -66,7 +69,7 @@ function Player(posX, posY) {
 		},
 		'swim' : {
 			'positions' : [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3], // same as walking
-			'distance' : ANIMATIONDISTANCE * 2
+			'distance' : ANIMATIONDISTANCE
 		},
 		'fly' : {
 			'positions' : [FLYING1, FLYING2],
@@ -86,6 +89,8 @@ function Player(posX, posY) {
 		this._handleEntityCollision,
 		0.4 // jump speed (singular increase in -y velocity on jump command)
 	);
+
+	this.gogglesSprite = global.get('imageHandler').getSprite('player-goggles');
 
 	// collision width/height
 	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
@@ -122,6 +127,16 @@ Player.prototype.draw = function () {
 		x += this.inStillAnimation2 ? STILLMARGIN : 0;
 		x += config.snakeMode ? FLYINGMARGINX : 0;
 		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, y, this.spritePosition);
+	}
+
+	// if we're in water or on scenes with only water display our swimming goggles !
+	if (this.inWater || consts['FULLWATERSCENES'].indexOf(global.get('background').getCurrentScene()) >= 0) {
+		if (this.orientation === 'right') {
+			this.gogglesSprite.draw(x - gogglesRelativePos.x, y - gogglesRelativePos.y);
+		} else {
+			var margin = MIRROREDMARGIN;
+			this.gogglesSprite.drawMirrored(x - gogglesRelativePos.x + margin, y - gogglesRelativePos.y);
+		}
 	}
 
 	this._drawBoundingBox();
