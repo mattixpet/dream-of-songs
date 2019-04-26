@@ -13,6 +13,7 @@ function AudioManager () {
 	this.player = new AudioPlayer();
 
 	this.songs = global.get('audio-data');
+	util.log('Found: ' + this.songs.length + ' songs which should hopefully fit into ' + global.get('consts').NUMCHESTS + ' chests.');
 
 	this.gui = new AudioGUI();
 	global.set('audioGui', this.gui); // for the mouse events, so they can notify the gui and more of course..

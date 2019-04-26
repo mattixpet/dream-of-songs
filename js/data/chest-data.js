@@ -86,7 +86,8 @@ var chest_data = {
 	],
 	'hillbottom' : [
 		{'x':160,'y':198,'flipped':true,'hidden':false}, {'x':240,'y':205,'flipped':true,'hidden':false}, 
-		{'x':320,'y':212,'flipped':true,'hidden':false}, {'x':400,'y':225,'flipped':true,'hidden':false}
+		{'x':320,'y':212,'flipped':true,'hidden':false}, {'x':400,'y':225,'flipped':true,'hidden':false},
+		{'x':80,'y':190,'flipped':true,'hidden':false}
 	],
 	'hilltopcorner' : [
 		{'x':570,'y':99,'flipped':true,'hidden':true}, {'x':642,'y':102,'flipped':true,'hidden':true}
@@ -111,7 +112,8 @@ var chest_data = {
 		{'x':680,'y':25,'flipped':true,'hidden':false},	{'x':744,'y':39,'flipped':true,'hidden':false}
 	],
 	'spikes' : [
-		{'x':727,'y':3,'flipped':true,'hidden':false,'message':'only-way-to-fly'}
+		{'x':727,'y':3,'flipped':true,'hidden':false,'message':'only-way-to-fly'},
+		{'x':576,'y':241,'flipped':true,'hidden':true,'flying':true}
 	],
 	'semivaulttop' : undefined, // reuse from semivault
 	'mountain' : [
@@ -120,7 +122,8 @@ var chest_data = {
 	],
 	'singlecloud' : [
 		{'x':466,'y':237,'flipped':false,'hidden':false}, {'x':516,'y':280,'flipped':false,'hidden':false},
-		{'x':631,'y':280,'flipped':true,'hidden':false}, {'x':681,'y':237,'flipped':true,'hidden':false}
+		{'x':631,'y':280,'flipped':true,'hidden':false}, {'x':681,'y':237,'flipped':true,'hidden':false},
+		{'x':574,'y':294,'flipped':false,'hidden':true}
 	],
 	'skyvault00' : undefined,
 	'topskyvault00' : undefined,
