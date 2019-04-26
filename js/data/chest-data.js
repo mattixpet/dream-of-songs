@@ -177,10 +177,28 @@ var chest_data = {
 		{'x':507,'y':361,'flipped':false,'hidden':false,'flying':true}, {'x':636,'y':362,'flipped':false,'hidden':false,'flying':true}
 	],
 	'sky17' : [
-		{'x':650,'y':50,'flipped':true,'hidden':false,'flying':true}
+		{'x':690,'y':45,'flipped':true,'hidden':false,'flying':true}
 	],
 	'tinycloud' : [
-		{'x':100,'y':50,'flipped':false,'hidden':false,'flying':true}
+		{'x':88,'y':74,'flipped':false,'hidden':false,'flying':true}
+	],
+	'beach' : [
+		{'x':188,'y':61,'flipped':true,'hidden':false}, {'x':242,'y':91,'flipped':true,'hidden':false}
+	],
+	'hillbeach' : [
+		{'x':344,'y':158,'flipped':false,'hidden':false}, {'x':409,'y':112,'flipped':false,'hidden':false},
+		{'x':474,'y':67,'flipped':false,'hidden':false}, {'x':247,'y':370,'flipped':true,'hidden':true,'flying':true}
+	],
+	'water00' : [
+		{'x':8,'y':218,'flipped':false,'hidden':true}
+	],
+	'water01' : [
+		{'x':747,'y':217,'flipped':true,'hidden':true}
+	],
+	'darkchasm' : [
+		{'x':55,'y':38,'flipped':false,'hidden':false}, {'x':114,'y':34,'flipped':false,'hidden':false},
+		{'x':175,'y':36,'flipped':false,'hidden':false}, {'x':570,'y':36,'flipped':true,'hidden':false},
+		{'x':631,'y':36,'flipped':true,'hidden':false}, {'x':690,'y':35,'flipped':true,'hidden':false}
 	]
 };
 
