@@ -26,10 +26,15 @@ var raven_hidden_data = {
 		'direction' : 'left'
 	},
 	'fourth' : {
+		'scene' : 'hillbeach',
+		'coords' : {'x':246, 'y':220},
+		'direction' : 'left'
+	},
+	'fifth' : {
 		'scene' : 'hilltop',
 		'coords' : {'x':486, 'y':29},
-		'direction' : 'left'
-	}
+		'direction' : 'right'
+	},
 };
 
 global.set('raven-data', raven_data);

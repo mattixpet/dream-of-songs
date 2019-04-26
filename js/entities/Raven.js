@@ -91,6 +91,9 @@ Raven.prototype.chaseAway = function () {
 				case 'third':
 					this.numberOfScene = 'fourth';
 					break;
+				case 'fourth':
+					this.numberOfScene = 'fifth';
+					break;
 				default:
 					util.warn('Something wrong with raven being chased away!');
 					return;
@@ -119,7 +122,8 @@ Raven.prototype.update = function (dt) {
 		this.orientation = 'left'; // always look left while stationary
 		this.mode = 'still';
 		this._setAnimation(this.mode);
-		if (this.numberOfScene === 'fourth') {
+		// last scene
+		if (this.numberOfScene === 'fifth') {
 			this.mode = 'chilling';
 		}
 	}
