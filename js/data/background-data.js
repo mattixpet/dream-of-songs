@@ -322,6 +322,15 @@ var background_data = {
 			'right' : {'scene' : 'underwater00', 'coords' : 'flip'},
 			'down' : {'scene' : 'underwater00', 'coords' : 'flip'},
 			'special' : undefined
+		},
+		// or underwater01 depending on where entity came from
+		// background will change this appropriately
+		'youwin' : {
+			'left' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'up' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'right' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'down' : {'scene' : 'underwater00', 'coords' : 'flip'},
+			'special' : undefined
 		}
 	},
 	'clearsky' : [

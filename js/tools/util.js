@@ -6,6 +6,21 @@
 
 var util = {};
 
+function arrayEquals(a, b) {
+	if (a === b) {
+		return true;
+	}
+	if (a.length !== b.length) {
+		return false;
+	}
+	for (var i = 0; i < a.length; i++) {
+		if (a[i] !== b[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+
 // Return true if a in [b-delta,b+delta]
 function almostEqual(a, b, delta) {
 	return a === b || (a <= b+delta && a >= b-delta);
@@ -115,6 +130,7 @@ function _getDateMilliseconds() {
 		date.getMilliseconds();
 }
 
+util['arrayEquals'] = arrayEquals;
 util['almostEqual'] = almostEqual;
 util['deepCopy'] = deepCopy;
 util['shallowCopy'] = shallowCopy;

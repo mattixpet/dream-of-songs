@@ -11,6 +11,9 @@ var draw = global.get('draw');
 var consts = global.get('consts');
 var collision = global.get('collision');
 
+// local consts
+const WINNINGCOMBINATION = ['right', 'right', 'left', 'left', 'right'];
+
 function Background() {
 	this.scenes = {}; // scene = page, stage whatever you want to call it, one background image
 	this.currentScene = config.STARTINGSCENE;
@@ -38,6 +41,17 @@ function Background() {
 	}
 
 	this.heavenNotification = false; // display notification on player entering skyvault or topskyvault
+
+	// Object with the entities (well only player really..) which
+	// have gone the correct directions in underwater{00,01} scenes
+	// ending in the youwin screen !
+	// Winning combination: right, right, left, left, right
+	// Format, anywhere from an empty array to this:
+	// {
+	//		'entityName' : ['right', 'right', 'left', 'left, 'right']
+	// }
+	// if it's like this ^ then entity has gotten to the youwin screen !
+	this.youWinTrail = {};
 }
 
 Background.prototype.draw = function () {
@@ -190,6 +204,9 @@ Background.prototype.requestNextScene = function (entity, direction) {
 			this.currentSceneTemplate = undefined;
 		}
 
+		// if all the correct directions, scene will be 'youwin'
+		scene = this._processYouWinTrail(entity.getName(), scene, direction);
+
 		// update scene
 		this.currentScene = scene;
 
@@ -202,7 +219,7 @@ Background.prototype.requestNextScene = function (entity, direction) {
 
 		// let's not just change scene, let's also notify entityManager so he can
 		// spawn/take care of entities on that scene and move entity between scenes
-		global.get('entityManager').notifySceneChange(nextScene.scene, entity);
+		global.get('entityManager').notifySceneChange(scene, entity);
 
 		var coords = nextScene.coords;
 		var canvas = global.get('canvas');
@@ -235,6 +252,38 @@ Background.prototype.requestNextScene = function (entity, direction) {
 	}
 
 	return false;
+};
+
+Background.prototype._processYouWinTrail = function (entityName, scene, direction) {
+	// first make sure the previous scene was the underwater scene
+	var prevScene = this.currentScene;
+	if (!(prevScene === 'underwater00' || prevScene === 'underwater01')) {
+		return scene;
+	}
+
+	if (!this.youWinTrail[entityName]) {
+		this.youWinTrail[entityName] = [];
+	}
+	var entityTrail = this.youWinTrail[entityName];
+	entityTrail.push(direction);
+	if (util.arrayEquals(entityTrail, WINNINGCOMBINATION.slice(0, entityTrail.length))) {
+		if (entityTrail.length === WINNINGCOMBINATION.length) {
+			util.log('CONGRATULATIONS! Top of the morning to ya.');
+			this.youWinTrail[entityName] = []; // reset so he can go again
+			// set the correct nextScene in youwin (to go back to underwater00 if that's
+			// where we were or underwater01 otherwise)
+			var youWinScene = this.cData['Connections'].youwin;
+			youWinScene.left.scene = 
+				youWinScene.up.scene = 
+				youWinScene.right.scene = 
+				youWinScene.down.scene = prevScene;
+			return 'youwin';
+		}
+	} else {
+		// reset on a wrong direction
+		this.youWinTrail[entityName] = [];
+	}
+	return scene;
 };
 
 Background.prototype.getGridWidth = function () {
