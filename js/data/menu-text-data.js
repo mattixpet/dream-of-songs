@@ -41,7 +41,7 @@ var menu_text_data = {
 						'Maybe there are some more chests to be found? ' +
 						'You can always check ' +
 						'out the songs you have collected in the pause menu (click \'p\').',
-		'general-chest' : 'New song! {}/' + (consts.NUMCHESTS+1) + ' \n {}', //+ 1 here because of title theme
+		'general-chest' : 'New song! {}/' + consts.NUMCHESTS + ' \n {}',
 		'first-hidden-chest' : 	'Congratulations you found a hidden chest! \n Hidden chests ' +
 							'are much rarer than normal chests and can\'t be seen with ' +
 							'the naked eye. Well done. (1/' + consts.NUMHIDDENCHESTS + ')',

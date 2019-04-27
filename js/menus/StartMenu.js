@@ -30,8 +30,6 @@ function StartMenu (callback) {
 StartMenu.prototype = Object.create(Menu.prototype);
 
 StartMenu.prototype._handleStart = function () {
-	// pause title theme !
-	global.get('audioManager').pause();
 	this.callback(); // should have been provided with function to start game on creation, that is callback
 	this.hide();
 };
@@ -46,15 +44,6 @@ StartMenu.prototype._handleAbout = function () {
 
 StartMenu.prototype.onEnter = function () {
 	this._handleStart();
-};
-
-// overwrite the default display because we need to play our title theme !
-StartMenu.prototype.display = function () {
-	Menu.prototype.display.call(this);
-	if (!this.startedPlayingTheme && config.playTitleTheme) {
-		global.get('audioManager').playTitleTheme();
-		this.startedPlayingTheme = true;
-	}
 };
 
 global.set('class/StartMenu', StartMenu);

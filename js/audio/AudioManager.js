@@ -21,11 +21,8 @@ function AudioManager () {
 	this.songsDelivered = {}; // songs we've put in chests but player hasn't opened
 	this.playerSongs = []; // songs player has gotten from chests
 
-	// set title theme ready and as our first song
-	this.notifySongOpened(this.getNewSong('title'));
-
 	// index of current song in this.playerSongs
-	this.currentSong = 0; // we'll always have at least one song (since we get title theme)
+	this.currentSong = 0;
 
 	// is a song playing at the moment? (audio audible)
 	this.isPlaying = false;
@@ -79,13 +76,15 @@ AudioManager.prototype.notifySpacePress = function () {
 		this.pause();
 		this.gui.setCurrentSongAsPaused();
 	} else {
-		var currentSongName = this.playerSongs[this.currentSong].name;
-		if (currentSongName === this.player.getSongName()) {
-			this.resume();
-		} else {
-			this.playSong(currentSongName, true);
+		var currentSong = this.playerSongs[this.currentSong]
+		if (currentSong) {
+			if (currentSong.name === this.player.getSongName()) {
+				this.resume();
+			} else {
+				this.playSong(currentSong.name, true);
+			}
+			this.gui.setCurrentSongAsPlaying();
 		}
-		this.gui.setCurrentSongAsPlaying();
 	}
 };
 
@@ -102,23 +101,12 @@ AudioManager.prototype.notifySongOpened = function (songName) {
 
 // Returns the name of a random song, and moves the song itself to this.songsDelivered
 // Used by the chests on initialization.
-// If special === 'title', get our chosen title theme, should be called in audiomanager constructor
-// otherwise get random song
 AudioManager.prototype.getNewSong = function (special) {
 	if (this.songs.length === 0) {
 		util.warn('No more songs left to add to chests.');
 		return;
 	}
 	var rndIdx = util.randInt(0, this.songs.length);
-	if (special === 'title') {
-		// find our index of 'title' theme, which is called: sofa
-		for (var i = 0; i < this.songs.length; i++) {
-			if (this.songs[i].name === 'sofa') {
-				rndIdx = i; // cheat to get our song !
-				break;
-			}
-		}
-	}
 	var song = this.songs[rndIdx];
 	this.songs.splice(rndIdx, 1); // delete song from our song array
 	this.songsDelivered[song.name] = song; // log it here
@@ -313,10 +301,6 @@ AudioManager.prototype.setIntervalForSongInMenu = function () {
 // and draw updates update the song
 AudioManager.prototype.stopIntervalForSongInMenu = function () {
 	clearInterval(this.intervalId);
-};
-
-AudioManager.prototype.playTitleTheme = function () {
-	this.playSong(this.playerSongs[0].name, true); // title is always first song we have
 };
 
 AudioManager.prototype.drawGui = function () {

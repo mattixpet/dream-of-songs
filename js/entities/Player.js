@@ -288,6 +288,7 @@ Player.prototype._handleChestCollision = function (chest) {
 			} else if (this.numChests === 0 && !chest.containsMessage()) {
 				// display first chest notification, unless the chest has a message
 				// (super unlikely that is players first chest, but just in case)
+				global.get('audioGui').showControls(); // display the player in case user turned on fade before first chest
 				global.get('notificationMenu').notify('first-chest');
 				global.get('notificationMenu').display();
 

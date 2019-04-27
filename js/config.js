@@ -28,7 +28,6 @@ config['allowParallelSongs'] = false; // only play one song at a time or not, de
 config['repeatSongs'] = false; // repeat the current song, default: no
 
 // misc
-config['playTitleTheme'] = false;
 // options: no-cors, cors, same-origin, depending on where your audio is located
 // see config.SONGURL
 config['fetchMode'] = 'cors';

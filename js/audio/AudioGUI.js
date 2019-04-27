@@ -47,7 +47,7 @@ function AudioGUI () {
 	this.fadeOut = false;
 	this.fadeTime = 0;
 	this.mouseStillTime = 0; // after this reaches MOUSESTILLTIME we fade player out
-	this.controlsVisible = true;
+	this.controlsVisible = false; // set as true on first song gotten
 }
 
 // Mouse event handling calls this function so we can know what to do
@@ -266,6 +266,10 @@ AudioGUI.prototype.draw = function () {
 		// create a new song and draw it
 		// Also if the current songs configuration is 'menu', we came from there and need to change it to game
 		var song = playerSongs[audioManager.getCurrentSong()];
+		if (!song) {
+			return;
+		}
+
 		if (this.activeSongs.length !== 1 || 
 			(this.activeSongs.length > 0 && song.name !== this.activeSongs[0].name) ||
 			(this.activeSongs.length > 0 && this.activeSongs[0].getConfiguration() === 'menu')) {
@@ -326,8 +330,7 @@ AudioGUI.prototype.draw = function () {
 
 		// draw the total songs collected text and download all text
 		draw.fillText(
-			// + 1 in the num chests because of title theme
-			'Total songs collected: ' + playerSongs.length + '/' + (consts.NUMCHESTS + 1),
+			'Total songs collected: ' + playerSongs.length + '/' + consts.NUMCHESTS,
 			data.totalSongPos.x,
 			data.totalSongPos.y,
 			data.font,
@@ -427,6 +430,12 @@ AudioGUI.prototype.notifyDownloadInProgress = function () {
 AudioGUI.prototype.notifyDownloadCompleted = function () {
 	this.downloading = false;
 	util.log('Download completed or error.');
+};
+
+AudioGUI.prototype.showControls = function () {
+	this.controlsVisible = true;
+	this.fadeIn = false;
+	this.fadeOut = false;
 };
 
 global.set('class/AudioGUI', AudioGUI);
