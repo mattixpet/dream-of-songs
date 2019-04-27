@@ -105,7 +105,7 @@ ImageHandler.prototype._createSpriteFromImage =
 	function _createSpriteFromImage(name, fileurl, dispWidth, dispHeight, srcWidth, srcHeight, positions) {
 		var img = new Image();
 		this.imagesLoaded.push(
-			new Promise(function(resolve, reject){
+			new Promise(function(resolve){
 				img.onload = function () {
 					var imageHandler = global.get('imageHandler');
 					imageHandler.incrementImageCounter();
@@ -138,7 +138,7 @@ ImageHandler.prototype.incrementImageCounter = function () {
 };
 
 ImageHandler.prototype.preloadImages = function (callback) {
-	Promise.all(this.imagesLoaded).then(function(values){
+	Promise.all(this.imagesLoaded).then(function(){
 		callback();
 	});
 };

@@ -74,7 +74,7 @@ function Song (name, x, y, year, duration, configuration, position) {
 
 // Fills this.playRect, this.downloadRect, this.barRect and this.nameTopleft with information
 // Make them ready for immediate drawing !
-Song.prototype._populateRects = function (x, y) {
+Song.prototype._populateRects = function () {
 	var spacingData = global.get('audio-gui-data')['Spacings'];
 
 	// just shorter more comfortable names here

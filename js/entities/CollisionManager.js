@@ -5,7 +5,6 @@
 'use strict';
 
 // imports
-var util = global.get('util');
 var collision = global.get('collision'); // helper library
 
 function CollisionManager() {

@@ -8,7 +8,6 @@
 
 // imports
 var util = global.get('util');
-var collision = global.get('collision');
 var Menu = global.get('class/Menu');
 
 function ScrollableMenu(upArrowCoords, downArrowCoords) {

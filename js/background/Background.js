@@ -9,7 +9,6 @@ var config = global.get('config');
 var util = global.get('util');
 var draw = global.get('draw');
 var consts = global.get('consts');
-var collision = global.get('collision');
 
 // local consts
 const WINNINGCOMBINATION = ['right', 'right', 'left', 'left', 'right'];

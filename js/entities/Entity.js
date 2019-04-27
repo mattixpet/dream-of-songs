@@ -10,7 +10,6 @@
 'use strict';
 
 var config = global.get('config');
-var util = global.get('util');
 var draw = global.get('draw');
 
 function Entity(sprite, posX, posY, affectedByGravity) {

@@ -72,7 +72,7 @@ function MovingEntity(
 			case 'fly':
 				this.flies = true;
 				distanceMetric = 'distanceXY';
-				break
+				break;
 			default:
 				distanceMetric = 'distanceX';
 				break;
@@ -358,14 +358,14 @@ MovingEntity.prototype._handleBackgroundCollision = function (collision, nextX, 
 		var gridY = collision.gridY;
 		var bg = global.get('background');
 		// only count this as collision if we are coming from above the block and on our way down (and not in stairs)
-		if (!this.inStairs && !this.inWater
-			&& this.y + this.height <= util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y
-			&& this.y < nextY) {
+		if (!this.inStairs && !this.inWater &&
+			this.y + this.height <= util.gridToPixel(gridX, gridY, bg.getGridWidth(), bg.getGridHeight()).y &&
+			this.y < nextY) {
 			// halt
 			this.speedY = 0;
 		} else {
 			// treat as 'no collision'
-			return false
+			return false;
 		}
 
 	} else if (collision.block === consts.STAIRBLOCK || collision.block === consts.WATERBLOCK) {

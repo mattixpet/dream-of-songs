@@ -1,3 +1,7 @@
+(function () {
+
+'use strict';
+
 describe("background-data", function() {
   var background_data = global.get('background-data');
 
@@ -74,3 +78,5 @@ describe("background-data", function() {
     });
   });
 });
+
+}());

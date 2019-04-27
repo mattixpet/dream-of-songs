@@ -48,11 +48,11 @@ function _oneOfPointsWithinRect(aX, aY, aW, aH, bX, bY, bW, bH) {
 	// presumed most common collision is player
 	// with front to something, and just why not
 	for (var i = aPoints.length - 1; i >= 0; i--) {
-		var aX = aPoints[i].x;
-		var aY = aPoints[i].y;
-		if (aY >= bY && aY <= bY + bH) {
+		var x = aPoints[i].x;
+		var y = aPoints[i].y;
+		if (y >= bY && y <= bY + bH) {
 			// we have vertical collision
-			if (aX >= bX && aX <= bX + bW) {
+			if (x >= bX && x <= bX + bW) {
 				// we have horizontal collision as well
 				// and therefore a total collision
 				return true;

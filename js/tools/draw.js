@@ -81,8 +81,6 @@ function drawCirclePoint(x, y, numPoints, index, thickness, radius, color, alpha
 }
 
 function drawCirclePointWithShadow(x, y, numPoints, index, thickness, radius, color, borderColor) {
-	var ctx = global.get('ctx');
-	
 	var n = numPoints;
 	var idx = index;
 	var thick = thickness;

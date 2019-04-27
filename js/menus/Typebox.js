@@ -9,9 +9,6 @@ var draw = global.get('draw');
 var collision = global.get('collision');
 var consts = global.get('consts');
 
-// local constants
-const iconWidth = global.get('menu-text-data')['Common'].iconWidth;
-
 // [[label]] is the text to be displayed with the typebox
 // [[callback]] is a function to call when user types something and hits Return with the word as an argument
 function Typebox(label, callback) {

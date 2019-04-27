@@ -97,7 +97,7 @@ AnimatingEntity.prototype._handleTimeAnimation = function (animation, dt) {
 };
 
 AnimatingEntity.prototype._handleDistanceAnimation = function (animation) {
-	var distanceMetric = undefined;
+	var distanceMetric;
 	switch (animation.type) {
 		case 'distanceX' :
 			distanceMetric = this.distanceTraveledX;

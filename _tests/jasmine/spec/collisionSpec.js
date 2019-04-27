@@ -1,3 +1,7 @@
+(function () {
+
+'use strict';
+
 describe("collision", function() {
   var collision = global.get('collision');
 
@@ -78,3 +82,5 @@ describe("collision", function() {
     });
   });
 });
+
+}());

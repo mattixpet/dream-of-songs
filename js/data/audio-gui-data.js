@@ -9,7 +9,7 @@ var iconList = ['downarrow', 'download', 'next', 'pause', 'play', 'previous', 'u
 var iconWidth = 50; // px, icons are square
 var barWidth = 200;
 var barHeight = 30;
-var canvasWidth = 800;
+//var canvasWidth = 800;
 var canvasHeight = 450;
 
 var audio_gui_data = {

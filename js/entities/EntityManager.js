@@ -5,6 +5,8 @@
 'use strict';
 
 var config = global.get('config');
+var util = global.get('util');
+
 var Chest = global.get('class/Chest');
 var Torch = global.get('class/Torch');
 var Water = global.get('class/Water');

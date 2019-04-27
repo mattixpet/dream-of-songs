@@ -76,7 +76,7 @@ AudioManager.prototype.notifySpacePress = function () {
 		this.pause();
 		this.gui.setCurrentSongAsPaused();
 	} else {
-		var currentSong = this.playerSongs[this.currentSong]
+		var currentSong = this.playerSongs[this.currentSong];
 		if (currentSong) {
 			if (currentSong.name === this.player.getSongName()) {
 				this.resume();
@@ -101,7 +101,7 @@ AudioManager.prototype.notifySongOpened = function (songName) {
 
 // Returns the name of a random song, and moves the song itself to this.songsDelivered
 // Used by the chests on initialization.
-AudioManager.prototype.getNewSong = function (special) {
+AudioManager.prototype.getNewSong = function () {
 	if (this.songs.length === 0) {
 		util.warn('No more songs left to add to chests.');
 		return;
@@ -178,7 +178,7 @@ AudioManager.prototype._downloadSong = function (songName) {
 		saveAs(blob, song.name + '.mp3');
 		global.get('audioManager').gui.notifyDownloadCompleted();
 	})
-	.catch(function(err){
+	.catch(function(){
 		global.get('audioManager').gui.notifyDownloadCompleted();
 	});
 };
@@ -211,7 +211,7 @@ AudioManager.prototype._zipPlayerSongs = function () {
 	}
 
 	// After all the fetches are complete, zip it and saveAs to prompt download for user
-	Promise.all(fetchPromises).then(function (values) {
+	Promise.all(fetchPromises).then(function () {
 		util.log('Zipping files.. this might take some time.');
 		var zipOptions = {
 			type: 'blob',
@@ -224,11 +224,11 @@ AudioManager.prototype._zipPlayerSongs = function () {
 			saveAs(value, "songs.zip"); // from FileSaver.min.js
 			global.get('audioManager').gui.notifyDownloadCompleted();
 		})
-		.catch(function(err){
+		.catch(function(){
 			global.get('audioManager').gui.notifyDownloadCompleted();
 		});
 	})
-	.catch(function(err){
+	.catch(function(){
 		global.get('audioManager').gui.notifyDownloadCompleted();
 	});	
 };

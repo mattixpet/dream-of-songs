@@ -387,7 +387,7 @@ AudioGUI.prototype.setCurrentSongAsPaused = function () {
 // status === 'playing' or 'paused'
 // This function should work if we are in game or in pause menu on the current song.
 AudioGUI.prototype._setCurrentSongAs = function (status) {
-	var activeSongsIndex = undefined;
+	var activeSongsIndex;
 	if (this.activeSongs.length === 1) {
 		// in game
 		activeSongsIndex = 0;

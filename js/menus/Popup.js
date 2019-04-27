@@ -56,7 +56,7 @@ Popup.prototype.draw = function () {
 		popupY = y + h + common.fontSize;
 	}
 
-	var opacity = undefined;
+	var opacity;
 	var fadeTime = this.popupTime - (this.POPUPDURATION - this.POPUPFADETIME); // time we've been fading
 	if (fadeTime > 0) {
 		opacity = (this.POPUPFADETIME - fadeTime) / this.POPUPFADETIME; // goes from 1 - 0 in POPUPFADETIME ms

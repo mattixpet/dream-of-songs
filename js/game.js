@@ -50,8 +50,6 @@ function continueLoading() {
 }
 
 function begin() {
-	var keys = global.get('keys');
-
 	// only have these toggles possible when not typing into the typebox (enter code)
 	if (!global.get('activeTypebox')) {
 		// handle in game input logic (other logic is in input.js)

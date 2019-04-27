@@ -5,7 +5,6 @@
 'use strict';
 
 // imports
-var config = global.get('config');
 var Menu = global.get('class/Menu');
 
 function StartMenu (callback) {

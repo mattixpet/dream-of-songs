@@ -1,3 +1,7 @@
+(function () {
+
+'use strict';
+
 describe("entityManager", function() {
   var EntityManager = global.get('class/EntityManager');
   var Entity = global.get('class/Entity');
@@ -72,3 +76,5 @@ describe("entityManager", function() {
     });
   });
 });
+
+}());

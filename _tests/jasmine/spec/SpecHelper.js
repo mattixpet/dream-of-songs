@@ -1,3 +1,7 @@
+(function () {
+
+'use strict';
+
 beforeEach(function () {
   jasmine.addMatchers({
     toContainEntity: function () {
@@ -18,3 +22,5 @@ beforeEach(function () {
     }
   });
 });
+
+}());

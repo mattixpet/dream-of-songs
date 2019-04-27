@@ -1,3 +1,7 @@
+(function () {
+
+'use strict';
+
 describe("util", function() {
   var util = global.get('util');
 
@@ -25,10 +29,7 @@ describe("util", function() {
 
   describe("grid and pixel coordinates", function() {
     global.set('canvas', {width: 800, height: 450});
-    var canvas = global.get('canvas');
 
-    var pixelW = canvas.width;
-    var pixelH = canvas.height;
     var gridW = 80;
     var gridH = 45;
 
@@ -138,3 +139,5 @@ describe("util", function() {
     });
   });
 });
+
+}());
