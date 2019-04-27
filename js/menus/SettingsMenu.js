@@ -103,6 +103,7 @@ SettingsMenu.prototype.handleTypedWord = function (word) {
 		this.typebox.stopEnteringCode();
 		config.snakeModeEnabled = true;
 		config.snakeMode = true;
+		global.get('player').setAsFlying(true);
 
 		this.inNotification = true;
 		this._drawBigNotification(global.get('menu-text-data')[this.name]['flying-notification']);
