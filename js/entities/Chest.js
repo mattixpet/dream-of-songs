@@ -66,27 +66,29 @@ Chest.prototype._drawHint = function () {
 	var lineWidth = 1.2;
 	var mX = this.x + Math.floor(this.width / 2);
 	var mY = this.y + Math.floor(this.height / 2);
+
 	// draw three stars
+	var color = this.looted ? 'teal' : 'blue';
 	draw.drawStar( 
 		mX-Math.floor(this.width/4), 
 		mY-Math.floor(this.height/4), 
 		starSize, 
 		lineWidth, 
-		'blue'
+		color
 	);
 	draw.drawStar(
 		mX+Math.floor(this.width/4), 
 		mY-Math.floor(this.height/8), 
 		starSize, 
 		lineWidth, 
-		'blue'
+		color
 	);
 	draw.drawStar(
 		mX-Math.floor(this.width/8), 
 		mY+Math.floor(this.height/4), 
 		starSize, 
 		lineWidth, 
-		'blue'
+		color
 	);
 };
 
