@@ -26,7 +26,6 @@ describe("entityManager", function() {
   });
 
   describe("registration", function() {
-
     it("should be able to register multiple entities with different ids", function() {
       var ids = [];
       for (var i = 0; i < 7; i++) {
@@ -54,6 +53,9 @@ describe("entityManager", function() {
       // check if entityManager contains all entities in ids except
       // the ones at indices idxs
       function containsEverythingExcept(ids, idxs) {
+        /*  jshint shadow: true */
+        /*  ^ allow for (var i =) and another (for var i =) */
+        
         for (var i = 0; i < idxs.length; i++) {
           expect(entityManager).not.toContainEntity(ids[idxs[i]]);
         }

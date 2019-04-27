@@ -18,6 +18,8 @@ module.exports = function(grunt) {
         //shadow: true, // I'm on the fence about this, I don't like when he complains about
                         // stuff like for(var i) and then later another for (var i)
                         // but I do want him to check other scope errors
+                        // Decided to just add it to the code like /* jshint shadow:true */
+                        // where appplicable
         esnext: true, // esversion: 6 seemed to be an invalid option?
         loopfunc: true, // we define functions as part of a promise chain in AudioManager.js:205,209
         sub: true, // is deprecated, but I really like my bracket notation??
@@ -35,6 +37,81 @@ module.exports = function(grunt) {
         }
       }
     },
+    jasmine: {
+      pivotal: {
+        // order is actually super important here so lets just do this kinda manually
+        // for now. Who cares
+        src: [
+          'js/ext/mainloop/mainloop.min.js',
+          'js/ext/jszip/jszip.min.js',
+          'js/ext/filesaver/FileSaver.min.js',
+
+          'js/global.js',
+          'js/config.js',
+          'js/tools/consts.js',
+          'js/tools/util.js',
+          'js/tools/draw.js',
+          'js/tools/collision.js',
+
+          'js/data/sprite-data.js',
+          'js/data/background-sky-data.js',
+          'js/data/background-data.js',
+          'js/data/chest-data.js',
+          'js/data/audio-data.js',
+          'js/data/audio-gui-data.js',
+          'js/data/menu-data.js',
+          'js/data/menu-text-data.js',
+          'js/data/torch-data.js',
+          'js/data/water-data.js',
+          'js/data/spike-data.js',
+          'js/data/raven-data.js',
+
+          'js/menus/LoadingBar.js',
+          'js/sprites/Sprite.js',
+          'js/sprites/ImageHandler.js',
+          'js/background/Background.js',
+
+          'js/menus/Menu.js',
+          'js/menus/ScrollableMenu.js',
+          'js/menus/StartMenu.js',
+          'js/menus/AboutMenu.js',
+          'js/menus/PauseMenu.js',
+          'js/menus/Popup.js',
+          'js/menus/NotificationMenu.js',
+          'js/menus/Checkbox.js',
+          'js/menus/Typebox.js',
+          'js/menus/SettingsMenu.js',
+
+          'js/audio/Song.js',
+          'js/audio/AudioPlayer.js',
+          'js/audio/AudioGUI.js',
+          'js/audio/AudioManager.js',
+
+          'js/entities/Entity.js',
+          'js/entities/AnimatingEntity.js',
+          'js/entities/MovingEntity.js',
+          'js/entities/Player.js',
+          'js/entities/Chest.js',
+          'js/entities/Torch.js',
+          'js/entities/Water.js',
+          'js/entities/Spikes.js',
+          'js/entities/Raven.js',
+
+          'js/entities/EntityManager.js',
+          'js/entities/CollisionManager.js',
+
+          'js/tools/input.js',
+          'js/game.js',
+
+          'js/**/*.js' // if we forgot or add something lets hope it works in this order
+        ],
+        options: {
+          //keepRunner: true, // this can be useful to check the console.logs
+          specs: '_tests/jasmine/spec/*Spec.js',
+          helpers: '_tests/jasmine/spec/*Helper.js'
+        }
+      }
+    },
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint']
@@ -42,9 +119,10 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jasmine', 'jshint']);
 };
 
 }());

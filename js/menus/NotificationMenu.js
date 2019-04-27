@@ -78,7 +78,9 @@ NotificationMenu.prototype.notify = function (type, values, x, y, width, height)
 // Callback for popups to call when they are done, so we can remove them from our list
 // Since we only have one popup, delete that one on the done call.
 NotificationMenu.prototype.popupDone = function (popup) {
-	this.popup = undefined;
+	if (this.popup === popup) {
+		this.popup = undefined;
+	}
 };
 
 // we overwrite this from Menu base class because we need to pause game

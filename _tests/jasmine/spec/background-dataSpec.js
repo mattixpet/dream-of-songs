@@ -4,9 +4,12 @@
 
 describe("background-data", function() {
   var background_data = global.get('background-data');
+  console.log(global);
 
   describe("background collision arrays", function() {
     it("should be 45 by 80 long (the grid size)", function() {
+      expect(1).toBe(1);
+
       var gridHeight = 45;
       var gridWidth = 80;
       for (var key in background_data) {
@@ -22,6 +25,9 @@ describe("background-data", function() {
 
   describe("Connections object", function() {
     it("should have a left, up, right, down and special key", function() {
+      /*  jshint shadow: true */
+      /*  ^ allow for (var i =) and another (for var i =) */
+
       var conns = background_data['Connections'];
       for (var scene in conns) {
         var dirs = ['left', 'up', 'right', 'down', 'special'];

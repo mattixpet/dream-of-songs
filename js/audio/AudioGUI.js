@@ -251,6 +251,9 @@ AudioGUI.prototype.update = function (dt) {
 };
 
 AudioGUI.prototype.draw = function () {
+	/* 	jshint shadow: true */
+	/*  ^ allow for (var i =) and another (for var i =)
+	   	and var song = in different if blocks */
 	var inMenu = global.get('inMenu');
 	var data = global.get('audio-gui-data')['Spacings'];
 	var audioManager = global.get('audioManager');

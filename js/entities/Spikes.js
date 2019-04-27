@@ -24,6 +24,8 @@ function Spikes(posX, posY, width, height, scene) {
 Spikes.prototype = Object.create(Entity.prototype);
 
 Spikes.prototype.update = function (dt) {
+	/* jshint unused:false */
+
 	// check collision with player (or anything, but counter only works for one entity)
 	var collision = global.get('collisionManager').isColliding(this, this.x, this.y);
 	if (collision && collision.entityCollision) { // not that we should ever be colliding with background

@@ -178,7 +178,8 @@ MovingEntity.prototype.update = function (dt) {
 				this.clipToGround();
 			}
 			// Don't check for ground if we are moving up!
-			if (!(nextY < oldY)) {
+			// i.e. only check for ground if we are moving down
+			if (oldY < nextY) {
 				this.onGround = this.isOnGround(); // returns false, or the block we're on (1,2,5 (or REGBLOCK, etc..))
 				if (this.onGround) {
 					this.upAgainstWall = false;
@@ -321,6 +322,9 @@ MovingEntity.prototype._findNextY = function (dt) {
 };
 
 MovingEntity.prototype._handleBackgroundCollision = function (collision, nextX, nextY) {
+	/* 	jshint shadow: true */
+	/*  ^ allow var bg = repeated in different if blocks */
+
 	// Handle all the different blocks we could be colliding with.
 	if (!collision) {
 		return false;

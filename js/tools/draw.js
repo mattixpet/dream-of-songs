@@ -162,6 +162,9 @@ function fillTextWithShadow(text, x, y, font, fontSize, color, opacity, shadowCo
 // if opacity is supplied, draw with that opacity
 // if shadowColor is supplied, draw additionally a shadow with shadowColor and shadowDistance from original text
 function writeText(text, x, y, font, fontSize, color, width, spacing, opacity, shadowColor, shadowDistance) {
+	/* 	jshint shadow: true */
+	/*  ^ allow for (var i =) and another (for var i =) */
+
 	var charW = Math.floor(fontSize / 2); // ~width of 1 character
 	var maxNumChars = Math.floor(width / charW); // maximum number of characters per line
 	var words = text.split(' ');
