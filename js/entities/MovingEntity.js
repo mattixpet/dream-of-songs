@@ -179,7 +179,7 @@ MovingEntity.prototype.update = function (dt) {
 			}
 			// Don't check for ground if we are moving up!
 			// i.e. only check for ground if we are moving down
-			if (oldY < nextY) {
+			if (oldY <= nextY) {
 				this.onGround = this.isOnGround(); // returns false, or the block we're on (1,2,5 (or REGBLOCK, etc..))
 				if (this.onGround) {
 					this.upAgainstWall = false;
