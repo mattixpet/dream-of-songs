@@ -4,6 +4,7 @@
 
 module.exports = function(grunt) {
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     jshint: {
       files: ['Gruntfile.js', 'js/**/*.js', '!js/ext/**', '_tests/jasmine/spec/**/*.js'],
       options: {
@@ -112,17 +113,30 @@ module.exports = function(grunt) {
         }
       }
     },
+    uglify : {
+      minified: {
+        options: {
+          banner: '/* Dream of songs v<%= pkg.version %> */',
+          sourceMap: true,
+          sourceMapName: 'dist/dreamofsongs.min.js.map'
+        },
+        files: {
+          'dist/dreamofsongs.min.js': ['<%= jasmine.pivotal.src %>']
+        }
+      }
+    },
     watch: {
       files: ['<%= jshint.files %>'],
-      tasks: ['jshint']
+      tasks: ['jasmine', 'jshint', 'uglify']
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-contrib-uglify-es');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['jasmine', 'jshint']);
+  grunt.registerTask('default', ['jasmine', 'jshint', 'uglify']);
 };
 
 }());
