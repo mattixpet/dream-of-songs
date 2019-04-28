@@ -21,6 +21,7 @@ var PauseMenu = global.get('class/PauseMenu');
 var NotificationMenu = global.get('class/NotificationMenu');
 var SettingsMenu = global.get('class/SettingsMenu');
 var AudioManager = global.get('class/AudioManager');
+var PlayerMouseAI = global.get('class/PlayerMouseAI');
 
 global.set('canvas', document.getElementById('dreamOfSongs'));
 var canvas = global.get('canvas');
@@ -180,10 +181,17 @@ function initGame() {
 	var collisionManager = new CollisionManager();
 	global.set('collisionManager', collisionManager);
 
+	// player stuff !
 	var playerStartPos = global.get('sprite-data').player.startingPosition;
 	var player = new Player(playerStartPos.x, playerStartPos.y);
 	entityManager.register(player, config.STARTINGSCENE);
 	global.set('player', player); // used for drawing player last
+
+	var playerMouseAI = new PlayerMouseAI(player);
+	global.set('playerMouseAI', playerMouseAI);
+
+	player.setMouseController(playerMouseAI);
+	//
 
 	var loadingBar = global.get('loadingBar');
 	if (loadingBar.getProgress() !== 1) {

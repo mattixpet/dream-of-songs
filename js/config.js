@@ -31,6 +31,7 @@ config['repeatSongs'] = false; // repeat the current song, default: no
 // options: no-cors, cors, same-origin, depending on where your audio is located
 // see config.SONGURL
 config['fetchMode'] = 'cors';
+config['mouseControls'] = false; // use the mouse to control player
 
 // game values
 config['GRAVITYCONSTANT'] = 0.001;

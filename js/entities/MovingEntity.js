@@ -102,7 +102,7 @@ function MovingEntity(
 
 	// status variables
 	this.onGround = false; // start in the air (can also take value of the block underneath, REGBLOCK, etc.)
-	this.isStationary = false;
+	this.stationary = false;
 	this.inStairs = false;
 	this.disableJump = false; // used for stairs for example, temporary flag, not allow player to jump
 	// set as true when we hit a wall while in air ('regBlockInAir') and then
@@ -128,9 +128,9 @@ MovingEntity.prototype.update = function (dt) {
 	var nextY = this._findNextY(dt);
 
 	if (nextX === this.x && nextY === this.y && this.onGround && this.affectedByGravity) {
-		this.isStationary = true;
+		this.stationary = true;
 	} else {
-		this.isStationary = false;
+		this.stationary = false;
 	}
 
 	// reset stairs
@@ -163,7 +163,7 @@ MovingEntity.prototype.update = function (dt) {
 	//	this.moveStop();
 	//}
 	// move if no collision or collision with something which set us as no collision
-	if (!this.isStationary && !collision && !this.upAgainstWall) {
+	if (!this.stationary && !collision && !this.upAgainstWall) {
 		this._updatePos(nextX, nextY);
 	}
 	// we hit a regblock on either side (with feet) but are still in air, meaning
@@ -176,7 +176,7 @@ MovingEntity.prototype.update = function (dt) {
 	if (config.gravity && this.affectedByGravity && !this.inStairs) {
 		// only check when we move if we are not on ground anymore (check background under us for collision)
 		// also check if we are pressing down (so we can move down stairs)
-		if (!this.isStationary) {
+		if (!this.stationary) {
 			if (this.onGround && collision) {
 				this.clipToGround();
 			}
@@ -216,10 +216,18 @@ MovingEntity.prototype.update = function (dt) {
 
 	if (this.moveThroughScenes) {
 		// let's not move if we can't get another scene
-		if (!this._checkForSceneChange()) {
+		var sceneChange = this._checkForSceneChange();
+		if (sceneChange === 'success') {
+			// we moved scenes! if we have a mouse controller let's let him know
+			if (this.mouseController) {
+				this.mouseController.notifySceneChange();
+			}
+		} else if (sceneChange === 'fail') {
+			// we tried to move scenes but were rejected by background
 			this.x = oldX;
 			this.y = oldY;
 		}
+		// else we are not at any edge or trying to change any scene
 	} else {
 		// if we can't move through scenes, we die on going out of bounds
 		if (this._offScreen()) {
@@ -267,9 +275,9 @@ MovingEntity.prototype.moveStop = function () {
 MovingEntity.prototype._chooseAnimation = function () {
 	if (this.jumps && !this.onGround && this.affectedByGravity && !this.inStairs) {
 		this._setAnimation('jump');
-	} else if (this.isStationary && this.affectedByGravity && !this.inStairs) {
+	} else if (this.stationary && this.affectedByGravity && !this.inStairs) {
 		this._setAnimation('still');
-	} else if (this.walks && !this.isStationary && this.affectedByGravity && !this.inStairs) {
+	} else if (this.walks && !this.stationary && this.affectedByGravity && !this.inStairs) {
 		this._setAnimation('walk');
 	} else if (this.climbsStairs && this.inStairs && this.affectedByGravity) {
 		this._setAnimation('stairs');
@@ -419,22 +427,25 @@ MovingEntity.prototype._handleBackgroundCollision = function (collision, nextX, 
 	return true;
 };
 
+// returns 'success' if a scene if a successful scene change took place
+// 'fail' if attemped a next scene but couldn't get one
+// and false if no scene change was attemped or succeeded
 MovingEntity.prototype._checkForSceneChange = function () {
 	var canvas = global.get('canvas');
 	var background = global.get('background');
-	var sceneChangeSuccess = true;
+	var sceneChange = false;
 	if (this.x > canvas.width) {
-		sceneChangeSuccess = background.requestNextScene(this, 'right');
+		sceneChange = background.requestNextScene(this, 'right') ? 'success' : 'fail';
 	} else if (this.x < 0) {
-		sceneChangeSuccess = background.requestNextScene(this, 'left');
+		sceneChange = background.requestNextScene(this, 'left') ? 'success' : 'fail';
 	} else if (this.y > canvas.height - this.height) {
 		// when moving down, teleport the moment we hit bottom with our feet
-		sceneChangeSuccess = background.requestNextScene(this, 'down');
+		sceneChange = background.requestNextScene(this, 'down') ? 'success' : 'fail';
 	} else if (this.y < -this.height) {
 		// when moving up, teleport the moment our feet leave the frame
-		sceneChangeSuccess = background.requestNextScene(this, 'up');
+		sceneChange = background.requestNextScene(this, 'up') ? 'success' : 'fail';
 	}
-	return sceneChangeSuccess;
+	return sceneChange;
 };
 
 // Returns true iff we are off screen (not visible)
@@ -450,6 +461,27 @@ MovingEntity.prototype.getSpeedY = function () {
 // value === true or false
 MovingEntity.prototype.setAsFlying = function (value) {
 	this.affectedByGravity = !value;
+};
+
+// Overwrite the Entity function here because we want to notify our mouseController
+// of our updated position
+MovingEntity.prototype._updatePos = function (nextX, nextY) {
+	if (config.mouseControls && this.mouseController) {
+		this.mouseController.notifyPositionChange(this.x, this.y, nextX, nextY);
+	}
+
+	AnimatingEntity.prototype._updatePos.call(this, nextX, nextY);
+};
+
+// [[mouseController]] is a PlayerMouseAI class instance to pass in
+//   if entity can be controlled by mouse movements as well as keyboard
+//   if mouseController is active config.mouseControls should be true
+MovingEntity.prototype.setMouseController = function (mouseController) {
+	this.mouseController = mouseController;
+}
+
+MovingEntity.prototype.isStationary = function () {
+	return this.stationary;
 };
 
 global.set('class/MovingEntity', MovingEntity);

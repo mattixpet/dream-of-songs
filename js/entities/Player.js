@@ -111,7 +111,7 @@ Player.prototype = Object.create(MovingEntity.prototype);
 
 // Overwrite MovingEntities default .draw function to do our thing uninterrupted
 Player.prototype.draw = function () {
-	if (this.isStationary) {
+	if (this.stationary) {
 		this._drawStillAnimation();
 	}
 
@@ -204,7 +204,7 @@ Player.prototype.update = function (dt) {
 
 	MovingEntity.prototype.update.call(this, dt);
 
-	if (this.isStationary) {
+	if (this.stationary) {
 		this.timeStill += dt;
 	} else {
 		this.timeStill = 0;

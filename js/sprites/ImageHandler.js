@@ -32,7 +32,7 @@ function ImageHandler() {
 
 	// load all the images !
 	this._handleSprites();
-	this._handleMenuItems();
+	this._handleMenuItems(); // menu data and settings data
 	this._handleBackground();
 	this._handleGuiItems();
 }

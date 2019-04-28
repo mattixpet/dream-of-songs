@@ -19,7 +19,19 @@ var sprite_data = {
 						{'x':2468,'y':66}, {'x':3110,'y':70}, {'x':2502,'y':1088}, // still animation
 						{'x':3600, 'y':0}, {'x':3600, 'y':1000} // flying
 					  ],
+		// technically not sprite data, but who cares, player data still
 		'startingPosition' : {'x':300,'y':-80},
+		// margin to draw player to next scene during mouse controls
+		'EDGEMARGIN' : 100,
+		// how close to player's feet a click is a jump and how far above the feet to count as a jump
+		'FEETMARGIN' : 90,
+		// how many milliseconds after which we cancel the movement command
+		// unless some other command has been issued or player collided
+		'CANCELTIME' : 3000,
+		// how close to a destination/objective pixel do we have to be to count as having arrived?
+		'DESTMARGIN' : 5,
+		// how long during mouse controls to wait until we issue a stop on player
+		'SCENECHANGESTOPTIME' : 200,
 		// how much to alter bounding box/sprite drawing, see player.js for more explanation
 		'COLLISIONXDELTA' : 10,
 		'COLLISIONWIDTHREDUCTION' : 30,

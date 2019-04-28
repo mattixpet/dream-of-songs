@@ -51,6 +51,7 @@ function AudioGUI () {
 }
 
 // Mouse event handling calls this function so we can know what to do
+// If we take an action, we return true
 AudioGUI.prototype.notifyClick = function (x, y) {
 	// check if one of our songs is being interacted with
 	for (var i = 0; i < this.activeSongs.length; i++) {
@@ -61,6 +62,7 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 			if (global.get('inMenu') === 'pauseMenu') {
 				this.draw(); // need to force a draw here when in menu
 			}
+			return true;
 		}
 	}
 	
@@ -76,7 +78,10 @@ AudioGUI.prototype.notifyClick = function (x, y) {
 									downloadButtonWidth, downloadButtonHeight) &&
 		global.get('inMenu') === 'pauseMenu') {
 		global.get('audioManager').notifyCommand('download all', undefined);
+		return true;
 	}
+
+	return false;
 };
 
 // Called by tools/input.js to let us know if player hit pause, so we can know to populate active songs/update them
