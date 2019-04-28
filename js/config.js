@@ -26,12 +26,12 @@ config['audioControlsFade'] = false; // always visible or fade in/out, default: 
 config['autoplay'] = true; // autoplay next song, default: yes
 config['allowParallelSongs'] = false; // only play one song at a time or not, default: one song at a time
 config['repeatSongs'] = false; // repeat the current song, default: no
+config['mouseControls'] = false; // use the mouse to control player, default: NO (yes on mobile)
 
 // misc
 // options: no-cors, cors, same-origin, depending on where your audio is located
 // see config.SONGURL
 config['fetchMode'] = 'cors';
-config['mouseControls'] = false; // use the mouse to control player
 
 // game values
 config['GRAVITYCONSTANT'] = 0.001;

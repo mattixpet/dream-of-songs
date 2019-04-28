@@ -199,11 +199,9 @@ function initGame() {
 	entityManager.register(player, config.STARTINGSCENE);
 	global.set('player', player); // used for drawing player last
 
-	if (global.get('mobile')) {
-		var playerMouseAI = new PlayerMouseAI(player);
-		global.set('playerMouseAI', playerMouseAI);
-		player.setMouseController(playerMouseAI);
-	}
+	var playerMouseAI = new PlayerMouseAI(player);
+	global.set('playerMouseAI', playerMouseAI);
+	player.setMouseController(playerMouseAI);
 	//
 
 	var loadingBar = global.get('loadingBar');

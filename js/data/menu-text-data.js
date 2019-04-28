@@ -115,6 +115,10 @@ var menu_text_data = {
 			{
 				'label' : 'Play song on repeat',
 				'variable' : 'repeatSongs'
+			},
+			{
+				'label' : 'Mouse controls (USE AT OWN RISK)',
+				'variable' : 'mouseControls'
 			}
 		],
 		'raven-notification' : 	'Nice! You figured out the riddle of the raven. \n ' +
