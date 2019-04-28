@@ -98,6 +98,8 @@ module.exports = function(grunt) {
           'js/entities/Spikes.js',
           'js/entities/Raven.js',
 
+          'js/entities/PlayerMouseAI.js',
+
           'js/entities/EntityManager.js',
           'js/entities/CollisionManager.js',
 

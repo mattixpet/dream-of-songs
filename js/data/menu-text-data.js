@@ -65,7 +65,12 @@ var menu_text_data = {
 						'(did you get the raven hinting at the water puzzle?) and ' +
 						'I\'m not sure anybody will ever read this I\'d like to share ' +
 						'the fact that I always pee sitting down. \n\n ' +
-						'Hope you enjoy'
+						'Hope you enjoy',
+		'mobile' : 	'Hello! I see you are on a mobile. I just want to let you know ' +
+					'this game was designed for a keyboard to move around. ' +
+					'However, in the interest of fun I did make a somewhat decent (maybe) mouse ' +
+					'AI so that you should be able to move by tapping where you want to go. \n\n ' +
+					'Oh and also, to bring up the pause menu, a double tap should do the trick.'
 		},
 	'aboutMenu' : {
 		'textPos' : {'x':170,'y':50},
