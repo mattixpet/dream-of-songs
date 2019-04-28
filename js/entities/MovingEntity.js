@@ -219,7 +219,7 @@ MovingEntity.prototype.update = function (dt) {
 		var sceneChange = this._checkForSceneChange();
 		if (sceneChange === 'success') {
 			// we moved scenes! if we have a mouse controller let's let him know
-			if (this.mouseController) {
+			if (config.mouseControls && this.mouseController) {
 				this.mouseController.notifySceneChange();
 			}
 		} else if (sceneChange === 'fail') {
