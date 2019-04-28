@@ -36,6 +36,11 @@ Typebox.prototype.click = function (x, y) {
 		this.typeboxX, this.typeboxY, 
 		this.typeboxSprite.getWidth(), this.typeboxSprite.getHeight()
 	)) {
+		if (global.get('mobile')) {
+			this.text = prompt() || '';
+			this.handleTypedCharacter({'keyCode':consts.KEY_ENTER}); // bogus event to trigger word check in settings menu
+			return;
+		}
 		this._enteringCode();
 	} else {
 		this.stopEnteringCode();

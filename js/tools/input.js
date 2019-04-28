@@ -116,10 +116,13 @@ function handleMousemove () {
 	}
 }
 
-function handleDoubleclick () {
+function handleDoubleclick (e) {
+	e.preventDefault(); // no double click zooming here, we need it to pause
+
 	if (config.doubleClickToPause) {
 		pauseOrResumeGame();
 	}
+
 }
 
 window.addEventListener("keydown", handleKeydown);
