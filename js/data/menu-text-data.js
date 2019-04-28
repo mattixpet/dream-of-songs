@@ -121,8 +121,8 @@ var menu_text_data = {
 				'variable' : 'mouseControls'
 			},
 			{
-				'label' : 'Double click pauses',
-				'variable' : 'doubleClickToPause'
+				'label' : 'Double tap pauses (mobile)',
+				'variable' : 'doubleTapToPause'
 			}
 		],
 		'raven-notification' : 	'Nice! You figured out the riddle of the raven. \n ' +

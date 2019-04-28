@@ -116,20 +116,27 @@ function handleMousemove () {
 	}
 }
 
-function handleDoubleclick (e) {
-	e.preventDefault(); // no double click zooming here, we need it to pause
-
-	if (config.doubleClickToPause) {
+// Only for double click checking
+var tappedOnce = false;
+function handleTouchstart (e) {
+	if (config.doubleTapToPause && tappedOnce) {
 		pauseOrResumeGame();
 	}
 
+	tappedOnce = true;
+	setTimeout(function () { tappedOnce = false; }, 300);
+
+	// click where we touch !
+	handleMousedown(e.touches[0]);
+
+	e.preventDefault(); // only needed for mobiles so we won't get the double tap zoom
 }
 
 window.addEventListener("keydown", handleKeydown);
 window.addEventListener("keyup", handleKeyup);
 canvas.addEventListener("mousedown", handleMousedown);
 canvas.addEventListener("mousemove", handleMousemove);
-canvas.addEventListener("dblclick", handleDoubleclick);
+canvas.addEventListener("touchstart", handleTouchstart);
 
 global.set('keys', keys);
 
