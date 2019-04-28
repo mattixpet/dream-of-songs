@@ -159,9 +159,6 @@ MovingEntity.prototype.update = function (dt) {
 			collision = false;
 		}
 	}
-	//if (collision && config.mouseControls) {
-	//	this.moveStop();
-	//}
 	// move if no collision or collision with something which set us as no collision
 	if (!this.stationary && !collision && !this.upAgainstWall) {
 		this._updatePos(nextX, nextY);
@@ -478,10 +475,6 @@ MovingEntity.prototype._updatePos = function (nextX, nextY) {
 //   if mouseController is active config.mouseControls should be true
 MovingEntity.prototype.setMouseController = function (mouseController) {
 	this.mouseController = mouseController;
-}
-
-MovingEntity.prototype.isStationary = function () {
-	return this.stationary;
 };
 
 global.set('class/MovingEntity', MovingEntity);

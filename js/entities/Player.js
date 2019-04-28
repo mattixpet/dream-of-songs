@@ -211,7 +211,7 @@ Player.prototype.update = function (dt) {
 	}
 };
 
-Player.prototype._handleInput = function (move) {
+Player.prototype._handleInput = function () {
 	if (util.eatKey(consts.KEY_RIGHT) || util.eatKey(consts.KEY_D)) {
 		this.moveRight();
 	}
