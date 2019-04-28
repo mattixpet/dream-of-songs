@@ -119,6 +119,10 @@ var menu_text_data = {
 			{
 				'label' : 'Mouse controls (USE AT OWN RISK)',
 				'variable' : 'mouseControls'
+			},
+			{
+				'label' : 'Double click pauses',
+				'variable' : 'doubleClickToPause'
 			}
 		],
 		'raven-notification' : 	'Nice! You figured out the riddle of the raven. \n ' +

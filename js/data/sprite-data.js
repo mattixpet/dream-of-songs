@@ -29,7 +29,7 @@ var sprite_data = {
 		// unless some other command has been issued or player collided
 		'CANCELTIME' : 3000,
 		// how close to a destination/objective pixel do we have to be to count as having arrived?
-		'DESTMARGIN' : 5,
+		'DESTMARGIN' : 10,
 		// how long during mouse controls to wait until we issue a stop on player
 		'SCENECHANGESTOPTIME' : 200,
 		// how much to alter bounding box/sprite drawing, see player.js for more explanation
