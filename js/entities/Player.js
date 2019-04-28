@@ -211,23 +211,38 @@ Player.prototype.update = function (dt) {
 	}
 };
 
-Player.prototype._handleInput = function () {
-	var keys = global.get('keys');
-
-	if (keys[consts.KEY_RIGHT] || keys[consts.KEY_D]) {
+Player.prototype._handleInput = function (move) {
+	if (util.eatKey(consts.KEY_RIGHT) || util.eatKey(consts.KEY_D)) {
 		this.moveRight();
 	}
-	if (keys[consts.KEY_LEFT] || keys[consts.KEY_A]) {
+	if (util.eatKey(consts.KEY_LEFT) || util.eatKey(consts.KEY_A)) {
 		this.moveLeft();
 	}
-	if (keys[consts.KEY_UP] || keys[consts.KEY_W]) {
+	if (util.eatKey(consts.KEY_UP) || util.eatKey(consts.KEY_W)) {
 		this.moveJump(); // jump and up are same keys for us
 		this.moveUp();
 	}
-	if (keys[consts.KEY_DOWN] || keys[consts.KEY_S]) {
+	if (util.eatKey(consts.KEY_DOWN) || util.eatKey(consts.KEY_S)) {
 		this.moveDown();
 	}
+};
 
+// Called by tools/input.js on a keyup
+// if the keyup is one of our controls lets initiate a stop for that movement
+Player.prototype.notifyKeyup = function (e) {
+	if (e.keyCode === consts.KEY_RIGHT || e.keyCode === consts.KEY_D) {
+		this.moveRight(true); // passing true here will stop the movement
+	}
+	if (e.keyCode === consts.KEY_LEFT || e.keyCode === consts.KEY_A) {
+		this.moveLeft(true);
+	}
+	if (e.keyCode === consts.KEY_UP || e.keyCode === consts.KEY_W) {
+		//this.moveJump(true); // jump and up are same keys for us
+		this.moveUp(true);
+	}
+	if (e.keyCode === consts.KEY_DOWN || e.keyCode === consts.KEY_S) {
+		this.moveDown(true);
+	}
 };
 
 Player.prototype._handleEntityCollision = function (entity) {

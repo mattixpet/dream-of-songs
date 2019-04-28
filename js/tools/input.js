@@ -78,6 +78,8 @@ function pauseOrResumeGame() {
 
 function handleKeyup(e) {
 	keys[e.keyCode] = false;
+
+	global.get('player').notifyKeyup(e);
 }
 
 function handleMousedown(e) {
@@ -92,7 +94,12 @@ function handleMousedown(e) {
 
 	// notify the audio gui we clicked, if only we are in pause or in game
 	if (inMenu === 'pauseMenu' || !inMenu || inMenu === 'notificationMenu') {
-		global.get('audioGui').notifyClick(x,y);
+		var res = global.get('audioGui').notifyClick(x,y);
+		// if we're in game and no action taken by audio gui
+		// then we want to pass the click on to our mouse controls (if applicable)
+		//if (!inMenu && !res && config.mouseControls) {
+		//	global.get('playerMouseAI').notifyClick(x, y);
+		//}
 	}
 
 	if (config.clickToShowCoord) {

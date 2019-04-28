@@ -159,6 +159,9 @@ MovingEntity.prototype.update = function (dt) {
 			collision = false;
 		}
 	}
+	//if (collision && config.mouseControls) {
+	//	this.moveStop();
+	//}
 	// move if no collision or collision with something which set us as no collision
 	if (!this.isStationary && !collision && !this.upAgainstWall) {
 		this._updatePos(nextX, nextY);
@@ -223,8 +226,6 @@ MovingEntity.prototype.update = function (dt) {
 			global.get('entityManager').destroy(this.id);
 		}
 	}
-
-	this._resetMoves();
 };
 
 MovingEntity.prototype.draw = function () {
@@ -237,23 +238,24 @@ MovingEntity.prototype.draw = function () {
 	this._drawBoundingBox();
 };
 
-MovingEntity.prototype.moveLeft = function () {
-	this.movingLeft = true;
+// [[stop]] is an optional argument to pass if we want to stop moving
+MovingEntity.prototype.moveLeft = function (stop) {
+	this.movingLeft = !stop;
 };
-MovingEntity.prototype.moveUp = function () {
-	this.movingUp = true;
+MovingEntity.prototype.moveUp = function (stop) {
+	this.movingUp = !stop;
 };
-MovingEntity.prototype.moveRight = function () {
-	this.movingRight = true;
+MovingEntity.prototype.moveRight = function (stop) {
+	this.movingRight = !stop;
 };
-MovingEntity.prototype.moveDown = function () {
-	this.movingDown = true;
+MovingEntity.prototype.moveDown = function (stop) {
+	this.movingDown = !stop;
 };
-MovingEntity.prototype.moveJump = function () {
-	this.movingJump = true;
+MovingEntity.prototype.moveJump = function (stop) {
+	this.movingJump = !stop;
 };
 // set all possible moves as false
-MovingEntity.prototype._resetMoves = function () {
+MovingEntity.prototype.moveStop = function () {
 	this.movingLeft = false;
 	this.movingUp = false;
 	this.movingRight = false;
