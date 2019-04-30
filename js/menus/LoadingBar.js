@@ -9,18 +9,25 @@ var config = global.get('config');
 var util = global.get('util');
 
 function LoadingBar() {
-	this.progress = 0; // 0-1
-	this.canvas = global.get('canvas');
 	this.ctx = global.get('ctx');
 	this.bgUrl = config.MENUITEMSURL + 'loading.jpg';
 	this.img = undefined; // set in this.preloadImage
+	this.color = '#889158';
+
+	this.repeatableSetup();
+}
+
+// Setup in beginning (needs to be a function and not in the constructor
+// because on resolution change we need to call it again)
+LoadingBar.prototype.repeatableSetup = function () {
+	this.progress = 0; // 0-1
+	this.canvas = global.get('canvas');
 	// positions of loading bar bar (go figure)
 	this.x = Math.floor(this.canvas.width / 3.031);
 	this.y = Math.floor(this.canvas.height / 2.275);
 	this.w = Math.floor(this.canvas.width / 2.735);
 	this.h = Math.floor(this.canvas.height / 12.86);
-	this.color = '#889158';
-}
+};
 
 LoadingBar.prototype.preloadImage = function(callback) {
 	util.log('Actually loading the loading bar image..');

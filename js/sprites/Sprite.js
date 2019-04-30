@@ -62,6 +62,11 @@ Sprite.prototype.getNumPositions = function () {
 	return this.positions.length;
 };
 
+Sprite.prototype.resetResolution = function (ratio) {
+	this.dispW = Math.round(this.dispW * ratio);
+	this.dispH = Math.round(this.dispH * ratio);
+};
+
 global.set('class/Sprite', Sprite);
 
 }());

@@ -14,10 +14,6 @@ const NORMALOPEN = 1;
 const FLIPPED = 2;
 const FLIPPEDOPEN = 3;
 
-// draw the sprite a bit lower than the collision box because of semi-3d
-const COLLISIONYDELTA = global.get('sprite-data').chest.COLLISIONYDELTA;
-const COLLISIONHEIGHTREDUCTION = global.get('sprite-data').chest.COLLISIONHEIGHTREDUCTION;
-
 // flip means which direction chest faces (left/right), flip is true if left
 // invisible is true iff chest is not supposed to be drawn (meaning player has to find it without seeing it)
 // message is an optional message to display once we're looted (located in menu-text-data under notificationMenu)
@@ -33,8 +29,10 @@ function Chest(posX, posY, flip, invisible, message, flying) {
 
 	this.invisible = invisible;
 
+	this._setSpriteExtraInfo();
+
 	this.width = this.sprite.getWidth();
-	this.height = this.sprite.getHeight() - COLLISIONHEIGHTREDUCTION;
+	this.height = this.sprite.getHeight() - this.COLLISIONHEIGHTREDUCTION;
 
 	// set as true once player has gotten the song from us
 	this.looted = false;
@@ -50,7 +48,7 @@ Chest.prototype = Object.create(Entity.prototype);
 
 Chest.prototype.draw = function () {
 	if (!this.invisible) {
-		this.sprite.draw(this.x, this.y - COLLISIONYDELTA, this.animation);
+		this.sprite.draw(this.x, this.y - this.COLLISIONYDELTA, this.animation);
 	}
 
 	this._drawBoundingBox();
@@ -62,8 +60,8 @@ Chest.prototype.draw = function () {
 
 // Draw a few stars at our location so player can see us
 Chest.prototype._drawHint = function () {
-	var starSize = 10;
-	var lineWidth = 1.2;
+	var starSize = this.starSize;
+	var lineWidth = this.starLineWidth;
 	var mX = this.x + Math.floor(this.width / 2);
 	var mY = this.y + Math.floor(this.height / 2);
 
@@ -125,6 +123,22 @@ Chest.prototype.isHidden = function () {
 
 Chest.prototype.containsMessage = function () {
 	return this.message ? true : false;
+};
+
+// sets info like COLLISIONDELTAS we need etc.
+Chest.prototype._setSpriteExtraInfo = function () {
+	// draw the sprite a bit lower than the collision box because of semi-3d
+	this.COLLISIONYDELTA = global.get('sprite-data').chest.COLLISIONYDELTA;
+	this.COLLISIONHEIGHTREDUCTION = global.get('sprite-data').chest.COLLISIONHEIGHTREDUCTION;
+
+	this.starSize = global.get('sprite-data').chest.starSize;
+	this.starLineWidth = global.get('sprite-data').chest.starLineWidth;
+};
+
+Chest.prototype.resetResolution = function (ratio) {
+	Entity.prototype.resetResolution.call(this, ratio);
+
+	this._setSpriteExtraInfo();
 };
 
 global.set('class/Chest', Chest);

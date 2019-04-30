@@ -147,6 +147,12 @@ ImageHandler.prototype.getSprite = function (key) {
 	return this.sprites[key];
 };
 
+ImageHandler.prototype.resetResolution = function (ratio) {
+	for (var name in this.sprites) {
+		this.sprites[name].resetResolution(ratio);
+	}
+};
+
 // exports
 global.set('class/ImageHandler', ImageHandler);
 

@@ -6,6 +6,10 @@
 
 var util = {};
 
+function isInteger(a) {
+	return a % 1 === 0;
+}
+
 function arrayEquals(a, b) {
 	if (a === b) {
 		return true;
@@ -130,6 +134,7 @@ function _getDateMilliseconds() {
 		date.getMilliseconds();
 }
 
+util['isInteger'] = isInteger;
 util['arrayEquals'] = arrayEquals;
 util['almostEqual'] = almostEqual;
 util['deepCopy'] = deepCopy;

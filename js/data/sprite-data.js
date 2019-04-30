@@ -65,7 +65,9 @@ var sprite_data = {
 		'srcHeight' : 636,
 		'positions' : [{'x':0,'y':6}, {'x':0,'y':643}, {'x':441,'y':9}, {'x':440,'y':641}],
 		'COLLISIONYDELTA' : 5,
-		'COLLISIONHEIGHTREDUCTION' : 10
+		'COLLISIONHEIGHTREDUCTION' : 10,
+		'starSize' : 10,
+		'starLineWidth' : 1.2
 	},
 	// water animations (currently only in stalagmites scene)
 	'stalagmites-water' : {

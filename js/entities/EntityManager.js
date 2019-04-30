@@ -205,6 +205,16 @@ EntityManager.prototype.destroy = function (id) {
 	this._delete(id, this.currentScene);
 };
 
+// Reset sprites/related distance info on all our entities on 
+// a resolution change
+EntityManager.prototype.resetResolution = function (ratio) {
+	for (var scene in this.entities) {
+		for (var id in this.entities[scene]) {
+			this.entities[scene][id].resetResolution(ratio);
+		}
+	}
+};
+
 global.set('class/EntityManager', EntityManager);
 
 }());

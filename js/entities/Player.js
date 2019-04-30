@@ -28,29 +28,12 @@ const STILLLEFT2 = 10;
 const FLYING1 = 11;
 const FLYING2 = 12;
 
-// since everything starts from top left, this is the offset for collision
-// meaning not count the first COLLISIONXDELTA pixels of the player sprite for collision
-var sprite_data = global.get('sprite-data');
-const COLLISIONXDELTA = sprite_data.player.COLLISIONXDELTA;
-// how much to reduce the collision width of the player sprite
-const COLLISIONWIDTHREDUCTION = sprite_data.player.COLLISIONWIDTHREDUCTION;
-// how much to move the mirrored sprite to the left, so bounding box fits sprite display
-const MIRROREDMARGIN = sprite_data.player.MIRROREDMARGIN;
-
-const COLLISIONHEIGHTREDUCTION = sprite_data.player.COLLISIONHEIGHTREDUCTION;
-// how much to shift drawing of sprite if in stairs, because of how I crop it from the spritesheet man
-const STAIRMARGIN = sprite_data.player.STAIRMARGIN;
-const STILLMARGIN = sprite_data.player.STILLMARGIN;
-const FLYINGMARGINX = sprite_data.player.FLYINGMARGINX;
-const FLYINGMARGINY = sprite_data.player.FLYINGMARGINY;
-const ANIMATIONDISTANCE = sprite_data.player.ANIMATIONDISTANCE;
-
-// other data
-const gogglesRelativePos = sprite_data.player.gogglesRelativePos;
-sprite_data = undefined;
-
 function Player(posX, posY) {
 	this.name = 'player';
+
+	// sets all our sprite/resolution dependant stuff like COLLISIONDELTAS
+	// and ANIMATIONDISTANC
+	this._setSpriteExtraInfo();
 
 	var movements = {
 		'still' : {
@@ -58,22 +41,22 @@ function Player(posX, posY) {
 		},
 		'walk' : {
 			'positions' : [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3],
-			'distance' : ANIMATIONDISTANCE
+			'distance' : this.ANIMATIONDISTANCE
 		},
 		'jump' : {
 			'positions' : JUMP
 		},
 		'stairs' : {
 			'positions' : [STAIR1, STAIR2],
-			'distance' : ANIMATIONDISTANCE * 2
+			'distance' : this.ANIMATIONDISTANCE * 2
 		},
 		'swim' : {
 			'positions' : [STOP, MOVE1, MOVE2, MOVE1, STOP, MOVE3, MOVE4, MOVE3], // same as walking
-			'distance' : ANIMATIONDISTANCE
+			'distance' : this.ANIMATIONDISTANCE
 		},
 		'fly' : {
 			'positions' : [FLYING1, FLYING2],
-			'distance' : ANIMATIONDISTANCE * 3
+			'distance' : this.ANIMATIONDISTANCE * 3
 		}
 	};
 	MovingEntity.call(
@@ -93,8 +76,8 @@ function Player(posX, posY) {
 	this.gogglesSprite = global.get('imageHandler').getSprite('player-goggles');
 
 	// collision width/height
-	this.width = this.sprite.getWidth() - COLLISIONWIDTHREDUCTION;
-	this.height = this.sprite.getHeight() - COLLISIONHEIGHTREDUCTION;
+	this.width = this.sprite.getWidth() - this.COLLISIONWIDTHREDUCTION;
+	this.height = this.sprite.getHeight() - this.COLLISIONHEIGHTREDUCTION;
 
 	this.timeStill = 0; // how long have we been standing still?
 	 // set this as true only when drawing the still animations specifically (not stop e.g)
@@ -118,26 +101,26 @@ Player.prototype.draw = function () {
 	// do sprite shifting to draw, so it makes sense compared to different animations
 	// and the bounding box fits our body and not e.g. our wings
 	var x = this.x;
-	var y = config.snakeMode ? this.y - FLYINGMARGINY : this.y;
+	var y = config.snakeMode ? this.y - this.FLYINGMARGINY : this.y;
 	if (this.orientation === 'right') {
-		x -= this.inStairs ? STAIRMARGIN : 0;
-		x -= this.inStillAnimation1 ? STILLMARGIN : 0;
-		x -= config.snakeMode ? FLYINGMARGINX : 0;
-		this.sprite.draw(x - COLLISIONXDELTA, y, this.spritePosition);
+		x -= this.inStairs ? this.STAIRMARGIN : 0;
+		x -= this.inStillAnimation1 ? this.STILLMARGIN : 0;
+		x -= config.snakeMode ? this.FLYINGMARGINX : 0;
+		this.sprite.draw(x - this.COLLISIONXDELTA, y, this.spritePosition);
 	} else {
-		x += this.inStairs ? STAIRMARGIN : 0;
-		x += this.inStillAnimation2 ? STILLMARGIN : 0;
-		x += config.snakeMode ? FLYINGMARGINX : 0;
-		this.sprite.drawMirrored(x - MIRROREDMARGIN - COLLISIONXDELTA, y, this.spritePosition);
+		x += this.inStairs ? this.STAIRMARGIN : 0;
+		x += this.inStillAnimation2 ? this.STILLMARGIN : 0;
+		x += config.snakeMode ? this.FLYINGMARGINX : 0;
+		this.sprite.drawMirrored(x - this.MIRROREDMARGIN - this.COLLISIONXDELTA, y, this.spritePosition);
 	}
 
 	// if we're in water or on scenes with only water display our swimming goggles !
 	if (this.inWater || consts['FULLWATERSCENES'].indexOf(global.get('background').getCurrentScene()) >= 0) {
 		if (this.orientation === 'right') {
-			this.gogglesSprite.draw(x - gogglesRelativePos.x, y - gogglesRelativePos.y);
+			this.gogglesSprite.draw(x - this.gogglesRelativePos.x, y - this.gogglesRelativePos.y);
 		} else {
-			var margin = MIRROREDMARGIN;
-			this.gogglesSprite.drawMirrored(x - gogglesRelativePos.x + margin, y - gogglesRelativePos.y);
+			var margin = this.MIRROREDMARGIN;
+			this.gogglesSprite.drawMirrored(x - this.gogglesRelativePos.x + margin, y - this.gogglesRelativePos.y);
 		}
 	}
 
@@ -328,6 +311,34 @@ Player.prototype._handleChestCollision = function (chest) {
 			}
 		}
 	}
+};
+
+Player.prototype._setSpriteExtraInfo = function () {
+	// since everything starts from top left, this is the offset for collision
+	// meaning not count the first this.COLLISIONXDELTA pixels of the player sprite for collision
+	var sprite_data = global.get('sprite-data');
+	this.COLLISIONXDELTA = sprite_data.player.COLLISIONXDELTA;
+	// how much to reduce the collision width of the player sprite
+	this.COLLISIONWIDTHREDUCTION = sprite_data.player.COLLISIONWIDTHREDUCTION;
+	// how much to move the mirrored sprite to the left, so bounding box fits sprite display
+	this.MIRROREDMARGIN = sprite_data.player.MIRROREDMARGIN;
+
+	this.COLLISIONHEIGHTREDUCTION = sprite_data.player.COLLISIONHEIGHTREDUCTION;
+	// how much to shift drawing of sprite if in stairs, because of how I crop it from the spritesheet man
+	this.STAIRMARGIN = sprite_data.player.STAIRMARGIN;
+	this.STILLMARGIN = sprite_data.player.STILLMARGIN;
+	this.FLYINGMARGINX = sprite_data.player.FLYINGMARGINX;
+	this.FLYINGMARGINY = sprite_data.player.FLYINGMARGINY;
+	this.ANIMATIONDISTANCE = sprite_data.player.ANIMATIONDISTANCE;
+
+	// other data
+	this.gogglesRelativePos = sprite_data.player.gogglesRelativePos;
+};
+
+Player.prototype.resetResolution = function (ratio) {
+	MovingEntity.prototype.resetResolution.call(this, ratio);
+
+	this._setSpriteExtraInfo();
 };
 
 global.set('class/Player', Player); // export

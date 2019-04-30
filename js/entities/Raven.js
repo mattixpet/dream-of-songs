@@ -22,17 +22,15 @@ const RIGHT = 1;
 const WINGS1 = 2;
 const WINGS2 = 3;
 
-// just for the bounding box/collision
-const COLLISIONWIDTHREDUCTION = global.get('sprite-data').raven.COLLISIONWIDTHREDUCTION;
-const COLLISIONHEIGHTREDUCTION = global.get('sprite-data').raven.COLLISIONHEIGHTREDUCTION;
-
 function Raven(posX, posY) {
 	this.name = 'raven';
 
 	AnimatingEntity.call(this, global.get('imageHandler').getSprite('raven'), posX, posY, false);
 
-	this.width -= COLLISIONWIDTHREDUCTION;
-	this.height -= COLLISIONHEIGHTREDUCTION;
+	this._setSpriteExtraInfo();
+
+	this.width -= this.COLLISIONWIDTHREDUCTION;
+	this.height -= this.COLLISIONHEIGHTREDUCTION;
 
 	this.speed = 0.2; // how fast can we flyyy.
 
@@ -118,7 +116,7 @@ Raven.prototype.update = function (dt) {
 
 	// when we leave the screen just stop changing coordinates
 	// unless it's when we are almost at our cross for the second time !
-	if (this.y < -this.height - COLLISIONHEIGHTREDUCTION) {
+	if (this.y < -this.height - this.COLLISIONHEIGHTREDUCTION) {
 		this.orientation = 'left'; // always look left while stationary
 		this.mode = 'still';
 		this._setAnimation(this.mode);
@@ -133,10 +131,24 @@ Raven.prototype.draw = function () {
 	if (this.orientation === 'left') {
 		this.sprite.draw(this.x, this.y, this.spritePosition);
 	} else {
-		this.sprite.drawMirrored(this.x - COLLISIONWIDTHREDUCTION, this.y, this.spritePosition);
+		this.sprite.drawMirrored(this.x - this.COLLISIONWIDTHREDUCTION, this.y, this.spritePosition);
 	}
 
 	this._drawBoundingBox();
+};
+
+Raven.prototype._setSpriteExtraInfo = function () {
+	// just for the bounding box/collision
+	this.COLLISIONWIDTHREDUCTION = global.get('sprite-data').raven.COLLISIONWIDTHREDUCTION;
+	this.COLLISIONHEIGHTREDUCTION = global.get('sprite-data').raven.COLLISIONHEIGHTREDUCTION;
+};
+
+Raven.prototype.resetResolution = function (ratio) {
+	AnimatingEntity.prototype.resetResolution.call(this, ratio);
+
+	this._setSpriteExtraInfo();
+
+	this.speed *= ratio;
 };
 
 global.set('class/Raven', Raven);

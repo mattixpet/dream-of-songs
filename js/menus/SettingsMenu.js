@@ -211,6 +211,14 @@ SettingsMenu.prototype._drawContinue = function () {
 	);
 };
 
+SettingsMenu.prototype.resetResolution = function (ratio) {
+	// we need to change our checkboxes/typeboxes
+	for (var i = 0; i < this.checkboxes.length; i++) {
+		this.checkboxes[i].resetResolution(ratio);
+	}
+	this.typebox.resetResolution(ratio);
+};
+
 global.set('class/SettingsMenu', SettingsMenu);
 
 }());

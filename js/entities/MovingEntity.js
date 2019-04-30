@@ -477,6 +477,19 @@ MovingEntity.prototype.setMouseController = function (mouseController) {
 	this.mouseController = mouseController;
 };
 
+MovingEntity.prototype.resetResolution = function (ratio) {
+	AnimatingEntity.prototype.resetResolution.call(this, ratio);
+
+	// we need to change our speeds
+	this.speedX *= ratio;
+	this.speedY *= ratio;
+	if (this.jumps) {
+		this.JUMPSPEED *= ratio > 1 ? ratio * 1.05 : ratio;
+	}
+
+	this.accelerationY *= ratio > 1 ? ratio * 0.95 : ratio;
+};
+
 global.set('class/MovingEntity', MovingEntity);
 
 }());

@@ -80,6 +80,10 @@ function begin() {
 			if (util.eatKey(consts.KEY_C)) {
 				config.clickToShowCoord = !config.clickToShowCoord;
 				util.log('Toggling click to show coord ' + (config.clickToShowCoord ? 'on.' : 'off.'));
+				// var width = 1100;
+				// var height = Math.round(width / canvas.width * canvas.height);
+				// console.log('Testing resolution change to ' + width + ' width with ' + height + ' height.');
+				// global.get('changeResolution')(width, height);
 			}
 			// print player info!
 			if (util.eatKey(consts.KEY_I)) {

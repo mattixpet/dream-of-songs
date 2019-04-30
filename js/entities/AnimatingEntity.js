@@ -151,6 +151,19 @@ AnimatingEntity.prototype._updatePos = function (nextX, nextY) {
 	Entity.prototype._updatePos.call(this, nextX, nextY);
 };
 
+// We need to modify any distance animations we have
+AnimatingEntity.prototype.resetResolution = function (ratio) {
+	Entity.prototype.resetResolution.call(this, ratio);
+
+	for (var animation in this.animations) {
+		var info = this.animations[animation];
+		// distanceX, distanceY, distanceXY
+		if (info.type.startsWith('distance')) {
+			info.durations = Math.round(info.durations * ratio);
+		}
+	}
+};
+
 global.set('class/AnimatingEntity', AnimatingEntity);
 
 }());

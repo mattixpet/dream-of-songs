@@ -53,6 +53,7 @@ module.exports = function(grunt) {
           'js/tools/util.js',
           'js/tools/draw.js',
           'js/tools/collision.js',
+          'js/tools/resolution.js',
 
           'js/data/sprite-data.js',
           'js/data/background-sky-data.js',

@@ -70,11 +70,12 @@ var menu_text_data = {
 					'this game was designed for a keyboard to move around. ' +
 					'However, in the interest of fun I did make a somewhat decent (maybe) mouse ' +
 					'AI so that you should be able to move by tapping where you want to go. \n\n ' +
-					'Oh and also, to bring up the pause menu, a double tap should do the trick.'
+					'Oh and also, to bring up the pause menu, a double tap should do the trick.',
+		'resolution-change' : 'Successfully changed resolution to: {}'
 		},
 	'aboutMenu' : {
-		'textPos' : {'x':170,'y':50},
-		'textWidth' : 410, // px
+		'textPos' : {'x':160,'y':50},
+		'textWidth' : 400, // px
 		'backButtonPos' : {'x':menu_data.aboutMenu.back.x + 30,'y':menu_data.aboutMenu.back.y + 50},
 		// set this after object declaration to be relative to pauseMenu.up/downArrowPos
 		'upArrowPos' : undefined,
@@ -148,9 +149,9 @@ menu_text_data['aboutMenu'].downArrowPos = util.shallowCopy(menu_text_data['paus
 menu_text_data['aboutMenu'].upArrowPos.x -= 80;
 menu_text_data['aboutMenu'].downArrowPos.x -= 80;
 
-menu_text_data['settingsMenu'].backButtonPos = menu_text_data['aboutMenu'].backButtonPos;
-menu_text_data['settingsMenu'].upArrowPos = menu_text_data['aboutMenu'].upArrowPos;
-menu_text_data['settingsMenu'].downArrowPos = menu_text_data['aboutMenu'].downArrowPos;
+menu_text_data['settingsMenu'].backButtonPos = util.shallowCopy(menu_text_data['aboutMenu'].backButtonPos);
+menu_text_data['settingsMenu'].upArrowPos = util.shallowCopy(menu_text_data['aboutMenu'].upArrowPos);
+menu_text_data['settingsMenu'].downArrowPos = util.shallowCopy(menu_text_data['aboutMenu'].downArrowPos);
 
 global.set('menu-text-data', menu_text_data);
 

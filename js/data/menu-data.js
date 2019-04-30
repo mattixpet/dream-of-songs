@@ -4,6 +4,8 @@
 
 'use strict';
 
+var util = global.get('util');
+
 var menu_data = {
 	// format
 	// {
@@ -40,8 +42,8 @@ var menu_data = {
 	}
 };
 
-menu_data['settingsMenu'].back = menu_data['aboutMenu'].back;
-menu_data['settingsMenu'].continue = menu_data['notificationMenu'].continue;
+menu_data['settingsMenu'].back = util.shallowCopy(menu_data['aboutMenu'].back);
+menu_data['settingsMenu'].continue = util.shallowCopy(menu_data['notificationMenu'].continue);
 
 global.set('menu-data', menu_data);
 

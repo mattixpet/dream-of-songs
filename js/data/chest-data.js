@@ -206,7 +206,7 @@ var chest_data = {
 };
 
 // reused chest coordinates
-chest_data.semivaulttop = chest_data.semivault.slice(0,6); // only top two rows of chests from semivault
+chest_data.semivaulttop = util.deepCopy(chest_data.semivault.slice(0,6)); // only top two rows of chests from semivault
 
 // except for skyvault/topskyvault, we need to move 3 chests
 chest_data.skyvault = util.deepCopy(chest_data.undergroundvault);
@@ -214,7 +214,7 @@ var skyvault = chest_data.skyvault;
 skyvault[skyvault.length-1].x -= 220;
 skyvault[skyvault.length-6].x += 280;
 skyvault[skyvault.length-5].x += 160;
-//
+// need to make sure not to change these on resolution change since they are only pointers to skyvault
 chest_data.topskyvault = chest_data.skyvault;
 chest_data.skyvault00 = chest_data.skyvault;
 chest_data.topskyvault00 = chest_data.skyvault;

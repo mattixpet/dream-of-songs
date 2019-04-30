@@ -302,6 +302,18 @@ Background.prototype.getCurrentScene = function () {
 	return this.currentScene;
 };
 
+// Necessary for resolution change !
+Background.prototype.setBlockDimensions = function (canvasWidth, canvasHeight) {
+	this.blockWidth = Math.round(canvasWidth / this.gridW);
+	this.blockHeight = Math.round(canvasHeight / this.gridH);
+
+	if (!Number.isInteger(this.blockWidth) || !Number.isInteger(this.blockHeight)) {
+		util.warn('Brick width or height is not integer, setting to floor.');
+		this.blockHeight = Math.floor(this.blockHeight);
+		this.blockWidth = Math.floor(this.blockWidth);
+	}
+}
+
 global.set('class/Background', Background);
 
 }());

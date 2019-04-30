@@ -110,6 +110,11 @@ Typebox.prototype._drawText = function (text, x, y) {
 	);
 };
 
+Typebox.prototype.resetResolution = function (ratio) {
+	this.width = Math.round(this.width * ratio);
+	this.height = Math.round(this.height * ratio);
+};
+
 global.set('class/Typebox', Typebox);
 
 }());

@@ -89,7 +89,7 @@ var torch_data = {
 	}
 };
 
-torch_data.spawns.semivaulttop = torch_data.spawns.semivault.slice(2,4); // only most right two torches reused
+torch_data.spawns.semivaulttop = util.deepCopy(torch_data.spawns.semivault.slice(2,4)); // only most right two torches reused
 
 // add our bezier curves as explained above (kinda)
 // interpolate changing only x coord of the base curves (ANIMATION0) to the left and right

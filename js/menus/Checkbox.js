@@ -10,9 +10,6 @@ var util = global.get('util');
 var draw = global.get('draw');
 var collision = global.get('collision');
 
-// local constants
-const iconWidth = global.get('menu-text-data')['Common'].iconWidth;
-
 // [[label]] is the text to be displayed with the checkbox
 // [[configVariable]] is the name of the key in config.js, representing
 //   the variable the checkbox is connected with
@@ -26,6 +23,8 @@ function Checkbox(label, configVariable) {
 	this.width = global.get('menu-text-data')['settingsMenu'].checkboxWidth;
 	this.height = global.get('menu-text-data')['settingsMenu'].checkboxHeight;
 
+	this.iconWidth = global.get('menu-text-data')['Common'].iconWidth;
+
 	// coordinates of the actual box to be checked/unchecked (but let's check it out though)
 	this.checkboxX = undefined;
 	this.checkboxY = undefined;
@@ -37,7 +36,7 @@ Checkbox.prototype.draw = function (x, y) {
 
 	var data = global.get('menu-text-data')['settingsMenu'];
 	this._drawLabel(x + data.checkboxMargin, y + this.height - data.labelMargin);
-	this.checkboxX = x + this.width - iconWidth - data.checkboxMargin * 2;
+	this.checkboxX = x + this.width - this.iconWidth - data.checkboxMargin * 2;
 	this.checkboxY = y + data.checkboxMargin;
 	this.checkboxSprite.draw(this.checkboxX, this.checkboxY);
 	if (config[this.configVariable]) {
@@ -47,7 +46,7 @@ Checkbox.prototype.draw = function (x, y) {
 
 // Is someone clicking our checkbox?
 Checkbox.prototype.click = function (x, y) {
-	if (collision.pixelWithinRect(x, y, this.checkboxX, this.checkboxY, iconWidth, iconWidth)) {
+	if (collision.pixelWithinRect(x, y, this.checkboxX, this.checkboxY, this.iconWidth, this.iconWidth)) {
 		config[this.configVariable] = !config[this.configVariable];
 		util.log('Toggling ' + this.configVariable + ' ' + (config[this.configVariable] ? 'on.' : 'off.'));
 
@@ -67,6 +66,12 @@ Checkbox.prototype._drawLabel = function (x, y) {
 		common.fontSize,
 		common.fontColor
 	);
+};
+
+Checkbox.prototype.resetResolution = function (ratio) {
+	this.width = Math.round(this.width * ratio);
+	this.height = Math.round(this.height * ratio);
+	this.iconWidth = Math.round(this.iconWidth * ratio);
 };
 
 global.set('class/Checkbox', Checkbox);

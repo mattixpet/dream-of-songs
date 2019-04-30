@@ -88,7 +88,7 @@ NotificationMenu.prototype.display = function () {
 	Menu.prototype.display.call(this);
 	// stop after here because we want to get one cycle in to redraw the gui with the current song
 	// timeout necessary to get in at least one cycle after song is updated
-	setTimeout(function(){MainLoop.stop();}, 60);
+	setTimeout(function(){MainLoop.stop();}, 40);
 };
 
 NotificationMenu.prototype.update = function (dt) {

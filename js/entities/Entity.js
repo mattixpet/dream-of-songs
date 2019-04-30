@@ -151,6 +151,21 @@ Entity.prototype.setId = function (id) {
 	this.id = id;
 };
 
+// On a resolution change by default, all that 
+// needs to be changed is the sprite, width, 
+// height and x, y of entity
+// [[ratio]] is the ratio the resolution changed
+// e.g. from 800 -> 1000 ratio would be 1.25
+Entity.prototype.resetResolution = function (ratio) {
+	this.TERMINALSPEED *= ratio;
+	this.width = Math.round(this.width * ratio);
+	this.height = Math.round(this.height * ratio);
+	this.x = Math.round(this.x * ratio);
+	this.y = Math.round(this.y * ratio);
+	this.startingX = Math.round(this.startingX * ratio);
+	this.startingY = Math.round(this.startingY * ratio);
+};
+
 global.set('class/Entity', Entity);
 
 }());
