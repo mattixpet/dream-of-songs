@@ -55,13 +55,16 @@ Menu.prototype.onEnter = function () {
 };
 
 // handle a click from user and process if it is within a button
+// returns the button clicked if a button was clicked, otherwise false
 Menu.prototype._handleClick = function (x, y) {
 	var buttonClicked = this._pixelWithinButton(x, y);
 	if (buttonClicked) {
 		// call relevant handler for this button and since they are stored as function pointers
 		// only, remember to pass the correct 'this' to them :)
 		this.buttonActions[buttonClicked].call(this);
+		return buttonClicked;
 	}
+	return false;
 };
 
 // returns the button if pixel is within it, otherwise returns false

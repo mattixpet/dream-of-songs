@@ -13,6 +13,7 @@ var Menu = global.get('class/Menu');
 var ScrollableMenu = global.get('class/ScrollableMenu');
 var Checkbox = global.get('class/Checkbox');
 var Typebox = global.get('class/Typebox');
+var Multibox = global.get('class/Multibox');
 
 function SettingsMenu () {
 	this.name = 'settingsMenu';
@@ -41,6 +42,12 @@ function SettingsMenu () {
 	this.typebox = new Typebox(
 		data.typebox.label,
 		this.handleTypedWord
+	);
+	// we only have one multibox (resolution)
+	this.multibox = new Multibox(
+		data.multibox.label,
+		data.multibox.options,
+		this.notifyAction
 	);
 }
 
@@ -78,13 +85,44 @@ SettingsMenu.prototype.onEnter = function () {
 };
 
 SettingsMenu.prototype._handleClick = function (x, y) {
-	// checks for button clicks (back button)
-	Menu.prototype._handleClick.call(this, x, y);
+	// make sure not to return when buttons not being displayed are 'clicked'
+	var buttonClicked = Menu.prototype._handleClick.call(this, x, y);
+	if ((this.inNotification && buttonClicked === 'continue') ||
+		!this.inNotification && buttonClicked === 'back') {
+		return;
+	}
 	// now check our checkboxes and typeboxes (well that one..) if they are being clicked
 	for (var i = 0; i < this.checkboxes.length; i++) {
 		this.checkboxes[i].click(x, y);
 	}
 	this.typebox.click(x, y);
+	this.multibox.click(x, y);
+};
+
+// actions called from our multibox
+SettingsMenu.prototype.notifyAction = function (action) {
+	var width, height;
+	switch (action) {
+		case '800x450':
+			width = 800;
+			height = 450;
+			break;
+		case 'windowWidth':
+			var canvas = global.get('canvas');
+			width = document.body.clientWidth - 2; // - 2 is because of the 1 px border of canvas
+			height = Math.round(width / canvas.width * canvas.height);
+			break;
+		case 'fullscreen':
+			// NOT IMPLEMENTED
+			break;
+		default:
+			// this is not used either.. but could be cool maybe someday
+			width = parseInt(action.split('x')[0]);
+			height = parseInt(action.split('x')[1]);
+			break;
+	}
+	util.log('Changing resolution to ' + width + ' width with ' + height + ' height.');
+	global.get('changeResolution')(width, height);
 };
 
 // Called by our typebox when user types a word and hits Return
@@ -122,6 +160,9 @@ SettingsMenu.prototype.draw = function () {
 	this._drawBackButton();
 	this._drawTypebox(); // typebox will be at top
 	this._drawCheckboxes();
+
+	var data = global.get('menu-text-data')[this.name];
+	this.multibox.draw(data.firstCheckboxPos.x, data.firstCheckboxPos.y + data.checkboxHeight * 2);
 };
 
 SettingsMenu.prototype._drawTypebox = function () {
@@ -217,6 +258,7 @@ SettingsMenu.prototype.resetResolution = function (ratio) {
 		this.checkboxes[i].resetResolution(ratio);
 	}
 	this.typebox.resetResolution(ratio);
+	this.multibox.resetResolution(ratio);
 };
 
 global.set('class/SettingsMenu', SettingsMenu);

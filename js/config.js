@@ -28,6 +28,10 @@ config['allowParallelSongs'] = false; // only play one song at a time or not, de
 config['repeatSongs'] = false; // repeat the current song, default: no
 config['mouseControls'] = false; // use the mouse to control player, default: NO (yes on mobile)
 config['doubleTapToPause'] = true; // for mobile only
+// multibox (resolution)
+config['fullscreen'] = false;
+config['windowWidth'] = false;
+config['800x450'] = true; // default resolution
 
 // misc
 // options: no-cors, cors, same-origin, depending on where your audio is located

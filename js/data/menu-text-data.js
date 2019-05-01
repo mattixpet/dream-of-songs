@@ -97,6 +97,8 @@ var menu_text_data = {
 		'checkboxHeight' : iconWidth + 10 + 10, // iconWidth + checkboxMargin * 2
 		'smallNotificationPos' : {'x':200, 'y':400},
 		'typeboxPadding' : 20,
+		'multiboxCheckboxWidth' : 400,
+		'multiboxHeight' : 70 * 3 + 40, // checkboxHeight * 3 + a lil
 		'typebox' : {
 			'label' : 'Enter code'
 		},
@@ -105,37 +107,37 @@ var menu_text_data = {
 				'label' : 'Audio controls fade in/out',
 				'variable' : 'audioControlsFade' // variable in config.js
 			},
-			{
-				'label' : 'Autoplay next song',
-				'variable' : 'autoplay'
-			},
-			{
-				'label' : 'Allow playing songs in parallel',
-				'variable' : 'allowParallelSongs'
-			},
-			{
-				'label' : 'Play song on repeat',
-				'variable' : 'repeatSongs'
-			},
-			{
-				'label' : 'Mouse controls (beta)',
-				'variable' : 'mouseControls'
-			},
-			{
-				'label' : 'Double tap pauses (mobile)',
-				'variable' : 'doubleTapToPause'
-			}
+			// {
+			// 	'label' : 'Autoplay next song',
+			// 	'variable' : 'autoplay'
+			// },
+			// {
+			// 	'label' : 'Allow playing songs in parallel',
+			// 	'variable' : 'allowParallelSongs'
+			// },
+			// {
+			// 	'label' : 'Play song on repeat',
+			// 	'variable' : 'repeatSongs'
+			// },
+			// {
+			// 	'label' : 'Mouse controls (beta)',
+			// 	'variable' : 'mouseControls'
+			// },
+			// {
+			// 	'label' : 'Double tap pauses (mobile)',
+			// 	'variable' : 'doubleTapToPause'
+			// }
 		],
-		'multiplechoicebox' : {
+		'multibox' : {
 			'label' : 'Resolution 16:9 (beta)',
-			'checkboxes' : [
+			'options' : [
 				{
 					'label' : 'Fullscreen',
 					'action' : 'fullscreen'
 				},
 				{
 					'label' : 'Device/browser width',
-					'action' : 'width'
+					'action' : 'windowWidth'
 				},
 				{
 					'label' : '800x450 (original)',

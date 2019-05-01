@@ -21,13 +21,6 @@ function changeResolution (width, height) {
 	canvas.width = width;
 	canvas.height = height;
 
-	if (MainLoop.isRunning()) {
-		MainLoop.stop(); // if not already stopped
-	}
-
-	global.get('loadingBar').repeatableSetup(); // pull up loading screen
-	global.get('loadingBar').start();
-
 	// now calculate the constant to multiply all our old coordinates with
 	var ratio = width / oldWidth; // should be same constant for width and height with 16:9 aspect ratio
 
@@ -67,12 +60,7 @@ function changeResolution (width, height) {
 	global.get('imageHandler').resetResolution(ratio);
 
 	// final
-	global.get('pauseMenu').display();
-	global.get('notificationMenu').notify('resolution-change', width + 'x' + height);
-	global.get('notificationMenu').display();
 	util.log('Completed resolution change.');
-
-	console.log(global.get('menu-data'));
 }
 
 // [[ratio]] is the constant to multiply all our coordinates with
