@@ -120,6 +120,7 @@ module.exports = function(grunt) {
     uglify : {
       minified: {
         options: {
+          mangle: false, // keep variable names for console logs/debugging
           banner: '/* Dream of songs v<%= pkg.version %> */',
           sourceMap: true,
           sourceMapName: 'dist/dreamofsongs.min.js.map'

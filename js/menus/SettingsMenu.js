@@ -101,6 +101,8 @@ SettingsMenu.prototype._handleClick = function (x, y) {
 
 // actions called from our multibox
 SettingsMenu.prototype.notifyAction = function (action) {
+	/* jshint shadow:true */
+
 	var width, height;
 	switch (action) {
 		case '800x450':
@@ -113,7 +115,10 @@ SettingsMenu.prototype.notifyAction = function (action) {
 			height = Math.round(width / canvas.width * canvas.height);
 			break;
 		case 'fullscreen':
-			// NOT IMPLEMENTED
+			this._requestFullscreen();
+			var canvas = global.get('canvas');
+			width = window.screen.width - 2 || document.body.clientWidth - 2;
+			height = Math.round(width / canvas.width * canvas.height);
 			break;
 		default:
 			// this is not used either.. but could be cool maybe someday
@@ -123,6 +128,15 @@ SettingsMenu.prototype.notifyAction = function (action) {
 	}
 	util.log('Changing resolution to ' + width + ' width with ' + height + ' height.');
 	global.get('changeResolution')(width, height);
+};
+
+SettingsMenu.prototype._requestFullscreen = function () {
+	var canvas = global.get('canvas');
+	(canvas.requestFullScreen || 
+		canvas.webkitRequestFullScreen || 
+		canvas.mozRequestFullScreen || 
+		canvas.msRequestFullScreen)
+	.call(canvas);
 };
 
 // Called by our typebox when user types a word and hits Return

@@ -51,8 +51,6 @@ Checkbox.prototype.draw = function (x, y) {
 
 // Is someone clicking our checkbox?
 Checkbox.prototype.click = function (x, y) {
-	console.log('Clicked: ' + x + ', ' + y + ' on checkbox: ' + this.configVariable);
-
 	if (collision.pixelWithinRect(x, y, this.checkboxX, this.checkboxY, this.iconWidth, this.iconWidth)) {
 		if (this.callback) {
 			if (!config[this.configVariable]) {

@@ -56,7 +56,7 @@ Multibox.prototype.click = function (x, y) {
 		}
 	}
 
-	if (wasClickedIndex) {
+	if (wasClickedIndex || wasClickedIndex === 0) {
 		for (var i = 0; i < this.checkboxes.length; i++) {
 			if (i !== wasClickedIndex) {
 				config[this.checkboxes[i].getConfigVariable()] = false;
@@ -85,8 +85,6 @@ Multibox.prototype.draw = function (x, y) {
 		this.checkboxes[i].draw(checkboxX, checkboxY);
 		checkboxY += this.checkboxHeight;
 	}
-
-	console.log(this);
 };
 
 // Draw at topleft x,y
