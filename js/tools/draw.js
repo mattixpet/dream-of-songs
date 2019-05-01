@@ -186,6 +186,12 @@ function writeText(text, x, y, font, fontSize, color, width, spacing, opacity, s
 				line = '';
 			}
 			continue;
+		} else if (word === '\t') {
+			word = '  ';
+		} else if (word === '\t\t') {
+			word = '    ';
+		} else if (word === '\s') {
+			word = ' ';
 		}
 		// lookahead one word, and if line is more than maxNumChars, we have our line
 		var nextLine = line + word + ' ';

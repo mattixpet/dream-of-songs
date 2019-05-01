@@ -100,7 +100,7 @@ AboutMenu.prototype._drawBackButton = function () {
 // Populates this.text array
 AboutMenu.prototype._splitText = function () {
 	// we can fit roughly numWordsPerPage words on each page
-	var numWordsPerPage = 110;
+	var numWordsPerPage = 105;
 	// menu-text-data.aboutMenu.text should be split on newlines which can fit each of our page
 	var words = global.get('menu-text-data')[this.name].text.split(' ');
 	var wordsDone = 0;
