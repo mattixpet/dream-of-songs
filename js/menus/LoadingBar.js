@@ -14,12 +14,6 @@ function LoadingBar() {
 	this.img = undefined; // set in this.preloadImage
 	this.color = '#889158';
 
-	this.repeatableSetup();
-}
-
-// Setup in beginning (needs to be a function and not in the constructor
-// because on resolution change we need to call it again)
-LoadingBar.prototype.repeatableSetup = function () {
 	this.progress = 0; // 0-1
 	this.canvas = global.get('canvas');
 	// positions of loading bar bar (go figure)
@@ -27,18 +21,21 @@ LoadingBar.prototype.repeatableSetup = function () {
 	this.y = Math.floor(this.canvas.height / 2.275);
 	this.w = Math.floor(this.canvas.width / 2.735);
 	this.h = Math.floor(this.canvas.height / 12.86);
-};
+}
 
 LoadingBar.prototype.preloadImage = function(callback) {
-	util.log('Actually loading the loading bar image..');
+	// check for Promise to be defined (es6), nothing will work without it (unless I would code it of course..)
+	var text = Promise ? 
+		'Actually loading the loading bar.. go figure :)' : 
+		'This game only works with ES6 at the moment. Sorry. Maybe update your browser?';
+	util.log(text);
 	var ctx = this.ctx;
 	ctx.save();
 	ctx.fillStyle = '#999966';
 	ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-	ctx.font = '20px Monospace';
+	ctx.font = Promise ? '20px Monospace' : '14px Monospace';
 	ctx.fillStyle = '#113333';
-	ctx.fillText(	'Actually loading the loading bar.. go figure :)', 
-						Math.floor(this.canvas.width/6), Math.floor(this.canvas.height/2));
+	ctx.fillText(text, Math.floor(this.canvas.width/6), Math.floor(this.canvas.height/2));
 	ctx.restore();
 
 	var img = new Image();
