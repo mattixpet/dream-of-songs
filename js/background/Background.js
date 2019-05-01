@@ -312,7 +312,7 @@ Background.prototype.setBlockDimensions = function (canvasWidth, canvasHeight) {
 		this.blockHeight = Math.floor(this.blockHeight);
 		this.blockWidth = Math.floor(this.blockWidth);
 	}
-}
+};
 
 global.set('class/Background', Background);
 

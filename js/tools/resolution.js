@@ -15,7 +15,7 @@ var config = global.get('config');
 function changeResolution (width, height) {
 	var canvas = global.get('canvas');
 	var oldWidth = canvas.width;
-	var oldHeight = canvas.height;
+	//var oldHeight = canvas.height;
 
 	// this must be changed before loading is called to have correct dimensions
 	canvas.width = width;
@@ -99,7 +99,7 @@ function modifyDataFiles (ratio) {
 		'marginy'
 	];
 	// exceptions to postfixes, like 'srcWidth' we don't want to change for example
-	var noModifyKeys = ['srcWidth', 'srcHeight', 'positions'];
+	var noModifyKeys = ['srcWidth', 'srcHeight', 'positions', 'popupShadowDistance'];
 
 	generalModification(global.get('audio-gui-data'), postfixes, noModifyKeys, ratio);
 	modifyBackgroundData(ratio); // modifies the teleport coordinates

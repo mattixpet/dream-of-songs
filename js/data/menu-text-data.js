@@ -118,7 +118,7 @@ var menu_text_data = {
 				'variable' : 'repeatSongs'
 			},
 			{
-				'label' : 'Mouse controls (USE AT OWN RISK)',
+				'label' : 'Mouse controls (beta)',
 				'variable' : 'mouseControls'
 			},
 			{
@@ -126,6 +126,23 @@ var menu_text_data = {
 				'variable' : 'doubleTapToPause'
 			}
 		],
+		'multiplechoicebox' : {
+			'label' : 'Resolution 16:9 (beta)',
+			'checkboxes' : [
+				{
+					'label' : 'Fullscreen',
+					'action' : 'fullscreen'
+				},
+				{
+					'label' : 'Device/browser width',
+					'action' : 'width'
+				},
+				{
+					'label' : '800x450 (original)',
+					'action' : '800x450'
+				}
+			]
+		},
 		'raven-notification' : 	'Nice! You figured out the riddle of the raven. \n ' +
 								'This means you can see where hidden chests are located now! ' +
 								'That doesn\'t mean they\'ll necessarily be easy to find, but ' +
