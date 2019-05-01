@@ -49,6 +49,14 @@ function SettingsMenu () {
 		data.multibox.options,
 		this.notifyAction
 	);
+
+	this.page = 0; // 2 pages, until user unlocks hidden chests/ flying, then will be 3 pages
+	// what do we have on each page?
+	this.pages = [
+		[this.typebox, this.checkboxes[0], this.checkboxes[1], this.checkboxes[2], this.checkboxes[3]],
+		[this.checkboxes[4], this.checkboxes[5], this.multibox],
+		[] // will include hidden checkboxes later if user unlocks them
+	];
 }
 
 SettingsMenu.prototype = Object.create(ScrollableMenu.prototype);
@@ -67,12 +75,20 @@ SettingsMenu.prototype._handleContinue = function () {
 };
 
 SettingsMenu.prototype._handleUp = function () {
-	//this.textIndex = this.textIndex - 1 === -1 ? this.text.length - 1 : this.textIndex - 1;
+	this.page = this.page - 1 === -1 ? this.pages.length - 1 : this.page - 1;
+	// if our page 3 has no checkboxes yet let's not stay there
+	if (this.pages[this.page].length === 0) {
+		this.page--;
+	}
 	this.draw();
 };
 
 SettingsMenu.prototype._handleDown = function () {
-	//this.textIndex = (this.textIndex + 1) % this.text.length;
+	this.page = (this.page + 1) % this.pages.length;
+	// if our page 3 has no checkboxes yet let's not stay there
+	if (this.pages[this.page].length === 0) {
+		this.page = 0;
+	}
 	this.draw();
 };
 
@@ -91,12 +107,11 @@ SettingsMenu.prototype._handleClick = function (x, y) {
 		!this.inNotification && buttonClicked === 'back') {
 		return;
 	}
-	// now check our checkboxes and typeboxes (well that one..) if they are being clicked
-	for (var i = 0; i < this.checkboxes.length; i++) {
-		this.checkboxes[i].click(x, y);
+	// now check everything we are displaying at the moment
+	var items = this.pages[this.page];
+	for (var i = 0; i < items.length; i++) {
+		items[i].click(x, y);
 	}
-	this.typebox.click(x, y);
-	this.multibox.click(x, y);
 };
 
 // actions called from our multibox
@@ -111,13 +126,13 @@ SettingsMenu.prototype.notifyAction = function (action) {
 			break;
 		case 'windowWidth':
 			var canvas = global.get('canvas');
-			width = document.body.clientWidth - 2; // - 2 is because of the 1 px border of canvas
+			width = (document.body.clientWidth || window.innerWidth) - 2; // - 2 is because of the 1 px border of canvas
 			height = Math.round(width / canvas.width * canvas.height);
 			break;
 		case 'fullscreen':
 			this._requestFullscreen();
 			var canvas = global.get('canvas');
-			width = window.screen.width - 2 || document.body.clientWidth - 2;
+			width = (window.screen.width || document.body.clientWidth || window.innerWidth) - 2;
 			height = Math.round(width / canvas.width * canvas.height);
 			break;
 		default:
@@ -141,6 +156,8 @@ SettingsMenu.prototype._requestFullscreen = function () {
 
 // Called by our typebox when user types a word and hits Return
 SettingsMenu.prototype.handleTypedWord = function (word) {
+	/* jshint shadow:true */
+
 	util.log('Settings called with word: ' + word);
 	this.draw();
 
@@ -151,6 +168,23 @@ SettingsMenu.prototype.handleTypedWord = function (word) {
 
 		this.inNotification = true;
 		this._drawBigNotification(global.get('menu-text-data')[this.name]['raven-notification']);
+
+		// add this checkbox (unless we've added this before)
+		var data = global.get('menu-text-data')[this.name];
+		var done = false;
+		for (var i = 0; i < this.pages[2].length; i++) {
+			if (this.pages[2][i].getConfigVariable() === 'showHiddenChests') {
+				done = true;
+			}
+		}
+		if (!done) {
+			this.pages[2].push(
+				new Checkbox(
+					data['hidden-checkboxes']['hiddenChestHints'].label,
+					data['hidden-checkboxes']['hiddenChestHints'].variable
+				)
+			);
+		}
 	} else if (word.toLowerCase() === consts.THEONLYWAYTOFLY) {
 		this.typebox.stopEnteringCode();
 		config.snakeModeEnabled = true;
@@ -159,6 +193,23 @@ SettingsMenu.prototype.handleTypedWord = function (word) {
 
 		this.inNotification = true;
 		this._drawBigNotification(global.get('menu-text-data')[this.name]['flying-notification']);
+
+		// add this checkbox!
+		var data = global.get('menu-text-data')[this.name];
+		var done = false;
+		for (var i = 0; i < this.pages[2].length; i++) {
+			if (this.pages[2][i].getConfigVariable() === 'snakeMode') {
+				done = true;
+			}
+		}
+		if (!done) {
+			this.pages[2].push(
+				new Checkbox(
+					data['hidden-checkboxes']['flying'].label,
+					data['hidden-checkboxes']['flying'].variable
+				)
+			);
+		}
 	} else if (word.toLowerCase() === consts.THEONLYWAYTODEVMODE) {
 		config.devMode = !config.devMode;
 		util.log('Dev mode: ' + config.devMode);
@@ -171,31 +222,17 @@ SettingsMenu.prototype.draw = function () {
 	// draw the background and canvas for our text
 	ScrollableMenu.prototype.draw.call(this);
 
-	this._drawBackButton();
-	this._drawTypebox(); // typebox will be at top
-	this._drawCheckboxes();
-
-	var data = global.get('menu-text-data')[this.name];
-	this.multibox.draw(data.firstCheckboxPos.x, data.firstCheckboxPos.y + data.checkboxHeight * 2);
-};
-
-SettingsMenu.prototype._drawTypebox = function () {
-	var data = global.get('menu-text-data')[this.name];
-	this.typebox.draw(
-		data.firstCheckboxPos.x,
-		data.firstCheckboxPos.y
-	);
-};
-
-// Draw our checkboxes, remember there is one typebox already drawn above us
-SettingsMenu.prototype._drawCheckboxes = function () {
+	// draw all our elements on the page
+	var items = this.pages[this.page];
 	var data = global.get('menu-text-data')[this.name];
 	var x = data.firstCheckboxPos.x;
-	var y = data.firstCheckboxPos.y + data.checkboxHeight;
-	for (var i = 0; i < this.checkboxes.length; i++) {
-		this.checkboxes[i].draw(x, y);
-		y += data.checkboxHeight;
+	var y = data.firstCheckboxPos.y;
+	for (var i = 0; i < items.length; i++) {
+		items[i].draw(x, y);
+		y += items[i].height;
 	}
+
+	this._drawBackButton();
 };
 
 SettingsMenu.prototype._drawBackButton = function () {

@@ -17,7 +17,7 @@ function changeResolution (width, height) {
 	var oldWidth = canvas.width;
 	//var oldHeight = canvas.height;
 
-	if (width/height !== 16/9) {
+	if (!util.almostEqual(width/height, 16/9, 0.001)) {
 		util.warn('Warning, 16:9 aspect ratio not respected in resolution change. Still changing.');
 	}
 

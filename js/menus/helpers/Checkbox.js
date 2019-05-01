@@ -87,6 +87,10 @@ Checkbox.prototype._drawLabel = function (x, y) {
 	);
 };
 
+Checkbox.prototype.getHeight = function () {
+	return this.height;
+};
+
 Checkbox.prototype.setWidth = function (width) {
 	this.width = width;
 };

@@ -40,7 +40,7 @@ var menu_text_data = {
 						'\n\n ' +
 						'Maybe there are some more chests to be found? ' +
 						'You can always check ' +
-						'out the songs you have collected in the pause menu (click \'p\').',
+						'out the songs you have collected in the pause menu (click \'p\', double tap on mobile).',
 		'general-chest' : 'New song! {}/' + consts.NUMCHESTS + ' \n {}',
 		'first-hidden-chest' : 	'Congratulations you found a hidden chest! \n Hidden chests ' +
 							'are much rarer than normal chests and can\'t be seen with ' +
@@ -107,27 +107,37 @@ var menu_text_data = {
 				'label' : 'Audio controls fade in/out',
 				'variable' : 'audioControlsFade' // variable in config.js
 			},
-			// {
-			// 	'label' : 'Autoplay next song',
-			// 	'variable' : 'autoplay'
-			// },
-			// {
-			// 	'label' : 'Allow playing songs in parallel',
-			// 	'variable' : 'allowParallelSongs'
-			// },
-			// {
-			// 	'label' : 'Play song on repeat',
-			// 	'variable' : 'repeatSongs'
-			// },
-			// {
-			// 	'label' : 'Mouse controls (beta)',
-			// 	'variable' : 'mouseControls'
-			// },
-			// {
-			// 	'label' : 'Double tap pauses (mobile)',
-			// 	'variable' : 'doubleTapToPause'
-			// }
+			{
+				'label' : 'Autoplay next song',
+				'variable' : 'autoplay'
+			},
+			{
+				'label' : 'Allow playing songs in parallel',
+				'variable' : 'allowParallelSongs'
+			},
+			{
+				'label' : 'Play song on repeat',
+				'variable' : 'repeatSongs'
+			},
+			{
+				'label' : 'Mouse controls (beta)',
+				'variable' : 'mouseControls'
+			},
+			{
+				'label' : 'Double tap pauses (mobile)',
+				'variable' : 'doubleTapToPause'
+			}
 		],
+		'hidden-checkboxes' : {
+			'hiddenChestHints' : {
+				'label' : 'Hidden chest hints',
+				'variable' : 'showHiddenChests'
+			},
+			'flying' : {
+				'label' : 'Flying',
+				'variable' : 'snakeMode'
+			}
+		},
 		'multibox' : {
 			'label' : 'Resolution 16:9 (beta)',
 			'options' : [
@@ -150,11 +160,11 @@ var menu_text_data = {
 								'That doesn\'t mean they\'ll necessarily be easy to find, but ' +
 								'certainly a lot easier than without the code. Keep an eye out ' +
 								'for three blue stars to guide your way. \n\n ' +
-								'You can always toggle this off/on with the \'h\' key now.',
+								'You can always toggle this off/on with the \'h\' key now (or here in settings).',
 		'flying-notification' : 'Good job! You figured out the only way to fly. \n ' +
 								'This means you now have wings and can FLY ! ' +
 								'May your wings take you wherever you desire. \n\n ' +
-								'You can always toggle this off/on with the \'o\' key now.',
+								'You can always toggle this off/on with the \'o\' key now (or here in settings).',
 		'sprites' : {
 			'checkbox' : {'width' : iconWidth, 'height' : iconWidth},
 			'checkmark' : {'width' : iconWidth, 'height' : iconWidth},

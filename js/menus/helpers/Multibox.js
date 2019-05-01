@@ -100,6 +100,10 @@ Multibox.prototype._drawLabel = function (x, y) {
 	);
 };
 
+Multibox.prototype.getHeight = function () {
+	return this.height;
+};
+
 Multibox.prototype.resetResolution = function (ratio) {
 	this.width = Math.round(this.width * ratio);
 	this.height = Math.round(this.height * ratio);
