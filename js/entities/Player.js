@@ -301,6 +301,14 @@ Player.prototype._handleChestCollision = function (chest) {
 			if (this.numChests >= consts.NUMCHESTS) {
 				global.get('notificationMenu').notify('won-game');
 				global.get('notificationMenu').display();
+
+				if (config.sendAnalytics) {
+					global.get('postToDb')({'type':'milestone', 'value':'beatgame'});
+				}
+			} else if (this.numChests === 51 && config.sendAnalytics) {
+				global.get('postToDb')({'type':'milestone', 'value':'over50songs'});
+			} else if (this.numChests === 101 && config.sendAnalytics) {
+				global.get('postToDb')({'type':'milestone', 'value':'over100songs'});
 			}
 		} else {
 			// no song ! display message only once

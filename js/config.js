@@ -36,7 +36,8 @@ config['800x450'] = true; // default resolution
 // misc
 // options: no-cors, cors, same-origin, depending on where your audio is located
 // see config.SONGURL
-config['fetchMode'] = 'cors';
+config['fetchMode'] = 'same-origin'; // devel: 'cors';
+config['sendAnalytics'] = true; // devel: false;
 
 // game values
 config['GRAVITYCONSTANT'] = 0.001;
@@ -50,7 +51,9 @@ config['SPRITEURL'] = 'img/spritesheets/';
 config['BACKGROUNDURL'] = 'img/backgrounds/';
 config['MENUITEMSURL'] = 'img/menuitems/';
 config['AUDIOGUIURL'] = 'img/audiogui/';
-config['SONGURL'] = 'https://matthiaspetursson.com/songs/';
+config['SONGURL'] = 'songs/'; // devel: 'https://matthiaspetursson.com/songs/';
+config['POSTURL'] = 'php/analytics.php'; // devel: 'https://matthiaspetursson.com/php/analytics.php';
+config['IPCHECKURL'] = 'http://ip-api.com/json';
 
 global.set('config', config);
 

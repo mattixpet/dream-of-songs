@@ -40,7 +40,7 @@ var menu_text_data = {
 						'\n\n ' +
 						'Maybe there are some more chests to be found? ' +
 						'You can always check ' +
-						'out the songs you have collected in the pause menu (click \'p\', double tap on mobile).',
+						'out the songs you have collected in the pause menu (click \'p\').',
 		'general-chest' : 'New song! {}/' + consts.NUMCHESTS + ' \n {}',
 		'first-hidden-chest' : 	'Congratulations you found a hidden chest! \n Hidden chests ' +
 							'are much rarer than normal chests and can\'t be seen with ' +

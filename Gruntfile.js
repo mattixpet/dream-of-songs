@@ -54,6 +54,7 @@ module.exports = function(grunt) {
           'js/tools/draw.js',
           'js/tools/collision.js',
           'js/tools/resolution.js',
+          'js/tools/analytics.js',
 
           'js/data/sprite-data.js',
           'js/data/background-sky-data.js',

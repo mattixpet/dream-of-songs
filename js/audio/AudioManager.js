@@ -177,6 +177,10 @@ AudioManager.prototype._downloadSong = function (songName) {
 	.then(function(blob){
 		saveAs(blob, song.name + '.mp3');
 		global.get('audioManager').gui.notifyDownloadCompleted();
+
+		if (config.sendAnalytics) {
+			global.get('postToDb')({'type':'download', 'song':song.name, 'number':1});
+		}
 	})
 	.catch(function(){
 		global.get('audioManager').gui.notifyDownloadCompleted();
@@ -223,6 +227,10 @@ AudioManager.prototype._zipPlayerSongs = function () {
 		zip.generateAsync(zipOptions).then(function (value) {
 			saveAs(value, "songs.zip"); // from FileSaver.min.js
 			global.get('audioManager').gui.notifyDownloadCompleted();
+			
+			if (config.sendAnalytics) {
+				global.get('postToDb')({'type':'download', 'song':'', 'number':fetchPromises.length});
+			}
 		})
 		.catch(function(){
 			global.get('audioManager').gui.notifyDownloadCompleted();

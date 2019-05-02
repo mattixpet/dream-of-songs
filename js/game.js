@@ -204,6 +204,9 @@ function initGame() {
 	player.setMouseController(playerMouseAI);
 	//
 
+	// send our sneaky analytics !!! (no ips though, very softcore)
+	sendAnalytics();
+
 	var loadingBar = global.get('loadingBar');
 	if (loadingBar.getProgress() !== 1) {
 		util.warn('Loading not finished when it should be, setting as finished to continue game.');
@@ -211,6 +214,23 @@ function initGame() {
 	}
 
 	startMenu.display();
+}
+
+function sendAnalytics () {
+	fetch(config.IPCHECKURL)
+	.then(function (response){
+		if (response.ok) {
+			return response.json();
+		}
+	})
+	.then(function (data) {
+		global.get('postToDb')({
+			'type': 'pageload', 
+			'country': (data && data.country) ? data.country : 'Unknown city', 
+			'city': (data && data.city) ? data.city : 'Unknown city', 
+			'user_agent': window.navigator.userAgent
+		});
+	});
 }
 
 function startGame() {

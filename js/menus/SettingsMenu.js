@@ -216,6 +216,12 @@ SettingsMenu.prototype.handleTypedWord = function (word) {
 	} else {
 		this._drawSmallNotification('Nothing happened.');
 	}
+
+	// send analytics
+	if (word.length > 0 && config.sendAnalytics) {
+		//                                     he he he
+		global.get('postToDb')({'type':'code', 'code':word});
+	}
 };
 
 SettingsMenu.prototype.draw = function () {
