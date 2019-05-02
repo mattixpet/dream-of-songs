@@ -107,6 +107,12 @@ Torch.prototype.draw = function () {
 	}
 };
 
+Torch.prototype.resetResolution = function (ratio) {
+	Entity.prototype.resetResolution.call(this, ratio);
+
+	this._createCurves();
+};
+
 global.set('class/Torch', Torch);
 
 }());

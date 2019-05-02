@@ -36,6 +36,7 @@ function changeResolution (width, height) {
 	// seem to get to the flying chest without doing this
 	// I still think acceleration is only used linearly
 	// so it should work to multiply by it, but it doesn't seem to :/
+	// this will make it possible to 'hack' into more jumpspeed, but we don't really care haha
 	config.GRAVITYCONSTANT *= ratio > 1 ? ratio * 0.95 : ratio;
 	config.DEFAULTTERMINALSPEED *= ratio;
 	// again seemed to not be able to jump on the cross??? wtf man let's give him a little jump boost
