@@ -43,10 +43,6 @@ module.exports = function(grunt) {
         // order is actually super important here so lets just do this kinda manually
         // for now. Who cares
         src: [
-          'js/ext/mainloop/mainloop.min.js',
-          'js/ext/jszip/jszip.min.js',
-          'js/ext/filesaver/FileSaver.min.js',
-
           'js/global.js',
           'js/config.js',
           'js/tools/consts.js',

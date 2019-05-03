@@ -226,7 +226,7 @@ function sendAnalytics () {
 	.then(function (data) {
 		global.get('postToDb')({
 			'type': 'pageload', 
-			'country': (data && data.country) ? data.country : 'Unknown city', 
+			'country': (data && data.country) ? data.country : 'Unknown country', 
 			'city': (data && data.city) ? data.city : 'Unknown city', 
 			'user_agent': window.navigator.userAgent
 		});
@@ -235,7 +235,7 @@ function sendAnalytics () {
 		// if we can't get country/city from ipcheck, let's still count it as a pageload/save the user agent
 		global.get('postToDb')({
 			'type': 'pageload', 
-			'country': 'Unknown city', 
+			'country': 'Unknown country', 
 			'city': 'Unknown city', 
 			'user_agent': window.navigator.userAgent
 		});

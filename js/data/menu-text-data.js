@@ -14,7 +14,7 @@ var iconWidth = global.get('audio-gui-data')['Spacings'].iconWidth;
 
 var menu_text_data = {
 	'Common' : {
-		'font' : 'Monospace',
+		'font' : 'Courier, Monaco, monospace',
 		'fontSize' : 18,
 		'fontColor' : 'white',
 		'spacing' : 1.5, // line spacing
@@ -125,7 +125,7 @@ var menu_text_data = {
 				'variable' : 'mouseControls'
 			},
 			{
-				'label' : 'Double tap/click pauses',
+				'label' : 'Double tap pauses (mobile)',
 				'variable' : 'doubleTapToPause'
 			}
 		],

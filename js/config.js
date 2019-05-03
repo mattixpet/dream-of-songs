@@ -14,7 +14,7 @@ config['showHiddenChests'] = false;
 config['snakeMode'] = false;
 
 // diagnostics
-config['devMode'] = true; // obv let's not forget to set this as false on release
+config['devMode'] = false;
 config['drawBackgroundGrid'] = false;
 config['drawPixelGrid'] = false;
 config['drawBoundingBoxes'] = false;

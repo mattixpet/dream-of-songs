@@ -66,10 +66,9 @@ SettingsMenu.prototype._handleBack = function () {
 	global.get(this.previousMenu).display();
 };
 
-// Only does anything when we pop a notification up, then this will remove the notification
+// Only does anything when we pop a notification up, then this will issue a draw to remove it
 SettingsMenu.prototype._handleContinue = function () {
 	if (this.inNotification) {
-		this.inNotification = false;
 		this.draw();
 	}
 };
@@ -94,7 +93,9 @@ SettingsMenu.prototype._handleDown = function () {
 
 SettingsMenu.prototype.onEnter = function () {
 	if (this.inNotification) {
-		this._handleContinue();
+		// redraw to remove notification on an enter
+		this.inNotification = false;
+		this.draw();
 	} else {
 		this._handleBack();
 	}
@@ -104,7 +105,8 @@ SettingsMenu.prototype._handleClick = function (x, y) {
 	// make sure not to return when buttons not being displayed are 'clicked'
 	var buttonClicked = Menu.prototype._handleClick.call(this, x, y);
 	if ((this.inNotification && buttonClicked === 'continue') ||
-		!this.inNotification && buttonClicked === 'back') {
+		(!this.inNotification && buttonClicked === 'back')) {
+		this.inNotification = false;
 		return;
 	}
 	// now check everything we are displaying at the moment

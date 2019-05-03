@@ -84,8 +84,8 @@ function handleKeyup(e) {
 
 var tappedOnce = false;
 function handleMousedown(e) {
-	// check for double tap/click
-	if (config.doubleTapToPause && tappedOnce) {
+	// check for double tap
+	if (global.get('mobile') && config.doubleTapToPause && tappedOnce) {
 		pauseOrResumeGame();
 	}
 	tappedOnce = true;

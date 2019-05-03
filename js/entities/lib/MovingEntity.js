@@ -359,7 +359,9 @@ MovingEntity.prototype._handleBackgroundCollision = function (collision, nextX, 
 		// check for top of stairs block
 		if (collision.block === consts.STAIRTOPBLOCK && (this.movingUp || this.movingDown)) {
 			this.inStairs = true;
-			this.disableJump = true; // so we don't jump directly out of stairs, is reset on x movement
+			// so we don't jump directly out of stairs, is reset on x movement
+			this.disableJump = true;
+			this.movingJump = false;
 		}
 		if (collision.block === consts.WATERTOPBLOCK && (this.movingUp || this.movingDown)) {
 			this.inWater = true;
