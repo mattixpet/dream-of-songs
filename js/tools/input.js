@@ -127,7 +127,9 @@ function handleTouchstart (e) {
 	setTimeout(function () { tappedOnce = false; }, 300);
 
 	// click where we touch !
-	handleMousedown(e.touches[0]);
+	if (global.get('gameStarted')) {
+		handleMousedown(e.touches[0]);
+	}
 
 	e.preventDefault(); // only needed for mobiles so we won't get the double tap zoom
 }

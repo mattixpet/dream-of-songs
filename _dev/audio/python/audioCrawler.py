@@ -26,7 +26,7 @@
 #     // e.g.
 #     {
 #       'name' : 'american_psycho',
-#       'url' : 'Lelegar_upptokur/amr/2014/american_psycho.mp3',
+#       'url' : 'Lelegar_upptokur/amr/2014/american_psycho.m4a',
 #       'year' : 2014,
 #       'duration': '3:14'
 #       'cover' : false
@@ -144,7 +144,7 @@ def processSong(folders, filename):
     fullSongPath = os.path.join(rootPath, songPath)
 
     songName = trimName(filename)
-    songUrl = songPath.replace('\\','/')
+    songUrl = songPath.replace('\\','/').replace('.mp3','.m4a') # output url as .m4a
     songYear = extractYear(fullSongPath)
     songDuration = getDuration(fullSongPath)
     songCover = '(cover)' in filename

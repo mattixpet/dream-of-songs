@@ -11,6 +11,10 @@ function AudioPlayer () {
 	this.currentSong = undefined;
 	this.lastPos = 0;
 	this.currentSongName = undefined;
+
+	// figure out which type of audio we support, if we can't play .ogg we play .m4a
+	this.canPlayOgg = !!(new Audio().canPlayType('audio/ogg; codecs="vorbis"'));
+	util.log('Audio format chosen: ' + (this.canPlayOgg ? '.ogg' : '.m4a'));
 }
 
 // Play current song
@@ -43,13 +47,16 @@ AudioPlayer.prototype.seek = function (index) {
 	}
 };
 
-// Play song by url
+// Play song by url on format 'path/to/song/song.m4a'
 // Play is true if we want to play it straight away otherwise we just load it
 AudioPlayer.prototype.playSong = function (songName, songUrl, play) {
 	if (this.currentSong && !config.allowParallelSongs) {
 		this.pause(); // stop our current song when we play a new one
 	}
-	this.currentSong = new Audio(songUrl);
+	// songUrl is always .m4a, if we can play .ogg we do that instead
+	this.currentSong = new Audio(
+		this.canPlayOgg ? songUrl.replace('.m4a', '.ogg') : songUrl
+	);
 	this.lastPos = 0; // start
 	this.currentSongName = songName;
 

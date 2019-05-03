@@ -175,7 +175,7 @@ AudioManager.prototype._downloadSong = function (songName) {
 		}
 	})
 	.then(function(blob){
-		saveAs(blob, song.name + '.mp3');
+		saveAs(blob, song.name + '.m4a');
 		global.get('audioManager').gui.notifyDownloadCompleted();
 
 		if (config.sendAnalytics) {
@@ -201,7 +201,7 @@ AudioManager.prototype._zipPlayerSongs = function () {
 		fetchPromises.push(
 			fetch(config.SONGURL + song.url, {mode: config.fetchMode})
 			.then(function(response){
-				// last item in this array is our file name, e.g. 'sofa.mp3'
+				// last item in this array is our file name, e.g. 'sofa.m4a'
 				var urlSplit = decodeURI(response.url).split('/');
 				if (response.ok) {
 					return {'fileName': urlSplit[urlSplit.length-1], 'blob': response.blob()};
