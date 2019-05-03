@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+
+<!-- you are a hacker! good job -->
+
+<!-- site developer: Matthías Pétursson - oldschool01123@gmail.com -->
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+	<main>
+
+		<p>HELLO</p>
+
+		<canvas id="canvas" width="600" height="400"></canvas>
+
+	    <audio controls="controls" id="currentSong">
+	    	<source src="songs/Tonlist_haha/2015/kristjan/pompei.ogg" type="audio/ogg">
+	    	<source src="songs/Tonlist_haha/2015/kristjan/pompei.m4a" type="audio/mpeg">
+	    	<source src="songs/Tonlist_haha/2015/kristjan/pompei.mp3" type="audio/mp3">
+	    	Sorry, but your browser does not support the HTML5 audio tag.
+	    </audio>
+
+	    <button onclick="buttonClick()">Play!</button>
+
+	    <button onclick="simpleButtonClick()">Different kind of play</button>
+
+	    <p id="debug"></p>
+
+	</main>
+
+	<script src="mobileaudiotest.js" type="text/javascript"></script>
+</body>
+
+</html>

@@ -125,7 +125,7 @@ var menu_text_data = {
 				'variable' : 'mouseControls'
 			},
 			{
-				'label' : 'Double tap pauses (mobile)',
+				'label' : 'Double tap/click pauses',
 				'variable' : 'doubleTapToPause'
 			}
 		],

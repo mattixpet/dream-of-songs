@@ -82,7 +82,16 @@ function handleKeyup(e) {
 	global.get('player').notifyKeyup(e);
 }
 
+var tappedOnce = false;
 function handleMousedown(e) {
+	// check for double tap/click
+	if (config.doubleTapToPause && tappedOnce) {
+		pauseOrResumeGame();
+	}
+	tappedOnce = true;
+	setTimeout(function () { tappedOnce = false; }, 300);
+	//
+
 	var x = e.clientX - canvas.offsetLeft;
 	var y = e.clientY - canvas.offsetTop;
 
@@ -95,6 +104,7 @@ function handleMousedown(e) {
 	// notify the audio gui we clicked, if only we are in pause or in game
 	if (inMenu === 'pauseMenu' || !inMenu || inMenu === 'notificationMenu') {
 		var res = global.get('audioGui').notifyClick(x,y);
+
 		// if we're in game and no action taken by audio gui
 		// then we want to pass the click on to our mouse controls (if applicable)
 		if (!inMenu && !res && config.mouseControls) {
@@ -116,29 +126,10 @@ function handleMousemove () {
 	}
 }
 
-// Only for double click checking
-var tappedOnce = false;
-function handleTouchstart (e) {
-	if (config.doubleTapToPause && tappedOnce) {
-		pauseOrResumeGame();
-	}
-
-	tappedOnce = true;
-	setTimeout(function () { tappedOnce = false; }, 300);
-
-	// click where we touch !
-	if (global.get('gameStarted')) {
-		handleMousedown(e.touches[0]);
-	}
-
-	e.preventDefault(); // only needed for mobiles so we won't get the double tap zoom
-}
-
 window.addEventListener("keydown", handleKeydown);
 window.addEventListener("keyup", handleKeyup);
 canvas.addEventListener("mousedown", handleMousedown);
 canvas.addEventListener("mousemove", handleMousemove);
-canvas.addEventListener("touchstart", handleTouchstart);
 
 global.set('keys', keys);
 
