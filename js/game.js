@@ -230,6 +230,15 @@ function sendAnalytics () {
 			'city': (data && data.city) ? data.city : 'Unknown city', 
 			'user_agent': window.navigator.userAgent
 		});
+	})
+	.catch(function () {
+		// if we can't get country/city from ipcheck, let's still count it as a pageload/save the user agent
+		global.get('postToDb')({
+			'type': 'pageload', 
+			'country': 'Unknown city', 
+			'city': 'Unknown city', 
+			'user_agent': window.navigator.userAgent
+		});
 	});
 }
 

@@ -53,7 +53,7 @@ config['MENUITEMSURL'] = 'img/menuitems/';
 config['AUDIOGUIURL'] = 'img/audiogui/';
 config['SONGURL'] = 'songs/'; // devel: 'https://matthiaspetursson.com/songs/';
 config['POSTURL'] = 'php/analytics.php'; // devel: 'https://matthiaspetursson.com/php/analytics.php';
-config['IPCHECKURL'] = 'http://ip-api.com/json';
+config['IPCHECKURL'] = 'https://ipinfo.io/json';
 
 global.set('config', config);
 
