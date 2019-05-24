@@ -112,7 +112,7 @@ ImageHandler.prototype._createSpriteFromImage =
 					util.log('Loaded ' + 	imageHandler.imageCounter + '/' + 
 											imageHandler.totalImageCount + ' images.');
 					global.get('loadingBar').updateProgress(
-						imageHandler.imageCounter / imageHandler.totalImageCount
+						imageHandler.imageCounter / imageHandler.totalImageCount * config.imagesPercentOfLoading
 					);
 					resolve();
 				};

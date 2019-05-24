@@ -38,6 +38,7 @@ config['800x450'] = true; // default resolution
 // see config.SONGURL
 config['fetchMode'] = 'same-origin'; // devel: 'cors';
 config['sendAnalytics'] = true; // devel: false;
+config['imagesPercentOfLoading'] = 0.95; // assume loading the images is 90% of the total loading
 
 // game values
 config['GRAVITYCONSTANT'] = 0.001;

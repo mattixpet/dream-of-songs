@@ -23,7 +23,7 @@ function LoadingBar() {
 	this.h = Math.floor(this.canvas.height / 12.86);
 }
 
-LoadingBar.prototype.preloadImage = function(callback) {
+LoadingBar.prototype.preloadImage = function (callback) {
 	// check for Promise to be defined (es6), nothing will work without it (unless I would code it of course..)
 	var text = Promise ? 
 		'Actually loading the loading bar.. go figure :)' : 
@@ -45,12 +45,12 @@ LoadingBar.prototype.preloadImage = function(callback) {
 };
 
 // call this in the callback to this.preloadImage to start
-LoadingBar.prototype.start = function() {
+LoadingBar.prototype.start = function () {
 	util.log('Started proper loading.');
 	this._drawBg();
 };
 
-LoadingBar.prototype.updateProgress = function(progress) {
+LoadingBar.prototype.updateProgress = function (progress) {
 	this.progress = progress;
 	if (progress < 0 || progress > 1) {
 		util.warn('Something is wrong, progress bar says: ' + progress);
@@ -61,15 +61,20 @@ LoadingBar.prototype.updateProgress = function(progress) {
 	}
 };
 
-LoadingBar.prototype.getProgress = function() {
+LoadingBar.prototype.incrementProgress = function (increment) {
+	this.progress += increment;
+	this.updateProgress(this.progress);
+};
+
+LoadingBar.prototype.getProgress = function () {
 	return this.progress;
 };
 
-LoadingBar.prototype._drawBg = function() {
+LoadingBar.prototype._drawBg = function () {
 	this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
 };
 
-LoadingBar.prototype._draw = function() {
+LoadingBar.prototype._draw = function () {
 	var ctx = this.ctx;
 	ctx.save();
 	ctx.fillStyle = this.color;

@@ -165,6 +165,11 @@ function checkMobile() {
 }
 
 function initGame() {
+	var loadingBar = global.get('loadingBar');
+	// split whatever loading images left us (config.imagesPercentOfLoading)
+	// into 5 loading points to place here
+	var loadingIncr = (1 - config.imagesPercentOfLoading) / 5;
+
 	// sets global.set('mobile') to true if we are on mobile
 	checkMobile();
 
@@ -175,10 +180,15 @@ function initGame() {
 	global.set('aboutMenu', aboutMenu);
 	var pauseMenu = new PauseMenu();
 	global.set('pauseMenu', pauseMenu);
+
+	loadingBar.incrementProgress(loadingIncr);
+
 	var notificationMenu = new NotificationMenu();
 	global.set('notificationMenu', notificationMenu);
 	var settingsMenu = new SettingsMenu();
 	global.set('settingsMenu', settingsMenu);
+
+	loadingBar.incrementProgress(loadingIncr);
 
 	// call 1-800-AUDIOMANAGER for everything audio
 	var audioManager = new AudioManager();
@@ -193,6 +203,8 @@ function initGame() {
 	var collisionManager = new CollisionManager();
 	global.set('collisionManager', collisionManager);
 
+	loadingBar.incrementProgress(loadingIncr);
+
 	// player stuff !
 	var playerStartPos = global.get('sprite-data').player.startingPosition;
 	var player = new Player(playerStartPos.x, playerStartPos.y);
@@ -204,14 +216,13 @@ function initGame() {
 	player.setMouseController(playerMouseAI);
 	//
 
+	loadingBar.incrementProgress(loadingIncr);
+
 	// send our sneaky analytics !!! (no ips though, very softcore)
 	sendAnalytics();
 
-	var loadingBar = global.get('loadingBar');
-	if (loadingBar.getProgress() !== 1) {
-		util.warn('Loading not finished when it should be, setting as finished to continue game.');
-		loadingBar.updateProgress(1); // end loading
-	}
+	// always finish loading no matter what though !
+	loadingBar.updateProgress(1);
 
 	startMenu.display();
 }
