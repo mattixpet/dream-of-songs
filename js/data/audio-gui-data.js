@@ -18,7 +18,7 @@ var audio_gui_data = {
 		'itemMarginRight' : 12, // right margin of icons/images in here
 		'fontSize' : 16,
 		'fontColor' : 'white',
-		'font' : 'Monospace',
+		'font' : 'Courier, Monaco, monospace',
 		'pauseMenuXCoord' : 365, // have the song list in pause at around 50% of screen
 		'pauseMenuYCoord' : iconWidth, // just magic kinda
 		'inGameXCoord' : 145, // coord for song displaying while in game
