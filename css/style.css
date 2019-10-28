@@ -13,7 +13,7 @@ a { color: black; }
 
 #dreamOfSongs {
 	border: 1px solid black;
-	margin: 1% auto;
+	margin: 0 auto;
 	display: block;
 
 	/* disable double tap zoom */
@@ -23,10 +23,26 @@ a { color: black; }
 footer {
 	height: 2em;
 	margin: 0 1% 0 1%;
-	margin-top: -2em;
+	margin-top: -2.5em;
 
 	text-align: center;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-footer a {
-	margin: 0 0.5%;
+
+footer a { margin: 0 0.5%; }
+
+footer > * {
+	margin: 0 1.5%;
+}
+
+@media screen and (max-width: 800px) {
+	footer { margin-top: 0.1em; }
+}
+
+/* remove footer so it doesn't display over game */
+@media screen and (max-height: 452px) {
+	footer { visibility: hidden; }
 }
