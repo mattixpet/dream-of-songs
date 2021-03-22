@@ -163,7 +163,8 @@ SettingsMenu.prototype.handleTypedWord = function (word) {
 	util.log('Settings called with word: ' + word);
 	this.draw();
 
-	if (word.toLowerCase() === consts.WHYISARAVENLIKEAWRITINGDESK) {
+	if (consts.WHYISARAVENLIKEAWRITINGDESK.indexOf(word.toLowerCase()) >= 0) {
+		// there are a few options for the raven riddle
 		this.typebox.stopEnteringCode();
 		config.hiddenChestsEnabled = true;
 		config.showHiddenChests = true;

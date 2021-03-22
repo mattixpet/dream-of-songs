@@ -52,7 +52,7 @@ consts['FULLWATERSCENES'] = ['cavewater'];
 // c h e a t s
 // if you're looking at this STOP NOW
 // just kidding.. cool I guess. But you could have figured this out from the riddles in the game!
-consts['WHYISARAVENLIKEAWRITINGDESK'] = 'alice';
+consts['WHYISARAVENLIKEAWRITINGDESK'] = ['alice', 'nevar', 'never'];
 consts['THEONLYWAYTOFLY'] = 'mescaline';
 // now this is just for advanced users :P
 consts['THEONLYWAYTODEVMODE'] = 'renaissance';
