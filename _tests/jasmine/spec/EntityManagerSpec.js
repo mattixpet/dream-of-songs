@@ -9,13 +9,27 @@ describe("entityManager", function() {
   var config = global.get('config');
   var ImageHandler = global.get('class/ImageHandler');
   var AudioManager = global.get('class/AudioManager');
+  var LoadingBar = global.get('class/LoadingBar');
+
+  global.set('canvas', document.getElementById('dreamOfSongs'));
+  global.set('ctx', canvas.getContext('2d'));
+  var canvas;
+  var ctx;
 
   var audioManager;
   var imageHandler;
   var entityManager;
   var placeHolderSprite;
+  var loadingBar;
 
   beforeEach(function() {
+    // loading bar is needed for image handler    
+    canvas = global.get('canvas');
+    ctx = global.get('ctx');
+    loadingBar = new LoadingBar();
+    global.set('loadingBar', loadingBar);
+    loadingBar.start();
+
     audioManager = new AudioManager();
     global.set('audioManager', audioManager);
     imageHandler = new ImageHandler();
