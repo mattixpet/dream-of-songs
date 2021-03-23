@@ -38,7 +38,7 @@ config['800x450'] = true; // default resolution
 // see config.SONGURL
 config['fetchMode'] = 'same-origin'; // devel: 'cors';
 config['sendAnalytics'] = true; // devel: false;
-config['imagesPercentOfLoading'] = 0.95; // assume loading the images is 90% of the total loading
+config['imagesPercentOfLoading'] = 0.95; // assume loading the images is 95% of the total loading
 
 // game values
 config['GRAVITYCONSTANT'] = 0.001;
@@ -48,12 +48,13 @@ config['DEFAULTJUMPSPEED'] = 0.4;
 config['STARTINGSCENE'] = 'clearsky';
 
 // paths/urls
-config['SPRITEURL'] = 'img/spritesheets/';
-config['BACKGROUNDURL'] = 'img/backgrounds/';
-config['MENUITEMSURL'] = 'img/menuitems/';
-config['AUDIOGUIURL'] = 'img/audiogui/';
-config['SONGURL'] = 'songs/'; // devel: 'https://matthiaspetursson.com/songs/';
-config['POSTURL'] = 'php/analytics.php'; // devel: 'https://matthiaspetursson.com/php/analytics.php';
+// in local testing, change /img/etc to img/etc.
+config['SPRITEURL'] = '/img/dreamofsongs/spritesheets/'; // img/dreamofsongs/etc. is just needed for the site (matthiaspetursson.com)
+config['BACKGROUNDURL'] = '/img/dreamofsongs/backgrounds/';
+config['MENUITEMSURL'] = '/img/dreamofsongs/menuitems/';
+config['AUDIOGUIURL'] = '/img/dreamofsongs/audiogui/';
+config['SONGURL'] = '/songs/'; // devel: 'https://matthiaspetursson.com/songs/';
+config['POSTURL'] = '/php/analytics.php'; // devel: 'https://matthiaspetursson.com/php/analytics.php';
 config['IPCHECKURL'] = 'https://ipinfo.io/json';
 
 global.set('config', config);
