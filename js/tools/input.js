@@ -92,8 +92,11 @@ function handleMousedown(e) {
 	setTimeout(function () { tappedOnce = false; }, 300);
 	//
 
-	var x = e.clientX - canvas.offsetLeft;
-	var y = e.clientY - canvas.offsetTop;
+	// Modified with code from here: https://stackoverflow.com/a/18053642/5272567
+	// to hopefully also work on safari
+	var rect = canvas.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
 
 	var inMenu = global.get('inMenu');
 	if (inMenu) {
