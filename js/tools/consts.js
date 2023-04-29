@@ -52,7 +52,26 @@ consts['FULLWATERSCENES'] = ['cavewater'];
 // c h e a t s
 // if you're looking at this STOP NOW
 // just kidding.. cool I guess. But you could have figured this out from the riddles in the game!
-consts['WHYISARAVENLIKEAWRITINGDESK'] = ['alice', 'nevar', 'never'];
+consts['WHYISARAVENLIKEAWRITINGDESK'] = [
+	'alice',
+	'alice in wonderland',
+	'nevar',
+	'never',
+	'i haven’t the slightest idea',
+	'i havent the slightest idea',
+	'because it can produce a few notes',
+	'tho they are very flat',
+	'and it is never put with the wrong end in front',
+	'both may be penned, but they can never truly be captive',
+	'both may be penned but they can never truly be captive',
+	'because they both come with inky quills',
+	'because the notes for which they are noted are not noted for being musical notes',
+	'because poe wrote on both',
+	'neither are made of jello',
+	'my english teacher says so',
+	'both make great beds',
+	'you can fly on one and the other one is a bird',
+];
 consts['THEONLYWAYTOFLY'] = 'mescaline';
 // now this is just for advanced users :P
 consts['THEONLYWAYTODEVMODE'] = 'renaissance';
