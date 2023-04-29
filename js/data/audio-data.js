@@ -1630,6 +1630,321 @@ var audio_data = [
 		'cover' : false
 	},
 	{
+		'name' : '74',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/74.m4a',
+		'year' : 2022,
+		'duration' : '0:29',
+		'cover' : false
+	},
+	{
+		'name' : 'Bach (cover) og Elínbjört',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Bach (cover) og Elínbjört.m4a',
+		'year' : 2022,
+		'duration' : '5:57',
+		'cover' : true
+	},
+	{
+		'name' : 'Detective Sherry Bottom',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Detective Sherry Bottom.m4a',
+		'year' : 2023,
+		'duration' : '6:04',
+		'cover' : false
+	},
+	{
+		'name' : 'Double piano whammy away',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Double piano whammy away.m4a',
+		'year' : 2023,
+		'duration' : '3:04',
+		'cover' : false
+	},
+	{
+		'name' : 'Elena arpeggíukafli',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Elena arpeggíukafli.m4a',
+		'year' : 2022,
+		'duration' : '3:56',
+		'cover' : false
+	},
+	{
+		'name' : 'Elena byrjun kannski',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Elena byrjun kannski.m4a',
+		'year' : 2022,
+		'duration' : '1:43',
+		'cover' : false
+	},
+	{
+		'name' : 'Elena first draft',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Elena first draft.m4a',
+		'year' : 2022,
+		'duration' : '4:57',
+		'cover' : false
+	},
+	{
+		'name' : 'Elena rólegur kafli fyrsti kafli',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Elena rólegur kafli fyrsti kafli.m4a',
+		'year' : 2022,
+		'duration' : '1:32',
+		'cover' : false
+	},
+	{
+		'name' : 'Elínbjört jarðarför rennsli',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Elínbjört jarðarför rennsli.m4a',
+		'year' : 2022,
+		'duration' : '1:26',
+		'cover' : false
+	},
+	{
+		'name' : 'Flat Tires',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Flat Tires.m4a',
+		'year' : 2022,
+		'duration' : '2:53',
+		'cover' : false
+	},
+	{
+		'name' : 'Gigue - Bach (cover)',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Gigue - Bach (cover).m4a',
+		'year' : 2022,
+		'duration' : '4:11',
+		'cover' : true
+	},
+	{
+		'name' : 'Gigue no. 2 (cover)',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Gigue no. 2 (cover).m4a',
+		'year' : 2022,
+		'duration' : '3:19',
+		'cover' : true
+	},
+	{
+		'name' : 'Gigue no.3 (cover)',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Gigue no.3 (cover).m4a',
+		'year' : 2022,
+		'duration' : '3:38',
+		'cover' : true
+	},
+	{
+		'name' : 'Glass Castle',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Glass Castle.m4a',
+		'year' : 2023,
+		'duration' : '2:25',
+		'cover' : false
+	},
+	{
+		'name' : 'Glockenspiel',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Glockenspiel.m4a',
+		'year' : 2023,
+		'duration' : '0:30',
+		'cover' : false
+	},
+	{
+		'name' : 'Godzilla',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Godzilla.m4a',
+		'year' : 2022,
+		'duration' : '3:08',
+		'cover' : false
+	},
+	{
+		'name' : 'Grétars Extravaganza',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Grétars Extravaganza.m4a',
+		'year' : 2021,
+		'duration' : '0:11',
+		'cover' : false
+	},
+	{
+		'name' : 'Gummybear',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Gummybear.m4a',
+		'year' : 2022,
+		'duration' : '4:10',
+		'cover' : false
+	},
+	{
+		'name' : 'Hakka hakka',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hakka hakka.m4a',
+		'year' : 2022,
+		'duration' : '4:31',
+		'cover' : false
+	},
+	{
+		'name' : 'Hef gert áður',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hef gert áður.m4a',
+		'year' : 2021,
+		'duration' : '1:02',
+		'cover' : false
+	},
+	{
+		'name' : 'Hmmmmm',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hmmmmm.m4a',
+		'year' : 2022,
+		'duration' : '1:39',
+		'cover' : false
+	},
+	{
+		'name' : 'Hot steaming',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hot steaming.m4a',
+		'year' : 2022,
+		'duration' : '5:14',
+		'cover' : false
+	},
+	{
+		'name' : 'Hulda 2',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hulda 2.m4a',
+		'year' : 2023,
+		'duration' : '2:47',
+		'cover' : false
+	},
+	{
+		'name' : 'Hulda 3',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hulda 3.m4a',
+		'year' : 2023,
+		'duration' : '12:50',
+		'cover' : false
+	},
+	{
+		'name' : 'Hulda karaoke',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hulda karaoke.m4a',
+		'year' : 2023,
+		'duration' : '1:51',
+		'cover' : false
+	},
+	{
+		'name' : 'Hulda söngur',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hulda söngur.m4a',
+		'year' : 2023,
+		'duration' : '0:59',
+		'cover' : false
+	},
+	{
+		'name' : 'Hulda',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Hulda.m4a',
+		'year' : 2023,
+		'duration' : '9:20',
+		'cover' : false
+	},
+	{
+		'name' : 'In the upper atmosphere',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/In the upper atmosphere.m4a',
+		'year' : 2022,
+		'duration' : '4:24',
+		'cover' : false
+	},
+	{
+		'name' : 'Kemur úr vestri',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Kemur úr vestri.m4a',
+		'year' : 2022,
+		'duration' : '5:05',
+		'cover' : false
+	},
+	{
+		'name' : 'Leiðir á away',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Leiðir á away.m4a',
+		'year' : 2022,
+		'duration' : '0:51',
+		'cover' : false
+	},
+	{
+		'name' : 'Low battery',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Low battery.m4a',
+		'year' : 2022,
+		'duration' : '7:37',
+		'cover' : false
+	},
+	{
+		'name' : 'Mistakes are a part of life',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Mistakes are a part of life.m4a',
+		'year' : 2022,
+		'duration' : '0:17',
+		'cover' : false
+	},
+	{
+		'name' : 'Mögulega var þetta aðeins betra',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Mögulega var þetta aðeins betra.m4a',
+		'year' : 2022,
+		'duration' : '3:43',
+		'cover' : false
+	},
+	{
+		'name' : 'Neon Clouds (b34)',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Neon Clouds (b34).m4a',
+		'year' : 2023,
+		'duration' : '1:56',
+		'cover' : false
+	},
+	{
+		'name' : 'Ný íbúð part 2 (Hornstrandir)',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Ný íbúð part 2 (Hornstrandir).m4a',
+		'year' : 2022,
+		'duration' : '2:44',
+		'cover' : false
+	},
+	{
+		'name' : 'Ný íbúð',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Ný íbúð.m4a',
+		'year' : 2021,
+		'duration' : '2:43',
+		'cover' : false
+	},
+	{
+		'name' : 'Nýja Testamentið',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Nýja Testamentið.m4a',
+		'year' : 2021,
+		'duration' : '1:43',
+		'cover' : false
+	},
+	{
+		'name' : 'Rennsli fyrir útgáfutónleika H9KM3',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Rennsli fyrir útgáfutónleika H9KM3.m4a',
+		'year' : 2022,
+		'duration' : '47:47',
+		'cover' : false
+	},
+	{
+		'name' : 'Sigur Óp',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Sigur Óp.m4a',
+		'year' : 2022,
+		'duration' : '5:34',
+		'cover' : false
+	},
+	{
+		'name' : 'Sorg í hausnum en fer ekki yfir í puttana',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Sorg í hausnum en fer ekki yfir í puttana.m4a',
+		'year' : 2022,
+		'duration' : '10:12',
+		'cover' : false
+	},
+	{
+		'name' : 'Spooked intro hugmynd',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Spooked intro hugmynd.m4a',
+		'year' : 2023,
+		'duration' : '0:46',
+		'cover' : false
+	},
+	{
+		'name' : 'Turtledove',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Turtledove.m4a',
+		'year' : 2022,
+		'duration' : '6:52',
+		'cover' : false
+	},
+	{
+		'name' : 'Álfkonan',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Álfkonan.m4a',
+		'year' : 2022,
+		'duration' : '6:23',
+		'cover' : false
+	},
+	{
+		'name' : 'Þarf að fara',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Þarf að fara.m4a',
+		'year' : 2022,
+		'duration' : '1:05',
+		'cover' : false
+	},
+	{
+		'name' : 'Það er gott að fá sér göngutúr',
+		'url' : 'Lelegar_upptokur/Nexus5X/29.4.2023/Það er gott að fá sér göngutúr.m4a',
+		'year' : 2023,
+		'duration' : '0:21',
+		'cover' : false
+	},
+	{
 		'name' : 'fells good',
 		'url' : 'Lelegar_upptokur/Nexus5X/3.3.2020/2017_11_04_01_00_20 fells good.m4a',
 		'year' : 2017,
@@ -3020,6 +3335,69 @@ var audio_data = [
 		'url' : 'Lelegar_upptokur/Nexus5X/8.11.2019/the Apple store.m4a',
 		'year' : 2017,
 		'duration' : '6:52',
+		'cover' : false
+	},
+	{
+		'name' : 'As big as a mouse',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/As big as a mouse.m4a',
+		'year' : 2022,
+		'duration' : '8:06',
+		'cover' : false
+	},
+	{
+		'name' : 'August rith vegagerðin',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/August rith vegagerðin.m4a',
+		'year' : 2021,
+		'duration' : '1:17',
+		'cover' : false
+	},
+	{
+		'name' : 'Gloria',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/Gloria.m4a',
+		'year' : 2021,
+		'duration' : '2:52',
+		'cover' : false
+	},
+	{
+		'name' : 'Hef gert áður',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/Hef gert áður.m4a',
+		'year' : 2021,
+		'duration' : '1:02',
+		'cover' : false
+	},
+	{
+		'name' : 'Hot steaming',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/Hot steaming.m4a',
+		'year' : 2022,
+		'duration' : '5:14',
+		'cover' : false
+	},
+	{
+		'name' : 'Ný íbúð part 2',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/Ný íbúð part 2.m4a',
+		'year' : 2021,
+		'duration' : '2:44',
+		'cover' : false
+	},
+	{
+		'name' : 'Ný íbúð',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/Ný íbúð.m4a',
+		'year' : 2021,
+		'duration' : '2:43',
+		'cover' : false
+	},
+	{
+		'name' : 'Nýja Testamentið',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/Nýja Testamentið.m4a',
+		'year' : 2021,
+		'duration' : '1:43',
+		'cover' : false
+	},
+	{
+		'name' : 'Village in the forest',
+		'url' : 'Lelegar_upptokur/Nexus5X/8.2.2022/Village in the forest.m4a',
+		'year' : 2022,
+		'duration' : '7:33',
 		'cover' : false
 	},
 	{

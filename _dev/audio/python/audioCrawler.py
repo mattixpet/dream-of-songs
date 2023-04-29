@@ -2,6 +2,10 @@
 # and extract the relevant information to output them as a javascript file
 # to be used by the game Dream of Songs (which is written in javascript)
 
+# Usage: Music_from_dream_of_songs folder should be in Documents
+# MAKE SURE you have .mp3 files of the songs (convert from m4a to ogg and mp3)
+# Run python audioCrawler.py
+
 # Here's the format of the javascript file output:
 # 
 # // Data for audio
