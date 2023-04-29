@@ -19,6 +19,8 @@ function Spikes(posX, posY, width, height, scene) {
 
 	// how many times has player died on us hehe
 	this.numDeaths = 0;
+	// true iff player is colliding with us
+	this.onSpikes = false;
 }
 
 Spikes.prototype = Object.create(Entity.prototype);
@@ -31,11 +33,27 @@ Spikes.prototype.update = function (dt) {
 	if (collision && collision.entityCollision) { // not that we should ever be colliding with background
 		var entity = collision.entityCollision;
 
-		this.numDeaths++;
+		this._increaseNumDeaths();
+		this.onSpikes = true;
 		// whatever hits us, we 'kill' it, spawn it back and place notification
 		this._notifyDeath();
-		// spawn it again
-		this._spawnEntityAgain(entity);
+		// spawn it again, the timeout is a bit of a hacky solution
+		// so we don't show the player spawned before user clicks continue
+		// the timeout interval just has to be greater than the interval
+		// in NotificationMenu.js, because that adds a delay to stop to redraw the song.
+		var spike_entity = this;
+		setTimeout(function(){
+			spike_entity._spawnEntityAgain(entity);
+			spike_entity.onSpikes = false;
+		}, 60);
+	}
+};
+
+// Do not increase the num deaths if player is on spikes, only do that once
+// the onSpikes boolean is reset after player is spawned on a new place.
+Spikes.prototype._increaseNumDeaths = function () {
+	if (!this.onSpikes) {
+		this.numDeaths++;
 	}
 };
 
@@ -80,14 +98,14 @@ Spikes.prototype._notifyDeath = function () {
 
 			// now make the appropriate message
 			deadManyTimesMessage = ' again! (for the '+this.numDeaths+numDescriptor+' time)';
-			if (this.numDeaths >= 30) {
+			if (this.numDeaths >= 25) {
 				deadManyTimesMessage = 	' yet again! (now '+this.numDeaths+
 									   	' times?? damn you must really want that chest)';
 			}
-			if (this.numDeaths >= 133) {
+			if (this.numDeaths >= 80) {
 				deadManyTimesMessage = ' for the millionth time? (I\'m quite impressed with your ambition)';
 			}
-			if (this.numDeaths >= 166) {
+			if (this.numDeaths >= 100) {
 				deadManyTimesMessage = 	' for the '+this.numDeaths+numDescriptor+' time?!'+
 										' (I wish you the best of luck with that chest, it should be worth it)';
 			}
