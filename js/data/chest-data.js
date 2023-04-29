@@ -193,7 +193,7 @@ var chest_data = {
 		{'x':474,'y':67,'flipped':false,'hidden':false}, {'x':247,'y':370,'flipped':true,'hidden':true,'flying':true}
 	],
 	'water00' : [
-		{'x':8,'y':218,'flipped':false,'hidden':true}
+		{'x':8,'y':218,'flipped':false,'hidden':true,'message':'you-win-hint'}
 	],
 	'water01' : [
 		{'x':747,'y':217,'flipped':true,'hidden':true}

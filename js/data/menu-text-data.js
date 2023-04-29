@@ -50,9 +50,18 @@ var menu_text_data = {
 		'dead-to-spikes' : 'Whoops! You are dead{} \n\n ' + 
 						   'But you can\'t really die in this world, so I\'ll just spawn you again.',
 		'only-way-to-fly' : '        What\'s the only way to fly? \n\n ' +
-							'        (hint: try to get some R&R)',
+							'        (hint: try to get some R&R and \n ' +
+					        '         follow the white rabbit) \n ' +
+					        '\n\n \n\n ' +
+					        '        (a riddle? perhaps the answer \n ' +
+					        '         can be typed somewhere)',
 		'raven' : 	'      Why am I like a writing desk? \n\n ' +
-					'              - Raven',
+					'              - Raven \n ' +
+					'\n\n \n\n \n\n ' +
+					'      (a riddle? perhaps the answer \n ' +
+					'       can be typed somewhere)',
+		'you-win-hint' : 'Shower thought: Perhaps the directions the \n ' +
+		                 'raven flies can be useful here somewhere?',
 		'welcome-to-heaven' : '      Welcome to the Dream of Heaven.',
 		'no-song' : 'Whoops you seem to have finished all the available songs! \n ' +
 					'This isn\'t really supposed to happen, but I\'m glad I at least ' +
@@ -61,7 +70,7 @@ var menu_text_data = {
 					'opened yet, or in hidden chests somewhere where you\'ve been. \n ' +
 					'Have a nice day :)',
 		'won-game' : 	'Congratulations you have managed to open all the chests! \n ' +
-						'Since this is kind of ridiculously hard to achieve ' +
+						'Since this is an achievment of great proportions ' +
 						'(did you get the raven hinting at the water puzzle?) and ' +
 						'I\'m not sure anybody will ever read this I\'d like to share ' +
 						'the fact that I always pee sitting down. \n\n ' +
