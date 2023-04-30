@@ -209,7 +209,7 @@ function initGame() {
 	var playerStartPos = global.get('sprite-data').player.startingPosition;
 	var player = new Player(playerStartPos.x, playerStartPos.y);
 	entityManager.register(player, config.STARTINGSCENE);
-	global.set('player', player); // used for drawing player last
+	global.set('player', player);
 
 	var playerMouseAI = new PlayerMouseAI(player);
 	global.set('playerMouseAI', playerMouseAI);
@@ -221,10 +221,19 @@ function initGame() {
 	// send our sneaky analytics !!! (no ips though, very softcore)
 	sendAnalytics();
 
+	// in 20 seconds start submitting high score every 20 seconds
+	setTimeout(function(){
+		setInterval(sendHighScores, 20000);
+	});
+
 	// always finish loading no matter what though !
 	loadingBar.updateProgress(1);
 
 	startMenu.display();
+}
+
+function sendHighScores () {
+	global.get('postHighScoreToDb')();
 }
 
 function sendAnalytics () {

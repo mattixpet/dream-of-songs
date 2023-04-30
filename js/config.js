@@ -55,6 +55,7 @@ config['MENUITEMSURL'] = '/img/dreamofsongs/menuitems/';
 config['AUDIOGUIURL'] = '/img/dreamofsongs/audiogui/';
 config['SONGURL'] = '/songs/'; // devel: 'https://matthiaspetursson.com/songs/';
 config['POSTURL'] = '/php/analytics.php'; // devel: 'https://matthiaspetursson.com/php/analytics.php';
+config['HIGHSCOREURL'] = '/php/highscore.php';
 config['IPCHECKURL'] = 'https://ipinfo.io/json';
 
 global.set('config', config);

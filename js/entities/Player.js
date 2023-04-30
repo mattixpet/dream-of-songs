@@ -30,6 +30,9 @@ const FLYING2 = 12;
 
 function Player(posX, posY) {
 	this.name = 'player';
+	this.username = 'unknown' + Math.floor(Math.random() * 10000); // decided by user through prompt
+	this.last_highscore = 0;
+	this.highscore_id = null; // set by highscore.js
 
 	// sets all our sprite/resolution dependant stuff like COLLISIONDELTAS
 	// and ANIMATIONDISTANC
@@ -302,13 +305,16 @@ Player.prototype._handleChestCollision = function (chest) {
 				global.get('notificationMenu').notify('won-game');
 				global.get('notificationMenu').display();
 
+				global.get('postHighScoreToDb')(); // make sure to send high score immediately if player wins
 				if (config.sendAnalytics) {
 					global.get('postToDb')({'type':'milestone', 'value':'beatgame'});
 				}
 			} else if (this.numChests === 51 && config.sendAnalytics) {
 				global.get('postToDb')({'type':'milestone', 'value':'over50songs'});
+				global.get('postHighScoreToDb')();
 			} else if (this.numChests === 101 && config.sendAnalytics) {
 				global.get('postToDb')({'type':'milestone', 'value':'over100songs'});
+				global.get('postHighScoreToDb')();
 			}
 		} else {
 			// no song ! display message only once

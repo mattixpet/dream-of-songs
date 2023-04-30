@@ -139,16 +139,15 @@ EntityManager.prototype._spawnSpikes = function (scene) {
 		var spike = data[scene];
 		if (!this.scenesVisited[scene]) {
 			// first time in scene, always only one spike in scene
-			this.register(
-				new Spikes(
-					spike.x,
-					spike.y,
-					spike.width,
-					spike.height,
-					scene
-				),
+			let spikes = new Spikes(
+				spike.x,
+				spike.y,
+				spike.width,
+				spike.height,
 				scene
 			);
+			this.register(spikes, scene);
+			global.set('spikes', spikes); // to get numDeaths for high score
 		}
 	}
 };
