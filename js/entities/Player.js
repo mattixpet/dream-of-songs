@@ -91,6 +91,8 @@ function Player(posX, posY) {
 	this.numHiddenChests = 0;
 
 	this.noMoreSongs = false;
+
+	this._q = 0;
 }
 
 Player.prototype = Object.create(MovingEntity.prototype);
@@ -299,6 +301,12 @@ Player.prototype._handleChestCollision = function (chest) {
 														this.x, this.y, this.width, this.height);
 			}
 
+			if (Math.abs(this._q - this.numChests) > 3) {
+				console.log('Are you trying to cheat? I like it.');
+				return;
+			} else {
+				this._q = this.numChests;
+			}
 			this.numChests++;
 
 			if (this.numChests >= consts.NUMCHESTS) {

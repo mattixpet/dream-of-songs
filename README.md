@@ -8,7 +8,7 @@
 ## Development
 
 - Change urls in config.js
-- Uncomment js code in index.html
+- Uncomment js import code in index.html and comment dreamofsongs.min.js line
 - Double click index.html file
 
-If you add a .js file, you have to manually add it in Gruntfile.js !
+If you add a new js file, and the order of the file read matters, you can add it manually in Gruntfile.js for the minification (default just reads all new files at the end).

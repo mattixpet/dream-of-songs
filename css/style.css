@@ -20,6 +20,35 @@ a { color: black; }
 	touch-action: manipulation;
 }
 
+.highscore-wrapper {
+	width: 800px;
+	margin: 0 auto;
+	padding: 1em;
+}
+.highscore-wrapper li {
+	list-style-type: none;
+}
+.highscore {
+	display: flex;
+	flex-direction: column;
+}
+.highscore li {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+.highscore li p {
+	width: 15%;
+	text-align: center;
+}
+.highscore li p:first-of-type {
+	width: 40%;
+	text-align: left;
+}
+.highscore li p:last-of-type {
+	width: 30%;
+}
+
 footer {
 	height: 2em;
 	margin: 0 1% 0 1%;

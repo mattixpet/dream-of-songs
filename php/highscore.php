@@ -69,9 +69,11 @@
         $errors[] = 'Failed high score insert.';
       }
     } elseif ($method === 'GET') {
-      // Display the high scores !
+      // Display the high scores, top 50.
       $stmt = $conn->prepare(
-        'SELECT * FROM high_scores'
+        'SELECT * FROM high_scores ' .
+        'ORDER BY score DESC ' .
+        'LIMIT 50'
       );
       $stmt->execute();
       $results = $stmt->fetchAll();

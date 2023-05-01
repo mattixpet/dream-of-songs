@@ -30,6 +30,10 @@
 	        Sorry, but your browser does not support the HTML5 canvas tag.
 	    </canvas>
 
+	    <div class="highscore-wrapper">
+	    	<?php include('/php/highscore.php') ?>
+	    </div>
+
 	</main>
 
 	<footer>
@@ -78,8 +82,9 @@
 	<script src="js/menus/NotificationMenu.js" type="text/javascript"></script>
 	<script src="js/menus/helpers/Checkbox.js" type="text/javascript"></script>
 	<script src="js/menus/helpers/Typebox.js" type="text/javascript"></script>
-	<script src="js/menus/helpers/Multibox.js" type="text/javascript"></script>	
+	<script src="js/menus/helpers/Multibox.js" type="text/javascript"></script>
 	<script src="js/menus/SettingsMenu.js" type="text/javascript"></script>
+	<script src="js/menus/NameMenu.js" type="text/javascript"></script>
 
 	<script src="js/audio/helpers/Song.js" type="text/javascript"></script>
 	<script src="js/audio/helpers/AudioPlayer.js" type="text/javascript"></script>
