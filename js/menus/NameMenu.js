@@ -25,6 +25,11 @@ function NameMenu (callback) {
         this._handleEnter,
         this
     );
+    // don't clear text for our textbox
+    this.typebox.stopEnteringCode = function () {
+        global.set('activeTypebox', false);
+    };
+    global.set('activeTypebox', this.typebox); // grab focus
 }
 
 NameMenu.prototype = Object.create(Menu.prototype);
@@ -41,8 +46,13 @@ NameMenu.prototype._handleEnter = function (text) {
         this.typebox.draw(this.typebox.x, this.typebox.y);
         return;
     }
-    this.callback(); // should have been provided with function to start game on creation, that is callback
+
+    this.callback(); // call startGame()!
     this.hide();
+
+    this.typebox.stopEnteringCode();
+
+    console.log('Player name is:', player.username);
 };
 
 NameMenu.prototype.onEnter = function () {
@@ -65,7 +75,6 @@ NameMenu.prototype._handleClick = function (x, y) {
 
     if (!buttonClicked) {
         // now check the typebox, only if user didn't click go button
-        // because we don't want to make typebox react to clicking outside of it
         this.typebox.click(x, y);
     }
 };

@@ -81,6 +81,7 @@ module.exports = function(grunt) {
           'js/menus/helpers/Typebox.js',
           'js/menus/helpers/Multibox.js',
           'js/menus/SettingsMenu.js',
+          'js/menus/NameMenu.js',
 
           'js/audio/helpers/Song.js',
           'js/audio/helpers/AudioPlayer.js',

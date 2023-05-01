@@ -10,3 +10,5 @@
 - Change urls in config.js
 - Uncomment js code in index.html
 - Double click index.html file
+
+If you add a .js file, you have to manually add it in Gruntfile.js !
