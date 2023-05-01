@@ -315,6 +315,8 @@ Player.prototype._handleChestCollision = function (chest) {
 			} else if (this.numChests === 101 && config.sendAnalytics) {
 				global.get('postToDb')({'type':'milestone', 'value':'over100songs'});
 				global.get('postHighScoreToDb')();
+			} else if (this.numChests === 201) {
+				global.get('postHighScoreToDb')();
 			}
 		} else {
 			// no song ! display message only once

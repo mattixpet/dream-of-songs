@@ -18,6 +18,7 @@ var CollisionManager = global.get('class/CollisionManager');
 var StartMenu = global.get('class/StartMenu');
 var AboutMenu = global.get('class/AboutMenu');
 var PauseMenu = global.get('class/PauseMenu');
+var NameMenu = global.get('class/NameMenu');
 var NotificationMenu = global.get('class/NotificationMenu');
 var SettingsMenu = global.get('class/SettingsMenu');
 var AudioManager = global.get('class/AudioManager');
@@ -174,12 +175,14 @@ function initGame() {
 	checkMobile();
 
 	// create all our entities and objects we need before we start the game
-	var startMenu = new StartMenu(startGame); // this then calls startGame when user clicks start
+	var startMenu = new StartMenu();
 	global.set('startMenu', startMenu);
 	var aboutMenu = new AboutMenu();
 	global.set('aboutMenu', aboutMenu);
 	var pauseMenu = new PauseMenu();
 	global.set('pauseMenu', pauseMenu);
+	var nameMenu = new NameMenu(startGame); // this then calls startGame after user types in name
+	global.set('nameMenu', nameMenu);
 
 	loadingBar.incrementProgress(loadingIncr);
 
@@ -263,7 +266,7 @@ function sendAnalytics () {
 }
 
 function startGame() {
-	//  Start the game !
+	// Start the game !
 	MainLoop.setBegin(begin).setUpdate(update).setDraw(draw).setEnd(end).start();
 	global.set('gameStarted', true);
 	setTimeout(function(){

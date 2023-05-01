@@ -31,6 +31,9 @@ var menu_data = {
 		'settings' :    {'x':80, 'y':191, 'width':210, 'height':68},
 		'about' :      	{'x':80, 'y':259, 'width':210, 'height':68}
 	},
+	'nameMenu' : {
+		'enter' : 		{'x':570, 'y':330, 'width':100, 'height':80}
+	},
 	'notificationMenu' : {
 		// 11 = margin
 		// 18 = font size

@@ -11,9 +11,12 @@ var consts = global.get('consts');
 
 // [[label]] is the text to be displayed with the typebox
 // [[callback]] is a function to call when user types something and hits Return with the word as an argument
-function Typebox(label, callback) {
+// [[parentMenu]] is the object of the calling menu, e.g. new SettingsMenu() or new NameMenu()
+function Typebox(label, callback, parentMenu) {
 	this.label = label;
 	this.callback = callback;
+
+	this.parentMenu = parentMenu;
 
 	this.typeboxSprite = global.get('imageHandler').getSprite('typebox');
 
@@ -65,13 +68,13 @@ Typebox.prototype.handleTypedCharacter = function (keyEvent) {
 	if (keyEvent.keyCode === consts.KEY_ENTER) {
 		var oldText = this.text;
 		this.text = ''; // need to reset this before the draw call to clear the typebox
-		this.callback.call(global.get('settingsMenu'), oldText); // make sure to call function with correct 'this'
+		this.callback.call(this.parentMenu, oldText); // make sure to call function with correct 'this'
 		return;
 	}
 
 	if (keyEvent.keyCode === consts.KEY_BACKSPACE) {
 		this.text = this.text.slice(0,this.text.length-1);
-		global.get('settingsMenu').draw();
+		this.parentMenu.draw();
 	}
 
 	// only add normal characters, like a-z, 0-9 etc. Not 'CapsLock' or 'Shift'

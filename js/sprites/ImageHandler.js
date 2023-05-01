@@ -55,7 +55,7 @@ ImageHandler.prototype._handleMenuItems = function () {
 	var menu_data = global.get('menu-data');
 	var canvas = global.get('canvas');
 
-	// first load the mindividual menucontrols
+	// first load the individual menucontrols
 	for (var menu in menu_data) {
 		this._createSpriteFromImage(
 			menu, config.MENUITEMSURL + menu.toLowerCase() + '.png',

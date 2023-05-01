@@ -180,6 +180,21 @@ var menu_text_data = {
 			'checkmark' : {'width' : iconWidth, 'height' : iconWidth},
 			'typebox' : {'width' : 340, 'height' : iconWidth}
 		}
+	},
+	'nameMenu' : {
+		'boxPos' : {'x':303,'y':260},
+		'nameDefaults' : [
+			'Moose',
+			'Porcupine',
+			'Hermit',
+			'Rat',
+			'Jesus',
+			'Platypus',
+			'Koala',
+			'Sloth',
+			'Fern',
+			'Snail'
+		]
 	}
 };
 

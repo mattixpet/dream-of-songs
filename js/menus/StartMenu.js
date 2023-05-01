@@ -7,13 +7,11 @@
 // imports
 var Menu = global.get('class/Menu');
 
-function StartMenu (callback) {
+function StartMenu () {
 	this.name = 'startMenu';
 
 	// call Menu constructor (it uses the .name property, so we must set it before calling)
-	Menu.call(this, callback);
-
-	this.callback = callback;
+	Menu.call(this);
 
 	this.buttonActions['start'] = this._handleStart;
 	this.buttonActions['settings'] = this._handleSettings;
@@ -29,8 +27,8 @@ function StartMenu (callback) {
 StartMenu.prototype = Object.create(Menu.prototype);
 
 StartMenu.prototype._handleStart = function () {
-	this.callback(); // should have been provided with function to start game on creation, that is callback
-	this.hide();
+	// Display prompt for user typing in name (name menu)
+	global.get('nameMenu').display();
 };
 
 StartMenu.prototype._handleSettings = function () {
