@@ -29,6 +29,7 @@ function NameMenu (callback) {
     // don't clear text for our textbox
     this.typebox.stopEnteringCode = function () {
         global.set('activeTypebox', false);
+        this.parentMenu.draw();
     };
     global.set('activeTypebox', this.typebox); // grab focus
 }

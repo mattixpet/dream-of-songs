@@ -58,6 +58,7 @@ Typebox.prototype.click = function (x, y) {
 // means we grab the input and analyse what user writes
 Typebox.prototype._enteringCode = function () {
 	global.set('activeTypebox', this);
+	this.parentMenu.draw();
 };
 
 // Called if user clicks out of the Enter code text field
@@ -65,6 +66,7 @@ Typebox.prototype._enteringCode = function () {
 Typebox.prototype.stopEnteringCode = function () {
 	this.text = '';
 	global.set('activeTypebox', false);
+	this.parentMenu.draw();
 };
 
 // This is the function called by input.js when in typingMode
@@ -84,7 +86,7 @@ Typebox.prototype.handleTypedCharacter = function (keyEvent) {
 	// only add normal characters, like a-z, 0-9 etc. Not 'CapsLock' or 'Shift'
 	if (keyEvent.key.length === 1) {
 		this.text += keyEvent.key;
-		this.draw(this.x, this.y); // display text in text box
+		this.parentMenu.draw(); // display text in text box
 	}
 };
 
@@ -97,6 +99,18 @@ Typebox.prototype.draw = function (x, y) {
 	this.typeboxX = x + this.width - this.typeboxSprite.getWidth() - data.checkboxMargin;
 	this.typeboxY = y + data.checkboxMargin;
 	this.typeboxSprite.draw(this.typeboxX, this.typeboxY);
+
+	if (global.get('activeTypebox') === this && this.parentMenu.name === 'settingsMenu') {
+		// Display white box indicating this box is active
+		draw.drawBox(
+			this.typeboxX + 8,
+			this.typeboxY + 9,
+			this.typeboxSprite.getWidth() - 19,
+			this.typeboxSprite.getHeight() - 20,
+			'white'
+		);
+	}
+
 	this._drawText(
 		this.text,
 		this.typeboxX + data.typeboxPadding,
