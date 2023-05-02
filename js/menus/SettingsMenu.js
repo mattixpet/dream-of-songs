@@ -42,7 +42,8 @@ function SettingsMenu () {
 	this.typebox = new Typebox(
 		data.typebox.label,
 		this.handleTypedWord,
-		this
+		this,
+		'Enter code:'
 	);
 	// we only have one multibox (resolution)
 	this.multibox = new Multibox(

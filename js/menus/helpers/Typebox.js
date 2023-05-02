@@ -12,8 +12,9 @@ var consts = global.get('consts');
 // [[label]] is the text to be displayed with the typebox
 // [[callback]] is a function to call when user types something and hits Return with the word as an argument
 // [[parentMenu]] is the object of the calling menu, e.g. new SettingsMenu() or new NameMenu()
-function Typebox(label, callback, parentMenu) {
+function Typebox(label, callback, parentMenu, mobileText) {
 	this.label = label;
+	this.mobileText = mobileText || 'Enter text:'; // text for mobile prompt
 	this.callback = callback;
 
 	this.parentMenu = parentMenu;
@@ -40,8 +41,11 @@ Typebox.prototype.click = function (x, y) {
 		this.typeboxSprite.getWidth(), this.typeboxSprite.getHeight()
 	)) {
 		if (global.get('mobile')) {
-			this.text = prompt() || '';
+			this.text = window.prompt(this.mobileText, this.text) || '';
 			this.handleTypedCharacter({'keyCode':consts.KEY_ENTER}); // bogus event to trigger word check in settings menu
+			if (this.parentMenu.name === 'nameMenu') {
+				this.parentMenu.draw();
+			}
 			return;
 		}
 		this._enteringCode();

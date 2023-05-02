@@ -23,7 +23,8 @@ function NameMenu (callback) {
     this.typebox = new Typebox(
         '',
         this._handleEnter,
-        this
+        this,
+        'Enter name:'
     );
     // don't clear text for our textbox
     this.typebox.stopEnteringCode = function () {
@@ -43,7 +44,7 @@ NameMenu.prototype._handleEnter = function (text) {
         const nameChoices = global.get('menu-text-data').nameMenu.nameDefaults;
         const name = nameChoices[Math.floor(Math.random() * nameChoices.length)];
         this.typebox.text = name + Math.floor(Math.random() * 10000);
-        this.typebox.draw(this.typebox.x, this.typebox.y);
+        this.draw();
         return;
     }
 
