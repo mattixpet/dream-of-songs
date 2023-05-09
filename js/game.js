@@ -94,7 +94,19 @@ function begin() {
 				util.log('\nPlayer information: ' +
 					out
 				);
-			}	
+			}
+			// increase player speed!
+			if (util.eatKey(consts.KEY_M)) {
+				let player = global.get('player');
+				player.speedX += 0.2;
+				player.speedY += 0.2;
+			}
+			// decrease player speed!
+			if (util.eatKey(consts.KEY_N)) {
+				let player = global.get('player');
+				player.speedX -= 0.2;
+				player.speedY -= 0.2;
+			}
 		}
 	}
 }

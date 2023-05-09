@@ -80,8 +80,11 @@ var menu_text_data = {
 					'However, in the interest of fun I did make a somewhat decent (maybe) mouse ' +
 					'AI so that you should be able to move by tapping where you want to go. \n\n ' +
 					'Oh and also, to bring up the pause menu, a double tap should do the trick.',
-		'resolution-change' : 'Successfully changed resolution to: {}'
-		},
+		'resolution-change' : 'Successfully changed resolution to: {}',
+		'downloadAllMsg' : 	'Just a heads up: \n\n ' +
+							'Downloading all songs can take a while \n ' +
+							'(for example ~1.5 minutes for 69 songs)'
+	},
 	'aboutMenu' : {
 		'textPos' : {'x':160,'y':50},
 		'textWidth' : 400, // px

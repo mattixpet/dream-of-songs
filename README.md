@@ -12,3 +12,11 @@
 - Double click index.html file
 
 If you add a new js file, and the order of the file read matters, you can add it manually in Gruntfile.js for the minification (default just reads all new files at the end).
+
+### Developing and needing music download capability
+
+- Run `grunt connect` to start a server
+- Change path in Gruntfile.js if needed to encompass the audio files
+- Change SONGURL in config.js to match, e.g. '../../Music_for_dream_of_songs/'
+- Change index.php to index.html so it is served
+- Go to localhost:9001 and browse to folder with index.html to get the game

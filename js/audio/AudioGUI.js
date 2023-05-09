@@ -48,6 +48,8 @@ function AudioGUI () {
 	this.fadeTime = 0;
 	this.mouseStillTime = 0; // after this reaches MOUSESTILLTIME we fade player out
 	this.controlsVisible = false; // set as true on first song gotten
+
+	this.displayedDownloadAllMsg = false;
 }
 
 // Mouse event handling calls this function so we can know what to do
@@ -444,6 +446,15 @@ AudioGUI.prototype.showControls = function () {
 	this.controlsVisible = true;
 	this.fadeIn = false;
 	this.fadeOut = false;
+};
+
+AudioGUI.prototype.notifyDownloadAll = function () {
+	// Display popup warning user this can take a while
+	if (!this.displayedDownloadAllMsg) {
+		global.get('notificationMenu').notify('downloadAllMsg');
+		global.get('notificationMenu').display();
+		this.displayedDownloadAllMsg = true;
+	}
 };
 
 global.set('class/AudioGUI', AudioGUI);

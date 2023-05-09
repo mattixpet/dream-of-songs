@@ -131,6 +131,15 @@ module.exports = function(grunt) {
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jasmine', 'jshint', 'uglify']
+    },
+    connect: {
+      server: {
+        options: {
+          port: 9001,
+          base: '../../',
+          keepalive: true
+        }
+      }  
     }
   });
 
@@ -138,6 +147,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-uglify-es');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.registerTask('default', ['jasmine', 'jshint', 'uglify']);
 };

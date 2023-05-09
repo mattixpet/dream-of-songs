@@ -192,6 +192,8 @@ AudioManager.prototype._zipPlayerSongs = function () {
 	var zip = new JSZip();
 
 	this.gui.notifyDownloadInProgress();
+	// display warning message this can take a while
+	this.gui.notifyDownloadAll();
 
 	// For each song in playerSongs, add a promise with the result from the fetch request
 	var fetchPromises = [];
