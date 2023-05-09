@@ -64,15 +64,24 @@ consts['WHYISARAVENLIKEAWRITINGDESK'] = [
 	'because it can produce a few notes',
 	'tho they are very flat',
 	'and it is never put with the wrong end in front',
+	'because it can produce a few notes tho they are very flat and it is never put with the wrong end in front',
 	'both may be penned, but they can never truly be captive',
 	'both may be penned but they can never truly be captive',
 	'because they both come with inky quills',
 	'because the notes for which they are noted are not noted for being musical notes',
 	'because poe wrote on both',
+	'because there is a b in both and an n in neither',
+	'because neither one of them is made from aluminum',
+	'because it slopes with a flap',
 	'neither are made of jello',
 	'my english teacher says so',
 	'both make great beds',
 	'you can fly on one and the other one is a bird',
+	'there is no answer to this riddle',
+	'no answer',
+	'there is no answer',
+	'writing desk',
+	'desk'
 ];
 consts['THEONLYWAYTOFLY'] = 'mescaline';
 // now this is just for advanced users :P
