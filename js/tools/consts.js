@@ -79,9 +79,7 @@ consts['WHYISARAVENLIKEAWRITINGDESK'] = [
 	'you can fly on one and the other one is a bird',
 	'there is no answer to this riddle',
 	'no answer',
-	'there is no answer',
-	'writing desk',
-	'desk'
+	'there is no answer'
 ];
 consts['THEONLYWAYTOFLY'] = 'mescaline';
 // now this is just for advanced users :P
