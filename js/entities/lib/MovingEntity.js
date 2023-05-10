@@ -203,6 +203,7 @@ MovingEntity.prototype.update = function (dt) {
 		// and realize we are not against wall anymore
 		if (oldX !== this.x) {
 			this.disableJump = false;
+			this.movingJump = false; // Reset this in case user clicked up while jump was disabled
 			this.upAgainstWall = false;
 		}
 

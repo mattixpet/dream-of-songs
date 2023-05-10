@@ -100,12 +100,17 @@ function begin() {
 				let player = global.get('player');
 				player.speedX += 0.2;
 				player.speedY += 0.2;
+				if (player.speedX === player.speedY) {
+					player.speedY -= 0.2;
+				}
+				util.log('Speed up! (x:' + player.speedX + ', y:' + player.speedY + ')');
 			}
 			// decrease player speed!
 			if (util.eatKey(consts.KEY_N)) {
 				let player = global.get('player');
 				player.speedX -= 0.2;
-				player.speedY -= 0.2;
+				player.speedY = Math.max(player.speedY - 0.2, 0);
+				util.log('Speed down! (x:' + player.speedX + ', y:' + player.speedY + ')');
 			}
 		}
 	}

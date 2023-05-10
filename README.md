@@ -3,7 +3,7 @@
 ## Summary:
 * A javascript platformer where you collect song scraps from my life !
 
-* Big thanks to [MainLoop.js](https://github.com/IceCreamYou/MainLoop.js), [Online Audio Converter](https://online-audio-converter.com/), [mutagen](https://mutagen.readthedocs.io), [JSZip](https://stuk.github.io/jszip/), [FileSaver](https://github.com/eligrey/FileSaver.js), [ipinfo](https://ipinfo.io), [MediaHuman Audio Converter](https://www.mediahuman.com/audio-converter/), paragonie for [Random Compat](https://github.com/paragonie/random_compat) library and of course [Stackoverflow](https://stackoverflow.com)
+* Big thanks to [MainLoop.js](https://github.com/IceCreamYou/MainLoop.js), [Online Audio Converter](https://online-audio-converter.com/), [mutagen](https://mutagen.readthedocs.io), [JSZip](https://stuk.github.io/jszip/), [FileSaver](https://github.com/eligrey/FileSaver.js), [ipinfo](https://ipinfo.io), [MediaHuman Audio Converter](https://www.mediahuman.com/audio-converter/), [Random Compat](https://github.com/paragonie/random_compat) library and of course [Stackoverflow](https://stackoverflow.com)
 
 ## Development
 
