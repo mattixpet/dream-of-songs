@@ -244,7 +244,10 @@ function initGame() {
 	// in 20 seconds start submitting high score every 20 seconds
 	setTimeout(function(){
 		setInterval(sendHighScores, 20000);
-	});
+	}, 20000);
+
+	// load state if in local storage, see tools/state.js
+	global.get('state').loadState();
 
 	// always finish loading no matter what though !
 	loadingBar.updateProgress(1);

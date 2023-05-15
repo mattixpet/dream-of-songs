@@ -115,8 +115,11 @@ function objLen(obj) {
 	return Object.keys(obj).length;
 }
 
-function log(arg) {
+function log(arg, secondArg) {
 	console.log(arg + ' ' + _getDateMilliseconds());
+	if (secondArg) {
+		console.warn('util.log only takes one argument.');
+	}
 }
 
 function warn(arg) {

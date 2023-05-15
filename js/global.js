@@ -20,7 +20,8 @@ Global.prototype.set = function (key, value) {
 
 Global.prototype.get = function (key) {
 	if (this.refs[key] === undefined) {
-		this.get('util').warn('Nothing found with name: ' + key + ' in global\n\nStack trace: ' + new Error().stack);
+		const debugMsg = this.get('config')['devMode'] ? '\n\nStack trace: ' + new Error().stack : '';
+		this.get('util').warn(`Nothing found with name: ${key} in global.${debugMsg}`);
 	}
 	return this.refs[key];
 };

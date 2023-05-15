@@ -302,7 +302,7 @@ Player.prototype._handleChestCollision = function (chest) {
 			}
 
 			if (Math.abs(this._q - this.numChests) > 3) {
-				console.log('Are you trying to cheat? I like it.');
+				util.log('Are you trying to cheat? I like it.');
 				return;
 			} else {
 				this._q = this.numChests;
@@ -323,8 +323,24 @@ Player.prototype._handleChestCollision = function (chest) {
 			} else if (this.numChests === 101 && config.sendAnalytics) {
 				global.get('postToDb')({'type':'milestone', 'value':'over100songs'});
 				global.get('postHighScoreToDb')();
+			} else if (this.numChests === 151) {
+				global.get('postHighScoreToDb')();
 			} else if (this.numChests === 201) {
 				global.get('postHighScoreToDb')();
+			} else if (this.numChests === 221) {
+				global.get('postHighScoreToDb')();
+			} else if (this.numChests === 241) {
+				global.get('postHighScoreToDb')();
+			} else if (this.numChests === 251) {
+				global.get('postHighScoreToDb')();
+			}
+
+			// Save state on each chest pickup, but not if the function is already running
+			if (!global.get('currentlySavingState')) {
+				global.set('currentlySavingState', true);
+				global.get('state').saveState().then(function (){
+					global.set('currentlySavingState', false);
+				});
 			}
 		} else {
 			// no song ! display message only once

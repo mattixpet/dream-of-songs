@@ -54,6 +54,7 @@
 	<script src="js/tools/resolution.js" type="text/javascript"></script>
 	<script src="js/tools/analytics.js" type="text/javascript"></script>
 	<script src="js/tools/highscore.js" type="text/javascript"></script>
+	<script src="js/tools/state.js" type="text/javascript"></script>
 
 	<script src="js/data/sprite-data.js" type="text/javascript"></script>
 	<script src="js/data/background-sky-data.js" type="text/javascript"></script>

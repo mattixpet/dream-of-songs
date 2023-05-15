@@ -27,21 +27,6 @@ function postToDb(data) {
         },
         body: JSON.stringify(data)
 	});
-	// .then(function (response) {
-	// 	if (response.ok) {
-	// 		console.log('Success ! ' + response.status);
-	// 		return response.json();
-	// 	} else {
-	// 		console.log('Error ! ' + response.status);
-	// 		return response.json();
-	// 	}
-	// })
-	// .then(function (data) {
-	// 	console.log(data);
-	// })
-	// .catch(function (error) {
-	// 	console.log(error);
-	// });
 }
 
 global.set('postToDb', postToDb);

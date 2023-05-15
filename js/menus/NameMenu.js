@@ -54,7 +54,7 @@ NameMenu.prototype._handleEnter = function (text) {
 
     this.typebox.stopEnteringCode();
 
-    console.log('Player name is:', player.username);
+    global.get('util').log(`Player name is: ${player.username}`);
 };
 
 NameMenu.prototype.onEnter = function () {
@@ -79,6 +79,17 @@ NameMenu.prototype._handleClick = function (x, y) {
         // now check the typebox, only if user didn't click go button
         this.typebox.click(x, y);
     }
+};
+
+NameMenu.prototype.display = function() {
+    // if there's a state, it should have been loaded, and we don't ask player for his name
+    if (window.localStorage.getItem('serializedState')) {
+        this.callback();
+        this.hide();
+        this.typebox.stopEnteringCode();
+        return;
+    }
+    Menu.prototype.display.call(this);
 };
 
 global.set('class/NameMenu', NameMenu);

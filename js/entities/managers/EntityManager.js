@@ -71,30 +71,74 @@ EntityManager.prototype._spawnEntitiesOnScene = function (scene) {
 	this._spawnRavens(scene);
 };
 
-EntityManager.prototype._spawnChests = function (scene) {
+EntityManager.prototype._spawnChests = function (scene, chestsFromState) {
 	var data = global.get('chest-data');
 	if (data.hasOwnProperty(scene)) {
 		var chests = data[scene];
-		for (var i = 0; i < chests.length; i++) {
-			if (!this.scenesVisited[scene]) {
-				// first time here
-				var chest = new Chest(
-					chests[i].x, chests[i].y, 
-					chests[i].flipped, 
-					chests[i].hidden,
-					chests[i].message, // optional
-					chests[i].flying // also optional
-				);
-				this.register(chest, scene);
-			} else {
-				// we've been here before, still let's reset chests to their starting coordinates
-				for (var key in this.entities[scene]) {
-					var ent = this.entities[scene][key];
-					if (ent.getName() === 'chest') {
-						ent.resetToStartingPosition();
+		if (!this.scenesVisited[scene]) {
+			if (!this.entities.hasOwnProperty(scene)) {
+				this.entities[scene] = {};
+			}
+			if (chestsFromState && chestsFromState.length > 0) {
+				// we've been here before in another life
+				util.log(`Loading chests from state for scene: ${scene}, chests: ${JSON.stringify(chestsFromState)}`);
+				for (let i = 0; i < chests.length; i++) {
+					let chestInState = false;  // was chest in state or not
+					for (let j = 0; j < chestsFromState.length; j++) {
+						if (chestsFromState[j].x === chests[i].x && chestsFromState[j].y === chests[i].y) {
+							chestInState = true;
+							break;
+						}
 					}
+					let chestInst;
+					if (chestInState) {
+						// we have found this specific chest on this scene
+						chestInst = new Chest(
+							chests[i].x, chests[i].y,
+							chests[i].flipped,
+							chests[i].hidden,
+							undefined, // don't display any chest message
+							chests[i].flying // also optional
+						);
+						// chest should be open since we opened it before
+						chestInst.loot();
+					} else {
+						// unopened chest on scene
+						chestInst = new Chest(
+							chests[i].x, chests[i].y,
+							chests[i].flipped,
+							chests[i].hidden,
+							chests[i].message,
+							chests[i].flying,
+						);
+					}
+					this.register(chestInst, scene);
+				}
+			} else {
+				// first time here
+				for (var i = 0; i < chests.length; i++) {
+					const chestInst = new Chest(
+						chests[i].x, chests[i].y,
+						chests[i].flipped,
+						chests[i].hidden,
+						chests[i].message, // optional
+						chests[i].flying, // also optional
+					);
+					this.register(chestInst, scene);
 				}
 			}
+		} else {
+			// we've been here before, still let's reset chests to their starting coordinates
+			for (var key in this.entities[scene]) {
+				var ent = this.entities[scene][key];
+				if (ent.getName() === 'chest') {
+					ent.resetToStartingPosition();
+				}
+			}
+		}
+		// because we bypass _notifySceneChange when loading the state
+		if (chestsFromState) {
+			this.scenesVisited[scene] = true;
 		}
 	}
 	// else no chests on scene
@@ -195,6 +239,10 @@ EntityManager.prototype.getEntities = function () {
 	return this.entities[this.currentScene];
 };
 
+EntityManager.prototype.getAllEntities = function () {
+	return this.entities;
+};
+
 EntityManager.prototype._delete = function (id, scene) {
 	delete this.entities[scene][id];
 };
@@ -211,6 +259,13 @@ EntityManager.prototype.resetResolution = function (ratio) {
 		for (var id in this.entities[scene]) {
 			this.entities[scene][id].resetResolution(ratio);
 		}
+	}
+};
+
+// chestsState as described in tools/state.js
+EntityManager.prototype.spawnChestsFromState = function (chestsState) {
+	for (let scene in chestsState) {
+		this._spawnChests(scene, chestsState[scene]);
 	}
 };
 
