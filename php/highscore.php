@@ -17,7 +17,6 @@
 
   $errors = array();
   try {
-    // REMEMBER NOT TO COMMIT TO GIT
     $conn = new PDO(/* here is some private information about connecting to the database! */);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch(PDOException $e) {

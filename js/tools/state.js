@@ -119,7 +119,7 @@ function loadState() {
         }
     }
     entityManager.scenesVisited[config.STARTINGSCENE] = false;
-    entityManager.spawnChestsFromState(s.chests);
+    entityManager.spawnEntitiesFromState(s.chests);
 
     const scene = s.player.scene;
     entityManager.notifySceneChange(scene, player);

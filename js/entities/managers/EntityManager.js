@@ -76,9 +76,6 @@ EntityManager.prototype._spawnChests = function (scene, chestsFromState) {
 	if (data.hasOwnProperty(scene)) {
 		var chests = data[scene];
 		if (!this.scenesVisited[scene]) {
-			if (!this.entities.hasOwnProperty(scene)) {
-				this.entities[scene] = {};
-			}
 			if (chestsFromState && chestsFromState.length > 0) {
 				// we've been here before in another life
 				util.log(`Loading chests from state for scene: ${scene}, chests: ${JSON.stringify(chestsFromState)}`);
@@ -263,8 +260,14 @@ EntityManager.prototype.resetResolution = function (ratio) {
 };
 
 // chestsState as described in tools/state.js
-EntityManager.prototype.spawnChestsFromState = function (chestsState) {
+EntityManager.prototype.spawnEntitiesFromState = function (chestsState) {
 	for (let scene in chestsState) {
+		if (!this.entities.hasOwnProperty(scene)) {
+			this.entities[scene] = {};
+		}
+		this._spawnTorches(scene);
+		this._spawnWater(scene);
+		this._spawnSpikes(scene);
 		this._spawnChests(scene, chestsState[scene]);
 	}
 };
