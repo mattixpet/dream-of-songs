@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                         // but I do want him to check other scope errors
                         // Decided to just add it to the code like /* jshint shadow:true */
                         // where appplicable
-        esversion: 6,
+        esversion: 8,
         loopfunc: true, // we define functions as part of a promise chain in AudioManager.js:205,209
         sub: true, // is deprecated, but I really like my bracket notation??
         jasmine: true,
