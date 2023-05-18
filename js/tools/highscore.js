@@ -29,6 +29,11 @@ function postHighScoreToDb() {
 
     const spikes = global.get('spikes') || {'numDeaths': 0};
 
+    // Special case for an error where a \n was submitted after the id from php
+    if (player.highscore_id[player.highscore_id.length-1] === '\n') {
+        player.highscore_id = player.highscore_id.slice(0, -1);
+    }
+
     // data == {
     //     'name': 'asdf',
     //     'score': 67,
@@ -60,10 +65,6 @@ function postHighScoreToDb() {
         if (!player.highscore_id) {
             player.highscore_id = data.slice(0, -1);  // remove \n from php echo
             return;
-        }
-        // Special case for an error where a \n was submitted after the id from php
-        if (player.highscore_id[player.highscore_id.length-1] === '\n') {
-            player.highscore_id = player.highscore_id.slice(0, -1);
         }
     });
 }
