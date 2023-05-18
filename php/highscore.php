@@ -71,7 +71,7 @@
       // Display the high scores, top 50.
       $stmt = $conn->prepare(
         'SELECT * FROM high_scores ' .
-        'ORDER BY score DESC ' .
+        'ORDER BY score DESC, deaths ' .
         'LIMIT 50'
       );
       $stmt->execute();

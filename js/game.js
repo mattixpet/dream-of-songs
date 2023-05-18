@@ -241,10 +241,10 @@ function initGame() {
 	// send our sneaky analytics !!! (no ips though, very softcore)
 	sendAnalytics();
 
-	// in 20 seconds start submitting high score every 20 seconds
+	// in 5 seconds start submitting high score every 10 seconds
 	setTimeout(function(){
-		setInterval(sendHighScores, 20000);
-	}, 20000);
+		setInterval(sendHighScores, 10000);
+	}, 5000);
 
 	// load state if in local storage, see tools/state.js
 	global.get('state').loadState();

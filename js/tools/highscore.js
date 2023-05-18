@@ -58,7 +58,12 @@ function postHighScoreToDb() {
         return res.text();
     }).then(function(data){
         if (!player.highscore_id) {
-            player.highscore_id = data;
+            player.highscore_id = data.slice(0, -1);  // remove \n from php echo
+            return;
+        }
+        // Special case for an error where a \n was submitted after the id from php
+        if (player.highscore_id[player.highscore_id.length-1] === '\n') {
+            player.highscore_id = player.highscore_id.slice(0, -1);
         }
     });
 }
