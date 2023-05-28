@@ -54,6 +54,7 @@ Spikes.prototype.update = function (dt) {
 Spikes.prototype._increaseNumDeaths = function () {
 	if (!this.onSpikes) {
 		this.numDeaths++;
+		global.get('player').increaseNumDeaths();
 	}
 };
 

@@ -31,6 +31,7 @@ async function saveState() {
     //        'numHiddenChests': 20,
     //        '_q': 43,
     //        'currentlyFlying': true,
+    //        'deaths': 50
     //    }
     // }
     // where x and y are chest.startingX and startingY (same as in chest-data.js)
@@ -75,6 +76,7 @@ async function saveState() {
     stateObj.player.numChests = player.numChests;
     stateObj.player.numHiddenChests = player.numHiddenChests;
     stateObj.player._q = player._q;
+    stateObj.player.deaths = player.deaths;
 
     window.localStorage.setItem('serializedState', JSON.stringify(stateObj));
 }
@@ -106,6 +108,7 @@ function loadState() {
     player.numChests = s.player.numChests;
     player.numHiddenChests = s.player.numHiddenChests;
     player._q = s.player._q;
+    player.deaths = s.player.deaths;
 
     const entityManager = global.get('entityManager');
     // since entity manager spawns the first clearsky scene, we have to delete the

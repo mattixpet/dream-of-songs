@@ -24,10 +24,8 @@ function postHighScoreToDb() {
         if (!player.username.includes(' (cheater!)')) {
             player.username += ' (cheater!)';
             player.highscore_id = null;
-        }        
+        }
     }
-
-    const spikes = global.get('spikes') || {'numDeaths': 0};
 
     // Special case for an error where a \n was submitted after the id from php
     if (player.highscore_id && player.highscore_id[player.highscore_id.length-1] === '\n') {
@@ -43,7 +41,7 @@ function postHighScoreToDb() {
     const data = {
         'name': player.username,
         'score': new_score,
-        'deaths': spikes.numDeaths,
+        'deaths': player.deaths,
         'date': new Date().toUTCString(),
         'unique_id': player.highscore_id,
     };

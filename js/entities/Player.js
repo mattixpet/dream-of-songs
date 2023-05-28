@@ -93,6 +93,8 @@ function Player(posX, posY) {
 	this.noMoreSongs = false;
 
 	this._q = 0;
+
+	this.deaths = 0;
 }
 
 Player.prototype = Object.create(MovingEntity.prototype);
@@ -379,6 +381,10 @@ Player.prototype.resetResolution = function (ratio) {
 	MovingEntity.prototype.resetResolution.call(this, ratio);
 
 	this._setSpriteExtraInfo();
+};
+
+Player.prototype.increaseNumDeaths = function () {
+	this.deaths++;
 };
 
 global.set('class/Player', Player); // export
