@@ -30,7 +30,7 @@ function postHighScoreToDb() {
     const spikes = global.get('spikes') || {'numDeaths': 0};
 
     // Special case for an error where a \n was submitted after the id from php
-    if (player.highscore_id[player.highscore_id.length-1] === '\n') {
+    if (player.highscore_id && player.highscore_id[player.highscore_id.length-1] === '\n') {
         player.highscore_id = player.highscore_id.slice(0, -1);
     }
 
