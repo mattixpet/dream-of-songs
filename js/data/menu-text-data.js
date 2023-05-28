@@ -61,7 +61,7 @@ var menu_text_data = {
 					'      (a riddle? perhaps the answer \n ' +
 					'       can be typed somewhere)',
 		'you-win-hint' : 'Shower thought: Perhaps the directions the \n ' +
-		                 'raven flies can be useful here somewhere?',
+		                 'raven flies can be useful around here somewhere?',
 		'welcome-to-heaven' : '      Welcome to the Dream of Heaven.',
 		'no-song' : 'Whoops you seem to have finished all the available songs! \n ' +
 					'This isn\'t really supposed to happen, but I\'m glad I at least ' +
